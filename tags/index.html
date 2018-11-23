@@ -193,46 +193,7 @@
 <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/hello-world/">hello world</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/缓存/">缓存</a></li></ul>
 
 <script src="/js/tagcanvas.js" type="text/javascript"></script>
-<script type="text/javascript">
-    function tagCanvas(){
-        try {
-          TagCanvas.Start('my3DTags','tags',{
-            //initial: [0.8,-0.3],
-            textFont: 'Georgia,Optima',
-            textColour: null,
-            textHeight: 30,
-            outlineColour: null,
-            weight: true,
-            reverse: true,
-            depth: 0.8,
-            maxSpeed: 0.05,
-            minSpeed: 0.01,
-            weightMode:'both',
-            bgRadius: 1,
-            freezeDecel: true
-          });
-        } catch(e) {
-          // something went wrong, hide the canvas container
-          document.getElementById('myTags').style.display = 'none';
-        }
-    }
 
-  function addLoadEvent(func) {
-  var oldonload = window.onload;
-  if (typeof window.onload != 'function') {
-    window.onload = func;
-  } else {  
-    window.onload = function() {
-      oldonload();
-      func();
-    }
-  }
-}
-    addLoadEvent(tagCanvas);
-
-
-      
-    </script>
     <style type="text/css">
     .category-list li, .tags li{
             display: inline-block;
@@ -413,6 +374,22 @@
   
 
   
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "https://liuxiaocsu.github.io/tags/index.html",
+  owner: 'liuxiaocsu',
+  repo: 'liuxiaocsu.github.io',
+  oauth: {
+    client_id: '11fad8dd8af945506b52',
+    client_secret: '460e5265f4cd98a87c8abebbdac4940b891cf693',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
+  
 
 
           </div>
@@ -530,11 +507,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">一致性哈希</a>
+                <a href="javascript:void(0)" class="js-tag color3">me</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">me</a>
+                <a href="javascript:void(0)" class="js-tag color1">一致性哈希</a>
               </li>
             
             <div class="clearfix"></div>
