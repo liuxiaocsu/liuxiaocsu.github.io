@@ -277,23 +277,14 @@
             maxSpeed: 0.05,
             minSpeed: 0.01,
             weightMode:'both',
-            bgRadius: 1
-            //freezeDecel: true
+            bgRadius: 1,
+            freezeDecel: true
           });
         } catch(e) {
           // something went wrong, hide the canvas container
           document.getElementById('myTags').style.display = 'none';
         }
       };
-
-      function changeshape(s) {
-            var locks = { hcylinder: 'x', vcylinder: 'y', hring: 'x', vring: 'y', sphere: '' };
-            lock = locks[s] || '';
-            shape = s;
-            TagCanvas.initial = (lock == 'x' && [0,0.2]) || (lock == 'y' && [0.2,0]) || [0.2,0.2];
-            TagCanvas.restart();
-        }
-        changeshape('vcylinder')
     </script>
       
     </div>
@@ -536,11 +527,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">一致性哈希</a>
+                <a href="javascript:void(0)" class="js-tag color3">me</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">me</a>
+                <a href="javascript:void(0)" class="js-tag color1">一致性哈希</a>
               </li>
             
             <div class="clearfix"></div>
