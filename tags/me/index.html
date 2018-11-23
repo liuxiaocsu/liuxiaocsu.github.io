@@ -31,91 +31,7 @@
 
   
     <script src="/js/tagcanvas.js" type="text/javascript"></script>
-    <script type="text/javascript">
-      window.onload = function() {
-        try {
-          TagCanvas.Start('my3DTags','tags',{
-            initial: [0.8,-0.3],
-            textFont: 'Georgia,Optima',
-            textColour: null,
-            textHeight: 30,
-            outlineColour: null,
-            weight: true,
-            reverse: true,
-            depth: 0.8,
-            maxSpeed: 0.05,
-            minSpeed: 0.01,
-            weightMode:'both',
-            bgRadius: 1,
-            freezeDecel: true
-          });
-        } catch(e) {
-          // something went wrong, hide the canvas container
-          document.getElementById('myTags').style.display = 'none';
-        }
-      };
-    </script>
-    <style type="text/css">
-    .category-list li, .tags li{
-            display: inline-block;
-            margin: 0 1em .5em 0;
-            padding: 4px;
-            border: 1px solid lightgray;
-            font-size: 1.2em;
-    }
-    .category-list a {
-        color: gray;
-    }
-    .category-list:hover a {
-        color: gray;
-    }
-    .category-list-item:hover a {
-        color: gray;
-        text-decoration: none;
-        padding: 4px;
-    }
-    .category-list-item:hover {
-        background-color: #eaeaea;
-    }
-    .category-list-count {
-        margin-left: 2px;
-        font-size: .9em;
-    }
-    .article-entry ul li:before{
-        display: none;
-    }
-    .article-inner  {
-        text-align: center;
-    }
-    .article-meta {
-        display: none;
-    }
-    .article-header {
-        padding-right: 35px;
-    }
-    #container .article .article-title {
-        padding-right: 0;
-    }
-    .tags {
-        max-width: 50em;
-        margin: 2em auto;
-        margin-top: 0em;
-    }
-    .tags a {
-        margin-right: 1em;
-        line-height: 65px;
-        border-bottom: 1px solid gray;
-        white-space: nowrap;
-    }
-    .tags a:hover {
-         border-bottom: 2px solid black;
-         text-decoration: none;
-         font-style: italic;
-    }
-    .category-list-child {
-        display: none;
-    }
-</style>
+    
   
 
   
@@ -435,15 +351,15 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">me</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">一致性哈希</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">me</a>
               </li>
             
             <div class="clearfix"></div>
