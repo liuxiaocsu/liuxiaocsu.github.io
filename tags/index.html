@@ -269,13 +269,14 @@
             initial: [0.8,-0.3],
             textFont: 'Georgia,Optima',
             textColour: null,
-            //textHeight: 30,
+            textHeight: 30,
             outlineColour: null,
             weight: true,
             reverse: true,
             depth: 0.8,
             maxSpeed: 0.05,
             minSpeed: 0.01,
+            weightMode:'both',
             bgRadius: 1
             //freezeDecel: true
           });
@@ -284,6 +285,15 @@
           document.getElementById('myTags').style.display = 'none';
         }
       };
+
+      function changeshape(s) {
+            var locks = { hcylinder: 'x', vcylinder: 'y', hring: 'x', vring: 'y', sphere: '' };
+            lock = locks[s] || '';
+            shape = s;
+            TagCanvas.initial = (lock == 'x' && [0,0.2]) || (lock == 'y' && [0.2,0]) || [0.2,0.2];
+            restart();
+        }
+        changeshape('vcylinder')
     </script>
       
     </div>
