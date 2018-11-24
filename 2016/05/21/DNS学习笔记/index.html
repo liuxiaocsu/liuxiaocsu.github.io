@@ -18,7 +18,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://liuxiaocsu.github.io/2016/05/21/DNS学习笔记/markdown-img-paste-20181124182650657.png">
 <meta property="og:image" content="https://liuxiaocsu.github.io/2016/05/21/DNS学习笔记/markdown-img-paste-2018112418454685.png">
-<meta property="og:updated_time" content="2018-11-24T13:22:02.092Z">
+<meta property="og:updated_time" content="2018-11-24T13:28:50.934Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DNS学习笔记">
 <meta name="twitter:description" content="访问一台机器要靠IP地址和MAC地址，其中，MAC地址可以通过ARP协议得到，所以这对用户是透明的，但是IP地址就不行，无论如何用户都需要用一个指定的IP来访问一台计算机，而IP地址又非常不好记，于是就出现了DNS系统。DNS（Domain Name System，域名系统），万维网上作为域名和IP地址相互映射的一个分布式数据库，能够使用户更方便的访问互联网，而不用去记住能够被机器直接读取的IP地">
@@ -214,12 +214,9 @@
 </ul>
 <h3 id="DNS的分类"><a href="#DNS的分类" class="headerlink" title="DNS的分类"></a>DNS的分类</h3><p><img src="/2016/05/21/DNS学习笔记/markdown-img-paste-20181124182650657.png" alt=""></p>
 <ol>
-<li><p>根DNS服务器<br>根服务器主要用来管理互联网的主目录，全世界只有13台（这13台根域名服务器名字分别为“A”至“M”），1个为主根服务器在美国。其余12个均为辅根服务器，其中9个在美国，欧洲2个，位于英国和瑞典，亚洲1个位于日本。<br>所有根服务器均由美国政府授权的互联网域名与号码分配机构ICANN统一管理，负责全球互联网域名根服务器、域名体系和IP地址等的管理，这13台根服务器可以指挥Firefox或Internet Explorer这样的Web浏览器和电子邮件程序控制互联网通信，由于根服务器中有经美国政府批准的260个左右的互联网后缀（如 .com、.xyz、.net、.top等）和一些国家的指定符（如法国的 .fr、挪威的.no等），美国政府对其管理拥有很大发言权。根域名服务器是架构因特网所必须的基础设施。在国外，许多计算机科学家将根域名服务器称作“真理”（TRUTH），足见其重要性。换句话说——攻击整个因特网最有力、最直接，也是最致命的方法恐怕就是攻击根域名服务器了。</p>
-</li>
-<li><p>顶级域DNS服务器<br>也叫做TLD服务器，负责顶级域名com、org、net、edu、gov以及所有国家的顶级域名uk、fr、ca、ch等。</p>
-</li>
-<li><p>权威DNS服务器<br>在因特网上具有公共可访问主机的每个组织机构必须提供公共可访问的DNS记录，这些记录就是主机名字映射ip地址。这些记录要么这个组织搞个权威DNS服务器记录起来，要么找服务提供商给钱存一下。多数大学和大公司都是自己实现维护的权威DNS服务器的。</p>
-</li>
+<li>根DNS服务器<br>根服务器主要用来管理互联网的主目录，全世界只有13台（这13台根域名服务器名字分别为“A”至“M”），1个为主根服务器在美国。其余12个均为辅根服务器，其中9个在美国，欧洲2个，位于英国和瑞典，亚洲1个位于日本。<br>所有根服务器均由美国政府授权的互联网域名与号码分配机构ICANN统一管理，负责全球互联网域名根服务器、域名体系和IP地址等的管理，这13台根服务器可以指挥Firefox或Internet Explorer这样的Web浏览器和电子邮件程序控制互联网通信，由于根服务器中有经美国政府批准的260个左右的互联网后缀（如 .com、.xyz、.net、.top等）和一些国家的指定符（如法国的 .fr、挪威的.no等），美国政府对其管理拥有很大发言权。根域名服务器是架构因特网所必须的基础设施。在国外，许多计算机科学家将根域名服务器称作“真理”（TRUTH），足见其重要性。换句话说——攻击整个因特网最有力、最直接，也是最致命的方法恐怕就是攻击根域名服务器了。</li>
+<li>顶级域DNS服务器<br>也叫做TLD服务器，负责顶级域名com、org、net、edu、gov以及所有国家的顶级域名uk、fr、ca、ch等。</li>
+<li>权威DNS服务器<br>在因特网上具有公共可访问主机的每个组织机构必须提供公共可访问的DNS记录，这些记录就是主机名字映射ip地址。这些记录要么这个组织搞个权威DNS服务器记录起来，要么找服务提供商给钱存一下。多数大学和大公司都是自己实现维护的权威DNS服务器的。</li>
 </ol>
 <h3 id="DNS查询术语"><a href="#DNS查询术语" class="headerlink" title="DNS查询术语"></a>DNS查询术语</h3><p>FQDN：full qualified domain name，全限定域名，它包含了域和主机名，如：<a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a> 是一个FQDN。<br>IP：ip地址，包括IPv4、IPv6。<br>Resolve：解析，转换。</p>
 <p>域名解析的过程其实就是：FQDN <-----> IP ，这两者间的转换过程。</-----></p>
