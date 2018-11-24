@@ -18,7 +18,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://liuxiaocsu.github.io/2016/05/21/DNS学习笔记/markdown-img-paste-20181124182650657.png">
 <meta property="og:image" content="https://liuxiaocsu.github.io/2016/05/21/DNS学习笔记/markdown-img-paste-2018112418454685.png">
-<meta property="og:updated_time" content="2018-11-24T11:54:51.922Z">
+<meta property="og:updated_time" content="2018-11-24T12:02:15.540Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DNS学习笔记">
 <meta name="twitter:description" content="DNS（Domain Name System，域名系统），万维网上作为域名和IP地址相互映射的一个分布式数据库，能够使用户更方便的访问互联网，而不用去记住能够被机器直接读取的IP地址。通过域名，最终得到该域名对应的IP地址的过程叫做域名解析（或主机名解析）。DNS协议运行在UDP协议之上，使用端口号53。">
@@ -202,8 +202,8 @@
 <h3 id="域名的结构"><a href="#域名的结构" class="headerlink" title="域名的结构"></a>域名的结构</h3><p>DNS 是一个分层级的分散式名称对应系统，有点像电脑的目录树结构：在最顶端的是一个”root”，然后其下分为好几个基本类别名称，如com、org、edu 等；再下面是组织名称，如ibm﹑microsoft﹑intel 等；继而是主机名称，如www﹑mail﹑ftp 等。因为当初 internet 是从美国发展起的，所以当时并没有国域名称，但随着后来 internet 的蓬勃发展，DNS 也加进了诸如 tw﹑hk﹑cn 等国域名称。所以一个完整的 dns 名称就好象是这样的: <a href="http://www.csu.edu.cn" target="_blank" rel="noopener">www.csu.edu.cn</a> ,而整个名称对应的就是一个(或多个) IP 位址了。 </p>
 <h3 id="域名解析的过程"><a href="#域名解析的过程" class="headerlink" title="域名解析的过程"></a>域名解析的过程</h3><p>我们的电脑里都有网卡，上面除了有ip地址、掩码，还有下面的DNS服务器/域名服务器。域名服务器则提供域名查询的功能，即域名服务器上存储着域名对应的ip地址。<br>当我们在浏览器输入<a href="http://www.csu.edu.cn/" target="_blank" rel="noopener">http://www.csu.edu.cn/</a> 敲回车，这是电脑会进行以下动作：</p>
 <ul>
-<li>首先根据网址提取出域名，即“<a href="http://www.csu.edu.cn”" target="_blank" rel="noopener">www.csu.edu.cn”</a></li>
-<li>如果你在系统中配置了Host文件，那么电脑会先查询hosts文件，看“<a href="http://www.csu.edu.cn”是否在Hosts文件中已经有了对应的记录，如果有就直接去该记录中的ip地址，域名解析的过程就结束了。如果Hosts文件中没有这个域名的记录，此时电脑会根据你设置的域名服务器去解析域名。" target="_blank" rel="noopener">www.csu.edu.cn”是否在Hosts文件中已经有了对应的记录，如果有就直接去该记录中的ip地址，域名解析的过程就结束了。如果Hosts文件中没有这个域名的记录，此时电脑会根据你设置的域名服务器去解析域名。</a></li>
+<li>首先根据网址提取出域名，即 <a href="http://www.csu.edu.cn" target="_blank" rel="noopener">www.csu.edu.cn</a></li>
+<li>如果你在系统中配置了Host文件，那么电脑会先查询hosts文件，看”<a href="http://www.csu.edu.cn" target="_blank" rel="noopener">www.csu.edu.cn</a> “ 是否在Hosts文件中已经有了对应的记录，如果有就直接去该记录中的ip地址，域名解析的过程就结束了。如果Hosts文件中没有这个域名的记录，此时电脑会根据你设置的域名服务器去解析域名。</li>
 <li>如果你的电脑没有配置域名服务器，那么这时就会出现网站的域名无法解析错误。过程也结束了。如果你设置了域名服务器，那么电脑会向这个域名服务器发送一个域名查询的请求，如果这台域名服务器始终没有回应，则也会出现浏览器报错。</li>
 <li>如果域名服务器回应了，那么电脑可以根据域名服务器返回的应答信息得到域名的ip地址。然后，浏览器就会想这个ip地址对应的web服务器发送http请求。</li>
 </ul>
@@ -571,10 +571,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">me</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">tag1</a>
               </li>
              
@@ -612,6 +608,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">IO</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">me</a>
               </li>
              
               <li class="article-tag-list-item">
