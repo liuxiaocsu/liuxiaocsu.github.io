@@ -18,7 +18,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://liuxiaocsu.github.io/2016/05/21/DNS学习笔记/markdown-img-paste-20181124182650657.png">
 <meta property="og:image" content="https://liuxiaocsu.github.io/2016/05/21/DNS学习笔记/markdown-img-paste-2018112418454685.png">
-<meta property="og:updated_time" content="2018-11-24T12:43:42.936Z">
+<meta property="og:updated_time" content="2018-11-24T12:51:47.221Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DNS学习笔记">
 <meta name="twitter:description" content="访问一台机器要靠IP地址和MAC地址，其中，MAC地址可以通过ARP协议得到，所以这对用户是透明的，但是IP地址就不行，无论如何用户都需要用一个指定的IP来访问一台计算机，而IP地址又非常不好记，于是就出现了DNS系统。DNS（Domain Name System，域名系统），万维网上作为域名和IP地址相互映射的一个分布式数据库，能够使用户更方便的访问互联网，而不用去记住能够被机器直接读取的IP地">
@@ -229,22 +229,14 @@
 <p>一个主机查询的过程分为两个部分，主机到本地DNS服务器之间是递归查询，本地服务器向根和相关服务器查询是迭代查询。</p>
 <p><img src="/2016/05/21/DNS学习笔记/markdown-img-paste-2018112418454685.png" alt=""></p>
 <ol>
-<li><p>首先客户端怎样发起一个DNS查询请求，例如此时你在浏览器地址栏输入<a href="http://www.163.com敲回车之后，那么浏览器并没有发起DNS请求，而是先查询本机的DNS缓存中是否有该域名对应的地址，有的话直接访问该地址，没有的话查询本机的hosts文件，如果刚好你本机的hosts文件中有该域名对应的地址，那么此刻客户端是不会发起dns请求的，但是通常情况下本地的host文件是空的，所以就有了第二步。" target="_blank" rel="noopener">www.163.com敲回车之后，那么浏览器并没有发起DNS请求，而是先查询本机的DNS缓存中是否有该域名对应的地址，有的话直接访问该地址，没有的话查询本机的hosts文件，如果刚好你本机的hosts文件中有该域名对应的地址，那么此刻客户端是不会发起dns请求的，但是通常情况下本地的host文件是空的，所以就有了第二步。</a></p>
-</li>
-<li><p>经历是前面两次本机内部的查询之后发现并没有该域名对应的IP地址，于是客户端正式向本地的DNS服务器发起DNS查询请求。</p>
-</li>
-<li><p>本地的DNS服务器收到这个查询请求后，会查询自己的缓存中以及自己的资源记录中是否有该域名对应的IP地址，如果在自己的缓存中以及本机的资源记录中依然找不到该对应的IP地址，此时本地DNS服务器会把请求发送给大名鼎鼎的13台根服务器中的一台。</p>
-</li>
-<li><p>其中一台根服务器收到这个请求后，会发送一个回复说，.com的域名解析服务我已经委派给.com这台域名服务器了，给你这个.com这台域服务器的地址，你去哪里查询吧，此时本地DNS服务器就进入了迭代查询。</p>
-</li>
-<li><p>本地DNS服务器收到这个参考答案后，就会将它收到来自客户端的DNS请求再次发往.com域名服务器。</p>
-</li>
-<li><p>负责.com域名解析服务器收到这个请求后，会回复说163.com的主区域服务器应该会知道答案，给你163.com主区域服务器的地址，你去它那里查询吧。</p>
-</li>
-<li><p>本地DNS服务器收到这个参考答案后，就会将它收到来自客户端的DNS请求再次发往163.com主区域服务器，当163.com这个主区域服务器收到这个DNS请求后，查询自己的缓存以及自己的资源记录，终于找到本区域内有一个www的主机。于是将<a href="http://www.163.com对应的ip地址回复给本地DNS服务器。" target="_blank" rel="noopener">www.163.com对应的ip地址回复给本地DNS服务器。</a></p>
-</li>
-<li><p>此时本地DNS服务器收到这个回复后，会将这条记录回复给客户端，同时将该记录写入到自己的缓存中，以便备查。</p>
-</li>
+<li>首先客户端怎样发起一个DNS查询请求，例如此时你在浏览器地址栏输入<a href="http://www.163.com" target="_blank" rel="noopener">www.163.com</a> 敲回车之后，那么浏览器并没有发起DNS请求，而是先查询本机的DNS缓存中是否有该域名对应的地址，有的话直接访问该地址，没有的话查询本机的hosts文件，如果刚好你本机的hosts文件中有该域名对应的地址，那么此刻客户端是不会发起dns请求的，但是通常情况下本地的host文件是空的，所以就有了第二步。</li>
+<li>经历是前面两次本机内部的查询之后发现并没有该域名对应的IP地址，于是客户端正式向本地的DNS服务器发起DNS查询请求。</li>
+<li>本地的DNS服务器收到这个查询请求后，会查询自己的缓存中以及自己的资源记录中是否有该域名对应的IP地址，如果在自己的缓存中以及本机的资源记录中依然找不到该对应的IP地址，此时本地DNS服务器会把请求发送给大名鼎鼎的13台根服务器中的一台。</li>
+<li>其中一台根服务器收到这个请求后，会发送一个回复说，.com的域名解析服务我已经委派给.com这台域名服务器了，给你这个.com这台域服务器的地址，你去哪里查询吧，此时本地DNS服务器就进入了迭代查询。</li>
+<li>本地DNS服务器收到这个参考答案后，就会将它收到来自客户端的DNS请求再次发往.com域名服务器。</li>
+<li>负责.com域名解析服务器收到这个请求后，会回复说163.com的主区域服务器应该会知道答案，给你163.com主区域服务器的地址，你去它那里查询吧。</li>
+<li>本地DNS服务器收到这个参考答案后，就会将它收到来自客户端的DNS请求再次发往163.com主区域服务器，当163.com这个主区域服务器收到这个DNS请求后，查询自己的缓存以及自己的资源记录，终于找到本区域内有一个www的主机。于是将<a href="http://www.163.com" target="_blank" rel="noopener">www.163.com</a> 对应的ip地址回复给本地DNS服务器。</li>
+<li>此时本地DNS服务器收到这个回复后，会将这条记录回复给客户端，同时将该记录写入到自己的缓存中，以便备查。</li>
 </ol>
 <p>以上只是简单的介绍了一个DNS请求的大致过程，当然实际的过程中要比这复杂的多，同时除了正向解析：FQDNàIP的解析之外，还包括反响解析：IPàFQDN。</p>
 <p>从上面DNS请求的过程可以了解到，客户端发送一个请求后，本地的DNS服务器就需要对不断的迭代查询客户端发起的这个请求到底是哪个地址，直到找到这个域名所对应的IP地址是什么为止，那这台DNS服务器具体是怎么工作的那?以及这台DNS服务器都有哪些部分组成那?接下来，先来认识一下DNS服务器都有哪些类型：</p>
@@ -256,35 +248,27 @@
 </ol>
 <p>从上面DNS服务器的类型上可以看出，主DNS服务器承担着重要的工作，那究竟我们的主DNS服务器如何工作的那?其实DNS服务器是通过由众多资源记录(Resource Record)这个区域解析库来完成解析，任何一台主DNS服务器都是如此，无论是windows平台上面使用的域控制器，还是linux平台的bind都是通过这些资源记录来完成解析过程。以下就是这些资源记录的类型以及语法格式，每条资源记录的语法都遵循</p>
 <p>name [TTL] INrr_type value</p>
-<p>SOA记录：Start Of Authority，起始授权记录;一个区域解析库有且仅能有一个SOA记录，而必须为解析库的第一条记录;</p>
-<p>name:当前区域的名字，例如“sina.com.”;</p>
-<p>value:有多部分组成</p>
+<ul>
+<li><p>SOA记录：Start Of Authority，起始授权记录;一个区域解析库有且仅能有一个SOA记录，而必须为解析库的第一条记录;<br>name:当前区域的名字，例如“sina.com.”;<br>value:有多部分组成</p>
 <ol>
 <li>当前区域的主DNS服务器的FQDN，也可以使用当前区域的名字。</li>
 <li>录前区域管理员的邮箱地址;但地址中不能使用@符号，一般用“.”替换。</li>
 <li>主从服务协调属性的定义以及否定的答案的统一的TTL。</li>
 </ol>
-<p>A记录：internet Address，作用，FQDN(完全格式域名)–&gt; IP</p>
-<p>name:某主机的FQDN(完全格式域名);</p>
-<p>value:主机名对应主机的IPv4地址;</p>
-<p>AAAA记录:FQDN(完全格式域名)–&gt; IPv6</p>
-<p>name:某主机的FQDN(完全格式域名);</p>
-<p>value:主机名对应主机的IPv6地址;</p>
-<p>PTR记录:PoinTeR，IP –&gt; FQDN(完全格式域名)，用于反向解析</p>
-<p>name: IP，有特定格式，把IP地址反过来写，1.2.3.4，要写作4.3.2.1;而有特定后缀</p>
-<p>in-addr.arpa.，所以完整写法为：4.3.2.1.in-addra.arpa.;</p>
-<p>value: FQDN(完全格式域名);</p>
-<p>NS记录:Name Server，专用于标明当前区域的DNS服务器</p>
-<p>name:当前区域的名字;</p>
-<p>value:当前区域的某DNS服务器的名字;</p>
-<p>注意：一个区域可以有多个NS记录;</p>
-<p>CNAME记录：Canonical Name，别名记录</p>
-<p>name:别名的FQDN(完全格式域名);</p>
-<p>value:正式名字的FQDN(完全格式域名);</p>
-<p>MX:记录　Mail exchanger，邮件交换器，用于定位该区域中的邮件服务器</p>
-<p>name:当前区域的名字;</p>
-<p>value:当前区域的某邮件服务器(smtp服务器)的主机名;</p>
-<p>注意：一个区域内，MX记录可有多个;但每个记录的value之前应该有一个数字(0-99)，表示此服务器的优先级;数字越小优先级越高;</p>
+</li>
+<li><p>A记录：internet Address，作用，FQDN(完全格式域名)–&gt; IP<br>name:某主机的FQDN(完全格式域名);<br>value:主机名对应主机的IPv4地址;</p>
+</li>
+<li><p>AAAA记录:FQDN(完全格式域名)–&gt; IPv6<br>name:某主机的FQDN(完全格式域名);<br>value:主机名对应主机的IPv6地址;</p>
+</li>
+<li><p>PTR记录:PoinTeR，IP –&gt; FQDN(完全格式域名)，用于反向解析<br>name: IP，有特定格式，把IP地址反过来写，1.2.3.4，要写作4.3.2.1;而有特定后缀<br>in-addr.arpa.，所以完整写法为：4.3.2.1.in-addra.arpa.;<br>value: FQDN(完全格式域名);</p>
+</li>
+<li><p>NS记录:Name Server，专用于标明当前区域的DNS服务器<br>name:当前区域的名字;<br>value:当前区域的某DNS服务器的名字;<br>注意：一个区域可以有多个NS记录;</p>
+</li>
+<li><p>CNAME记录：Canonical Name，别名记录<br>name:别名的FQDN(完全格式域名);<br>value:正式名字的FQDN(完全格式域名);</p>
+</li>
+<li><p>MX:记录　Mail exchanger，邮件交换器，用于定位该区域中的邮件服务器<br>name:当前区域的名字;<br>value:当前区域的某邮件服务器(smtp服务器)的主机名;<br>注意：一个区域内，MX记录可有多个;但每个记录的value之前应该有一个数字(0-99)，表示此服务器的优先级;数字越小优先级越高;</p>
+</li>
+</ul>
 <p>在研究DNS解析和排除DNS解析类故障问题的时候一个强大的工具就是dig。和他对应的有个比较传统的命令nslookup,不过dig作为更新的命令，其强大而简洁可定制的输出也使得运维其开发人员使用。DNS查询命令dig，这里已查询百度的域名为例。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">ali-6c96cfd9fc63:Hexo liuxiao$ dig www.baidu.com</span><br><span class="line"></span><br><span class="line">; &lt;&lt;&gt;&gt; DiG 9.10.6 &lt;&lt;&gt;&gt; www.baidu.com</span><br><span class="line">;; global options: +cmd</span><br><span class="line">;; Got answer:</span><br><span class="line">;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 33031</span><br><span class="line">;; flags: qr rd ra; QUERY: 1, ANSWER: 3, AUTHORITY: 5, ADDITIONAL: 6</span><br><span class="line"></span><br><span class="line">;; OPT PSEUDOSECTION:</span><br><span class="line">; EDNS: version: 0, flags:; udp: 4096</span><br><span class="line">;; QUESTION SECTION:</span><br><span class="line">;www.baidu.com.			IN	A</span><br><span class="line"></span><br><span class="line">;; ANSWER SECTION:</span><br><span class="line">www.baidu.com.		30	IN	CNAME	www.a.shifen.com.</span><br><span class="line">www.a.shifen.com.	30	IN	A	115.239.211.112</span><br><span class="line">www.a.shifen.com.	30	IN	A	115.239.210.27</span><br><span class="line"></span><br><span class="line">;; AUTHORITY SECTION:</span><br><span class="line">a.shifen.com.		1174	IN	NS	ns4.a.shifen.com.</span><br><span class="line">a.shifen.com.		1174	IN	NS	ns5.a.shifen.com.</span><br><span class="line">a.shifen.com.		1174	IN	NS	ns1.a.shifen.com.</span><br><span class="line">a.shifen.com.		1174	IN	NS	ns2.a.shifen.com.</span><br><span class="line">a.shifen.com.		1174	IN	NS	ns3.a.shifen.com.</span><br><span class="line"></span><br><span class="line">;; ADDITIONAL SECTION:</span><br><span class="line">ns1.a.shifen.com.	575	IN	A	61.135.165.224</span><br><span class="line">ns2.a.shifen.com.	574	IN	A	220.181.57.142</span><br><span class="line">ns3.a.shifen.com.	574	IN	A	112.80.255.253</span><br><span class="line">ns4.a.shifen.com.	574	IN	A	14.215.177.229</span><br><span class="line">ns5.a.shifen.com.	581	IN	A	180.76.76.95</span><br><span class="line"></span><br><span class="line">;; Query time: 8 msec</span><br><span class="line">;; SERVER: 192.168.31.1<span class="comment">#53(192.168.31.1)</span></span><br><span class="line">;; WHEN: Sat Nov 24 17:48:36 CST 2018</span><br><span class="line">;; MSG SIZE  rcvd: 271</span><br></pre></td></tr></table></figure>
 <h3 id="域名服务器"><a href="#域名服务器" class="headerlink" title="域名服务器"></a>域名服务器</h3><p>上面已经介绍，域名解析的过程其实就是FQDN和IP之间的转换，而这些转换关系就是一个数据库，由于互联网的蓬勃发展，需要使用一些专门的服务器来存储这些数据，当用户来访问请求解析时，可以查找自身的数据库，并把相关的信息反馈。</p>
