@@ -18,7 +18,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://liuxiaocsu.github.io/2016/05/21/DNS学习笔记/markdown-img-paste-20181124182650657.png">
 <meta property="og:image" content="https://liuxiaocsu.github.io/2016/05/21/DNS学习笔记/markdown-img-paste-2018112418454685.png">
-<meta property="og:updated_time" content="2018-11-24T13:31:53.872Z">
+<meta property="og:updated_time" content="2018-11-24T13:34:45.011Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DNS学习笔记">
 <meta name="twitter:description" content="访问一台机器要靠IP地址和MAC地址，其中，MAC地址可以通过ARP协议得到，所以这对用户是透明的，但是IP地址就不行，无论如何用户都需要用一个指定的IP来访问一台计算机，而IP地址又非常不好记，于是就出现了DNS系统。DNS（Domain Name System，域名系统），万维网上作为域名和IP地址相互映射的一个分布式数据库，能够使用户更方便的访问互联网，而不用去记住能够被机器直接读取的IP地">
@@ -205,7 +205,7 @@
 </ul>
 <a id="more"></a>
 <h3 id="域名的结构"><a href="#域名的结构" class="headerlink" title="域名的结构"></a>域名的结构</h3><p>DNS 是一个分层级的分散式名称对应系统，有点像电脑的目录树结构：在最顶端的是一个”root”，然后其下分为好几个基本类别名称，如com、org、edu 等；再下面是组织名称，如ibm﹑microsoft﹑intel 等；继而是主机名称，如www﹑mail﹑ftp 等。因为当初 internet 是从美国发展起的，所以当时并没有国域名称，但随着后来 internet 的蓬勃发展，DNS 也加进了诸如 tw﹑hk﹑cn 等国域名称。所以一个完整的 dns 名称就好象是这样的: <a href="http://www.csu.edu.cn" target="_blank" rel="noopener">www.csu.edu.cn</a> ,而整个名称对应的就是一个(或多个) IP 位址了。 </p>
-<h3 id="域名解析的过程"><a href="#域名解析的过程" class="headerlink" title="域名解析的过程"></a>域名解析的过程</h3><p>我们的电脑里都有网卡，上面除了有ip地址、掩码，还有下面的DNS服务器/域名服务器。域名服务器则提供域名查询的功能，即域名服务器上存储着域名对应的ip地址。<br>当我们在浏览器输入<a href="http://www.csu.edu.cn/" target="_blank" rel="noopener">http://www.csu.edu.cn/</a> 敲回车，这是电脑会进行以下动作：</p>
+<h3 id="域名解析的过程"><a href="#域名解析的过程" class="headerlink" title="域名解析的过程"></a>域名解析的过程</h3><p>我们的电脑里都有网卡，上面除了有ip地址、掩码，还有下面的DNS服务器/域名服务器。域名服务器则提供域名查询的功能，即域名服务器上存储着域名对应的ip地址。<br>当我们在浏览器输入<a href="http://www.csu.edu.cn/" target="_blank" rel="noopener">http://www.csu.edu.cn/</a> 敲回车，这是电脑会进行以下动作:</p>
 <ul>
 <li>首先根据网址提取出域名，即 <a href="http://www.csu.edu.cn" target="_blank" rel="noopener">www.csu.edu.cn</a></li>
 <li>如果你在系统中配置了Host文件，那么电脑会先查询hosts文件，看”<a href="http://www.csu.edu.cn" target="_blank" rel="noopener">www.csu.edu.cn</a> “ 是否在Hosts文件中已经有了对应的记录，如果有就直接去该记录中的ip地址，域名解析的过程就结束了。如果Hosts文件中没有这个域名的记录，此时电脑会根据你设置的域名服务器去解析域名。</li>
@@ -265,7 +265,7 @@
 <li>如此反复，向三级、四级域名服务器查询也是按照这样的过程，直到返回最终的IP地址。</li>
 </ol>
 <h3 id="缓存的生命周期"><a href="#缓存的生命周期" class="headerlink" title="缓存的生命周期"></a>缓存的生命周期</h3><p>既然这里说到了缓存，那就有生命周期。互联网上的域名信息是有可能发生变化的。比如某个域名被注销了，或者某个域名对应的IP地址修改了。所以域名服务器上的缓存中的域名记录都是有生命周期的，可能是几分钟，也可能几小时。如果某条记录过期了，就会被删除，然后DNS服务器就会在下次查询时重新缓存对应的域名记录。</p>
-<h3 id="域名服务器的资源记录-Resource-Record"><a href="#域名服务器的资源记录-Resource-Record" class="headerlink" title="域名服务器的资源记录(Resource Record)"></a>域名服务器的资源记录(Resource Record)</h3><p>资源记录的语法格式：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">name [TTL] INrr_type value</span><br></pre></td></tr></table></figure></p>
+<h3 id="域名服务器的资源记录-Resource-Record"><a href="#域名服务器的资源记录-Resource-Record" class="headerlink" title="域名服务器的资源记录(Resource Record)"></a>域名服务器的资源记录(Resource Record)</h3><h4 id="资源记录的语法格式："><a href="#资源记录的语法格式：" class="headerlink" title="资源记录的语法格式："></a>资源记录的语法格式：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">name [TTL] INrr_type value</span><br></pre></td></tr></table></figure>
 <p>注意:</p>
 <ol>
 <li>TTL可从全局继承</li>
@@ -273,8 +273,7 @@
 <li>同一个名字可以通过多条记录定义多个不同的值；此时DNS服务器会以轮询方式响应</li>
 <li>同一个值也可能有多个不同的定义名字；通过多个不同的名字指向同一个值进行定义；此仅表示通过多个不同的名字可以找到同一个主机</li>
 </ol>
-<p>资源记录类型：A, AAAA, PTR, SOA, NS, CNAME, MX。</p>
-<ul>
+<h4 id="资源记录类型：A-AAAA-PTR-SOA-NS-CNAME-MX。"><a href="#资源记录类型：A-AAAA-PTR-SOA-NS-CNAME-MX。" class="headerlink" title="资源记录类型：A, AAAA, PTR, SOA, NS, CNAME, MX。"></a>资源记录类型：A, AAAA, PTR, SOA, NS, CNAME, MX。</h4><ul>
 <li><p>SOA记录：Start Of Authority，起始授权记录，此记录指定区域的起点;一个区域解析库有且仅能有一个SOA记录，而必须为解析库的第一条记录;它所包含的信息有区域名、区域管理员电子邮件地址，以及指示辅 DNS 服务器如何更新区域数据文件的设置等。<br>name:当前区域的名字，例如“sina.com.”;<br>value:有多部分组成</p>
 <ol>
 <li>当前区域的主DNS服务器的FQDN，也可以使用当前区域的名字。</li>
@@ -430,7 +429,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#域名的结构"><span class="toc-number">1.</span> <span class="toc-text">域名的结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#域名解析的过程"><span class="toc-number">2.</span> <span class="toc-text">域名解析的过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DNS的分类"><span class="toc-number">3.</span> <span class="toc-text">DNS的分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DNS查询术语"><span class="toc-number">4.</span> <span class="toc-text">DNS查询术语</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#域名服务器"><span class="toc-number">5.</span> <span class="toc-text">域名服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#域名的缓存"><span class="toc-number">6.</span> <span class="toc-text">域名的缓存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#缓存的生命周期"><span class="toc-number">7.</span> <span class="toc-text">缓存的生命周期</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#域名服务器的资源记录-Resource-Record"><span class="toc-number">8.</span> <span class="toc-text">域名服务器的资源记录(Resource Record)</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#域名的结构"><span class="toc-number">1.</span> <span class="toc-text">域名的结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#域名解析的过程"><span class="toc-number">2.</span> <span class="toc-text">域名解析的过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DNS的分类"><span class="toc-number">3.</span> <span class="toc-text">DNS的分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DNS查询术语"><span class="toc-number">4.</span> <span class="toc-text">DNS查询术语</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#域名服务器"><span class="toc-number">5.</span> <span class="toc-text">域名服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#域名的缓存"><span class="toc-number">6.</span> <span class="toc-text">域名的缓存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#缓存的生命周期"><span class="toc-number">7.</span> <span class="toc-text">缓存的生命周期</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#域名服务器的资源记录-Resource-Record"><span class="toc-number">8.</span> <span class="toc-text">域名服务器的资源记录(Resource Record)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#资源记录的语法格式："><span class="toc-number">8.1.</span> <span class="toc-text">资源记录的语法格式：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#资源记录类型：A-AAAA-PTR-SOA-NS-CNAME-MX。"><span class="toc-number">8.2.</span> <span class="toc-text">资源记录类型：A, AAAA, PTR, SOA, NS, CNAME, MX。</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -599,6 +598,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">一致性哈希</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
@@ -644,10 +647,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">IO</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">一致性哈希</a>
               </li>
              
               <li class="article-tag-list-item">
