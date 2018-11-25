@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
 <meta property="og:description" content="Java 位运算 表示方法： 　在Java语言中，二进制数使用补码表示，最高位为符号位，正数的符号位为0，负数为1。补码的表示需要满足如下要求。 　(1)正数的最高位为0，其余各位代表数值本身(二进制数)。 　(2)对于负数，通过对该数绝对值的补码按位取反，再对整个数加1。  位运算符 　位运算表达式由操作数和位运算符组成，实现对整数类型的二进制数进行位运算。位运算符可以分为逻辑运算符(包括~、＆">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:updated_time" content="2018-11-25T05:21:29.888Z">
+<meta property="og:updated_time" content="2018-11-25T05:24:27.812Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="位运算">
 <meta name="twitter:description" content="Java 位运算 表示方法： 　在Java语言中，二进制数使用补码表示，最高位为符号位，正数的符号位为0，负数为1。补码的表示需要满足如下要求。 　(1)正数的最高位为0，其余各位代表数值本身(二进制数)。 　(2)对于负数，通过对该数绝对值的补码按位取反，再对整个数加1。  位运算符 　位运算表达式由操作数和位运算符组成，实现对整数类型的二进制数进行位运算。位运算符可以分为逻辑运算符(包括~、＆">
@@ -255,9 +255,8 @@
 <li><p>不用temp交换两个整数</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span> x , <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">    x ^= y;</span><br><span class="line">    y ^= x;</span><br><span class="line">    x ^= y;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
-</ol>
-<p>18.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">if</span> (x == a)</span><br><span class="line">      x= b;</span><br><span class="line">　　 <span class="keyword">else</span></span><br><span class="line">      x= a;</span><br><span class="line"></span><br><span class="line">等价于 x= a ^ b ^ x;</span><br></pre></td></tr></table></figure></p>
-<ol start="19">
+<li><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">if</span> (x == a)</span><br><span class="line">      x= b;</span><br><span class="line">　　 <span class="keyword">else</span></span><br><span class="line">      x= a;</span><br><span class="line"></span><br><span class="line">等价于 x= a ^ b ^ x;</span><br></pre></td></tr></table></figure>
+</li>
 <li><p>x 的 相反数</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(~x+1)</span><br></pre></td></tr></table></figure>
 </li>
