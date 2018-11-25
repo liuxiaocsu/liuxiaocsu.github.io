@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
 <meta property="og:description" content="Java序列化是指把Java对象保存为二进制字节码的过程，Java反序列化是指把二进制字节码重新转换成Java对象的过程。那么为什么需要序列化呢？第一种情况是：一般情况下Java对象的声明周期都比Java虚拟机的要短，实际应用中我们希望在JVM停止运行之后能够持久化指定的对象，这时候就需要把对象进行序列化之后保存。第二种情况是：需要把Java对象通过网络进行传输的时候。因为数据只能够以二进制的形式">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:updated_time" content="2018-11-25T08:47:04.163Z">
+<meta property="og:updated_time" content="2018-11-25T08:51:37.479Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="序列化">
 <meta name="twitter:description" content="Java序列化是指把Java对象保存为二进制字节码的过程，Java反序列化是指把二进制字节码重新转换成Java对象的过程。那么为什么需要序列化呢？第一种情况是：一般情况下Java对象的声明周期都比Java虚拟机的要短，实际应用中我们希望在JVM停止运行之后能够持久化指定的对象，这时候就需要把对象进行序列化之后保存。第二种情况是：需要把Java对象通过网络进行传输的时候。因为数据只能够以二进制的形式">
@@ -232,7 +232,7 @@
 <p>也就可以解释，为什么序列化可以破坏单例了？因为序列化会通过反射调用无参数的构造方法创建一个新的对象。</p>
 <p>为什么只要在Singleton类中定义readResolve就可防止反序列化破坏单例呢？<br>继续看readOrdinaryObject方法的代码片段，其中有个desc.hasReadResolveMethod()方法和desc.invokeReadResolve(obj)方法。<br>hasReadResolveMethod:如果实现了serializable 或者 externalizable接口的类中包含readResolve则返回true</p>
 <p>invokeReadResolve:通过反射的方式调用要被反序列化的类的readResolve方法。</p>
-<p>所以，原理也就清楚了，主要在Singleton中定义readResolve方法，并在该方法中指定要返回的对象的生成策略，就可以方式单例被破坏。</p>
+<p>所以，原理也就清楚了，主要在Singleton中定义readResolve方法，并在该方法中指定要返回的对象的生成策略，就可以防止单例被破坏。</p>
 
   
 
@@ -525,15 +525,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">me</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">一致性哈希</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -577,15 +577,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">动态代理</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">加密解密</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">LVS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">动态代理</a>
               </li>
              
               <li class="article-tag-list-item">
