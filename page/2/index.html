@@ -461,209 +461,8 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-  
-    <h3 id="Java-位运算"><a href="#Java-位运算" class="headerlink" title="Java 位运算"></a>Java 位运算</h3><ol>
-<li><p>表示方法　<br>在Java语言中，二进制数使用补码表示，最高位为符号位，正数的符号位为0，负数为1。补码的表示需要满足如下要求。 　<br>(1)正数的最高位为0，其余各位代表数值本身(二进制数)。 　<br>(2)对于负数，通过对该数绝对值的补码按位取反，再对整个数加1。</p>
-</li>
-<li><p>位运算符<br>位运算表达式由操作数和位运算符组成，实现对整数类型的二进制数进行位运算。位运算符可以分为逻辑运算符(包括~、＆、|和^)及移位运算符(包括&gt;&gt;、&lt;&lt;和&gt;&gt;&gt;)。<br>1)左移位运算符（&lt;&lt;）能将运算符左边的运算对象向左移动运算符右侧指定的位数（在低位补0）。<br>2)“有符号”右移位运算符（&gt;&gt;）则将运算符左边的运算对象向右移动运算符右侧指定的位数。 “有符号”右移位运算符使用了“符号扩展”：若值为正，则在高位插入0；若值为负，则在高位插入1。<br>3)Java也添加了一种“无符号”右移位运算符（&gt;&gt;&gt;），它使用了“零扩展”：无论正负，都在高位插入0。这一运算符是C或C++没有的。<br>4)若对char，byte或者short进行移位处理，那么在移位进行之前，它们会自动转换成一个int。 只有右侧的5个低位才会用到。这样可防止我们在一个int数里移动不切实际的位数。 若对一个long值进行处理，最后得到的结果也是long。此时只会用到右侧的6个低位，防止移动超过long值里现成的位数。 但在进行“无符号”右移位时，也可能遇到一个问题。若对byte或short值进行右移位运算，得到的可能不是正确的结果（Java 1.0和Java 1.1特别突出）。 它们会自动转换成int类型，并进行右移位。但“零扩展”不会发生，所以在那些情况下会得到-1的结果。</p>
-</li>
-</ol>
-<p>在进行位运算时，需要注意以下几点。 　　<br>(1)&gt;&gt;&gt;和&gt;&gt;的区别是：在执行运算时，&gt;&gt;&gt;运算符的操作数高位补0，而&gt;&gt;运算符的操作数高位移入原来高位的值。 　　<br>(2)右移一位相当于除以2，左移一位(在不溢出的情况下)相当于乘以2；移位运算速度高于乘除运算。 　　<br>(3)若进行位逻辑运算的两个操作数的数据长度不相同，则返回值应该是数据长度较长的数据类型。 　　<br>(4)按位异或可以不使用临时变量完成两个值的交换，也可以使某个整型数的特定位的值翻转。 　　<br>(5)按位与运算可以用来屏蔽特定的位，也可以用来取某个数型数中某些特定的位。 　　<br>(6)按位或运算可以用来对某个整型数的特定位的值置l。</p>
-<p>3．位运算符的优先级<br>~的优先级最高，其次是&lt;&lt;、&gt;&gt;和&gt;&gt;&gt;，再次是＆，然后是^，优先级最低的是|。</p>
-<h3 id="位运算的应用"><a href="#位运算的应用" class="headerlink" title="位运算的应用"></a>位运算的应用</h3><ol>
-<li><p>判断int型变量a是奇数还是偶数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a&amp;1 = 0 偶数</span><br><span class="line">a&amp;1 = 1 奇数</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>求平均值，比如有两个int类型变量x、y,首先要求x+y的和，再除以2，但是有可能x+y的结果会超过int的最大表示范围，所以位运算就派上用场啦。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">      (x&amp;y)+((x^y)&gt;&gt;1);</span><br><span class="line"></span><br><span class="line">知识点：&gt;&gt;n 相当于除于2^n ，&lt;&lt;n 相当于乘于2^n 。</span><br><span class="line">x,y对应位均为1，相加后再除以2还是原来的数，如两个00001000相加后除以2仍得00001000,那么我们把x与y分别分成两个部分来看,两者相同的位分别拿出来 则 :</span><br><span class="line">x = (111111111111000)2 =  (111111111111000)2 +  (000000000000000)2</span><br><span class="line">y =  (111111111111010)2 =  (111111111111000)2 +  (000000000000010)2</span><br><span class="line">相同部分我们叫做x1,y1,不同部分我们叫做x2,y2.那么现在(x+y)/2 =(x1+y1)/2 +(x2 + y2)/2 ,因为x1 == y1 ,所以(x1+y1)/2 ==x1 ==y1,相同部分我们用与运算求出来 x1 = x&amp;y ,不同部分的和我们用^求出来,然后除于2就是我们想要的结果了。</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>对于一个大于0的整数，判断它是不是2的几次方</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">((x&amp;(x-1))==0)&amp;&amp;(x!=0)；</span><br><span class="line">/*如果是2的幂，n一定是100... n-1就是1111....</span><br><span class="line">   所以做与运算结果为0*/</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>比如有两个int类型变量x、y,要求两者数字交换，位运算的实现方法：性能绝对高效</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x ^= y;</span><br><span class="line">y ^= x;</span><br><span class="line">x ^= y;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>求绝对值</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">int</span> <span class="title">abs</span><span class="params">( <span class="keyword">int</span> x )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> y ;</span><br><span class="line">  y = x &gt;&gt; <span class="number">31</span> ;</span><br><span class="line"> <span class="keyword">return</span> (x^y)-y ;        <span class="comment">//or: (x+y)^y</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>取模运算，采用位运算实现</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a % (2^n) 等价于 a &amp; (2^n - 1) ;或者 m % n 等价于 m &amp; (n-1)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>乘法运算 采用位运算实现</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a * (2^n) 等价于 a &lt;&lt; n</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>除法运算转化成位运算</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a / (2^n) 等价于 a&gt;&gt; n</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>求相反数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(~x+1)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>a % 2 等价于</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a &amp; 1</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>取int型变量a的第k位 (k=0,1,2……sizeof(int))</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a&gt;&gt;k&amp;1   (先右移再与1)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>将int型变量a的第k位清0</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a&amp;~(1&lt;&lt;k)    (10000 取反后为00001 )</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>将int型变量a的第k位置1</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a|(1&lt;&lt;k)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>int型变量循环左移k次</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a&lt;&lt;k|a&gt;&gt;16-k   (设sizeof(int)=16)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>int型变量a循环右移k次</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a&gt;&gt;k|a&lt;&lt;16-k   (设sizeof(int)=16)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>对于一个数 x &gt;= 0，判断是不是2的幂。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">isPower2</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> ((x&amp;(x-<span class="number">1</span>))==<span class="number">0</span>) &amp;&amp; (x!=<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>不用temp交换两个整数</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span> x , <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">    x ^= y;</span><br><span class="line">    y ^= x;</span><br><span class="line">    x ^= y;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>18.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">if</span> (x == a)</span><br><span class="line">      x= b;</span><br><span class="line">　　 <span class="keyword">else</span></span><br><span class="line">      x= a;</span><br><span class="line"></span><br><span class="line">等价于 x= a ^ b ^ x;</span><br></pre></td></tr></table></figure></p>
-<ol start="19">
-<li><p>x 的 相反数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(~x+1)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>m乘以2的n次方</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m &lt;&lt; n</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>m除以以2的n次方</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m &gt;&gt; n</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>求整数k从x位（高）到y位（低）间共有多少个1</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">findChessNum</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = y; i &lt;= x; i++) &#123;</span><br><span class="line">    result += ((k &gt;&gt; (i - <span class="number">1</span>)) &amp; <span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>取绝对值</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">abs</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">      <span class="keyword">return</span> (n ^ (n &gt;&gt; <span class="number">31</span>)) - (n &gt;&gt; <span class="number">31</span>);</span><br><span class="line">  &#125;</span><br><span class="line"><span class="comment">/* n&gt;&gt;31 取得n的符号，若n为正数，n&gt;&gt;31等于0，若n为负数，n&gt;&gt;31等于-1</span></span><br><span class="line"><span class="comment">若n为正数 n^0=0,数不变，若n为负数有n^-1 需要计算n和-1的补码，然后进行异或运算， 结果n变号并且为n的绝对值减1，再减去-1就是绝对值 */</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><table>
-<thead>
-<tr>
-<th>功能</th>
-<th>示例</th>
-<th>位运算</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>去掉最后一位</td>
-<td>(101101-&gt;10110)</td>
-<td>x &gt;&gt; 1</td>
-</tr>
-<tr>
-<td>在最后加一个0</td>
-<td>(101101-&gt;1011010)</td>
-<td>x &lt; &lt; 1</td>
-</tr>
-<tr>
-<td>在最后加一个1</td>
-<td>(101101-&gt;1011011)</td>
-<td>x &lt; &lt; 1+1</td>
-</tr>
-<tr>
-<td>把最后一位变成1</td>
-<td>(101100-&gt;101101)</td>
-<td>“x</td>
-<td>1”</td>
-</tr>
-<tr>
-<td>把最后一位变成0</td>
-<td>(101101-&gt;101100)</td>
-<td>“x</td>
-<td>1-1”</td>
-</tr>
-<tr>
-<td>最后一位取反</td>
-<td>(101101-&gt;101100)</td>
-<td>x ^ 1</td>
-</tr>
-<tr>
-<td>把右数第k位变成1</td>
-<td>(101001-&gt;101101,k=3)</td>
-<td>x</td>
-<td>(1 &lt; &lt; (k-1))</td>
-</tr>
-<tr>
-<td>把右数第k位变成0</td>
-<td>(101101-&gt;101001,k=3)</td>
-<td>x &amp; ~ (1 &lt; &lt; (k-1))</td>
-</tr>
-<tr>
-<td>右数第k位取反</td>
-<td>(101001-&gt;101101,k=3)</td>
-<td>x ^ (1 &lt; &lt; (k-1))</td>
-</tr>
-<tr>
-<td>取末三位</td>
-<td>(1101101-&gt;101)</td>
-<td>x &amp; 7</td>
-</tr>
-<tr>
-<td>取末k位</td>
-<td>(1101101-&gt;1101,k=5)</td>
-<td>x &amp; ((1 &lt; &lt; k)-1)</td>
-</tr>
-<tr>
-<td>取右数第k位</td>
-<td>(1101101-&gt;1,k=4)</td>
-<td>x &gt;&gt; (k-1) &amp; 1</td>
-</tr>
-<tr>
-<td>把末k位变成1</td>
-<td>(101001-&gt;101111,k=4)</td>
-<td>x</td>
-<td>(1 &lt; &lt; k-1)</td>
-</tr>
-<tr>
-<td>末k位取反</td>
-<td>(101001-&gt;100110,k=4)</td>
-<td>x ^ (1 &lt; &lt; k-1)</td>
-</tr>
-<tr>
-<td>把右边连续的1变成0</td>
-<td>(100101111-&gt;100100000)</td>
-<td>x &amp; (x+1)</td>
-</tr>
-<tr>
-<td>把右起第一个0变成1</td>
-<td>(100101111-&gt;100111111)</td>
-<td>x</td>
-<td>(x+1)</td>
-</tr>
-<tr>
-<td>把右边连续的0变成1</td>
-<td>(11011000-&gt;11011111)</td>
-<td>x</td>
-<td>(x-1)</td>
-</tr>
-<tr>
-<td>取右边连续的1</td>
-<td>(100101111-&gt;1111)</td>
-<td>(x ^ (x+1)) &gt;&gt; 1</td>
-</tr>
-<tr>
-<td>去掉右起第一个1的左边</td>
-<td>(100101000-&gt;1000)</td>
-<td>x &amp; (x ^ (x-1))</td>
-</tr>
-<tr>
-<td>判断奇数</td>
-<td></td>
-<td>(x&amp;1)==1</td>
-</tr>
-<tr>
-<td>判断偶数</td>
-<td></td>
-<td>(x&amp;1)==0</td>
-</tr>
-</tbody>
-</table>
-
+     <h3 id="Java-位运算"><a href="#Java-位运算" class="headerlink" title="Java 位运算"></a>Java 位运算</h3><ol>
+<li><p>表示方法　<br>在Java语言中，二进制数使用补码表示，最高位为符号位，正数的符号位为0，负数为1。补码的表示需要满足如下要求。 　<br>(1)正数的最高位为0，其余各位代表数值本身(二进制数)。 　<br>(2)对于负数，通过对该数绝对值的补码按位取反，再对整个数加1。</p></li></ol>
   
 
     </div>
@@ -1241,11 +1040,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">LVS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">LVS</a>
+                <a href="javascript:void(0)" class="js-tag color1">一致性哈希</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1294,10 +1097,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">IO</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">一致性哈希</a>
               </li>
              
               <li class="article-tag-list-item">

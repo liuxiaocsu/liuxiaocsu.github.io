@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="https://liuxiaocsu.github.io">
   <title>位运算 | Byte_Liu&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Java 位运算 表示方法　在Java语言中，二进制数使用补码表示，最高位为符号位，正数的符号位为0，负数为1。补码的表示需要满足如下要求。 　(1)正数的最高位为0，其余各位代表数值本身(二进制数)。 　(2)对于负数，通过对该数绝对值的补码按位取反，再对整个数加1。  位运算符位运算表达式由操作数和位运算符组成，实现对整数类型的二进制数进行位运算。位运算符可以分为逻辑运算符(包括~、＆、|和^">
+  <meta name="description" content="Java 位运算 表示方法　在Java语言中，二进制数使用补码表示，最高位为符号位，正数的符号位为0，负数为1。补码的表示需要满足如下要求。 　(1)正数的最高位为0，其余各位代表数值本身(二进制数)。 　(2)对于负数，通过对该数绝对值的补码按位取反，再对整个数加1。">
 <meta name="keywords" content="Java基础">
 <meta property="og:type" content="article">
 <meta property="og:title" content="位运算">
 <meta property="og:url" content="https://liuxiaocsu.github.io/2016/08/03/位运算/index.html">
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
-<meta property="og:description" content="Java 位运算 表示方法　在Java语言中，二进制数使用补码表示，最高位为符号位，正数的符号位为0，负数为1。补码的表示需要满足如下要求。 　(1)正数的最高位为0，其余各位代表数值本身(二进制数)。 　(2)对于负数，通过对该数绝对值的补码按位取反，再对整个数加1。  位运算符位运算表达式由操作数和位运算符组成，实现对整数类型的二进制数进行位运算。位运算符可以分为逻辑运算符(包括~、＆、|和^">
+<meta property="og:description" content="Java 位运算 表示方法　在Java语言中，二进制数使用补码表示，最高位为符号位，正数的符号位为0，负数为1。补码的表示需要满足如下要求。 　(1)正数的最高位为0，其余各位代表数值本身(二进制数)。 　(2)对于负数，通过对该数绝对值的补码按位取反，再对整个数加1。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:updated_time" content="2018-11-25T05:28:46.429Z">
+<meta property="og:updated_time" content="2018-11-25T05:36:25.757Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="位运算">
-<meta name="twitter:description" content="Java 位运算 表示方法　在Java语言中，二进制数使用补码表示，最高位为符号位，正数的符号位为0，负数为1。补码的表示需要满足如下要求。 　(1)正数的最高位为0，其余各位代表数值本身(二进制数)。 　(2)对于负数，通过对该数绝对值的补码按位取反，再对整个数加1。  位运算符位运算表达式由操作数和位运算符组成，实现对整数类型的二进制数进行位运算。位运算符可以分为逻辑运算符(包括~、＆、|和^">
+<meta name="twitter:description" content="Java 位运算 表示方法　在Java语言中，二进制数使用补码表示，最高位为符号位，正数的符号位为0，负数为1。补码的表示需要满足如下要求。 　(1)正数的最高位为0，其余各位代表数值本身(二进制数)。 　(2)对于负数，通过对该数绝对值的补码按位取反，再对整个数加1。">
   
     <link rel="alternative" href="/atom.xml" title="Byte_Liu&#39;s Blog" type="application/atom+xml">
   
@@ -197,6 +197,7 @@
   
     <h3 id="Java-位运算"><a href="#Java-位运算" class="headerlink" title="Java 位运算"></a>Java 位运算</h3><ol>
 <li><p>表示方法　<br>在Java语言中，二进制数使用补码表示，最高位为符号位，正数的符号位为0，负数为1。补码的表示需要满足如下要求。 　<br>(1)正数的最高位为0，其余各位代表数值本身(二进制数)。 　<br>(2)对于负数，通过对该数绝对值的补码按位取反，再对整个数加1。</p>
+<a id="more"></a>
 </li>
 <li><p>位运算符<br>位运算表达式由操作数和位运算符组成，实现对整数类型的二进制数进行位运算。位运算符可以分为逻辑运算符(包括~、＆、|和^)及移位运算符(包括&gt;&gt;、&lt;&lt;和&gt;&gt;&gt;)。<br>1)左移位运算符（&lt;&lt;）能将运算符左边的运算对象向左移动运算符右侧指定的位数（在低位补0）。<br>2)“有符号”右移位运算符（&gt;&gt;）则将运算符左边的运算对象向右移动运算符右侧指定的位数。 “有符号”右移位运算符使用了“符号扩展”：若值为正，则在高位插入0；若值为负，则在高位插入1。<br>3)Java也添加了一种“无符号”右移位运算符（&gt;&gt;&gt;），它使用了“零扩展”：无论正负，都在高位插入0。这一运算符是C或C++没有的。<br>4)若对char，byte或者short进行移位处理，那么在移位进行之前，它们会自动转换成一个int。 只有右侧的5个低位才会用到。这样可防止我们在一个int数里移动不切实际的位数。 若对一个long值进行处理，最后得到的结果也是long。此时只会用到右侧的6个低位，防止移动超过long值里现成的位数。 但在进行“无符号”右移位时，也可能遇到一个问题。若对byte或short值进行右移位运算，得到的可能不是正确的结果（Java 1.0和Java 1.1特别突出）。 它们会自动转换成int类型，并进行右移位。但“零扩展”不会发生，所以在那些情况下会得到-1的结果。</p>
 </li>
@@ -258,7 +259,7 @@
 </ol>
 <p>18.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">if</span> (x == a)</span><br><span class="line">      x= b;</span><br><span class="line">　　 <span class="keyword">else</span></span><br><span class="line">      x= a;</span><br><span class="line"></span><br><span class="line">等价于 x= a ^ b ^ x;</span><br></pre></td></tr></table></figure></p>
 <ol start="19">
-<li><p>x 的 相反数</p>
+<li><p>x的相反数</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(~x+1)</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>m乘以2的n次方</p>
@@ -301,14 +302,12 @@
 <tr>
 <td>把最后一位变成1</td>
 <td>(101100-&gt;101101)</td>
-<td>“x</td>
-<td>1”</td>
+<td>x &#124; 1</td>
 </tr>
 <tr>
 <td>把最后一位变成0</td>
 <td>(101101-&gt;101100)</td>
-<td>“x</td>
-<td>1-1”</td>
+<td>x &#124; 1-1</td>
 </tr>
 <tr>
 <td>最后一位取反</td>
@@ -318,8 +317,7 @@
 <tr>
 <td>把右数第k位变成1</td>
 <td>(101001-&gt;101101,k=3)</td>
-<td>x</td>
-<td>(1 &lt; &lt; (k-1))</td>
+<td>x &#124; (1 &lt; &lt; (k-1))</td>
 </tr>
 <tr>
 <td>把右数第k位变成0</td>
@@ -349,8 +347,7 @@
 <tr>
 <td>把末k位变成1</td>
 <td>(101001-&gt;101111,k=4)</td>
-<td>x</td>
-<td>(1 &lt; &lt; k-1)</td>
+<td>x &#124; (1 &lt; &lt; k-1)</td>
 </tr>
 <tr>
 <td>末k位取反</td>
@@ -365,14 +362,12 @@
 <tr>
 <td>把右起第一个0变成1</td>
 <td>(100101111-&gt;100111111)</td>
-<td>x</td>
-<td>(x+1)</td>
+<td>x &#124; (x+1)</td>
 </tr>
 <tr>
 <td>把右边连续的0变成1</td>
 <td>(11011000-&gt;11011111)</td>
-<td>x</td>
-<td>(x-1)</td>
+<td>x &#124; (x-1)</td>
 </tr>
 <tr>
 <td>取右边连续的1</td>
@@ -684,11 +679,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">LVS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">LVS</a>
+                <a href="javascript:void(0)" class="js-tag color1">一致性哈希</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -737,10 +736,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">IO</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">一致性哈希</a>
               </li>
              
               <li class="article-tag-list-item">
