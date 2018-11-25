@@ -8,23 +8,23 @@
   <link rel="dns-prefetch" href="https://liuxiaocsu.github.io">
   <title>LVS简介及使用 | Byte_Liu&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="LVS自从1998年开始，发展到现在已经是一个比较成熟的技术项目了。可以利用LVS技术实现高可伸缩的、高可用的网络服务，例如WWW服务、Cache服务、DNS服务、FTP服务、MAIL服务、视频/音频点播服务等等，有许多比较著名网站和组织都在使用LVS架设的集群系统，例如：Linux的门户网站（www.linux.com）、向RealPlayer提供音频视频服务而闻名的Real公司（www.rea">
+  <meta name="description" content="LVS自从1998年开始，发展到现在已经是一个比较成熟的技术项目了。可以利用LVS技术实现高可伸缩的、高可用的网络服务，例如WWW服务、Cache服务、DNS服务、FTP服务、MAIL服务、视频/音频点播服务等等，有许多比较著名网站和组织都在使用LVS架设的集群系统，例如：Linux的门户网站、向RealPlayer提供音频视频服务而闻名的Real公司、全球最大的开源网站sourceforge等。">
 <meta name="keywords" content="LVS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LVS简介及使用">
 <meta property="og:url" content="https://liuxiaocsu.github.io/2016/09/23/LVS简介及使用/index.html">
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
-<meta property="og:description" content="LVS自从1998年开始，发展到现在已经是一个比较成熟的技术项目了。可以利用LVS技术实现高可伸缩的、高可用的网络服务，例如WWW服务、Cache服务、DNS服务、FTP服务、MAIL服务、视频/音频点播服务等等，有许多比较著名网站和组织都在使用LVS架设的集群系统，例如：Linux的门户网站（www.linux.com）、向RealPlayer提供音频视频服务而闻名的Real公司（www.rea">
+<meta property="og:description" content="LVS自从1998年开始，发展到现在已经是一个比较成熟的技术项目了。可以利用LVS技术实现高可伸缩的、高可用的网络服务，例如WWW服务、Cache服务、DNS服务、FTP服务、MAIL服务、视频/音频点播服务等等，有许多比较著名网站和组织都在使用LVS架设的集群系统，例如：Linux的门户网站、向RealPlayer提供音频视频服务而闻名的Real公司、全球最大的开源网站sourceforge等。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://liuxiaocsu.github.io/2016/09/23/LVS简介及使用/markdown-img-paste-20181125135701312.png">
 <meta property="og:image" content="https://liuxiaocsu.github.io/2016/09/23/LVS简介及使用/markdown-img-paste-2018112514160426.png">
 <meta property="og:image" content="https://liuxiaocsu.github.io/2016/09/23/LVS简介及使用/markdown-img-paste-20181125141703134.png">
 <meta property="og:image" content="https://liuxiaocsu.github.io/2016/09/23/LVS简介及使用/markdown-img-paste-20181125141510944.png">
 <meta property="og:image" content="https://liuxiaocsu.github.io/2016/09/23/LVS简介及使用/markdown-img-paste-2018112514263220.png">
-<meta property="og:updated_time" content="2018-11-25T06:31:25.068Z">
+<meta property="og:updated_time" content="2018-11-25T06:38:33.502Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LVS简介及使用">
-<meta name="twitter:description" content="LVS自从1998年开始，发展到现在已经是一个比较成熟的技术项目了。可以利用LVS技术实现高可伸缩的、高可用的网络服务，例如WWW服务、Cache服务、DNS服务、FTP服务、MAIL服务、视频/音频点播服务等等，有许多比较著名网站和组织都在使用LVS架设的集群系统，例如：Linux的门户网站（www.linux.com）、向RealPlayer提供音频视频服务而闻名的Real公司（www.rea">
+<meta name="twitter:description" content="LVS自从1998年开始，发展到现在已经是一个比较成熟的技术项目了。可以利用LVS技术实现高可伸缩的、高可用的网络服务，例如WWW服务、Cache服务、DNS服务、FTP服务、MAIL服务、视频/音频点播服务等等，有许多比较著名网站和组织都在使用LVS架设的集群系统，例如：Linux的门户网站、向RealPlayer提供音频视频服务而闻名的Real公司、全球最大的开源网站sourceforge等。">
 <meta name="twitter:image" content="https://liuxiaocsu.github.io/2016/09/23/LVS简介及使用/markdown-img-paste-20181125135701312.png">
   
     <link rel="alternative" href="/atom.xml" title="Byte_Liu&#39;s Blog" type="application/atom+xml">
@@ -201,7 +201,7 @@
       
 
   
-    <p>LVS自从1998年开始，发展到现在已经是一个比较成熟的技术项目了。可以利用LVS技术实现高可伸缩的、高可用的网络服务，例如WWW服务、Cache服务、DNS服务、FTP服务、MAIL服务、视频/音频点播服务等等，有许多比较著名网站和组织都在使用LVS架设的集群系统，例如：Linux的门户网站（<a href="http://www.linux.com）、向RealPlayer提供音频视频服务而闻名的Real公司（www.real.com）、全球最大的开源网站（sourceforge.net）等。" target="_blank" rel="noopener">www.linux.com）、向RealPlayer提供音频视频服务而闻名的Real公司（www.real.com）、全球最大的开源网站（sourceforge.net）等。</a><br><a id="more"></a></p>
+    <p>LVS自从1998年开始，发展到现在已经是一个比较成熟的技术项目了。可以利用LVS技术实现高可伸缩的、高可用的网络服务，例如WWW服务、Cache服务、DNS服务、FTP服务、MAIL服务、视频/音频点播服务等等，有许多比较著名网站和组织都在使用LVS架设的集群系统，例如：<a href="www.linux.com">Linux的门户网站</a>、向RealPlayer提供音频视频服务而闻名的<a href="www.real.com">Real公司</a>、全球最大的开源网站<a href="sourceforge.net">sourceforge</a>等。<br><a id="more"></a></p>
 <h3 id="一-LVS是什么？"><a href="#一-LVS是什么？" class="headerlink" title="一.LVS是什么？"></a>一.LVS是什么？</h3><p>LVS是Linux Virtual Server的简称，也就是Linux虚拟服务器, 是一个由章文嵩博士发起的自由软件项目，它的官方站点是 <a href="http://www.linuxvirtualserver.org" target="_blank" rel="noopener">www.linuxvirtualserver.org</a> 。现在LVS已经是 Linux标准内核的一部分，在Linux2.4内核以前，使用LVS时必须要重新编译内核以支持LVS功能模块，但是从Linux2.4内核以后，已经完全内置了LVS的各个功能模块，无需给内核打任何补丁，可以直接使用LVS提供的各种功能。<br>使用LVS技术要达到的目标是：通过LVS提供的负载均衡技术和Linux操作系统实现一个高性能、高可用的服务器群集，它具有良好可靠性、可扩展性和可操作性。从而以低廉的成本实现最优的服务性能。</p>
 <h3 id="二-LVS能干什么？"><a href="#二-LVS能干什么？" class="headerlink" title="二.LVS能干什么？"></a>二.LVS能干什么？</h3><p>LVS主要用于多服务器的负载均衡。它工作在网络层，可以实现高性能，高可用的服务器集群技术。它廉价，可把许多低性能的服务器组合在一起形成一个超级服务器。它易用，配置非常简单，且有多种负载均衡的方法。它稳定可靠，即使在集群的服务器中某台服务器无法正常工作，也不影响整体效果。另外可扩展性也非常好。</p>
 <h3 id="三-工作原理"><a href="#三-工作原理" class="headerlink" title="三.工作原理"></a>三.工作原理</h3><p><img src="/2016/09/23/LVS简介及使用/markdown-img-paste-20181125135701312.png" alt=""></p>
@@ -209,7 +209,10 @@
 <ol>
 <li>Load Balancer：这是LVS的核心部分，它好比我们网站MVC模型的Controller。它负责将客户的请求按照一定的算法分发到下一层不同的服务器进行处理，自己本身不做具体业务的处理。另外该层还可用监控下一层的状态，如果下一层的某台服务器不能正常工作了，它会自动把其剔除，恢复后又可用加上。该层由一台或者几台Director Server组成。</li>
 <li>Server Array：该层负责具体业务。可有WEB Server、mail Server、FTP Server、DNS Server等组成。注意，其实上层的Director Server也可以当Real server用的。</li>
-<li>Shared Storage：主要是提高上一层数据和为上一层保持数据一致。<h3 id="四-负载均衡机制"><a href="#四-负载均衡机制" class="headerlink" title="四.负载均衡机制"></a>四.负载均衡机制</h3>前面我们说了LVS是工作在网络层。相对于其它负载均衡的解决办法，比如DNS域名轮流解析、应用层负载的调度、客户端的调度等，它的效率是非常高的。LVS的通过控制IP来实现负载均衡。IPVS是其具体的实现模块。IPVS的主要作用：安装在Director Server上面，在Director Server虚拟一个对外访问的IP（VIP）。用户访问VIP，到达Director Server，Director Server根据一定的规则选择一个Real Server，处理完成后然后返回给客户端数据。这些步骤产生了一些具体的问题，比如如何选择具体的Real Server，Real Server如果返回给客户端数据等等。IPVS为此有三种机制：</li>
+<li>Shared Storage：主要是提高上一层数据和为上一层保持数据一致。</li>
+</ol>
+<h3 id="四-负载均衡机制"><a href="#四-负载均衡机制" class="headerlink" title="四.负载均衡机制"></a>四.负载均衡机制</h3><p>前面我们说了LVS是工作在网络层。相对于其它负载均衡的解决办法，比如DNS域名轮流解析、应用层负载的调度、客户端的调度等，它的效率是非常高的。LVS的通过控制IP来实现负载均衡。IPVS是其具体的实现模块。IPVS的主要作用：安装在Director Server上面，在Director Server虚拟一个对外访问的IP（VIP）。用户访问VIP，到达Director Server，Director Server根据一定的规则选择一个Real Server，处理完成后然后返回给客户端数据。这些步骤产生了一些具体的问题，比如如何选择具体的Real Server，Real Server如果返回给客户端数据等等。IPVS为此有三种机制:</p>
+<ol>
 <li>VS/NAT(Virtual Server via Network Address Translation)，即网络地址翻转技术实现虚拟服务器。当请求来到时，Diretor server上处理的程序将数据报文中的目标地址（即虚拟IP地址）改成具体的某台Real Server,端口也改成Real Server的端口，然后把报文发给Real Server。Real Server处理完数据后，需要返回给Diretor Server，然后Diretor server将数据包中的源地址和源端口改成VIP的地址和端口，最后把数据发送出去。由此可以看出，用户的请求和返回都要经过Diretor Server，如果数据过多，Diretor Server肯定会不堪重负。<br><img src="/2016/09/23/LVS简介及使用/markdown-img-paste-2018112514160426.png" alt=""></li>
 </ol>
 <p>特点和要求：</p>
