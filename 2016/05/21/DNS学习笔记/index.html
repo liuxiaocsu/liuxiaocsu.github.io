@@ -18,7 +18,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://liuxiaocsu.github.io/2016/05/21/DNS学习笔记/markdown-img-paste-20181124182650657.png">
 <meta property="og:image" content="https://liuxiaocsu.github.io/2016/05/21/DNS学习笔记/markdown-img-paste-2018112418454685.png">
-<meta property="og:updated_time" content="2018-11-24T13:34:45.011Z">
+<meta property="og:updated_time" content="2018-11-25T03:58:54.818Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DNS学习笔记">
 <meta name="twitter:description" content="访问一台机器要靠IP地址和MAC地址，其中，MAC地址可以通过ARP协议得到，所以这对用户是透明的，但是IP地址就不行，无论如何用户都需要用一个指定的IP来访问一台计算机，而IP地址又非常不好记，于是就出现了DNS系统。DNS（Domain Name System，域名系统），万维网上作为域名和IP地址相互映射的一个分布式数据库，能够使用户更方便的访问互联网，而不用去记住能够被机器直接读取的IP地">
@@ -204,7 +204,7 @@
 <li>当主（master）服务器和辅（slave）服务器之间通信，辅服务器要拿到主服务器的zone信息的时候。</li>
 </ul>
 <a id="more"></a>
-<h3 id="域名的结构"><a href="#域名的结构" class="headerlink" title="域名的结构"></a>域名的结构</h3><p>DNS 是一个分层级的分散式名称对应系统，有点像电脑的目录树结构：在最顶端的是一个”root”，然后其下分为好几个基本类别名称，如com、org、edu 等；再下面是组织名称，如ibm﹑microsoft﹑intel 等；继而是主机名称，如www﹑mail﹑ftp 等。因为当初 internet 是从美国发展起的，所以当时并没有国域名称，但随着后来 internet 的蓬勃发展，DNS 也加进了诸如 tw﹑hk﹑cn 等国域名称。所以一个完整的 dns 名称就好象是这样的: <a href="http://www.csu.edu.cn" target="_blank" rel="noopener">www.csu.edu.cn</a> ,而整个名称对应的就是一个(或多个) IP 位址了。 </p>
+<h3 id="域名的结构"><a href="#域名的结构" class="headerlink" title="域名的结构"></a>域名的结构</h3><p>DNS 是一个分层级的分散式名称对应系统，有点像电脑的目录树结构：在最顶端的是一个”root”，然后其下分为好几个基本类别名称，如com、org、edu 等；再下面是组织名称，如ibm﹑microsoft﹑intel 等；继而是主机名称，如www﹑mail﹑ftp 等。因为当初 internet 是从美国发展起的，所以当时并没有国域名称，但随着后来 internet 的蓬勃发展，DNS 也加进了诸如 tw﹑hk﹑cn 等国域名称。所以一个完整的 dns 名称就好象是这样的: <a href="http://www.csu.edu.cn" target="_blank" rel="noopener">www.csu.edu.cn</a> ,而整个名称对应的就是一个(或多个) IP 地址了。 </p>
 <h3 id="域名解析的过程"><a href="#域名解析的过程" class="headerlink" title="域名解析的过程"></a>域名解析的过程</h3><p>我们的电脑里都有网卡，上面除了有ip地址、掩码，还有下面的DNS服务器/域名服务器。域名服务器则提供域名查询的功能，即域名服务器上存储着域名对应的ip地址。<br>当我们在浏览器输入<a href="http://www.csu.edu.cn/" target="_blank" rel="noopener">http://www.csu.edu.cn/</a> 敲回车，这是电脑会进行以下动作:</p>
 <ul>
 <li>首先根据网址提取出域名，即 <a href="http://www.csu.edu.cn" target="_blank" rel="noopener">www.csu.edu.cn</a></li>
@@ -248,7 +248,7 @@
 </ol>
 <p>从上面DNS服务器的类型上可以看出，主DNS服务器承担着重要的工作，那究竟我们的主DNS服务器如何工作的呢?其实DNS服务器是通过由众多资源记录(Resource Record)这个区域解析库来完成解析，任何一台主DNS服务器都是如此，无论是windows平台上面使用的域控制器，还是linux平台的bind都是通过这些资源记录来完成解析过程。</p>
 <p>在研究DNS解析和排除DNS解析类故障问题的时候一个强大的工具就是dig。和他对应的有个比较传统的命令nslookup,不过dig作为更新的命令，其强大而简洁可定制的输出也使得运维其开发人员使用。DNS查询命令dig，这里以查询百度的域名为例。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">ali-6c96cfd9fc63:Hexo liuxiao$ dig www.baidu.com</span><br><span class="line"></span><br><span class="line">; &lt;&lt;&gt;&gt; DiG 9.10.6 &lt;&lt;&gt;&gt; www.baidu.com</span><br><span class="line">;; global options: +cmd</span><br><span class="line">;; Got answer:</span><br><span class="line">;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 33031</span><br><span class="line">;; flags: qr rd ra; QUERY: 1, ANSWER: 3, AUTHORITY: 5, ADDITIONAL: 6</span><br><span class="line"></span><br><span class="line">;; OPT PSEUDOSECTION:</span><br><span class="line">; EDNS: version: 0, flags:; udp: 4096</span><br><span class="line">;; QUESTION SECTION:</span><br><span class="line">;www.baidu.com.			IN	A</span><br><span class="line"></span><br><span class="line">;; ANSWER SECTION:</span><br><span class="line">www.baidu.com.		30	IN	CNAME	www.a.shifen.com.</span><br><span class="line">www.a.shifen.com.	30	IN	A	115.239.211.112</span><br><span class="line">www.a.shifen.com.	30	IN	A	115.239.210.27</span><br><span class="line"></span><br><span class="line">;; AUTHORITY SECTION:</span><br><span class="line">a.shifen.com.		1174	IN	NS	ns4.a.shifen.com.</span><br><span class="line">a.shifen.com.		1174	IN	NS	ns5.a.shifen.com.</span><br><span class="line">a.shifen.com.		1174	IN	NS	ns1.a.shifen.com.</span><br><span class="line">a.shifen.com.		1174	IN	NS	ns2.a.shifen.com.</span><br><span class="line">a.shifen.com.		1174	IN	NS	ns3.a.shifen.com.</span><br><span class="line"></span><br><span class="line">;; ADDITIONAL SECTION:</span><br><span class="line">ns1.a.shifen.com.	575	IN	A	61.135.165.224</span><br><span class="line">ns2.a.shifen.com.	574	IN	A	220.181.57.142</span><br><span class="line">ns3.a.shifen.com.	574	IN	A	112.80.255.253</span><br><span class="line">ns4.a.shifen.com.	574	IN	A	14.215.177.229</span><br><span class="line">ns5.a.shifen.com.	581	IN	A	180.76.76.95</span><br><span class="line"></span><br><span class="line">;; Query time: 8 msec</span><br><span class="line">;; SERVER: 192.168.31.1<span class="comment">#53(192.168.31.1)</span></span><br><span class="line">;; WHEN: Sat Nov 24 17:48:36 CST 2018</span><br><span class="line">;; MSG SIZE  rcvd: 271</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">ali-6c96cfd9fc63:Hexo liuxiao$ dig www.baidu.com</span><br><span class="line"></span><br><span class="line">; &lt;&lt;&gt;&gt; DiG 9.10.6 &lt;&lt;&gt;&gt; www.baidu.com</span><br><span class="line">;; global options: +cmd</span><br><span class="line">;; Got answer:</span><br><span class="line">;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 33031</span><br><span class="line">;; flags: qr rd ra; QUERY: 1, ANSWER: 3, AUTHORITY: 5, ADDITIONAL: 6</span><br><span class="line"></span><br><span class="line">;; OPT PSEUDOSECTION:</span><br><span class="line">; EDNS: version: 0, flags:; udp: 4096</span><br><span class="line">;; QUESTION SECTION:</span><br><span class="line">;www.baidu.com.			IN	A</span><br><span class="line"></span><br><span class="line">;; ANSWER SECTION:</span><br><span class="line">www.baidu.com.		30	IN	CNAME	www.a.shifen.com.</span><br><span class="line">www.a.shifen.com.	30	IN	A	115.239.211.112</span><br><span class="line">www.a.shifen.com.	30	IN	A	115.239.210.27</span><br><span class="line"></span><br><span class="line">;; AUTHORITY SECTION:</span><br><span class="line">a.shifen.com.		1174	IN	NS	ns4.a.shifen.com.</span><br><span class="line">a.shifen.com.		1174	IN	NS	ns5.a.shifen.com.</span><br><span class="line">a.shifen.com.		1174	IN	NS	ns1.a.shifen.com.</span><br><span class="line">a.shifen.com.		1174	IN	NS	ns2.a.shifen.com.</span><br><span class="line">a.shifen.com.		1174	IN	NS	ns3.a.shifen.com.</span><br><span class="line"></span><br><span class="line">;; ADDITIONAL SECTION:</span><br><span class="line">ns1.a.shifen.com.	575	IN	A	61.135.165.224</span><br><span class="line">ns2.a.shifen.com.	574	IN	A	220.181.57.142</span><br><span class="line">ns3.a.shifen.com.	574	IN	A	112.80.255.253</span><br><span class="line">ns4.a.shifen.com.	574	IN	A	14.215.177.229</span><br><span class="line">ns5.a.shifen.com.	581	IN	A	180.76.76.95</span><br><span class="line"></span><br><span class="line">;; Query time: 8 msec</span><br><span class="line">;; SERVER: 192.168.31.1<span class="comment">#53(192.168.31.1)</span></span><br><span class="line">;; WHEN: Sat May 21 17:48:36 CST 2016</span><br><span class="line">;; MSG SIZE  rcvd: 271</span><br></pre></td></tr></table></figure>
 <h3 id="域名服务器"><a href="#域名服务器" class="headerlink" title="域名服务器"></a>域名服务器</h3><p>上面已经介绍，域名解析的过程其实就是FQDN和IP之间的转换，而这些转换关系就是一个数据库，由于互联网的蓬勃发展，需要使用一些专门的服务器来存储这些数据，当用户来访问请求解析时，可以查找自身的数据库，并把相关的信息反馈。</p>
 <p>一个服务器所负责管辖(或有权限)的范围叫做区(zone)。各单位根据具体情况来划分自己管辖范围的区。但在一个区中的所有节点必须是能够连通的。每一个区设置相应的权限域名服务器，用来保存该区中的所有主机到域名IP地址的映射。总之，DNS服务器的管辖范围不是以“域”为单位，而是以“区”为单位。区是DNS服务器实际管辖的范围。区 &lt;= 域。</p>
 <ul>
@@ -586,11 +586,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">LVS</a>
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">me</a>
+                <a href="javascript:void(0)" class="js-tag color4">LVS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -598,11 +598,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">一致性哈希</a>
+                <a href="javascript:void(0)" class="js-tag color3">me</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -643,6 +639,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">IO</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">一致性哈希</a>
               </li>
              
               <li class="article-tag-list-item">
