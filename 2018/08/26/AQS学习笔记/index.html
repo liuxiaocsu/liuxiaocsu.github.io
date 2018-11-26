@@ -8,15 +8,20 @@
   <link rel="dns-prefetch" href="https://liuxiaocsu.github.io">
   <title>AQS学习笔记 | Byte_Liu&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="JUC">
+  <meta name="description" content="AbstractQueuedSynchronizer类是实现代码块的并发访问控制的核心。在java.util.concurrent.locks包中有很多Lock的实现类，常用的有ReentrantLock、ReentrantReadWriteLock，内部实现都依赖AQS(AbstractQueuedSynchronizer)，然而这些锁都没有直接来继承AQS,而是定义了一个Sync类去继承AQS">
+<meta name="keywords" content="JUC">
 <meta property="og:type" content="article">
 <meta property="og:title" content="AQS学习笔记">
 <meta property="og:url" content="https://liuxiaocsu.github.io/2018/08/26/AQS学习笔记/index.html">
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
+<meta property="og:description" content="AbstractQueuedSynchronizer类是实现代码块的并发访问控制的核心。在java.util.concurrent.locks包中有很多Lock的实现类，常用的有ReentrantLock、ReentrantReadWriteLock，内部实现都依赖AQS(AbstractQueuedSynchronizer)，然而这些锁都没有直接来继承AQS,而是定义了一个Sync类去继承AQS">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:updated_time" content="2018-11-23T09:01:08.428Z">
+<meta property="og:image" content="https://liuxiaocsu.github.io/2018/08/26/AQS学习笔记/markdown-img-paste-20181126145339965.png">
+<meta property="og:updated_time" content="2018-11-26T10:25:24.746Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AQS学习笔记">
+<meta name="twitter:description" content="AbstractQueuedSynchronizer类是实现代码块的并发访问控制的核心。在java.util.concurrent.locks包中有很多Lock的实现类，常用的有ReentrantLock、ReentrantReadWriteLock，内部实现都依赖AQS(AbstractQueuedSynchronizer)，然而这些锁都没有直接来继承AQS,而是定义了一个Sync类去继承AQS">
+<meta name="twitter:image" content="https://liuxiaocsu.github.io/2018/08/26/AQS学习笔记/markdown-img-paste-20181126145339965.png">
   
     <link rel="alternative" href="/atom.xml" title="Byte_Liu&#39;s Blog" type="application/atom+xml">
   
@@ -192,7 +197,55 @@
       
 
   
-    
+    <p>AbstractQueuedSynchronizer类是实现代码块的并发访问控制的核心。在java.util.concurrent.locks包中有很多Lock的实现类，常用的有ReentrantLock、ReentrantReadWriteLock，内部实现都依赖AQS(AbstractQueuedSynchronizer)，然而这些锁都没有直接来继承AQS,而是定义了一个Sync类去继承AQS。这样设计的原因是锁面向的是使用用户,而同步器面向的则是线程控制,那么在锁的实现中聚合同步器而不是直接继承AQS就可以很好的隔离二者所关注的事情。</p>
+<p>在同步组件的实现中，AQS是核心部分，同步组件的实现者通过使用AQS提供的模板方法实现同步组件语义，AQS则实现了对同步状态的管理，以及对阻塞线程进行排队，等待通知等等一些底层的实现处理。<br><a id="more"></a></p>
+<h3 id="同步队列"><a href="#同步队列" class="headerlink" title="同步队列"></a>同步队列</h3><p>当共享资源被某个线程占有，其他请求该资源的线程将会阻塞，从而进入同步队列。就数据结构而言，队列的实现方式无外乎两者，一是通过数组的形式，另外一种则是链表的形式。AQS中的同步队列则是通过双向链表方式进行实现。<br>下面是AbstractQueuedSynchronizer的源码片段：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractQueuedSynchronizer</span> <span class="keyword">extends</span></span></span><br><span class="line"><span class="class"><span class="title">AbstractOwnableSynchronizer</span> <span class="keyword">implements</span> <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span> </span>&#123;</span><br><span class="line">  <span class="comment">//同步队列的头节点</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">transient</span> <span class="keyword">volatile</span> Node head;</span><br><span class="line">  <span class="comment">//同步队列的尾节点</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">transient</span> <span class="keyword">volatile</span> Node tail;</span><br><span class="line">  <span class="comment">//同步状态</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">int</span> state;</span><br><span class="line">  <span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">getState</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> state;&#125;</span><br><span class="line">  <span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">setState</span><span class="params">(<span class="keyword">int</span> newState)</span> </span>&#123; state = newState;&#125;</span><br><span class="line">  ...</span><br><span class="line"></span><br><span class="line">  <span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span> </span>&#123;</span><br><span class="line">        <span class="keyword">static</span> <span class="keyword">final</span> Node SHARED = <span class="keyword">new</span> Node();</span><br><span class="line">        <span class="keyword">static</span> <span class="keyword">final</span> Node EXCLUSIVE = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> CANCELLED =  <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SIGNAL    = -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> CONDITION = -<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> PROPAGATE = -<span class="number">3</span>;</span><br><span class="line">        <span class="keyword">volatile</span> <span class="keyword">int</span> waitStatus;</span><br><span class="line">        <span class="keyword">volatile</span> Node prev;</span><br><span class="line">        <span class="keyword">volatile</span> Node next;</span><br><span class="line">        <span class="keyword">volatile</span> Thread thread;</span><br><span class="line">        Node nextWaiter;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在AQS有一个静态内部类Node，其中有这样一些属性：<br>每个节点中， 除了存储了当前线程，前后节点的引用以外，还有一个waitStatus变量，用于描述节点当前的状态。多线程并发执行时，队列中会有多个节点存在，这个waitStatus其实代表对应线程的状态：有的线程可能获取锁因为某些原因放弃竞争；有的线程在等待满足条件，满足之后才能执行等等。一共有4中状态：</p>
+<ul>
+<li>CANCELLED : 取消状态</li>
+<li>SIGNAL : 等待触发状态</li>
+<li>CONDITION : 等待条件状态</li>
+<li>PROPAGATE : 状态需要向后传播</li>
+</ul>
+<p>同步队列是FIFO先进先出，只有前一个节点的状态为SIGNAL时，当前节点的线程才能被挂起。</p>
+<p>抽象队列同步器AQS是用来构建锁或其他同步组件的基础框架，内部使用一个int成员变量表示同步状态，通过内置的FIFO队列来完成资源获取线程的排队工作，其中内部状态state，同步队列的头节点head和尾节点head，都是通过volatile修饰，保证了多线程之间的可见。AQS是通过头尾指针来管理同步队列，同时实现包括获取锁失败的线程进行入队，释放锁时对同步队列中的线程进行通知等核心方法。其示意图如下：</p>
+<p><img src="/2018/08/26/AQS学习笔记/markdown-img-paste-20181126145339965.png" alt=""></p>
+<h3 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h3><p>AQS提供了两组模板方法，一组用于共享模式，一组用于排他模式<br>|   方法说明    | 排他模式                 | 共享模式     |<br>|    ——-   |        —          | —————             |<br>| 获取锁        | acquire              | acquireShared              |<br>| 可中断的获取锁 | acquireInterruptibly | acquireSharedInterruptibly |<br>| 可超时的获取锁 | tryAcquireNanos      | tryAcquireSharedNanos      |<br>|  释放锁       | release              | releaseShared   |</p>
+<p>子类需要重写isHeldExclusively方法声明是否是排他模式，需要重写tryAcquire、tryAcquireShared、tryRelease、tryReleaseShared方法通过CAS指令修改状态变量state。</p>
+<ul>
+<li>isHeldExclusively方法只有子类用到condition才需要去实现它。</li>
+<li>如果子类是排他模式，重写tryAcquire和tryRelease即可。</li>
+<li>如果子类是共享模式，重写tryAcquireShared和tryReleaseShared即可。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>方法说明</th>
+<th>排他模式</th>
+<th>共享模式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>是否排他模式</td>
+<td>isHeldExclusively</td>
+<td>isHeldExclusively</td>
+</tr>
+<tr>
+<td>获取锁</td>
+<td>tryAcquire</td>
+<td>tryAcquireShared</td>
+</tr>
+<tr>
+<td>释放锁</td>
+<td>tryRelease</td>
+<td>tryReleaseShared</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">acquire</span><span class="params">(<span class="keyword">int</span> arg)</span> </span>&#123;</span><br><span class="line"> <span class="keyword">if</span> (!tryAcquire(arg) &amp;&amp; acquireQueued(addWaiter(Node.EXCLUSIVE), arg))</span><br><span class="line">    selfInterrupt();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">release</span><span class="params">(<span class="keyword">int</span> arg)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (tryRelease(arg)) &#123;</span><br><span class="line">          Node h = head;</span><br><span class="line">          <span class="keyword">if</span> (h != <span class="keyword">null</span> &amp;&amp; h.waitStatus != <span class="number">0</span>)</span><br><span class="line">              unparkSuccessor(h);</span><br><span class="line">          <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
   
 
     </div>
@@ -323,7 +376,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    目录，不存在的…
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#同步队列"><span class="toc-number">1.</span> <span class="toc-text">同步队列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现原理"><span class="toc-number">2.</span> <span class="toc-text">实现原理</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -488,6 +541,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">一致性哈希</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">tag1</a>
               </li>
              
@@ -525,14 +586,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">IO</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">一致性哈希</a>
               </li>
              
               <li class="article-tag-list-item">
