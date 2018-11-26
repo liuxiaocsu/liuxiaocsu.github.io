@@ -369,8 +369,8 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p>AbstractQueuedSynchronizer类是实现代码块的并发访问控制的核心。在java.util.concurrent.locks包中有很多Lock的实现类，常用的有ReentrantLock、ReentrantReadWriteLock，内部实现都依赖AQS(AbstractQueuedSynchronizer)，然而这些锁都没有直接来继承AQS,而是定义了一个Sync类去继承AQS。这样设计的原因是锁面向的是使用用户,而同步器面向的则是线程控制,那么在锁的实现中聚合同步器而不是直接继承AQS就可以很好的隔离二者所关注的事情。</p>
-<p>在同步组件的实现中，AQS是核心部分，同步组件的实现者通过使用AQS提供的模板方法实现同步组件语义，AQS则实现了对同步状态的管理，以及对阻塞线程进行排队，等待通知等等一些底层的实现处理。<br></p>
+     <p>AbstractQueuedSynchronizer类是实现代码块的并发访问控制的核心(CAS算法是AbstractQueuedSynchronizer的核心)。在java.util.concurrent.locks包中有很多Lock的实现类(常用的有ReentrantLock、ReentrantReadWriteLock)、CountDownLatch、Semphore内部实现都依赖AQS(AbstractQueuedSynchronizer)，然而这些锁都没有直接来继承AQS,而是定义了一个Sync类去继承AQS。这样设计的原因是锁面向的是使用用户,而同步器面向的则是线程控制,那么在锁的实现中聚合同步器而不是直接继承AQS就可以很好的隔离二者所关注的事情。</p>
+<p>在同步组件的实现中，AQS是核心部分，同步组件的实现者通过使用AQS提供的模板方法实现同步组件语义，AQS则实现了对同步状态的管理，以及对阻塞线程进行排队，等待通知等等一些底层的实现处理。AQS的基本思想: 使用标志位(基于volatile int state这样的一个属性同时配合Unsafe工具对其原子性的操作来实现对当前锁的状态进行修改) + 队列的方式，记录获取锁、竞争锁、释放锁等一系列锁的状态。<br></p>
   
 
     </div>
@@ -1170,15 +1170,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">me</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">一致性哈希</a>
+                <a href="javascript:void(0)" class="js-tag color3">me</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1219,6 +1215,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">IO</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">一致性哈希</a>
               </li>
              
               <li class="article-tag-list-item">
