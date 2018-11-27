@@ -369,8 +369,10 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p>AbstractQueuedSynchronizer类是实现代码块的并发访问控制的核心(CAS算法是AbstractQueuedSynchronizer的核心)。在java.util.concurrent.locks包中有很多Lock的实现类(常用的有ReentrantLock、ReentrantReadWriteLock)、CountDownLatch、Semphore内部实现都依赖AQS(AbstractQueuedSynchronizer)，然而这些锁都没有直接来继承AQS,而是定义了一个Sync类去继承AQS。这样设计的原因是锁面向的是使用用户,而同步器面向的则是线程控制,那么在锁的实现中聚合同步器而不是直接继承AQS就可以很好的隔离二者所关注的事情。</p>
-<p>在同步组件的实现中，AQS是核心部分，同步组件的实现者通过使用AQS提供的模板方法实现同步组件语义，AQS则实现了对同步状态的管理，以及对阻塞线程进行排队，等待通知等等一些底层的实现处理。AQS的基本思想: 使用标志位(基于volatile int state这样的一个属性同时配合Unsafe工具对其原子性的操作来实现对当前锁的状态进行修改) + 队列的方式，记录获取锁、竞争锁、释放锁等一系列锁的状态。<br></p>
+     <p>java的内置锁一直都是备受争议的，在JDK 1.6之前，synchronized这个重量级锁其性能一直都是较为低下，虽然在1.6后，进行大量的锁优化策略(偏向锁、轻量级锁、重量级锁、锁消除、锁粗化),但是与Lock相比synchronized还是存在一些缺陷的：虽然synchronized提供了便捷性的隐式获取锁释放锁机制（基于JVM机制），但是它却缺少了获取锁与释放锁的可操作性(获取锁和释放锁只能在同一个方法中)，可中断、超时获取锁，且它为独占式在高并发场景下性能大打折扣。JUC包中的各种Lock如此优秀主要还得归功于AQS，那什么是AQS呢？</p>
+<p>AQS，AbstractQueuedSynchronizer，是实现代码块的并发访问控制的核心(CAS算法是AbstractQueuedSynchronizer的核心)。在java.util.concurrent.locks包中有很多Lock的实现类(常用的有ReentrantLock、ReentrantReadWriteLock)、CountDownLatch、Semphore内部实现都依赖AQS，然而这些锁都没有直接来继承AQS,而是定义了一个Sync类去继承AQS。这样设计的原因是锁面向的是使用用户,而同步器面向的则是线程控制,那么在锁的实现中聚合同步器而不是直接继承AQS就可以很好的隔离二者所关注的事情。</p>
+<p>在同步组件的实现中，AQS是核心部分，同步组件的实现者通过使用AQS提供的模板方法实现同步组件语义，AQS则实现了对同步状态的管理，以及对阻塞线程进行排队，等待通知等等一些底层的实现处理。AQS的基本思想: 使用标志位(基于volatile int state这样的一个属性同时配合Unsafe工具对其原子性的操作来实现对当前锁的状态进行修改) + 队列的方式，记录获取锁、竞争锁、释放锁等一系列锁的状态。</p>
+<p>AQS中本质上有两个队列，一个是同步队列，一个是条件队列。同步队列一般用于各种锁的实现，条件队列必须结合锁一起使用，通过await方法加入条件队列，通过signal方法可以把节点移动到同步队列，并触发从条件队列中移除（在await方法返回前）。<br></p>
   
 
     </div>
@@ -1166,15 +1168,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">me</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
