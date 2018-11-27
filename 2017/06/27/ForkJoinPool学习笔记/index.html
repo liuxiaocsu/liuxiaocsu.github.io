@@ -8,15 +8,22 @@
   <link rel="dns-prefetch" href="https://liuxiaocsu.github.io">
   <title>ForkJoinPool学习笔记 | Byte_Liu&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="JUC">
+  <meta name="description" content="在 Java7引入的诸多新特性中，Fork/Join 框架无疑是重要的一项。JSR 166旨在标准化一个实质上可扩展的框架，以将并行计算的通用工具类组织成一个类似java.util中Collection一样的包。其目标是使之对开发人员易用且易维护，同时该框架也旨在并行计算地高质量实现。目前已经有多个新的类和接口被添加到该框架中了。该新特性主要是解决Java社区中对于如synchronized，wa">
+<meta name="keywords" content="JUC">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ForkJoinPool学习笔记">
 <meta property="og:url" content="https://liuxiaocsu.github.io/2017/06/27/ForkJoinPool学习笔记/index.html">
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
+<meta property="og:description" content="在 Java7引入的诸多新特性中，Fork/Join 框架无疑是重要的一项。JSR 166旨在标准化一个实质上可扩展的框架，以将并行计算的通用工具类组织成一个类似java.util中Collection一样的包。其目标是使之对开发人员易用且易维护，同时该框架也旨在并行计算地高质量实现。目前已经有多个新的类和接口被添加到该框架中了。该新特性主要是解决Java社区中对于如synchronized，wa">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:updated_time" content="2018-11-23T08:58:21.592Z">
+<meta property="og:image" content="https://liuxiaocsu.github.io/2017/06/27/ForkJoinPool学习笔记/markdown-img-paste-2018112712410476.png">
+<meta property="og:image" content="https://liuxiaocsu.github.io/2017/06/27/ForkJoinPool学习笔记/markdown-img-paste-20181127124410874.png">
+<meta property="og:image" content="https://liuxiaocsu.github.io/2017/06/27/ForkJoinPool学习笔记/markdown-img-paste-2018112712494517.png">
+<meta property="og:updated_time" content="2018-11-27T04:56:07.996Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ForkJoinPool学习笔记">
+<meta name="twitter:description" content="在 Java7引入的诸多新特性中，Fork/Join 框架无疑是重要的一项。JSR 166旨在标准化一个实质上可扩展的框架，以将并行计算的通用工具类组织成一个类似java.util中Collection一样的包。其目标是使之对开发人员易用且易维护，同时该框架也旨在并行计算地高质量实现。目前已经有多个新的类和接口被添加到该框架中了。该新特性主要是解决Java社区中对于如synchronized，wa">
+<meta name="twitter:image" content="https://liuxiaocsu.github.io/2017/06/27/ForkJoinPool学习笔记/markdown-img-paste-2018112712410476.png">
   
     <link rel="alternative" href="/atom.xml" title="Byte_Liu&#39;s Blog" type="application/atom+xml">
   
@@ -192,7 +199,28 @@
       
 
   
-    
+    <p>在 Java7引入的诸多新特性中，Fork/Join 框架无疑是重要的一项。JSR 166旨在标准化一个实质上可扩展的框架，以将并行计算的通用工具类组织成一个类似java.util中Collection一样的包。其目标是使之对开发人员易用且易维护，同时该框架也旨在并行计算地高质量实现。目前已经有多个新的类和接口被添加到该框架中了。<br>该新特性主要是解决Java社区中对于如synchronized，wait和notify等操作的低级别的话题活动的需求。Fork/Join框 架被设计成可以容易地将算法并行化、分治化。开发人员曾多次想用自己(在非底层实现)的并发机制实现这一目标，因此新框架的想法是提供标准化和效率最高的 并发工具协助开发人员实现各种多线程应用。其所需的类和接口都位于java.util.concurrent包中。<br><a id="more"></a></p>
+<h3 id="“分治”问题"><a href="#“分治”问题" class="headerlink" title="“分治”问题"></a>“分治”问题</h3><p>在实际情况中，很多时候我们都需要面对经典的“分治”问题。要解决这类问题，主要任务通常被分解为多个任务块（分解阶段），其后每一小块任务被独立并行计算。一旦计算任务完成，每一快的结果会被合并或者解决（解决阶段）。<br>“分治”问题可以很容易地通过Callable线程的Executor接口来解决。通过为每个任 务实例化一个Callable实例，并在ExecutorService类中汇总计算结果来得出最终结果可以实现这一目的。那么自然而然想到的问题就是，如果这一 接口已经做得不错了，我们为什么还需要Java 7的其他框架？<br>使用ExecutorService和Callable的主要问题是，Callable实例在本质上是阻塞的。一旦一个Callable实例开始执行，其他 所有Callable都会被阻塞。由于队列后面的Callable实例在前一实例未执行完成的时候不会被执行，因此许多资源无法得到利用。 Fork/Join框架被引入来解决这一并行问题，而Executor解决的是并发问题。并发和并行的区别就是一个处理器同时处理多个任务和多个处理器或者是多核的处理器同时处理多个不同的任务，具体参考下图：</p>
+<p><img src="/2017/06/27/ForkJoinPool学习笔记/markdown-img-paste-2018112712410476.png" alt=""></p>
+<h3 id="Fork-Join框架中的”工作窃取（Work-stealing）”"><a href="#Fork-Join框架中的”工作窃取（Work-stealing）”" class="headerlink" title="Fork/Join框架中的”工作窃取（Work stealing）”"></a>Fork/Join框架中的”工作窃取（Work stealing）”</h3><p>Fork/Join框架在java.util.concurrent包中加入了两个主要的类：</p>
+<ul>
+<li>ForkJoinPool</li>
+<li>ForkJoinTask<br>ForkJoinPool类是ForkJoinTask实例的执行者，ForkJoinPool的主要任务就是”工作窃取”，其线程尝试发现和执行其他任务创建的子任务。ForkJoinTask实例与普通Java线程相比是非常轻量的。<br>一 旦ForkJoinTask被启动，就会启动其子任务并等待它们执行完成。执行者ForkJoinPool负责将自任务赋予线程池中处于等待任务状态的另 一线程。线程池中的活动线程会尝试执行其他任务所创建的子任务。ForkJoinPool会尝试在任何时候都维持与可用的处理器数目一样数目的活动线程数<br>除了几个其他API方法以外，ForkJoinTask有两个主要的方法：</li>
+<li>fork () – 这个方法决定了ForkJoinTask的异步执行，凭借这个方法可以创建新的任务。</li>
+<li>join () – 该方法负责在计算完成侯返回结果，因此允许一个任务等待另一任务执行完成。</li>
+</ul>
+<p>分支/合并的完整过程如下：<br><img src="/2017/06/27/ForkJoinPool学习笔记/markdown-img-paste-20181127124410874.png" alt=""></p>
+<h3 id="工作窃取算法"><a href="#工作窃取算法" class="headerlink" title="工作窃取算法"></a>工作窃取算法</h3><p>工作窃取（work-stealing）算法是指某个线程从其他队列里窃取任务来执行。工作窃取的运行流程图如下：</p>
+<p><img src="/2017/06/27/ForkJoinPool学习笔记/markdown-img-paste-2018112712494517.png" alt=""></p>
+<p>那么为什么需要使用工作窃取算法呢？假如我们需要做一个比较大的任务，我们可以把这个任务分割为若干互不依赖的子任务，为了减少线程间的竞争，于是 把这些子任务分别放到不同的队列里，并为每个队列创建一个单独的线程来执行队列里的任务，线程和队列一一对应，比如A线程负责处理A队列里的任务。但是有 的线程会先把自己队列里的任务干完，而其他线程对应的队列里还有任务等待处理。干完活的线程与其等着，不如去帮其他线程干活，于是它就去其他线程的队列里 窃取一个任务来执行。而在这时它们会访问同一个队列，所以为了减少窃取任务线程和被窃取任务线程之间的竞争，通常会使用双端队列，被窃取任务线程永远从双 端队列的头部拿任务执行，而窃取任务的线程永远从双端队列的尾部拿任务执行。<br>工作窃取算法的优点是充分利用线程进行并行计算，并减少了线程间的竞争，其缺点是在某些情况下还是存在竞争，比如双端队列里只有一个任务时。并且消耗了更多的系统资源，比如创建多个线程和多个双端队列。</p>
+<h3 id="Fork-Join框架的异常处理"><a href="#Fork-Join框架的异常处理" class="headerlink" title="Fork/Join框架的异常处理"></a>Fork/Join框架的异常处理</h3><p>ForkJoinTask在执行的时候可能会抛出异常，但是我们没办法在主线程里直接捕获异常，所以ForkJoinTask提供了 isCompletedAbnormally()方法来检查任务是否已经抛出异常或已经被取消了，并且可以通过ForkJoinTask的 getException方法获取异常。使用如下代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(task.isCompletedAbnormally()) &#123;</span><br><span class="line">    System.out.println(task.getException());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>getException方法返回Throwable对象，如果任务被取消了则返回CancellationException。如果任务没有完成或者没有抛出异常则返回null。</p>
+<h3 id="Fork-Join框架的实现原理"><a href="#Fork-Join框架的实现原理" class="headerlink" title="Fork/Join框架的实现原理"></a>Fork/Join框架的实现原理</h3><p>ForkJoinPool由ForkJoinTask数组和ForkJoinWorkerThread数组组成，ForkJoinTask数组负责存放程序提交给ForkJoinPool的任务，而ForkJoinWorkerThread数组负责执行这些任务。<br>ForkJoinTask的fork方法实现原理。当我们调用ForkJoinTask的fork方法时，程序会调用ForkJoinWorkerThread的pushTask方法异步的执行这个任务，然后立即返回结果。代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> ForkJoinTask <span class="title">fork</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      ((ForkJoinWorkerThread) Thread.currentThread()).pushTask(<span class="keyword">this</span>);</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
+<p>pushTask方法把当前任务存放在ForkJoinTask 数组queue里。然后再调用ForkJoinPool的signalWork()方法唤醒或创建一个工作线程来执行任务。代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">final</span> <span class="keyword">void</span> <span class="title">pushTask</span><span class="params">(ForkJoinTask t)</span> </span>&#123;</span><br><span class="line">      ForkJoinTask[] q;</span><br><span class="line">      <span class="keyword">int</span> s, m;</span><br><span class="line">      <span class="keyword">if</span> ((q = queue) != <span class="keyword">null</span>) &#123;    <span class="comment">// ignore if queue removed</span></span><br><span class="line">          <span class="keyword">long</span> u = (((s = queueTop) &amp; (m = q.length - <span class="number">1</span>)) &lt;&lt; ASHIFT) + ABASE;</span><br><span class="line">          UNSAFE.putOrderedObject(q, u, t);</span><br><span class="line">          queueTop = s + <span class="number">1</span>;         <span class="comment">// or use putOrderedInt</span></span><br><span class="line">          <span class="keyword">if</span> ((s -= queueBase) &lt;= <span class="number">2</span>)</span><br><span class="line">              pool.signalWork();</span><br><span class="line">          <span class="keyword">else</span> <span class="keyword">if</span> (s == m)</span><br><span class="line">              growQueue();</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
+<p>ForkJoinTask的join方法实现原理。Join方法的主要作用是阻塞当前线程并等待获取结果。让我们一起看看ForkJoinTask的join方法的实现，代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> V <span class="title">join</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (doJoin() != NORMAL)</span><br><span class="line">          <span class="keyword">return</span> reportResult();</span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">          <span class="keyword">return</span> getRawResult();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> V <span class="title">reportResult</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">int</span> s;</span><br><span class="line">      Throwable ex;</span><br><span class="line">      <span class="keyword">if</span> ((s = status) == CANCELLED)</span><br><span class="line">          <span class="keyword">throw</span> <span class="keyword">new</span> CancellationException();</span><br><span class="line">      <span class="keyword">if</span> (s == EXCEPTIONAL &amp;&amp; (ex = getThrowableException()) != <span class="keyword">null</span>)</span><br><span class="line">          UNSAFE.throwException(ex);</span><br><span class="line">      <span class="keyword">return</span> getRawResult();</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
+<p>首先，它调用了doJoin()方法，通过doJoin()方法得到当前任务的状态来判断返回什么结果，任务状态有四种：已完成（NORMAL），被取消（CANCELLED），信号（SIGNAL）和出现异常（EXCEPTIONAL）。<br>如果任务状态是已完成，则直接返回任务结果。<br>如果任务状态是被取消，则直接抛出CancellationException。<br>如果任务状态是抛出异常，则直接抛出对应的异常。<br>让我们再来分析下doJoin()方法的实现代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">doJoin</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Thread t;</span><br><span class="line">    ForkJoinWorkerThread w;</span><br><span class="line">    <span class="keyword">int</span> s;</span><br><span class="line">    <span class="keyword">boolean</span> completed;</span><br><span class="line">    <span class="keyword">if</span> ((t = Thread.currentThread()) <span class="keyword">instanceof</span> ForkJoinWorkerThread) &#123;</span><br><span class="line">        <span class="keyword">if</span> ((s = status) &lt; <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> s;</span><br><span class="line">        <span class="keyword">if</span> ((w = (ForkJoinWorkerThread) t).unpushTask(<span class="keyword">this</span>)) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                completed = exec();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Throwable rex) &#123;</span><br><span class="line">                <span class="keyword">return</span> setExceptionalCompletion(rex);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (completed)</span><br><span class="line">                <span class="keyword">return</span> setCompletion(NORMAL);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> w.joinTask(<span class="keyword">this</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> externalAwaitDone();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在doJoin()方法里，首先通过查看任务的状态，看任务是否已经执行完了，如果执行完了，则直接返回任务状态，如果没有执行完，则从任务数组里 取出任务并执行。如果任务顺利执行完成了，则设置任务状态为NORMAL，如果出现异常，则纪录异常，并将任务状态设置为EXCEPTIONAL。</p>
+
   
 
     </div>
@@ -323,7 +351,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    目录，不存在的…
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#“分治”问题"><span class="toc-number">1.</span> <span class="toc-text">“分治”问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Fork-Join框架中的”工作窃取（Work-stealing）”"><span class="toc-number">2.</span> <span class="toc-text">Fork/Join框架中的”工作窃取（Work stealing）”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#工作窃取算法"><span class="toc-number">3.</span> <span class="toc-text">工作窃取算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Fork-Join框架的异常处理"><span class="toc-number">4.</span> <span class="toc-text">Fork/Join框架的异常处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Fork-Join框架的实现原理"><span class="toc-number">5.</span> <span class="toc-text">Fork/Join框架的实现原理</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -480,7 +508,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -488,7 +516,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">一致性哈希</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -529,10 +561,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">IO</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">一致性哈希</a>
               </li>
              
               <li class="article-tag-list-item">
