@@ -18,7 +18,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://liuxiaocsu.github.io/2017/05/15/CAS学习笔记/markdown-img-paste-20181127143600737.png">
 <meta property="og:image" content="https://liuxiaocsu.github.io/2017/05/15/CAS学习笔记/markdown-img-paste-2018112714415336.png">
-<meta property="og:updated_time" content="2018-11-27T06:54:23.185Z">
+<meta property="og:updated_time" content="2018-11-27T06:58:07.287Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CAS学习笔记">
 <meta name="twitter:description" content="CAS(Compare And Swap)，比较并交换，是CPU硬件级别提供的功能，比如IA64,X86指令集中用来完成CAS功能的指令集是cmpxchg。java.util.concurrent包中使用该技术实现乐观锁，换句话说java.util.concurrent包是完全建立在CAS之上，AQS同步组件、Atomic原子类操作等都是基于CAS实现的。CAS在JUC包中所处的位置如图：">
@@ -204,13 +204,12 @@
 <h3 id="Java中的CAS"><a href="#Java中的CAS" class="headerlink" title="Java中的CAS"></a>Java中的CAS</h3><p>java中具体的CAS操作是由类sun.misc.Unsafe来负责的。Unsafe类提供了硬件级别的原子操作（即native方法），Java使用native方法来间接访问操作系统底层（如系统硬件等)，扩展Java程序的功能。native具体方法使用C++实现。sun.misc.Unsafe提供了三个CAS操作，从方法名即可看出，分别针对Object类型、int类型和long类型。上文说过CAS有3个操作数，内存值V，旧的预期值A，要修改的新值B，但是仔细看Unsafe提供的CAS操作有4个操作数，这是因为Unsafe提供的CAS操作具体实现是使用C++来实现的，C++可以直接操作内存，效提升操作效率，直接用对象和字段偏移量来获取内存值V，第一个参数是要修改field所在的对象 ，第二个参数是对象中需要修改的field的偏移量（field偏移量这个参数所代表的意思是某个字段相对Java对象的“起始地址”的偏移量，Unsafe提供了一个方法objectFieldOffset(Field var1)来获取这个参数值，对于field偏移量的理解可以参考<a href="http://hllvm.group.iteye.com/group/topic/37940" target="_blank" rel="noopener">这里</a>），第三个参数就是旧的预期值A，第四个参数是要修改的新值B。</p>
 <p><img src="/2017/05/15/CAS学习笔记/markdown-img-paste-2018112714415336.png" alt=""></p>
 <h2 id="CAS缺陷"><a href="#CAS缺陷" class="headerlink" title="CAS缺陷"></a>CAS缺陷</h2><ol>
-<li><p>循环时间长导致CPU负载高<br>CAS操作一般和循环搭配使用（即我们所说的自旋CAS），直到修改成功才会退出循环。如果在某些并发量较大的情况下，变量的值始终被别的线程修改，自旋CAS长时间地不成功，则会给CPU带来非常大的开销。CAS 在并发量不是很高的情况下效率远远高于锁机制。还有一种策略就是限制CAS自旋的次数，在JUC中有些地方就使用了这种策略，例如阻塞队列中的SynchronousQueue。</p>
+<li><p>循1环时间长导致CPU负载高<br>CAS操作一般和循环搭配使用（即我们所说的自旋CAS），直到修改成功才会退出循环。如果在某些并发量较大的情况下，变量的值始终被别的线程修改，自旋CAS长时间地不成功，则会给CPU带来非常大的开销。CAS 在并发量不是很高的情况下效率远远高于锁机制。还有一种策略就是限制CAS自旋的次数，在JUC中有些地方就使用了这种策略，例如阻塞队列中的SynchronousQueue。</p>
 </li>
 <li><p>只能保证一个共享变量原子操作<br>CAS只能针对一个共享变量，如果是多个共享变量有三种方案，一是使用锁；二是把多个变量合并为一个变量，比如juc包中的Phaser类中的status字段可以表示四个变量；三是把多个变量放在一个对象里来使用AtomicReference类进行CAS操作改变引用地址以达到修改变量的目的。</p>
 </li>
-<li><p>ABA问题<br>CAS需要检查操作值有没有发生改变，如果没有发生改变则更新。但是存在这样一种情况：如果一个值原来是A，变成了B，然后又变成了A，那么在CAS检查的时候会发现没有改变，但是实质上它已经发生了改变，这就是所谓的ABA问题。对于ABA问题其解决方案是加上版本号，即在每个变量都加上一个版本号，每次改变时加1，即A —&gt; B —&gt; A，变成A1 —&gt; B2 —&gt; A3。JUC包中提供了一个AtomicStampedReference类来解决ABA问题。 AtomicStampedReference 本质是有一个int 值作为版本号，每次更改前先取到这个int值的版本号，等到修改的时候，比较当前版本号与当前线程持有的版本号是否一致，如果一致，则进行修改，并将版本号加1，在zookeeper中保持数据的一致性也是用的这种方式；此外，JUC包中还有一个AtomicMarkableReference类，这个类则是将一个boolean值作是否有更改的标记，本质就是它的版本号只有两个，true和false，修改的时候在这两个版本号之间来回切换，这样做并不能解决ABA的问题。</p>
-</li>
 </ol>
+<p>3.ABA问题<br>CAS需要检查操作值有没有发生改变，如果没有发生改变则更新。但是存在这样一种情况：如果一个值原来是A，变成了B，然后又变成了A，那么在CAS检查的时候会发现没有改变，但是实质上它已经发生了改变，这就是所谓的ABA问题。对于ABA问题其解决方案是加上版本号，即在每个变量都加上一个版本号，每次改变时加1，即A —&gt; B —&gt; A，变成A1 —&gt; B2 —&gt; A3。JUC包中提供了一个AtomicStampedReference类来解决ABA问题。 AtomicStampedReference 本质是有一个int 值作为版本号，每次更改前先取到这个int值的版本号，等到修改的时候，比较当前版本号与当前线程持有的版本号是否一致，如果一致，则进行修改，并将版本号加1，在zookeeper中保持数据的一致性也是用的这种方式；此外，JUC包中还有一个AtomicMarkableReference类，这个类则是将一个boolean值作是否有更改的标记，本质就是它的版本号只有两个，true和false，修改的时候在这两个版本号之间来回切换，这样做并不能解决ABA的问题。</p>
 
   
 
@@ -507,6 +506,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">一致性哈希</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">me</a>
               </li>
              
@@ -548,10 +551,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">IO</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">一致性哈希</a>
               </li>
              
               <li class="article-tag-list-item">
