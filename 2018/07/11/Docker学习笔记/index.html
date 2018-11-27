@@ -27,7 +27,7 @@
 <meta property="og:image" content="https://liuxiaocsu.github.io/2018/07/11/Docker学习笔记/markdown-img-paste-20181127201038194.png">
 <meta property="og:image" content="https://liuxiaocsu.github.io/2018/07/11/Docker学习笔记/markdown-img-paste-20181127201423995.png">
 <meta property="og:image" content="https://liuxiaocsu.github.io/2018/07/11/Docker学习笔记/markdown-img-paste-20181127201816971.png">
-<meta property="og:updated_time" content="2018-11-27T12:28:05.348Z">
+<meta property="og:updated_time" content="2018-11-27T12:29:47.882Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker学习笔记">
 <meta name="twitter:description" content="Docker 是开源的应用容器引擎,是一种”容器即服务”(Docker Containers as a Service ,简称 CaaS),使得开发和IT运营团队可以对于应用的构建、发布、运行更加敏捷和可控,可以将所有应用软件以及它的以来打包成软件开发的标准化单元。是为开发人员和系统管理员用于构建、发布、并运行分布式应用程序的开放式平台。该平台由 Docker 引擎（一个便携、轻巧的运行时和打包工">
@@ -237,11 +237,27 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"></td>
+<td style="text-align:left">启动</td>
+<td style="text-align:left">秒级</td>
+<td style="text-align:left">分钟级</td>
+</tr>
+<tr>
+<td style="text-align:left">硬盘使用</td>
+<td style="text-align:left">一般为 MB</td>
+<td style="text-align:left">一般为 GB</td>
+</tr>
+<tr>
+<td style="text-align:left">性能</td>
+<td style="text-align:left">接近原生</td>
+<td style="text-align:left">弱于</td>
+</tr>
+<tr>
+<td style="text-align:left">系统支持量</td>
+<td style="text-align:left">单机支持上千个容器</td>
+<td style="text-align:left">一般几十个</td>
 </tr>
 </tbody>
 </table>
-<p> 启动    |秒级    |分钟级<br> 硬盘使用    |一般为 MB    |一般为 GB<br> 性能    |接近原生|    弱于<br> 系统支持量|    单机支持上千个容器    |一般几十个</p>
 <h3 id="Docker-组件与元素"><a href="#Docker-组件与元素" class="headerlink" title="Docker 组件与元素"></a>Docker 组件与元素</h3><p>Docker有三个组件和三个基本元素，三个组件分别是：</p>
 <ul>
 <li>Docker Client 是用户界面，它支持用户与Docker Daemon之间通信。</li>
