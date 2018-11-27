@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="https://liuxiaocsu.github.io">
   <title>Redis学习笔记 | Byte_Liu&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Redis 是什么？Redis 是一种快速、开源、内存键值数据结构存储库。Redis提供了一组通用的内存数据结构，您可以通过这些结构轻松创建各种自定义的应用程序。关于Redis的主要使用案例包括缓存、会话管理、pub/sub以及排行榜。这是当今广受欢迎的键值存储数据库。它由BSD授权、采用优化的C语言代码编写，并支持多种开发语言。Redis是REmoteDIctionary Server 的首字母">
+  <meta name="description" content="Redis 是一种快速、开源、内存键值数据结构存储库。Redis提供了一组通用的内存数据结构，您可以通过这些结构轻松创建各种自定义的应用程序。关于Redis的主要使用案例包括缓存、会话管理、pub/sub以及排行榜。这是当今广受欢迎的键值存储数据库。它由BSD授权、采用优化的C语言代码编写，并支持多种开发语言。Redis是REmoteDIctionary Server 的首字母缩略词。由于其速度和">
 <meta name="keywords" content="Redis">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis学习笔记">
 <meta property="og:url" content="https://liuxiaocsu.github.io/2018/11/24/Redis学习笔记/index.html">
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
-<meta property="og:description" content="Redis 是什么？Redis 是一种快速、开源、内存键值数据结构存储库。Redis提供了一组通用的内存数据结构，您可以通过这些结构轻松创建各种自定义的应用程序。关于Redis的主要使用案例包括缓存、会话管理、pub/sub以及排行榜。这是当今广受欢迎的键值存储数据库。它由BSD授权、采用优化的C语言代码编写，并支持多种开发语言。Redis是REmoteDIctionary Server 的首字母">
+<meta property="og:description" content="Redis 是一种快速、开源、内存键值数据结构存储库。Redis提供了一组通用的内存数据结构，您可以通过这些结构轻松创建各种自定义的应用程序。关于Redis的主要使用案例包括缓存、会话管理、pub/sub以及排行榜。这是当今广受欢迎的键值存储数据库。它由BSD授权、采用优化的C语言代码编写，并支持多种开发语言。Redis是REmoteDIctionary Server 的首字母缩略词。由于其速度和">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:updated_time" content="2018-11-25T09:58:18.334Z">
+<meta property="og:updated_time" content="2018-11-27T07:05:59.476Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis学习笔记">
-<meta name="twitter:description" content="Redis 是什么？Redis 是一种快速、开源、内存键值数据结构存储库。Redis提供了一组通用的内存数据结构，您可以通过这些结构轻松创建各种自定义的应用程序。关于Redis的主要使用案例包括缓存、会话管理、pub/sub以及排行榜。这是当今广受欢迎的键值存储数据库。它由BSD授权、采用优化的C语言代码编写，并支持多种开发语言。Redis是REmoteDIctionary Server 的首字母">
+<meta name="twitter:description" content="Redis 是一种快速、开源、内存键值数据结构存储库。Redis提供了一组通用的内存数据结构，您可以通过这些结构轻松创建各种自定义的应用程序。关于Redis的主要使用案例包括缓存、会话管理、pub/sub以及排行榜。这是当今广受欢迎的键值存储数据库。它由BSD授权、采用优化的C语言代码编写，并支持多种开发语言。Redis是REmoteDIctionary Server 的首字母缩略词。由于其速度和">
   
     <link rel="alternative" href="/atom.xml" title="Byte_Liu&#39;s Blog" type="application/atom+xml">
   
@@ -195,7 +195,7 @@
       
 
   
-    <h2 id="Redis-是什么？"><a href="#Redis-是什么？" class="headerlink" title="Redis 是什么？"></a>Redis 是什么？</h2><p>Redis 是一种快速、开源、内存键值数据结构存储库。Redis提供了一组通用的内存数据结构，您可以通过这些结构轻松创建各种自定义的应用程序。关于Redis的主要使用案例包括缓存、会话管理、pub/sub以及排行榜。这是当今广受欢迎的键值存储数据库。它由BSD授权、采用优化的C语言代码编写，并支持多种开发语言。Redis是REmoteDIctionary Server 的首字母缩略词。<br>由于其速度和易用性，Redis 成为需要一流性能的 Web、移动、游戏、广告技术、物联网应用程序的理想之选。<br><a id="more"></a></p>
+    <p>Redis 是一种快速、开源、内存键值数据结构存储库。Redis提供了一组通用的内存数据结构，您可以通过这些结构轻松创建各种自定义的应用程序。关于Redis的主要使用案例包括缓存、会话管理、pub/sub以及排行榜。这是当今广受欢迎的键值存储数据库。它由BSD授权、采用优化的C语言代码编写，并支持多种开发语言。Redis是REmoteDIctionary Server 的首字母缩略词。<br>由于其速度和易用性，Redis 成为需要一流性能的 Web、移动、游戏、广告技术、物联网应用程序的理想之选。<br><a id="more"></a></p>
 <h2 id="Redis-的优点"><a href="#Redis-的优点" class="headerlink" title="Redis 的优点"></a>Redis 的优点</h2><h4 id="性能极高"><a href="#性能极高" class="headerlink" title="性能极高"></a>性能极高</h4><p>Redis 的所有数据均位于其服务器的主内存中，而大部分的数据库管理系统则将数据存储在磁盘或 SSD 上。由于不再需要访问磁盘，Redis 等内存数据库可以避免时间延迟，借助较简单的使用较少 CPU 指令的算法访问数据。执行典型操作的时间不超过 1 毫秒。Redis能读的速度是110000次/s,写的速度是81000次/s 。</p>
 <h4 id="丰富的内存数据结构"><a href="#丰富的内存数据结构" class="headerlink" title="丰富的内存数据结构"></a>丰富的内存数据结构</h4><p>Redis 允许客户存储映射到各种数据类型的键。基本的数据类型是字符串，它可以是大小最多为 512MB 的文本或二进制数据。Redis 还支持按添加顺序列出的字符串列表、无序字符串的集合、按分数排序的有序集、存储一系列字段和值的哈希表、计算一个数据集中唯一项目的 HyperLogLog。使用 Redis 可以在内存中几乎存储所有类型的数据。（Redis支持二进制案例的 Strings, Lists, Hashes, Sets 及 Ordered Sets 数据类型操作。）</p>
 <h4 id="通用性和易用性"><a href="#通用性和易用性" class="headerlink" title="通用性和易用性"></a>通用性和易用性</h4><p>Redis 带有许多工具，借助这些工具，可以加快开发和运营的进程并使之简单化，其中包括 Pub/Sub，它会将要提供给订阅者的消息发布到渠道，是聊天和消息传送系统的理想之选；TTL 密钥，它们可以拥有确定的生存时间，在该时间之后，它们会将自身删除，这有助于避免数据库中充满不需要的数据；原子计数器，可以确保竞争条件不会产生不一致的结果，Redis的所有操作都是原子性的，同时Redis还支持对几个操作全并后的原子性执行。Lua，一种功能强大的轻量级脚本语言。</p>
@@ -339,7 +339,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis-是什么？"><span class="toc-number">1.</span> <span class="toc-text">Redis 是什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis-的优点"><span class="toc-number">2.</span> <span class="toc-text">Redis 的优点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#性能极高"><span class="toc-number">2.0.1.</span> <span class="toc-text">性能极高</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#丰富的内存数据结构"><span class="toc-number">2.0.2.</span> <span class="toc-text">丰富的内存数据结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#通用性和易用性"><span class="toc-number">2.0.3.</span> <span class="toc-text">通用性和易用性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#复制和持久性"><span class="toc-number">2.0.4.</span> <span class="toc-text">复制和持久性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#支持常用的开发语言"><span class="toc-number">2.0.5.</span> <span class="toc-text">支持常用的开发语言</span></a></li></ol></li></ol><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis与其他key-value存储有什么不同？"><span class="toc-number">3.</span> <span class="toc-text">Redis与其他key-value存储有什么不同？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis-使用案例"><span class="toc-number">4.</span> <span class="toc-text">Redis 使用案例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#缓存"><span class="toc-number">4.0.1.</span> <span class="toc-text">缓存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#会话管理"><span class="toc-number">4.0.2.</span> <span class="toc-text">会话管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#实时排行榜"><span class="toc-number">4.0.3.</span> <span class="toc-text">实时排行榜</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#速率限制"><span class="toc-number">4.0.4.</span> <span class="toc-text">速率限制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#队列"><span class="toc-number">4.0.5.</span> <span class="toc-text">队列</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#聊天和消息传送"><span class="toc-number">4.0.6.</span> <span class="toc-text">聊天和消息传送</span></a></li></ol></li>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis-的优点"><span class="toc-number">1.</span> <span class="toc-text">Redis 的优点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#性能极高"><span class="toc-number">1.0.1.</span> <span class="toc-text">性能极高</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#丰富的内存数据结构"><span class="toc-number">1.0.2.</span> <span class="toc-text">丰富的内存数据结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#通用性和易用性"><span class="toc-number">1.0.3.</span> <span class="toc-text">通用性和易用性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#复制和持久性"><span class="toc-number">1.0.4.</span> <span class="toc-text">复制和持久性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#支持常用的开发语言"><span class="toc-number">1.0.5.</span> <span class="toc-text">支持常用的开发语言</span></a></li></ol></li></ol><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis与其他key-value存储有什么不同？"><span class="toc-number">2.</span> <span class="toc-text">Redis与其他key-value存储有什么不同？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis-使用案例"><span class="toc-number">3.</span> <span class="toc-text">Redis 使用案例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#缓存"><span class="toc-number">3.0.1.</span> <span class="toc-text">缓存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#会话管理"><span class="toc-number">3.0.2.</span> <span class="toc-text">会话管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#实时排行榜"><span class="toc-number">3.0.3.</span> <span class="toc-text">实时排行榜</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#速率限制"><span class="toc-number">3.0.4.</span> <span class="toc-text">速率限制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#队列"><span class="toc-number">3.0.5.</span> <span class="toc-text">队列</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#聊天和消息传送"><span class="toc-number">3.0.6.</span> <span class="toc-text">聊天和消息传送</span></a></li></ol></li>
                     </div>
                 </span>
             </div>
@@ -504,11 +504,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">me</a>
+                <a href="javascript:void(0)" class="js-tag color1">一致性哈希</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">一致性哈希</a>
+                <a href="javascript:void(0)" class="js-tag color3">me</a>
               </li>
              
               <li class="article-tag-list-item">
