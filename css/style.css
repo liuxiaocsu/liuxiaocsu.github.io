@@ -13,7 +13,7 @@ html, body {
   background-size: cover;
 }
 
-.dynamic-area1, .archives   {
+.archives   {
   position: absolute;
   width: 100%;
   height: 100%;
