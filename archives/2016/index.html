@@ -187,6 +187,9 @@
 }
 
 .archives   {
+  filter:alpha(opacity=20); /*ie透明度20%*/ 
+  -moz-opacity:0.8;        /*Moz + FF 透明度20%*/ 
+  opacity:0.8; /*支持CSS3的浏览器(FF1.5也支持)透明度20%*/ 
   background: url(../img/poster-drop-animate2.png) repeat-x 0px 0px;
   background-size: cover;
   animation: posterDrop1 6000s linear infinite;
@@ -846,11 +849,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">C10K</a>
+                <a href="javascript:void(0)" class="js-tag color4">JUC</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JUC</a>
+                <a href="javascript:void(0)" class="js-tag color5">C10K</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -922,11 +925,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">zookeeper</a>
+                <a href="javascript:void(0)" class="js-tag color1">一致性哈希</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">一致性哈希</a>
+                <a href="javascript:void(0)" class="js-tag color5">zookeeper</a>
               </li>
              
               <li class="article-tag-list-item">
