@@ -6,20 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://liuxiaocsu.github.io">
-  <title>Java Integer的缓存策略 | Byte_Liu&#39;s Blog</title>
+  <title>TCP保活 | Byte_Liu&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在Java5中，为Integer的操作引入了一个新的特性，用来节省内存和提高性能。整型对象在内部实现中通过使用相同的对象引用实现了缓存和重用。上面的规则默认适用于整数区间 -128 到 +127（这个整数区间可以通过启动应用的虚拟机参数修改：-XX:AutoBoxCacheMax）。这种Integer缓存策略仅在自动装箱（autoboxing）的时候有用，使用构造器创建的Integer对象不能被缓">
-<meta name="keywords" content="Integer">
+  <meta name="keywords" content="TCP">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java Integer的缓存策略">
-<meta property="og:url" content="https://liuxiaocsu.github.io/2016/08/23/Java-Integer的缓存策略/index.html">
+<meta property="og:title" content="TCP保活">
+<meta property="og:url" content="https://liuxiaocsu.github.io/2017/07/21/TCP保活/index.html">
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
-<meta property="og:description" content="在Java5中，为Integer的操作引入了一个新的特性，用来节省内存和提高性能。整型对象在内部实现中通过使用相同的对象引用实现了缓存和重用。上面的规则默认适用于整数区间 -128 到 +127（这个整数区间可以通过启动应用的虚拟机参数修改：-XX:AutoBoxCacheMax）。这种Integer缓存策略仅在自动装箱（autoboxing）的时候有用，使用构造器创建的Integer对象不能被缓">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:updated_time" content="2018-11-29T07:30:22.273Z">
+<meta property="og:updated_time" content="2018-11-29T08:12:03.640Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java Integer的缓存策略">
-<meta name="twitter:description" content="在Java5中，为Integer的操作引入了一个新的特性，用来节省内存和提高性能。整型对象在内部实现中通过使用相同的对象引用实现了缓存和重用。上面的规则默认适用于整数区间 -128 到 +127（这个整数区间可以通过启动应用的虚拟机参数修改：-XX:AutoBoxCacheMax）。这种Integer缓存策略仅在自动装箱（autoboxing）的时候有用，使用构造器创建的Integer对象不能被缓">
+<meta name="twitter:title" content="TCP保活">
   
     <link rel="alternative" href="/atom.xml" title="Byte_Liu&#39;s Blog" type="application/atom+xml">
   
@@ -168,20 +165,20 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Java-Integer的缓存策略" class="article article-type-post " itemscope="" itemprop="blogPost">
+            <article id="post-TCP保活" class="article article-type-post " itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Java Integer的缓存策略
+      TCP保活
     </h1>
   
 
         
-        <a href="/2016/08/23/Java-Integer的缓存策略/" class="archive-article-date">
-  	<time datetime="2016-08-23T02:31:45.000Z" itemprop="datePublished">2016-08-23</time>
+        <a href="/2017/07/21/TCP保活/" class="archive-article-date">
+  	<time datetime="2017-07-21T02:10:54.000Z" itemprop="datePublished">2017-07-21</time>
   	<span id="busuanzi_container_page_pv" style="color:DarkGray">
       view <span id="busuanzi_value_page_pv"></span> times
     </span>
@@ -195,22 +192,7 @@
       
 
   
-    <p>在Java5中，为Integer的操作引入了一个新的特性，用来节省内存和提高性能。整型对象在内部实现中通过使用相同的对象引用实现了缓存和重用。<br>上面的规则默认适用于整数区间 -128 到 +127（这个整数区间可以通过启动应用的虚拟机参数修改：-XX:AutoBoxCacheMax）。这种Integer缓存策略仅在自动装箱（autoboxing）的时候有用，使用构造器创建的Integer对象不能被缓存。Java 编译器把原始类型自动转换为封装类的过程称为自动装箱（autoboxing），这相当于调用 valueOf 方法。<br><a id="more"></a></p>
-<p>如果面试官问Integer与int的区别：估计大多数人只会说道两点，Ingeter是int的包装类，int的初值为0，Ingeter的初值 为null。但是如果面试官再问一下Integer i = 1;int ii = 1; i==ii为true还是为false？估计就有一部分人答不出来了，如果再问一下其他的，估计更多的人会头脑一片混乱。<br>首先看代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">public class TestInteger &#123;</span><br><span class="line">  public static void main(String[] args) &#123;</span><br><span class="line">    int i = 128;</span><br><span class="line">    Integer i2 = 128;</span><br><span class="line">    Integer i3 = new Integer(128);</span><br><span class="line">    //Integer会自动拆箱为int，所以为true</span><br><span class="line">    System.out.println(i == i2);</span><br><span class="line">    System.out.println(i == i3);</span><br><span class="line">    System.out.println(&quot;**************&quot;);</span><br><span class="line">    Integer i5 = 127;//java在编译的时候,被翻译成-&gt; Integer i5 = Integer.valueOf(127);</span><br><span class="line">    Integer i6 = 127;</span><br><span class="line">    System.out.println(i5 == i6);//true</span><br><span class="line">    /*</span><br><span class="line">    Integer i5 = 128;</span><br><span class="line">    Integer i6 = 128;</span><br><span class="line">    System.out.println(i5 == i6);//false</span><br><span class="line">    */</span><br><span class="line">    Integer ii5 = new Integer(127);</span><br><span class="line">    System.out.println(i5 == ii5); //false</span><br><span class="line">    Integer i7 = new Integer(128);</span><br><span class="line">    Integer i8 = new Integer(123);</span><br><span class="line">    System.out.println(i7 == i8);  //false</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>首先，7行和8行输出结果都为true,因为Integer和int比都会自动拆箱（jdk1.5以上）。<br>13行的结果为true,而17行则为false,很多人都不懂为什么。其实java在编译Integer i5 = 127的时候,被翻译成-&gt; Integer i5 = Integer.valueOf(127);所以关键就是看valueOf()函数了。只要看看valueOf()函数的源码就会明白了。JDK源码的 valueOf函数式这样的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public static Integer valueOf(int i) &#123;</span><br><span class="line">   assert IntegerCache.high &gt;= 127;</span><br><span class="line">   if (i &gt;= IntegerCache.low &amp;&amp; i &lt;= IntegerCache.high)</span><br><span class="line">       return IntegerCache.cache[i + (-IntegerCache.low)];</span><br><span class="line">   return new Integer(i);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></p>
-<p>看一下源码大家都会明白，对于-128到127之间的数，会进行缓存，Integer i5 = 127时，会将127进行缓存，下次再写Integer i6 = 127时，就会直接从缓存中取，就不会new了。所以22行的结果为true,而25行为false。<br>对于20行和23行，因为对象不一样，所以为false。<br>对于以上的情况总结如下：</p>
-<ul>
-<li><strong>无论如何，Integer与new Integer不会相等。不会经历拆箱过程，i3的引用指向堆，而i4指向专门存放他的内存（常量池），他们的内存地址不一样，所以为false</strong></li>
-<li><strong>两个都是非new出来的Integer，如果数在-128到127之间，则是true,否则为false。java在编译Integer i2 = 128的时候,被翻译成-&gt; Integer i2 = Integer.valueOf(128);而valueOf()函数会对-128到127之间的数进行缓存</strong></li>
-<li><strong>两个都是new出来的,都为false</strong></li>
-<li><strong>int和Integer(无论new否)比，都为true，因为会把Integer自动拆箱为int再去比</strong></li>
-</ul>
-<h4 id="AutoBoxCacheMax参数"><a href="#AutoBoxCacheMax参数" class="headerlink" title="AutoBoxCacheMax参数"></a>AutoBoxCacheMax参数</h4><p>-XX:AutoBoxCacheMax这个参数是设置Integer缓存上限的参数。理论上讲，当系统需要频繁使用Integer时，或者说堆内存中存在大量的Integer对象时，可以考虑提高Integer缓存上限，避免JVM重复创造对象，提高内存的使用率，减少GC的频率，从而提高系统的性能。<br>理论归理论，这个参数能否提高系统系统关键还是要看堆中Integer对象到底有多少、以及Integer的创建的方式。如果堆中的Integer对象很少，重新设置这个参数并不会提高系统的性能。即使堆中存在大量的Integer对象，也要看Integer对象时如何产生的。</p>
-<ol>
-<li>大部分Integer对象通过Integer.valueOf()产生。说明代码里存在大量的拆箱与装箱操作。这时候设置这个参数会系统性能有所提高。</li>
-<li>大部分Integer对象通过反射，new产生。这时候Integer对象的产生大部分不会走valueOf()方法，所以设置这个参数也是无济于事。</li>
-</ol>
-
+    
   
 
     </div>
@@ -222,7 +204,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Integer</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">TCP</a>
         		</li>
       		
 		</ul>
@@ -234,7 +216,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/基础//" class="article-tag-list-link color3">基础</a>
+        			<a href="/categories/网络协议//" class="article-tag-list-link color5">网络协议</a>
         		</li>
       		
 		</ul>
@@ -289,7 +271,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://liuxiaocsu.github.io/2016/08/23/Java-Integer的缓存策略/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://liuxiaocsu.github.io/2017/07/21/TCP保活/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -303,18 +285,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2016/08/27/C10K问题/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/08/05/HTTP协议简介/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          C10K问题
+          HTTP协议简介
         
       </div>
     </a>
   
   
-    <a href="/2016/08/03/位运算/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">位运算</div>
+    <a href="/2017/07/15/TCP拥塞控制/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">TCP拥塞控制</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -341,7 +323,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#AutoBoxCacheMax参数"><span class="toc-number">1.</span> <span class="toc-text">AutoBoxCacheMax参数</span></a></li></ol>
+                    目录，不存在的…
                     </div>
                 </span>
             </div>
@@ -366,7 +348,7 @@
 <script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "https://liuxiaocsu.github.io/2016/08/23/Java-Integer的缓存策略/",
+  id: "https://liuxiaocsu.github.io/2017/07/21/TCP保活/",
   owner: 'liuxiaocsu',
   repo: 'liuxiaocsu.github.io',
   oauth: {
