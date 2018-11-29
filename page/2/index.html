@@ -171,20 +171,20 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-ForkJoinPool学习笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-kafaka学习笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/27/ForkJoinPool学习笔记/">ForkJoinPool学习笔记</a>
+      <a class="article-title" href="/2018/03/21/kafaka学习笔记/">kafaka学习笔记</a>
     </h1>
   
 
         
-        <a href="/2017/06/27/ForkJoinPool学习笔记/" class="archive-article-date">
-  	<time datetime="2017-06-27T08:15:43.000Z" itemprop="datePublished">2017-06-27</time>
+        <a href="/2018/03/21/kafaka学习笔记/" class="archive-article-date">
+  	<time datetime="2018-03-21T12:39:26.000Z" itemprop="datePublished">2018-03-21</time>
   	<span id="busuanzi_container_page_pv" style="color:DarkGray">
       view <span id="busuanzi_value_page_pv"></span> times
     </span>
@@ -197,7 +197,8 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p>在 Java7引入的诸多新特性中，Fork/Join 框架无疑是重要的一项。JSR 166旨在标准化一个实质上可扩展的框架，以将并行计算的通用工具类组织成一个类似java.util中Collection一样的包。其目标是使之对开发人员易用且易维护，同时该框架也旨在并行计算地高质量实现。目前已经有多个新的类和接口被添加到该框架中了。<br>该新特性主要是解决Java社区中对于如synchronized，wait和notify等操作的低级别的话题活动的需求。Fork/Join框 架被设计成可以容易地将算法并行化、分治化。开发人员曾多次想用自己(在非底层实现)的并发机制实现这一目标，因此新框架的想法是提供标准化和效率最高的 并发工具协助开发人员实现各种多线程应用。其所需的类和接口都位于java.util.concurrent包中。<br></p>
+  
+    
   
 
     </div>
@@ -209,7 +210,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JUC</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">kafaka</a>
         		</li>
       		
 		</ul>
@@ -221,7 +222,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/并发-多线程//" class="article-tag-list-link color2">并发/多线程</a>
+        			<a href="/categories/MQ//" class="article-tag-list-link color3">MQ</a>
         		</li>
       		
 		</ul>
@@ -230,7 +231,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/06/27/ForkJoinPool学习笔记/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/03/21/kafaka学习笔记/">展开全文 >></a>
         </p>
       
 
@@ -260,20 +261,20 @@
 
 
   
-    <article id="post-Atomic包学习笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-分布式一致性协议之Zab" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/21/Atomic包学习笔记/">Atomic包学习笔记</a>
+      <a class="article-title" href="/2018/03/11/分布式一致性协议之Zab/">分布式一致性协议之Zab</a>
     </h1>
   
 
         
-        <a href="/2017/06/21/Atomic包学习笔记/" class="archive-article-date">
-  	<time datetime="2017-06-21T08:55:43.000Z" itemprop="datePublished">2017-06-21</time>
+        <a href="/2018/03/11/分布式一致性协议之Zab/" class="archive-article-date">
+  	<time datetime="2018-03-11T02:19:09.000Z" itemprop="datePublished">2018-03-11</time>
   	<span id="busuanzi_container_page_pv" style="color:DarkGray">
       view <span id="busuanzi_value_page_pv"></span> times
     </span>
@@ -286,7 +287,8 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p>java.util.concurrent.atomic包里提供了一组原子变量类。其基本的特性就是在多线程环境下，当有多个线程同时执行这些类的实例包含的方法时，具有排他性，即当某个线程进入方法，执 行其中的指令时，不会被其他线程打断，而别的线程就像自旋锁一样，一直等到该方法执行完成，才由JVM从等待队列中选择一个另一个线程进入，这只是一种逻辑上的理解。实际上是借助硬件的相关指令来实现的，不会阻塞线程(或者说只是在硬件级别上阻塞了)。可以对基本数据、数组中的基本数据、对类中的基本数据 进行操作。原子变量类相当于一种泛化的volatile变量，能够支持原子的和有条件的读-改-写操作。<br></p>
+  
+    
   
 
     </div>
@@ -294,10 +296,21 @@
       
       
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/分布式//" class="article-tag-list-link color4">分布式</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/06/21/Atomic包学习笔记/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/03/11/分布式一致性协议之Zab/">展开全文 >></a>
         </p>
       
 
@@ -327,20 +340,20 @@
 
 
   
-    <article id="post-LinkedList和ArrayList的区别" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-分布式一致性协议之Raft" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/23/LinkedList和ArrayList的区别/">LinkedList和ArrayList的区别</a>
+      <a class="article-title" href="/2018/03/07/分布式一致性协议之Raft/">分布式一致性协议之Raft</a>
     </h1>
   
 
         
-        <a href="/2017/05/23/LinkedList和ArrayList的区别/" class="archive-article-date">
-  	<time datetime="2017-05-23T08:42:09.000Z" itemprop="datePublished">2017-05-23</time>
+        <a href="/2018/03/07/分布式一致性协议之Raft/" class="archive-article-date">
+  	<time datetime="2018-03-07T02:17:49.000Z" itemprop="datePublished">2018-03-07</time>
   	<span id="busuanzi_container_page_pv" style="color:DarkGray">
       view <span id="busuanzi_value_page_pv"></span> times
     </span>
@@ -353,31 +366,21 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p>LinkedeList和ArrayList都实现了List接口，但是它们的工作原理却不一样。它们之间最主要的区别在于ArrayList是可 改变大小的数组，而LinkedList是双向链接串列(doubly LinkedList)。ArrayList更受欢迎，很多场景下ArrayList比LinkedList更为适用。这篇文章中我们将会看看 LinkedeList和ArrayList的不同，而且我们试图来看看什么场景下更适宜使用LinkedList，而不用ArrayList。<br></p>
+  
+    
   
 
     </div>
     <div class="article-info article-info-index">
       
       
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
+        			<a href="/categories/分布式//" class="article-tag-list-link color4">分布式</a>
         		</li>
       		
 		</ul>
@@ -386,7 +389,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/05/23/LinkedList和ArrayList的区别/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/03/07/分布式一致性协议之Raft/">展开全文 >></a>
         </p>
       
 
@@ -416,20 +419,20 @@
 
 
   
-    <article id="post-Future学习笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-分布式一致性协议之Paxos" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/20/Future学习笔记/">Future学习笔记</a>
+      <a class="article-title" href="/2018/03/02/分布式一致性协议之Paxos/">分布式一致性协议之Paxos</a>
     </h1>
   
 
         
-        <a href="/2017/05/20/Future学习笔记/" class="archive-article-date">
-  	<time datetime="2017-05-20T08:54:05.000Z" itemprop="datePublished">2017-05-20</time>
+        <a href="/2018/03/02/分布式一致性协议之Paxos/" class="archive-article-date">
+  	<time datetime="2018-03-02T02:17:57.000Z" itemprop="datePublished">2018-03-02</time>
   	<span id="busuanzi_container_page_pv" style="color:DarkGray">
       view <span id="busuanzi_value_page_pv"></span> times
     </span>
@@ -442,31 +445,21 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p>Future模式的核心思想是能够让主线程将原来需要同步等待的这段时间用来做其他的事情，这个时候可以更好的 利用CPU分片，这点可以这么理解，如果我们申请了线程，但是又没让CPU调度，这岂不是很浪费，我们可以有更好的方法来提高CPU的利用率，也就是让线 程本来可以等待（歇息）的时间让线程去做其他的事情，榨干它的剩余价值，当然是以CPU没有打满（100%利用率）为前提，JAVA里面对Future模 式的具体实现是JDK1.5开始的JUC包中的Future接口及其实现的定义。<br></p>
+  
+    
   
 
     </div>
     <div class="article-info article-info-index">
       
       
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JUC</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/并发-多线程//" class="article-tag-list-link color2">并发/多线程</a>
+        			<a href="/categories/分布式//" class="article-tag-list-link color4">分布式</a>
         		</li>
       		
 		</ul>
@@ -475,7 +468,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/05/20/Future学习笔记/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/03/02/分布式一致性协议之Paxos/">展开全文 >></a>
         </p>
       
 
@@ -505,20 +498,20 @@
 
 
   
-    <article id="post-CAS学习笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-git学习笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/15/CAS学习笔记/">CAS学习笔记</a>
+      <a class="article-title" href="/2017/11/26/git学习笔记/">git学习笔记</a>
     </h1>
   
 
         
-        <a href="/2017/05/15/CAS学习笔记/" class="archive-article-date">
-  	<time datetime="2017-05-15T08:52:15.000Z" itemprop="datePublished">2017-05-15</time>
+        <a href="/2017/11/26/git学习笔记/" class="archive-article-date">
+  	<time datetime="2017-11-26T02:20:43.000Z" itemprop="datePublished">2017-11-26</time>
   	<span id="busuanzi_container_page_pv" style="color:DarkGray">
       view <span id="busuanzi_value_page_pv"></span> times
     </span>
@@ -531,7 +524,8 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p>CAS(Compare And Swap)，比较并交换，是CPU硬件级别提供的功能，比如IA64,X86指令集中用来完成CAS功能的指令集是cmpxchg。java.util.concurrent包中使用该技术实现乐观锁，换句话说java.util.concurrent包是完全建立在CAS之上，AQS同步组件、Atomic原子类操作等都是基于CAS实现的。CAS在JUC包中所处的位置如图：<br></p>
+  
+    
   
 
     </div>
@@ -543,7 +537,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JUC</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">git</a>
         		</li>
       		
 		</ul>
@@ -555,7 +549,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/并发-多线程//" class="article-tag-list-link color2">并发/多线程</a>
+        			<a href="/categories/git//" class="article-tag-list-link color4">git</a>
         		</li>
       		
 		</ul>
@@ -564,7 +558,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/05/15/CAS学习笔记/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/11/26/git学习笔记/">展开全文 >></a>
         </p>
       
 
@@ -594,20 +588,20 @@
 
 
   
-    <article id="post-Java线程池" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-Spring学习笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/10/Java线程池/">Java线程池</a>
+      <a class="article-title" href="/2017/10/27/Spring学习笔记/">Spring学习笔记</a>
     </h1>
   
 
         
-        <a href="/2017/05/10/Java线程池/" class="archive-article-date">
-  	<time datetime="2017-05-10T08:53:18.000Z" itemprop="datePublished">2017-05-10</time>
+        <a href="/2017/10/27/Spring学习笔记/" class="archive-article-date">
+  	<time datetime="2017-10-27T12:38:10.000Z" itemprop="datePublished">2017-10-27</time>
   	<span id="busuanzi_container_page_pv" style="color:DarkGray">
       view <span id="busuanzi_value_page_pv"></span> times
     </span>
@@ -620,7 +614,8 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p>谈到线程池就会想到池化技术，其中最核心的思想就是把宝贵的资源放到一个池子中；每次使用都从里面获取，用完之后又放回池子供其他人重复使用。之前我们在使用多线程都是用Thread的start()来创建启动一个线程，但是在实际开发中，如果每个请求到达就创建一个新线程，开销是相当大的。服务器在创建和销毁线程上花费的时间和消耗的系统资源都相当大，甚至可能要比在处理实际的用请求的时间和资源要多的多。除了创建和销毁线程的开销之外，活动的线程也需要消耗系统资源。如果在一个jvm里创建太多的线程，可能会使系统由于过度消耗内存或“切换过度”而导致系统资源不足。这就引入了线程池概念。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">new Thread的弊端：</span><br><span class="line">- 新建和销毁线程对象都比较好资源，比性能差。</span><br><span class="line">- 线程缺乏统一管理，可能无限制新建线程，相互之间竞争，及可能占用过多系统资源导致死机或oom。</span><br><span class="line">- 缺乏更多功能，如定时执行、定期执行、线程中断。</span><br><span class="line"></span><br><span class="line">相比new Thread，Java提供的四种线程池的好处在于：</span><br><span class="line">- 重用存在的线程，减少对象创建、消亡的开销，性能佳。</span><br><span class="line">- 可有效控制最大并发线程数，提高系统资源的使用率，同时避免过多资源竞争，避免堵塞。</span><br><span class="line">- 提供定时执行、定期执行、单线程、并发数控制等功能。</span><br></pre></td></tr></table></figure></p>
+  
+    
   
 
     </div>
@@ -632,7 +627,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JUC</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
         		</li>
       		
 		</ul>
@@ -644,7 +639,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/并发-多线程//" class="article-tag-list-link color2">并发/多线程</a>
+        			<a href="/categories/Spring//" class="article-tag-list-link color2">Spring</a>
         		</li>
       		
 		</ul>
@@ -653,7 +648,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/05/10/Java线程池/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/10/27/Spring学习笔记/">展开全文 >></a>
         </p>
       
 
@@ -683,20 +678,20 @@
 
 
   
-    <article id="post-动态代理" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-《望江南·广州好》-朱光" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/28/动态代理/">动态代理</a>
+      <a class="article-title" href="/2017/10/20/《望江南·广州好》-朱光/">《望江南·广州好》-朱光</a>
     </h1>
   
 
         
-        <a href="/2017/04/28/动态代理/" class="archive-article-date">
-  	<time datetime="2017-04-28T08:47:04.000Z" itemprop="datePublished">2017-04-28</time>
+        <a href="/2017/10/20/《望江南·广州好》-朱光/" class="archive-article-date">
+  	<time datetime="2017-10-20T02:25:59.000Z" itemprop="datePublished">2017-10-20</time>
   	<span id="busuanzi_container_page_pv" style="color:DarkGray">
       view <span id="busuanzi_value_page_pv"></span> times
     </span>
@@ -709,31 +704,21 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p>代理模式<br>代理(Proxy)是一种设计模式,提供了对目标对象另外的访问方式;即通过代理对象访问目标对象。这样做的好处是:可以在目标对象实现的基础上,增强额外的功能操作,即扩展目标对象的功能。简单来说就是说代理就是增强方法，让方法实现更多的额功能。<br>在编写程序与实现某些功能时,我们经常会使用到动态代理。动态代理是个很简单但是很有效的东西。在我们平时使用的框架中,像servlet的filter、包括spring提供的aop以及struts2的拦截器都使用了动态代理功能。我们日常看到的mybatis分页插件,以及日志拦截、事务拦截、权限拦截这些几乎全部由动态代理的身影。它的实现原理是非常简单的,就是在方法实现前后加入对应的公共功能。动态代理实现有三种方式，jdk动态代理（基于接口），cglib动态代理（基于继承），javassist（hibernate中使用这种方式）实现动态代理。<br></p>
+  
+    
   
 
     </div>
     <div class="article-info article-info-index">
       
       
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">动态代理</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/动态代理//" class="article-tag-list-link color5">动态代理</a>
+        			<a href="/categories/诗词//" class="article-tag-list-link color3">诗词</a>
         		</li>
       		
 		</ul>
@@ -742,7 +727,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/04/28/动态代理/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/10/20/《望江南·广州好》-朱光/">展开全文 >></a>
         </p>
       
 
@@ -772,20 +757,20 @@
 
 
   
-    <article id="post-序列化" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-UDP协议简介" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/22/序列化/">序列化</a>
+      <a class="article-title" href="/2017/08/07/UDP协议简介/">UDP协议简介</a>
     </h1>
   
 
         
-        <a href="/2017/03/22/序列化/" class="archive-article-date">
-  	<time datetime="2017-03-22T08:47:55.000Z" itemprop="datePublished">2017-03-22</time>
+        <a href="/2017/08/07/UDP协议简介/" class="archive-article-date">
+  	<time datetime="2017-08-07T02:11:38.000Z" itemprop="datePublished">2017-08-07</time>
   	<span id="busuanzi_container_page_pv" style="color:DarkGray">
       view <span id="busuanzi_value_page_pv"></span> times
     </span>
@@ -798,7 +783,8 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p>Java序列化是指把Java对象保存为二进制字节码的过程，Java反序列化是指把二进制字节码重新转换成Java对象的过程。<br>那么为什么需要序列化呢？<br>第一种情况是：一般情况下Java对象的声明周期都比Java虚拟机的要短，实际应用中我们希望在JVM停止运行之后能够持久化指定的对象，这时候就需要把对象进行序列化之后保存。<br>第二种情况是：需要把Java对象通过网络进行传输的时候。因为数据只能够以二进制的形式在网络中进行传输，因此当把对象通过网络发送出去之前需要先序列化成二进制数据，在接收端读到二进制数据之后反序列化成Java对象。<br>总结起来就是两个主要原因：持久化和网络传输。<br></p>
+  
+    
   
 
     </div>
@@ -810,7 +796,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Java基础</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">UDP</a>
         		</li>
       		
 		</ul>
@@ -822,7 +808,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/Java基础//" class="article-tag-list-link color2">Java基础</a>
+        			<a href="/categories/网络协议//" class="article-tag-list-link color5">网络协议</a>
         		</li>
       		
 		</ul>
@@ -831,7 +817,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/03/22/序列化/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/08/07/UDP协议简介/">展开全文 >></a>
         </p>
       
 
@@ -861,20 +847,20 @@
 
 
   
-    <article id="post-Mybatis学习笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-HTTP协议简介" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/19/Mybatis学习笔记/">Mybatis学习笔记</a>
+      <a class="article-title" href="/2017/08/05/HTTP协议简介/">HTTP协议简介</a>
     </h1>
   
 
         
-        <a href="/2017/03/19/Mybatis学习笔记/" class="archive-article-date">
-  	<time datetime="2017-03-19T12:38:37.000Z" itemprop="datePublished">2017-03-19</time>
+        <a href="/2017/08/05/HTTP协议简介/" class="archive-article-date">
+  	<time datetime="2017-08-05T02:11:46.000Z" itemprop="datePublished">2017-08-05</time>
   	<span id="busuanzi_container_page_pv" style="color:DarkGray">
       view <span id="busuanzi_value_page_pv"></span> times
     </span>
@@ -900,7 +886,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Mybatis</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">HTTP</a>
         		</li>
       		
 		</ul>
@@ -912,7 +898,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/ORM框架//" class="article-tag-list-link color1">ORM框架</a>
+        			<a href="/categories/网络协议//" class="article-tag-list-link color5">网络协议</a>
         		</li>
       		
 		</ul>
@@ -921,7 +907,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/03/19/Mybatis学习笔记/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/08/05/HTTP协议简介/">展开全文 >></a>
         </p>
       
 
@@ -951,20 +937,20 @@
 
 
   
-    <article id="post-Java泛型详解" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-TCP拥塞控制" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/19/Java泛型详解/">Java泛型详解</a>
+      <a class="article-title" href="/2017/07/15/TCP拥塞控制/">TCP拥塞控制</a>
     </h1>
   
 
         
-        <a href="/2016/11/19/Java泛型详解/" class="archive-article-date">
-  	<time datetime="2016-11-19T08:49:33.000Z" itemprop="datePublished">2016-11-19</time>
+        <a href="/2017/07/15/TCP拥塞控制/" class="archive-article-date">
+  	<time datetime="2017-07-15T02:12:26.000Z" itemprop="datePublished">2017-07-15</time>
   	<span id="busuanzi_container_page_pv" style="color:DarkGray">
       view <span id="busuanzi_value_page_pv"></span> times
     </span>
@@ -977,7 +963,8 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p>Java 泛型（generics）是 JDK 5 中引入的一个新特性, 泛型提供了编译时类型安全检测机制，该机制允许程序员在编译时检测到非法的类型。<br>泛型的本质是参数化类型，也就是说所操作的数据类型被指定为一个参数。<br></p>
+  
+    
   
 
     </div>
@@ -989,7 +976,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Java基础</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">TCP</a>
         		</li>
       		
 		</ul>
@@ -1001,7 +988,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/Java基础//" class="article-tag-list-link color2">Java基础</a>
+        			<a href="/categories/网络协议//" class="article-tag-list-link color5">网络协议</a>
         		</li>
       		
 		</ul>
@@ -1010,7 +997,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2016/11/19/Java泛型详解/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/07/15/TCP拥塞控制/">展开全文 >></a>
         </p>
       
 
@@ -1042,7 +1029,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
     </nav>
   
 
@@ -1199,6 +1186,10 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Btrace</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">C10K</a>
               </li>
              
@@ -1207,7 +1198,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">HTTP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">代码规范</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Integer</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1227,7 +1230,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">TCP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">UDP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">me</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1279,11 +1294,27 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">汪国真</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">中间件</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">大型网站</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">一致性哈希</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">限流</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
               </li>
              
               <li class="article-tag-list-item">
