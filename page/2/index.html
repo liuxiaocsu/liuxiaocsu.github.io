@@ -428,25 +428,9 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-  
-    <h3 id="查看当前仓库"><a href="#查看当前仓库" class="headerlink" title="查看当前仓库"></a>查看当前仓库</h3><p>git branch</p>
+     <h3 id="查看当前仓库"><a href="#查看当前仓库" class="headerlink" title="查看当前仓库"></a>查看当前仓库</h3><p>git branch</p>
 <h3 id="查看所有仓库"><a href="#查看所有仓库" class="headerlink" title="查看所有仓库"></a>查看所有仓库</h3><p>git branch -a</p>
 <h3 id="仓库当前的状态"><a href="#仓库当前的状态" class="headerlink" title="仓库当前的状态"></a>仓库当前的状态</h3><p>git status命令可以让我们时刻掌握仓库当前的状态<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ git status</span><br><span class="line">On branch master</span><br><span class="line">Changes not staged for commit:</span><br><span class="line">  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)</span><br><span class="line">  (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)</span><br><span class="line"></span><br><span class="line">    modified:   readme.txt</span><br><span class="line"></span><br><span class="line">no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)</span><br></pre></td></tr></table></figure></p>
-<h3 id="查看difference"><a href="#查看difference" class="headerlink" title="查看difference"></a>查看difference</h3><p>git diff顾名思义就是查看difference，显示的格式正是Unix通用的diff格式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ git diff readme.txt</span><br><span class="line">diff --git a/readme.txt b/readme.txt</span><br><span class="line">index 46d49bf..9247db6 100644</span><br><span class="line">--- a/readme.txt</span><br><span class="line">+++ b/readme.txt</span><br><span class="line">@@ -1,2 +1,2 @@</span><br><span class="line">-Git is a version control system.</span><br><span class="line">+Git is a distributed version control system.</span><br><span class="line"> Git is free software.</span><br></pre></td></tr></table></figure></p>
-<h3 id="提交到远程仓库"><a href="#提交到远程仓库" class="headerlink" title="提交到远程仓库"></a>提交到远程仓库</h3><p>git add .<br>git commit -m “注释”<br>git push</p>
-<h3 id="“储藏”当前工作现场"><a href="#“储藏”当前工作现场" class="headerlink" title="“储藏”当前工作现场"></a>“储藏”当前工作现场</h3><p>当在一个分支的开发工作未完成，却又要切换到另外一个分支进行开发的时候，除了commit原分支的代码改动的方法外，我觉得git stash是一个更加便捷的选择。</p>
-<p>步骤如下：</p>
-<p>一、添加改动到stash。在原分支 git stash save -a “messeag”，网上很多很多资料都没有加 -a 这个option选项，我想他们的代码开发可能都是在原代码上进行修改吧。而对于在项目里加入了代码新文件的开发来说，-a选项才会将新加入的代码文件同时放入暂存区。</p>
-<p>二、恢复改动。如果你要恢复的是最近的一次改动，git stash pop即可，我用这个用的最多。如果有多次stash操作，那就通过git stash list查看stash列表，从中选择你想要pop的stash，运行命令git stash pop stash@{id}或者 git<br> stash apply stash@{id}即可。这方面网上的资料挺多的。</p>
-<p>三、删除stash。git stash drop &lt;stash@{id}&gt;  如果不加stash编号，默认的就是删除最新的，也就是编号为0的那个，加编号就是删除指定编号的stash。git  stash clear 是清除所有stash,整个世界一下子清净了！</p>
-<p>四、git stash pop  与 git stash apply &lt;stash@{id}&gt;<br>的区别。<br>使用git stash pop 和 git stash apply 几次以后，发现stash  list 好像比我预计的多了几个stash。原来git stash pop stash@{id}命令会在执行后将对应的stash id 从stash list里删除，而 git stash apply stash@{id}<br>命令则会继续保存stash id。对于有点强迫症的我来说，是容不下越来越多的陈旧stash id 仍然存在的，所以我更习惯于用git stash pop 命令。</p>
-<h3 id="撤销修改"><a href="#撤销修改" class="headerlink" title="撤销修改"></a>撤销修改</h3><p>场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令git checkout – file。<br>场景2：当你不但改乱了工作区某个文件的内容，还添加到了暂存区(就是已经运行了git add命令)时，想丢弃修改，分两步，第一步用命令git reset HEAD file，就回到了场景1，第二步按场景1操作。<br>场景3：已经提交了不合适的修改到版本库时，想要撤销本次提交，参考版本回退一节，不过前提是没有推送到远程库。</p>
-<p>HEAD指向的版本就是当前版本，因此，Git允许我们在版本的历史之间穿梭，使用命令git reset –hard commit_id。<br>穿梭前，用git log可以查看提交历史，以便确定要回退到哪个版本。<br>要重返未来，用git reflog查看命令历史，以便确定要回到未来的哪个版本。</p>
-<h3 id="把工作分支代码-合并-到master分支的方式"><a href="#把工作分支代码-合并-到master分支的方式" class="headerlink" title="把工作分支代码 合并 到master分支的方式"></a>把工作分支代码 合并 到master分支的方式</h3><p>假设工作分支为 v-5.23-redbalanceclient_setTimeout,主分支为master<br>1、切换到master分支，并更新<br>      git checkout master<br>      git pull</p>
-<p>2、切换到v-5.23-redbalanceclient_setTimeout分支<br>       git checkout v-5.23-redbalanceclient_setTimeout<br>       git merge master (把master分支合并到v-5.23-redbalanceclient_setTimeout分支)</p>
-<p>3、在v-5.23-redbalanceclient_setTimeout分支解决冲突后提交<br>        git add .<br>        git commit -m”注释”<br>        git push</p>
-<p>4、切换到master分支<br>        git checkout  master<br>        git merge v-5.23-redbalanceclient_setTimeout<br>        git push  （在master分支合并工作分支后，不需要git add . ;git commit 命令，直接push到远程master分支即可）</p>
-
   
 
     </div>
@@ -625,10 +609,8 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-  
-    <p>朱光市长《望江南 广州好》词50首</p>
-<p>广州好，城古越千年。饱阅沧桑消劫烬，缅怀缔造接前贤。山立五羊仙。<br>广州好，反帝百年名。城北平英扬义帜，虎门焚毒抗夷兵。独立血来争。<br>广州好，三月吊黄花。七二英雄溅碧血，万千豪杰拔龙牙。辛亥耀光华。<br>广州好，越秀更娇妍。俯瞰烟霞穷变化，仰观林翠有无间。碑写碧云天。<br>广州好，黄埔涌波涛。北伐雄师钢铸骨，工农从此识刀枪。八一树红旄。（枪字出韵，平按）<br>广州好，工运著威声。省港洪潮寒鬼胆，沙基残杀岂能平。教我工农盟。<br>广州好，革命好摇篮。农运雄风开讲所，回天基力出高坛。旭日万民看。<br>广州好，追忆红花岗。血荐轩辕垂万古，松涛陵上问穹苍。血谊永难忘。<br>广州好，体育惠同群。人健国强情焕发，容陈戚艺冠全军。大任岂斯文。<br>广州好，科学早昌明。辈出英才多卓荦，青年意气莽纵横。百氏正争鸣。<br>广州好，业绩展华丰。灿烂琳琅多品类，声光电化创工农。计日达高峰。<br>广州好，路树列飞鹏。万棵紫荆飏彩蝶，千行绿盖缀明灯。影动月初升。<br>广州好，追忆红花岗。故垒依稀寻战迹，头颅愧戴鬓沾霜。晨起舞朝阳。<br>广州好，我问白云山。南国擎天成砥柱，松林泉唱晚霞丹。何日摘星还。<br>广州好，凭眺越王台。千里江山来眼底，十年生息入诗裁。云海一天开。<br>广州好，镇海有高楼。极目风云堪识势，骋怀原野乐丰收。何事问王侯。<br>广州好，花塔插云头。六祖色空留塑像，东坡来去唱南陬。诃树啸千秋。<br>广州好，忆旧访流花。桥畔象山迎盛日，湖开新翠舞飞霞。春色遍天涯。<br>广州好，新景满昌华。十里藕花芳沁远，千株荔子道边遮。路断七香车。<br>广州好，东浦出东湖。红雨浥堤滋弱柳，碧波荡艇耀明珠。高下若平芜。<br>广州好，夜泛荔枝湾。击楫飞觞惊鹭宿，啖虾啜粥乐馀闲。月冷放歌还。<br>广州好，晓港辟公园。傍水依山亭阁起，猗猗绿竹万千根。邻接古泉门。<br>广州好，过海踏花行。花埭素馨连紫陌，杨桃清脆味乡情。尧日照天晴。<br>广州好，晚照石门天。绿水青山霞绛染，蜃楼明月海潮喧。唤我不归船。<br>广州好，月上试凭栏。银汉繁星燎夜宇，珠江渔火照明澜。俯仰几回看。<br>广州好，夏夜放中流。渔唱激湍胸底阔，海云舒卷弄飞舟。更喜月如钩。<br>广州好，水暖任沉浮。海角荔堤垂柳岸，弄潮人喜向东流。洄溯自忘忧。<br>广州好，茶室清且宜。名点山泉常品赏，楼头风月约相知。共话太平时。<br>广州好，佳馔世传闻。宰割烹调夸妙手，飞潜动植味奇芬。龙虎会风云。<br>广州好，人物竞风流。五子三家留傲骨，海山岳雪剩荒邱。今日胜前俦。<br>广州好，元夕看花灯。街落银河城不夜，鱼龙凤鹊竞天腾。火树满天升。<br>广州好，踏雪上萝峰。公社桃梅红十里，文山诗翰有遗风。小立叫晨钟。<br>广州好，花木四时春。旖旄繁英堆锦绣，缤纷香蕊落衣中。只是为劳人。<br>广州好，端午赛龙舟。急鼓千捶船竞发，万桡齐举浪低头。屈子不须愁。<br>广州好，乞巧乞姻缘。巧艺年年祈夙愿，钟情红粉总堪怜。今日得团圆。<br>广州好，花市百花开。除夕东风花共醉，芬芳盈掬絮春回。曙色破天来。<br>广州好，宜雨又宜晴。蔬果桑麻繁种植，农林渔牧共经营。丽日有深情。<br>广州好，钢厂烁红霞。烟突嵯峨穿翠幕，铁流腾沸出丹葩。不见日西斜。<br>广州好，百艺斗环奇。牙雕木雕陶作好，拷绸麻织绣华蕤。创造属工师。<br>广州好，珠海跨长虹。络绎人车飞跃过，涛呼今已伏蛟龙。浩荡又东风。<br>广州好，侨伯构新村。去国饱尝飘泊苦，回乡今喜物华春。美景乐天伦。<br>广州好，粤剧放光辉。文茂英风存粉墨，汉卿妙笔泻珠玑。绝唱蝶双飞。<br>广州好，红马艺名扬。谢宝风高维正义，窦娥冤血断人肠。惊世是歌场。<br>广州好，南国奏佳音。试马春郊龙夺锦，行云流水鸟投林。击鼓说雄心。<br>广州好，解放十春秋。苦难已随流水去，繁华事业仗群谋。与众乐淹留。<br>广州好，四处亦为家。并举高飞同跃进，上游远瞩事无涯。日日望京华。<br>广州好，画派创新姿。锦绣岭南收笔底，天风春睡出高师。多少画中诗。<br>广州好，奕道冠群伦。北战南征奇将帜，车飞马跃炮如神。国手数官璘。<br>广州好，人道木棉红。落叶开花飞火凤，参天擎日舞丹龙。三月正春风。<br>广州好，美德看今朝。秀丽全公扑烈火，英雄无我逼青霄。风格立高标。</p>
-
+     <p>朱光市长《望江南 广州好》词50首</p>
+<p>广州好，城古越千年。饱阅沧桑消劫烬，缅怀缔造接前贤。山立五羊仙。<br>广州好，反帝百年名。城北平英扬义帜，虎门焚毒抗夷兵。独立血来争。<br>广州好，三月吊黄花。七二英雄溅碧血，万千豪杰拔龙牙。辛亥耀光华。<br>广州好，越秀更娇妍。俯瞰烟霞穷变化，仰观林翠有无间。碑写碧云天。<br></p>
   
 
     </div>
@@ -1199,14 +1181,6 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Btrace</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">C10K</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">JUC</a>
               </li>
              
@@ -1231,11 +1205,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1303,14 +1277,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">中间件</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">大型网站</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">一致性哈希</a>
               </li>
              
@@ -1320,6 +1286,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Btrace</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">C10K</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1348,6 +1322,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">代码规范</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">中间件</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">大型网站</a>
               </li>
              
               <li class="article-tag-list-item">

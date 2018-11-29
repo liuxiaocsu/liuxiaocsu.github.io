@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
 <meta property="og:description" content="查看当前仓库git branch 查看所有仓库git branch -a 仓库当前的状态git status命令可以让我们时刻掌握仓库当前的状态123456789$ git statusOn branch masterChanges not staged for commit:  (use &amp;quot;git add &amp;lt;file&amp;gt;...&amp;quot; to update what wil">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:updated_time" content="2018-11-29T04:30:40.482Z">
+<meta property="og:updated_time" content="2018-11-29T06:49:50.356Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="git学习笔记">
 <meta name="twitter:description" content="查看当前仓库git branch 查看所有仓库git branch -a 仓库当前的状态git status命令可以让我们时刻掌握仓库当前的状态123456789$ git statusOn branch masterChanges not staged for commit:  (use &amp;quot;git add &amp;lt;file&amp;gt;...&amp;quot; to update what wil">
@@ -198,6 +198,7 @@
     <h3 id="查看当前仓库"><a href="#查看当前仓库" class="headerlink" title="查看当前仓库"></a>查看当前仓库</h3><p>git branch</p>
 <h3 id="查看所有仓库"><a href="#查看所有仓库" class="headerlink" title="查看所有仓库"></a>查看所有仓库</h3><p>git branch -a</p>
 <h3 id="仓库当前的状态"><a href="#仓库当前的状态" class="headerlink" title="仓库当前的状态"></a>仓库当前的状态</h3><p>git status命令可以让我们时刻掌握仓库当前的状态<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ git status</span><br><span class="line">On branch master</span><br><span class="line">Changes not staged for commit:</span><br><span class="line">  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)</span><br><span class="line">  (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)</span><br><span class="line"></span><br><span class="line">    modified:   readme.txt</span><br><span class="line"></span><br><span class="line">no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
 <h3 id="查看difference"><a href="#查看difference" class="headerlink" title="查看difference"></a>查看difference</h3><p>git diff顾名思义就是查看difference，显示的格式正是Unix通用的diff格式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ git diff readme.txt</span><br><span class="line">diff --git a/readme.txt b/readme.txt</span><br><span class="line">index 46d49bf..9247db6 100644</span><br><span class="line">--- a/readme.txt</span><br><span class="line">+++ b/readme.txt</span><br><span class="line">@@ -1,2 +1,2 @@</span><br><span class="line">-Git is a version control system.</span><br><span class="line">+Git is a distributed version control system.</span><br><span class="line"> Git is free software.</span><br></pre></td></tr></table></figure></p>
 <h3 id="提交到远程仓库"><a href="#提交到远程仓库" class="headerlink" title="提交到远程仓库"></a>提交到远程仓库</h3><p>git add .<br>git commit -m “注释”<br>git push</p>
 <h3 id="“储藏”当前工作现场"><a href="#“储藏”当前工作现场" class="headerlink" title="“储藏”当前工作现场"></a>“储藏”当前工作现场</h3><p>当在一个分支的开发工作未完成，却又要切换到另外一个分支进行开发的时候，除了commit原分支的代码改动的方法外，我觉得git stash是一个更加便捷的选择。</p>
@@ -492,14 +493,6 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Btrace</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">C10K</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">JUC</a>
               </li>
              
@@ -524,11 +517,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -596,14 +589,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">中间件</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">大型网站</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">一致性哈希</a>
               </li>
              
@@ -613,6 +598,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Btrace</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">C10K</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -641,6 +634,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">代码规范</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">中间件</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">大型网站</a>
               </li>
              
               <li class="article-tag-list-item">

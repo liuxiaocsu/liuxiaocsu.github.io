@@ -8,15 +8,18 @@
   <link rel="dns-prefetch" href="https://liuxiaocsu.github.io">
   <title>Btrace使用简介 | Byte_Liu&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="Btrace">
+  <meta name="description" content="BTrace是sun公司推出的一款Java 动态、安全追踪（监控）工具，可以在不用重启的情况下监控系统运行情况，方便的获取程序运行时的数据信息，如方法参数、返回值、全局变量和堆栈信息等，并且做到最少的侵入，占用最少的系统资源。项目地址：Btrace用户指南：UserGuide由于Btrace会把脚本逻辑直接侵入到运行的代码中，所以在使用上做很多限制：1、不能创建对象2、不能使用数组3、不能抛出或捕">
+<meta name="keywords" content="Btrace">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Btrace使用简介">
 <meta property="og:url" content="https://liuxiaocsu.github.io/2017/04/23/Btrace使用简介/index.html">
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
+<meta property="og:description" content="BTrace是sun公司推出的一款Java 动态、安全追踪（监控）工具，可以在不用重启的情况下监控系统运行情况，方便的获取程序运行时的数据信息，如方法参数、返回值、全局变量和堆栈信息等，并且做到最少的侵入，占用最少的系统资源。项目地址：Btrace用户指南：UserGuide由于Btrace会把脚本逻辑直接侵入到运行的代码中，所以在使用上做很多限制：1、不能创建对象2、不能使用数组3、不能抛出或捕">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:updated_time" content="2018-11-29T03:29:58.380Z">
+<meta property="og:updated_time" content="2018-11-29T08:10:45.194Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Btrace使用简介">
+<meta name="twitter:description" content="BTrace是sun公司推出的一款Java 动态、安全追踪（监控）工具，可以在不用重启的情况下监控系统运行情况，方便的获取程序运行时的数据信息，如方法参数、返回值、全局变量和堆栈信息等，并且做到最少的侵入，占用最少的系统资源。项目地址：Btrace用户指南：UserGuide由于Btrace会把脚本逻辑直接侵入到运行的代码中，所以在使用上做很多限制：1、不能创建对象2、不能使用数组3、不能抛出或捕">
   
     <link rel="alternative" href="/atom.xml" title="Byte_Liu&#39;s Blog" type="application/atom+xml">
   
@@ -192,7 +195,45 @@
       
 
   
-    
+    <p>BTrace是sun公司推出的一款Java 动态、安全追踪（监控）工具，可以在不用重启的情况下监控系统运行情况，方便的获取程序运行时的数据信息，如方法参数、返回值、全局变量和堆栈信息等，并且做到最少的侵入，占用最少的系统资源。<br>项目地址：<a href="http://github.com/btraceio/btrace" target="_blank" rel="noopener">Btrace</a><br>用户指南：<a href="https://kenai.com/projects/btrace/pages/UserGuide" target="_blank" rel="noopener">UserGuide</a><br>由于Btrace会把脚本逻辑直接侵入到运行的代码中，所以在使用上做很多限制：<br>1、不能创建对象<br>2、不能使用数组<br>3、不能抛出或捕获异常<br>4、不能使用循环<br>5、不能使用synchronized关键字<br>6、属性和方法必须使用static修饰</p>
+<p>根据官方声明，不恰当的使用BTrace可能导致JVM崩溃，如在BTrace脚本使用错误的class文件，所以在上生产环境之前，务必在本地充分的验证脚本的正确性。<br>Btrace可以做什么？<br>1、接口性能变慢，分析每个方法的耗时情况；<br>2、当在Map中插入大量数据，分析其扩容情况；<br>3、分析哪个方法调用了System.gc()，调用栈如何；<br>4、执行某个方法抛出异常时，分析运行时参数；<br><a id="more"></a></p>
+<p>btrace使用方法<br> 命令格式:<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">btrace [-I &lt;include-path&gt;] [-p &lt;port&gt;] [-cp &lt;classpath&gt;] &lt;pid&gt;  &lt;btrace-script&gt; [&lt;args&gt;]</span><br></pre></td></tr></table></figure></p>
+<p> 示例:<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">btrace -cp common.jar  1200 AllCalls1.java</span><br></pre></td></tr></table></figure></p>
+<p>参数含义:</p>
+<ul>
+<li>include-path指定头文件的路径，用于脚本预处理功能，可选；</li>
+<li>port指定BTrace agent的服务端监听端口号，用来监听clients，默认为2020，可选；</li>
+<li>classpath用来指定类加载路径，默认为当前路径，可选；</li>
+<li>pid表示进程号，可通过jps命令获取；</li>
+<li>btrace-script即为BTrace脚本；btrace脚本如果以.java结尾，会先编译再提交执行。可使用btracec命令对脚本进行预编译。</li>
+<li>args是BTrace脚本参数，在脚本中可通过”$”和”$length”获取参数信息，可选；</li>
+</ul>
+<h3 id="btrace案例"><a href="#btrace案例" class="headerlink" title="btrace案例"></a>btrace案例</h3><p>一次奇异的getRegionInfo异常定位<br>perftools查看堆外内存并解决hbase内存溢出<br>btrace记忆<br>常见使用场景</p>
+<p>1.获取方法参数值和返回值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import com.sun.btrace.annotations.*;</span><br><span class="line">import static com.sun.btrace.BTraceUtils.*;</span><br><span class="line"></span><br><span class="line">@BTrace</span><br><span class="line">public class TracingScript &#123;</span><br><span class="line">   @OnMethod(</span><br><span class="line">      clazz=&quot;com.learnworld.Counter&quot;,</span><br><span class="line">      method=&quot;add&quot;,</span><br><span class="line">      location=@Location(Kind.RETURN)</span><br><span class="line">   )</span><br><span class="line">   public static void traceExecute(int num,@Return int result)&#123;</span><br><span class="line">     println(&quot;====== &quot;);</span><br><span class="line">     println(strcat(&quot;parameter num: &quot;,str(num)));</span><br><span class="line">     println(strcat(&quot;return value:&quot;,str(result)));</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>import com.sun.btrace.annotations.BTrace;<br>import com.sun.btrace.annotations.OnMethod;<br>import com.sun.btrace.annotations.Return;<br>import com.sun.btrace.annotations.Self;<br>import static com.sun.btrace.BTraceUtils.<em>;<br>import com.sun.btrace.annotations.</em>;</p>
+<p>@BTrace(unsafe=true)<br>public class EgTest2 {</p>
+<pre><code>@OnMethod(clazz=&quot;com.learnworld.data.ip.IpAppMapper&quot;, method=&quot;getAppName&quot;,location=@Location(Kind.RETURN))
+public static void search(String ip,@Return String result){
+    println(strcat(ip,result));
+   }
+</code></pre><p>}</p>
+<p>2.定时获取Counter类的属性值totalCount。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">import com.sun.btrace.annotations.*;</span><br><span class="line">import static com.sun.btrace.BTraceUtils.*;</span><br><span class="line"></span><br><span class="line">@BTrace</span><br><span class="line">public class TracingScript &#123;</span><br><span class="line">   private static Object totalCount = 0;</span><br><span class="line"></span><br><span class="line">   @OnMethod(</span><br><span class="line">      clazz=&quot;com.learnworld.Counter&quot;,</span><br><span class="line">      method=&quot;add&quot;,</span><br><span class="line">      location=@Location(Kind.RETURN)</span><br><span class="line">   )</span><br><span class="line">   public static void traceExecute(@Self com.learnworld.Counter counter)&#123;</span><br><span class="line">     totalCount = get(field(&quot;com.learnworld.Counter&quot;,&quot;totalCount&quot;), counter);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   @OnTimer(1000)</span><br><span class="line">   public static void print()&#123;</span><br><span class="line">     println(&quot;====== &quot;);</span><br><span class="line">     println(strcat(&quot;totalCount: &quot;,str(totalCount)));</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ol start="3">
+<li>获取add方法执行时间。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">import com.sun.btrace.annotations.*;</span><br><span class="line">import static com.sun.btrace.BTraceUtils.*;</span><br><span class="line"></span><br><span class="line">@BTrace</span><br><span class="line">public class TracingScript &#123;</span><br><span class="line">   @TLS private static long startTime = 0;</span><br><span class="line"></span><br><span class="line">   @OnMethod(</span><br><span class="line">      clazz=&quot;com.learnworld.Counter&quot;,</span><br><span class="line">      method=&quot;add&quot;</span><br><span class="line">   )</span><br><span class="line">   public static void startExecute()&#123;</span><br><span class="line">     startTime = timeNanos();</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   @OnMethod(</span><br><span class="line">      clazz=&quot;com.learnworld.Counter&quot;,</span><br><span class="line">      method=&quot;add&quot;,</span><br><span class="line">      location=@Location(Kind.RETURN)</span><br><span class="line">   )</span><br><span class="line">   public static void endExecute(@Duration long duration)&#123;</span><br><span class="line">     long time = timeNanos() - startTime;</span><br><span class="line">     println(strcat(&quot;execute time(nanos): &quot;, str(time)));</span><br><span class="line">     println(strcat(&quot;duration(nanos): &quot;, str(duration)));</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">import com.sun.btrace.annotations.BTrace;</span><br><span class="line">import com.sun.btrace.annotations.OnMethod;</span><br><span class="line">import com.sun.btrace.annotations.Return;</span><br><span class="line">import com.sun.btrace.annotations.Self;</span><br><span class="line">import static com.sun.btrace.BTraceUtils.*;</span><br><span class="line">import com.sun.btrace.annotations.*;</span><br><span class="line">import org.apache.lucene.search.*;</span><br><span class="line">import org.apache.lucene.index.*;</span><br><span class="line"></span><br><span class="line">@BTrace</span><br><span class="line">public class MultiTermQueryWrapperFilter &#123;</span><br><span class="line"></span><br><span class="line">	 @TLS static long beginTime=0;</span><br><span class="line"></span><br><span class="line">	@OnMethod(clazz=&quot;org.apache.lucene.search.MultiTermQueryWrapperFilter&quot;, method=&quot;getDocIdSet&quot;)</span><br><span class="line">	public static void traceExecuteBegin()&#123;</span><br><span class="line">    		 beginTime=timeMillis();</span><br><span class="line">   	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	@OnMethod(clazz=&quot;org.apache.lucene.search.MultiTermQueryWrapperFilter&quot;, method=&quot;getDocIdSet&quot;,location=@Location(Kind.RETURN))</span><br><span class="line">	public static void mergeArray()throws Exception &#123;</span><br><span class="line">		println(strcat(strcat(&quot;MultiTermQueryWrapperFilter .execute time is:&quot;,str(timeMillis()-beginTime)),&quot;ms&quot;));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>获取add()方法调用方法sleep()次数。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">import com.sun.btrace.annotations.*;</span><br><span class="line">import static com.sun.btrace.BTraceUtils.*;</span><br><span class="line"></span><br><span class="line">@BTrace</span><br><span class="line">public class TracingScript &#123;</span><br><span class="line">   private static long count;</span><br><span class="line"></span><br><span class="line">   @OnMethod(</span><br><span class="line">      clazz=&quot;/.*/&quot;,</span><br><span class="line">      method=&quot;add&quot;,</span><br><span class="line">      location=@Location(value=Kind.CALL, clazz=&quot;/.*/&quot;, method=&quot;sleep&quot;)</span><br><span class="line">   )</span><br><span class="line">   public static void traceExecute(@ProbeClassName String pcm, @ProbeMethodName String pmn,</span><br><span class="line">   @TargetInstance Object instance,  @TargetMethodOrField String method)&#123;</span><br><span class="line">     println(&quot;====== &quot;);</span><br><span class="line">     println(strcat(&quot;ProbeClassName: &quot;,pcm));</span><br><span class="line">     println(strcat(&quot;ProbeMethodName: &quot;,pmn));</span><br><span class="line">     println(strcat(&quot;TargetInstance: &quot;,str(classOf(instance))));</span><br><span class="line">     println(strcat(&quot;TargetMethodOrField : &quot;,str(method)));</span><br><span class="line">     count++;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   @OnEvent</span><br><span class="line">   public static void getCount()&#123;</span><br><span class="line">       println(strcat(&quot;count: &quot;, str(count)));</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>获取参数的成员变量<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">@BTrace</span><br><span class="line">public class OracleTimeoutTracer &#123;</span><br><span class="line"></span><br><span class="line">    @OnMethod(clazz = &quot;oracle.net.nt.ConnStrategy&quot;, method = &quot;createSocketOptions&quot;, location = @Location(value = Kind.ENTRY))</span><br><span class="line">    public static void strategy(@Self Object self, Properties paramProperties) &#123;</span><br><span class="line">        println(str(paramProperties));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @OnMethod(clazz = &quot;oracle.net.nt.TcpNTAdapter&quot;, method = &quot;connect&quot;, location = @Location(value = Kind.ENTRY))</span><br><span class="line">    public static void adapter(@Self Object self) &#123;</span><br><span class="line">        Field socketTimeoutField = field(&quot;oracle.net.nt.TcpNTAdapter&quot;, &quot;sockTimeout&quot;);</span><br><span class="line">        Field hostField = field(&quot;oracle.net.nt.TcpNTAdapter&quot;, &quot;host&quot;);</span><br><span class="line">        Field portField = field(&quot;oracle.net.nt.TcpNTAdapter&quot;, &quot;port&quot;);</span><br><span class="line">        int scoketTimeout = (Integer) get(socketTimeoutField, self);</span><br><span class="line">        int port = (Integer) get(portField, self);</span><br><span class="line">        String host = (String) get(hostField, self);</span><br><span class="line"></span><br><span class="line">        println(strcat(strcat(strcat(strcat(strcat(&quot;host : &quot;, host), &quot;, port : &quot;), str(port)), &quot; , socketTimeout : &quot;),</span><br><span class="line">                       str(scoketTimeout)));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">import com.sun.btrace.annotations.BTrace;</span><br><span class="line">import com.sun.btrace.annotations.OnMethod;</span><br><span class="line">import com.sun.btrace.annotations.Return;</span><br><span class="line">import com.sun.btrace.annotations.Self;</span><br><span class="line">import static com.sun.btrace.BTraceUtils.*;</span><br><span class="line">import com.sun.btrace.annotations.*;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@BTrace(unsafe=true)</span><br><span class="line">public class EgTest1 &#123;</span><br><span class="line"></span><br><span class="line">	@OnMethod(clazz=&quot;com.learnworl.digest.RealtimeDigester&quot;, method=&quot;generateStat&quot;)</span><br><span class="line">	public static void search(RpcBased rpcBased)&#123;</span><br><span class="line"></span><br><span class="line">		Object clientAppName = get(field(&quot;com.taobao.eagleeye.model.RpcBased&quot;,&quot;clientAppName&quot;), rpcBased);</span><br><span class="line">		Object serverAppName = get(field(&quot;com.taobao.eagleeye.model.RpcBased&quot;,&quot;serverAppName&quot;), rpcBased);</span><br><span class="line">		Object serviceId = get(field(&quot;com.taobao.eagleeye.model.RpcBased&quot;,&quot;serviceId&quot;), rpcBased);</span><br><span class="line">		Object host = 	get(field(&quot;com.taobao.eagleeye.model.RpcBased&quot;,&quot;host&quot;), rpcBased);</span><br><span class="line"></span><br><span class="line">		String a = strcat(str(clientAppName),&quot;,&quot;);</span><br><span class="line">		String b = strcat(str(serverAppName),&quot;,&quot;);</span><br><span class="line">		String c = strcat(str(serviceId),&quot;,&quot;);</span><br><span class="line">		String e = strcat(str(host),&quot;,&quot;);</span><br><span class="line"></span><br><span class="line">		String n1 = strcat(a,b);</span><br><span class="line">		String n2 = strcat(c,e);</span><br><span class="line">		println(strcat(n1,n2));</span><br><span class="line">   	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="问题总结"><a href="#问题总结" class="headerlink" title="问题总结"></a>问题总结</h3><p> btrace报错：method calls are not allowed - only calls to BTraceUtils are allowed<br>原因是btrace存在安全限制，不允许调用被agent对象的方法。晚上说可以通过设计Dcom.sun.btrace.unsafe=true破解btrace的安全限制，但我试过不行。</p>
+
   
 
     </div>
@@ -323,7 +364,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    目录，不存在的…
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#btrace案例"><span class="toc-number">1.</span> <span class="toc-text">btrace案例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#问题总结"><span class="toc-number">2.</span> <span class="toc-text">问题总结</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -472,14 +513,6 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Btrace</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">C10K</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">JUC</a>
               </li>
              
@@ -504,11 +537,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -576,14 +609,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">中间件</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">大型网站</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">一致性哈希</a>
               </li>
              
@@ -593,6 +618,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Btrace</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">C10K</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -621,6 +654,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">代码规范</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">中间件</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">大型网站</a>
               </li>
              
               <li class="article-tag-list-item">
