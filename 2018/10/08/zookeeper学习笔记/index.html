@@ -8,15 +8,26 @@
   <link rel="dns-prefetch" href="https://liuxiaocsu.github.io">
   <title>zookeeper学习笔记 | Byte_Liu&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="zookeeper">
+  <meta name="description" content="Zookeeper是Hadoop分布式调度服务，用来构建分布式应用系统。构建一个分布式应用是一个很复杂的事情，主要的原因是我们需要合理有效 的处理分布式集群中的部分失败的问题。例如，集群中的节点在相互通信时，A节点向B节点发送消息。A节点如果想知道消息是否发送成功，只能由B节点告诉A 节点。那么如果B节点关机或者由于其他的原因脱离集群网络，问题就出现了。A节点不断的向B发送消息，并且无法获得B的响">
+<meta name="keywords" content="zookeeper">
 <meta property="og:type" content="article">
 <meta property="og:title" content="zookeeper学习笔记">
 <meta property="og:url" content="https://liuxiaocsu.github.io/2018/10/08/zookeeper学习笔记/index.html">
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
+<meta property="og:description" content="Zookeeper是Hadoop分布式调度服务，用来构建分布式应用系统。构建一个分布式应用是一个很复杂的事情，主要的原因是我们需要合理有效 的处理分布式集群中的部分失败的问题。例如，集群中的节点在相互通信时，A节点向B节点发送消息。A节点如果想知道消息是否发送成功，只能由B节点告诉A 节点。那么如果B节点关机或者由于其他的原因脱离集群网络，问题就出现了。A节点不断的向B发送消息，并且无法获得B的响">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:updated_time" content="2018-11-27T12:43:10.251Z">
+<meta property="og:image" content="https://liuxiaocsu.github.io/2018/10/08/zookeeper学习笔记/markdown-img-paste-20181129125913832.png">
+<meta property="og:image" content="https://liuxiaocsu.github.io/2018/10/08/zookeeper学习笔记/markdown-img-paste-20181129125946806.png">
+<meta property="og:image" content="https://liuxiaocsu.github.io/2018/10/08/zookeeper学习笔记/markdown-img-paste-20181129130119300.png">
+<meta property="og:image" content="https://liuxiaocsu.github.io/2018/10/08/zookeeper学习笔记/markdown-img-paste-2018112913015992.png">
+<meta property="og:image" content="https://liuxiaocsu.github.io/2018/10/08/zookeeper学习笔记/markdown-img-paste-20181129130233504.png">
+<meta property="og:image" content="https://liuxiaocsu.github.io/2018/10/08/zookeeper学习笔记/markdown-img-paste-20181129130318504.png">
+<meta property="og:image" content="https://liuxiaocsu.github.io/2018/10/08/zookeeper学习笔记/markdown-img-paste-2018112913040168.png">
+<meta property="og:updated_time" content="2018-11-29T05:07:11.295Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="zookeeper学习笔记">
+<meta name="twitter:description" content="Zookeeper是Hadoop分布式调度服务，用来构建分布式应用系统。构建一个分布式应用是一个很复杂的事情，主要的原因是我们需要合理有效 的处理分布式集群中的部分失败的问题。例如，集群中的节点在相互通信时，A节点向B节点发送消息。A节点如果想知道消息是否发送成功，只能由B节点告诉A 节点。那么如果B节点关机或者由于其他的原因脱离集群网络，问题就出现了。A节点不断的向B发送消息，并且无法获得B的响">
+<meta name="twitter:image" content="https://liuxiaocsu.github.io/2018/10/08/zookeeper学习笔记/markdown-img-paste-20181129125913832.png">
   
     <link rel="alternative" href="/atom.xml" title="Byte_Liu&#39;s Blog" type="application/atom+xml">
   
@@ -65,8 +76,6 @@
 				<li><a href="/archives">归档</a></li>
 	        
 				<li><a href="/tags">标签</a></li>
-	        
-				<li><a href="/aboutMe/liuxiao.html">about me</a></li>
 	        
 			</ul>
 		</nav>
@@ -128,8 +137,6 @@
 			
 				
 			
-				
-			
 			
 			
 			<nav class="header-nav">
@@ -148,15 +155,13 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 20%"><a href="/">主页</a></li>
+					<li style="width: 25%"><a href="/">主页</a></li>
 		        
-					<li style="width: 20%"><a href="/categories">分类</a></li>
+					<li style="width: 25%"><a href="/categories">分类</a></li>
 		        
-					<li style="width: 20%"><a href="/archives">归档</a></li>
+					<li style="width: 25%"><a href="/archives">归档</a></li>
 		        
-					<li style="width: 20%"><a href="/tags">标签</a></li>
-		        
-					<li style="width: 20%"><a href="/aboutMe/liuxiao.html">about me</a></li>
+					<li style="width: 25%"><a href="/tags">标签</a></li>
 		        
 				</ul>
 			</nav>
@@ -198,7 +203,67 @@
       
 
   
-    
+    <p>Zookeeper是Hadoop分布式调度服务，用来构建分布式应用系统。构建一个分布式应用是一个很复杂的事情，主要的原因是我们需要合理有效 的处理分布式集群中的部分失败的问题。例如，集群中的节点在相互通信时，A节点向B节点发送消息。A节点如果想知道消息是否发送成功，只能由B节点告诉A 节点。那么如果B节点关机或者由于其他的原因脱离集群网络，问题就出现了。A节点不断的向B发送消息，并且无法获得B的响应。B也没有办法通知A节点已经 离线或者关机。集群中其他的节点完全不知道B发生了什么情况，还在不断的向B发送消息。这时，你的整个集群就发生了部分失败的故障。<br>Zookeeper不能让部分失败的问题彻底消失，但是它提供了一些工具能够让你的分布式应用安全合理的处理部分失败的问题。</p>
+<p>Zookeeper 是分布式服务框架，主要是用来解决分布式应用中经常遇到的一些数据管理问题，如：统一命名服务、状态同步服务、集群管理、分布式应用配置项的管理等等。</p>
+<h3 id="zookeeper基本概念"><a href="#zookeeper基本概念" class="headerlink" title="zookeeper基本概念"></a>zookeeper基本概念</h3><h4 id="角色"><a href="#角色" class="headerlink" title="角色"></a>角色</h4><p>Zookeeper中的角色主要有以下三类，如下表所示：<br><img src="/2018/10/08/zookeeper学习笔记/markdown-img-paste-20181129125913832.png" alt=""></p>
+<p>系统模型如图所示：<br><img src="/2018/10/08/zookeeper学习笔记/markdown-img-paste-20181129125946806.png" alt=""></p>
+<h4 id="设计目的"><a href="#设计目的" class="headerlink" title="设计目的"></a>设计目的</h4><p>1.最终一致性：client不论连接到哪个Server，展示给它都是同一个视图，这是zookeeper最重要的性能。<br>2 .可靠性：具有简单、健壮、良好的性能，如果消息m被到一台服务器接受，那么它将被所有的服务器接受。<br>3 .实时性：Zookeeper保证客户端将在一个时间间隔范围内获得服务器的更新信息，或者服务器失效的信息。但由于网络延时等原因，Zookeeper不能保证两个客户端能同时得到刚更新的数据，如果需要最新数据，应该在读数据之前调用sync()接口。<br>4 .等待无关（wait-free）：慢的或者失效的client不得干预快速的client的请求，使得每个client都能有效的等待。<br>5.原子性：更新只能成功或者失败，没有中间状态。<br>6 .顺序性：包括全局有序和偏序两种：全局有序是指如果在一台服务器上消息a在消息b前发布，则在所有Server上消息a都将在消息b前被发布；偏序是指如果一个消息b在消息a后被同一个发送者发布，a必将排在b前面。</p>
+<h3 id="zookeeper工作原理"><a href="#zookeeper工作原理" class="headerlink" title="zookeeper工作原理"></a>zookeeper工作原理</h3><p>Zookeeper 的核心是广播，这个机制保证了各个Server之间的同步。实现这个机制的协议叫做Zab协议。Zab协议有两种模式，它们分别是恢复模式（选主）和广播 模式（同步）。当服务启动或者在领导者崩溃后，Zab就进入了恢复模式，当领导者被选举出来，且大多数Server完成了和leader的状态同步以后， 恢复模式就结束了。状态同步保证了leader和Server具有相同的系统状态。为了保证事务的顺序一致性，zookeeper采用了递增的事务id号 （zxid）来标识事务。所有的提议（proposal）都在被提出的时候加上了zxid。实现中zxid是一个64位的数字，它高32位是epoch用 来标识leader关系是否改变，每次一个leader被选出来，它都会有一个新的epoch，标识当前属于那个leader的统治时期。低32位用于递 增计数。<br>每个Server在工作过程中有三种状态：<br>LOOKING：当前Server不知道leader是谁，正在搜寻。<br>LEADING：当前Server即为选举出来的leader。<br>FOLLOWING：leader已经选举出来，当前Server与之同步。</p>
+<h4 id="选主流程"><a href="#选主流程" class="headerlink" title="选主流程"></a>选主流程</h4><p>当 leader崩溃或者leader失去大多数的follower，这时候zk进入恢复模式，恢复模式需要重新选举出一个新的leader，让所有的 Server都恢复到一个正确的状态。Zk的选举算法有两种：一种是基于basic paxos实现的，另外一种是基于fast paxos算法实现的。系统默认的选举算法为fast paxos。<br>basic paxos流程：<br>1 .选举线程由当前Server发起选举的线程担任，其主要功能是对投票结果进行统计，并选出推荐的Server；<br>2 .选举线程首先向所有Server发起一次询问(包括自己)；<br>3 .选举线程收到回复后，验证是否是自己发起的询问(验证zxid是否一致)，然后获取对方的id(myid)，并存储到当前询问对象列表中，最后获取对方提议的leader相关信息(id,zxid)，并将这些信息存储到当次选举的投票记录表中；</p>
+<ol start="4">
+<li>收到所有Server回复以后，就计算出zxid最大的那个Server，并将这个Server相关信息设置成下一次要投票的Server；</li>
+<li>线程将当前zxid最大的Server设置为当前Server要推荐的Leader，如果此时获胜的Server获得n/2 + 1的Server票数， 设置当前推荐的leader为获胜的Server，将根据获胜的Server相关信息设置自己的状态，否则，继续这个过程，直到leader被选举出来。<br>通 过流程分析我们可以得出：要使Leader获得多数Server的支持，则Server总数必须是奇数2n+1，且存活的Server的数目不得少于 n+1.每个Server启动后都会重复以上流程。在恢复模式下，如果是刚从崩溃状态恢复的或者刚启动的server还会从磁盘快照中恢复数据和会话信 息，zk会记录事务日志并定期进行快照，方便在恢复时进行状态恢复。<br>选主的具体流程图如下所示：</li>
+</ol>
+<p><img src="/2018/10/08/zookeeper学习笔记/markdown-img-paste-20181129130119300.png" alt=""></p>
+<p>fast paxos流程是在选举过程中，某Server首先向所有Server提议自己要成为leader，当其它Server收到提议以后，解决epoch和 zxid的冲突，并接受对方的提议，然后向对方发送接受提议完成的消息，重复这个流程，最后一定能选举出Leader。其流程图如下所示：</p>
+<p><img src="/2018/10/08/zookeeper学习笔记/markdown-img-paste-2018112913015992.png" alt=""></p>
+<h4 id="同步流程"><a href="#同步流程" class="headerlink" title="同步流程"></a>同步流程</h4><p>选完leader以后，zk就进入状态同步过程。</p>
+<ol>
+<li>leader等待server连接；<br>2 .Follower连接leader，将最大的zxid发送给leader；<br>3 .Leader根据follower的zxid确定同步点；<br>4 .完成同步后通知follower 已经成为uptodate状态；<br>5 .Follower收到uptodate消息后，又可以重新接受client的请求进行服务了。<br>流程图如下所示：</li>
+</ol>
+<p><img src="/2018/10/08/zookeeper学习笔记/markdown-img-paste-20181129130233504.png" alt=""></p>
+<h4 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h4><h5 id="Leader工作流程"><a href="#Leader工作流程" class="headerlink" title="Leader工作流程"></a>Leader工作流程</h5><p>Leader主要有三个功能：<br>1 .恢复数据；<br>2 .维持与Learner的心跳，接收Learner请求并判断Learner的请求消息类型；<br>3 .Learner的消息类型主要有PING消息、REQUEST消息、ACK消息、REVALIDATE消息，根据不同的消息类型，进行不同的处理。<br>PING 消息是指Learner的心跳信息；REQUEST消息是Follower发送的提议信息，包括写请求及同步请求；ACK消息是Follower的对提议 的回复，超过半数的Follower通过，则commit该提议；REVALIDATE消息是用来延长SESSION有效时间。<br>Leader的工作流程简图如下所示:</p>
+<p><img src="/2018/10/08/zookeeper学习笔记/markdown-img-paste-20181129130318504.png" alt=""></p>
+<h5 id="Follower工作流程"><a href="#Follower工作流程" class="headerlink" title="Follower工作流程"></a>Follower工作流程</h5><p>Follower主要有四个功能：</p>
+<ol>
+<li>向Leader发送请求（PING消息、REQUEST消息、ACK消息、REVALIDATE消息）；<br>2 .接收Leader消息并进行处理；<br>3 .接收Client的请求，如果为写请求，发送给Leader进行投票；<br>4 .返回Client结果。<br>Follower的消息循环处理如下几种来自Leader的消息：<br>1 .PING消息： 心跳消息；<br>2 .PROPOSAL消息：Leader发起的提案，要求Follower投票；<br>3 .COMMIT消息：服务器端最新一次提案的信息；<br>4 .UPTODATE消息：表明同步完成；<br>5 .REVALIDATE消息：根据Leader的REVALIDATE结果，关闭待revalidate的session还是允许其接受消息；<br>6 .SYNC消息：返回SYNC结果到客户端，这个消息最初由客户端发起，用来强制得到最新的更新。<br>Follower的工作流程简图如下所示：</li>
+</ol>
+<p><img src="/2018/10/08/zookeeper学习笔记/markdown-img-paste-2018112913040168.png" alt=""></p>
+<h3 id="zookeeper安装配置"><a href="#zookeeper安装配置" class="headerlink" title="zookeeper安装配置"></a>zookeeper安装配置</h3><p>ZooKeeper的安装模式分为三种，分别为：单机模式（stand-alone）、集群模式和集群伪<br>分布模式。</p>
+<h4 id="单机模式"><a href="#单机模式" class="headerlink" title="单机模式"></a>单机模式</h4><p>下载zookeeper的安装包之后, 解压到合适目录. 进入zookeeper目录下的conf子目录, 创建zoo.cfg:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tickTime=2000</span><br><span class="line">dataDir=/Users/apple/zookeeper/data</span><br><span class="line">dataLogDir=/Users/apple/zookeeper/logs</span><br><span class="line">clientPort=4180</span><br></pre></td></tr></table></figure></p>
+<p>参数说明:<br>tickTime: zookeeper中使用的基本时间单位, 毫秒值.<br>dataDir: 数据目录. 可以是任意目录.<br>dataLogDir: log目录, 同样可以是任意目录. 如果没有设置该参数, 将使用和dataDir相同的设置.<br>clientPort: 监听client连接的端口号</p>
+<h4 id="伪集群模式"><a href="#伪集群模式" class="headerlink" title="伪集群模式"></a>伪集群模式</h4><p>所谓伪集群, 是指在单台机器中启动多个zookeeper进程, 并组成一个集群. 以启动3个zookeeper进程为例.<br>将zookeeper的目录拷贝2份:<br>zookeeper0/conf/zoo.cfg文件为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">tickTime=2000</span><br><span class="line">initLimit=5</span><br><span class="line">syncLimit=2</span><br><span class="line">dataDir=/Users/apple/zookeeper0/data</span><br><span class="line">dataLogDir=/Users/apple/zookeeper0/logs</span><br><span class="line">clientPort=4180</span><br><span class="line">server.0=127.0.0.1:8880:7770</span><br><span class="line">server.1=127.0.0.1:8881:7771</span><br><span class="line">server.2=127.0.0.1:8882:7772</span><br></pre></td></tr></table></figure></p>
+<p>新增了几个参数, 其含义如下:<br>1 initLimit: zookeeper集群中的包含多台server, 其中一台为leader, 集群中其余的server为follower. initLimit参数配置初始化连接时, follower和leader之间的最长心跳时间. 此时该参数设置为5, 说明时间限制为5倍tickTime, 即5*2000=10000ms=10s.<br>2 syncLimit: 该参数配置leader和follower之间发送消息, 请求和应答的最大时间长度. 此时该参数设置为2, 说明时间限制为2倍tickTime, 即4000ms.<br>3 server.X=A:B:C 其中X是一个数字, 表示这是第几号server. A是该server所在的IP地址. B配置该server和集群中的leader交换消息所使用的端口. C配置选举leader时所使用的端口. 由于配置的是伪集群模式, 所以各个server的B, C参数必须不同.<br>参照zookeeper0/conf/zoo.cfg, 配置zookeeper1/conf/zoo.cfg, 和zookeeper2/conf/zoo.cfg文件. 只需更改dataDir, dataLogDir, clientPort参数即可.</p>
+<p>在之前设置的dataDir中新建myid文件, 写入一个数字, 该数字表示这是第几号server. 该数字必须和zoo.cfg文件中的server.X中的X一一对应.<br>/Users/apple/zookeeper0/data/myid文件中写入0, /Users/apple/zookeeper1/data/myid文件中写入1, /Users/apple/zookeeper2/data/myid文件中写入2.</p>
+<p>分别进入/Users/apple/zookeeper0/bin, /Users/apple/zookeeper1/bin, /Users/apple/zookeeper2/bin三个目录, 启动server.</p>
+<h4 id="集群模式"><a href="#集群模式" class="headerlink" title="集群模式"></a>集群模式</h4><p>集群模式的配置和伪集群基本一致.<br>由于集群模式下, 各server部署在不同的机器上, 因此各server的conf/zoo.cfg文件可以完全一样.<br>下面是一个示例:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">tickTime=2000</span><br><span class="line">initLimit=5</span><br><span class="line">syncLimit=2</span><br><span class="line">dataDir=/home/zookeeper/data</span><br><span class="line">dataLogDir=/home/zookeeper/logs</span><br><span class="line">clientPort=4180</span><br><span class="line">server.43=10.1.39.43:2888:3888</span><br><span class="line">server.47=10.1.39.47:2888:3888</span><br><span class="line">server.48=10.1.39.48:2888:3888</span><br></pre></td></tr></table></figure></p>
+<p>示例中部署了3台zookeeper server, 分别部署在10.1.39.43, 10.1.39.47, 10.1.39.48上. 需要注意的是, 各server的dataDir目录下的myid文件中的数字必须不同，10.1.39.43 server的myid为43, 10.1.39.47 server的myid为47, 10.1.39.48 server的myid为48.</p>
+<h3 id="zookeeper常用命令"><a href="#zookeeper常用命令" class="headerlink" title="zookeeper常用命令"></a>zookeeper常用命令</h3><h4 id="ZooKeeper服务命令"><a href="#ZooKeeper服务命令" class="headerlink" title="ZooKeeper服务命令:"></a>ZooKeeper服务命令:</h4><ol>
+<li>启动ZK服务: ./zkServer.sh start</li>
+<li>查看ZK服务状态: ./zkServer.sh status</li>
+<li>停止ZK服务: ./zkServer.sh stop</li>
+<li>重启ZK服务: ./zkServer.sh restart<h4 id="zk客户端命令："><a href="#zk客户端命令：" class="headerlink" title="zk客户端命令："></a>zk客户端命令：</h4>ZooKeeper 命令行工具类似于Linux的shell环境，使用它可以对ZooKeeper进行访问，数据创建，数据修改等操作. 使用 zkCli.sh -server 127.0.0.1:2181 连接到 ZooKeeper 服务，连接成功后，系统会输出 ZooKeeper 的相关环境以及配置信息。<br>命令行工具的一些简单操作如下：</li>
+<li>显示根目录下、文件： ls / 使用 ls 命令来查看当前 ZooKeeper 中所包含的内容</li>
+<li>显示根目录下、文件： ls2 / 查看当前节点数据并能看到更新次数等数据</li>
+<li>创建文件，并设置初始内容： create /zk “test” 创建一个新的 znode节点“ zk ”以及与它关联的字符串</li>
+<li>获取文件内容： get /zk 确认 znode 是否包含我们所创建的字符串</li>
+<li>修改文件内容： set /zk “zkbak” 对 zk 所关联的字符串进行设置</li>
+<li>删除文件： delete /zk 将刚才创建的 znode 删除</li>
+<li>退出客户端： quit</li>
+<li>帮助命令： help<h4 id="ZooKeeper-常用四字命令："><a href="#ZooKeeper-常用四字命令：" class="headerlink" title="ZooKeeper 常用四字命令："></a>ZooKeeper 常用四字命令：</h4>ZooKeeper 支持某些特定的四字命令字母与其的交互。它们大多是查询命令，用来获取 ZooKeeper 服务的当前状态及相关信息。用户在客户端可以通过 telnet 或 nc 向 ZooKeeper 提交相应的命令</li>
+<li>可以通过命令：echo stat|nc 127.0.0.1 2181 来查看哪个节点被选择作为follower或者leader</li>
+<li>使用echo ruok|nc 127.0.0.1 2181 测试是否启动了该Server，若回复imok表示已经启动。</li>
+<li>echo dump| nc 127.0.0.1 2181 ,列出未经处理的会话和临时节点。</li>
+<li>echo kill | nc 127.0.0.1 2181 ,关掉server</li>
+<li>echo conf | nc 127.0.0.1 2181 ,输出相关服务配置的详细信息。</li>
+<li>echo cons | nc 127.0.0.1 2181 ,列出所有连接到服务器的客户端的完全的连接 / 会话的详细信息。</li>
+<li>echo envi |nc 127.0.0.1 2181 ,输出关于服务环境的详细信息（区别于 conf 命令）。</li>
+<li>echo reqs | nc 127.0.0.1 2181 ,列出未经处理的请求。</li>
+<li>echo wchs | nc 127.0.0.1 2181 ,列出服务器 watch 的详细信息。</li>
+<li>echo wchc | nc 127.0.0.1 2181 ,通过 session 列出服务器 watch 的详细信息，它的输出是一个与 watch 相关的会话的列表。</li>
+<li>echo wchp | nc 127.0.0.1 2181 ,通过路径列出服务器 watch 的详细信息。它输出一个与 session 相关的路径。</li>
+</ol>
+
   
 
     </div>
@@ -329,7 +394,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    目录，不存在的…
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#zookeeper基本概念"><span class="toc-number">1.</span> <span class="toc-text">zookeeper基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#角色"><span class="toc-number">1.1.</span> <span class="toc-text">角色</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#设计目的"><span class="toc-number">1.2.</span> <span class="toc-text">设计目的</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#zookeeper工作原理"><span class="toc-number">2.</span> <span class="toc-text">zookeeper工作原理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#选主流程"><span class="toc-number">2.1.</span> <span class="toc-text">选主流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#同步流程"><span class="toc-number">2.2.</span> <span class="toc-text">同步流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#工作流程"><span class="toc-number">2.3.</span> <span class="toc-text">工作流程</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Leader工作流程"><span class="toc-number">2.3.1.</span> <span class="toc-text">Leader工作流程</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Follower工作流程"><span class="toc-number">2.3.2.</span> <span class="toc-text">Follower工作流程</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#zookeeper安装配置"><span class="toc-number">3.</span> <span class="toc-text">zookeeper安装配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#单机模式"><span class="toc-number">3.1.</span> <span class="toc-text">单机模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#伪集群模式"><span class="toc-number">3.2.</span> <span class="toc-text">伪集群模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#集群模式"><span class="toc-number">3.3.</span> <span class="toc-text">集群模式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#zookeeper常用命令"><span class="toc-number">4.</span> <span class="toc-text">zookeeper常用命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ZooKeeper服务命令"><span class="toc-number">4.1.</span> <span class="toc-text">ZooKeeper服务命令:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#zk客户端命令："><span class="toc-number">4.2.</span> <span class="toc-text">zk客户端命令：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ZooKeeper-常用四字命令："><span class="toc-number">4.3.</span> <span class="toc-text">ZooKeeper 常用四字命令：</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -494,15 +559,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">代码规范</a>
+                <a href="javascript:void(0)" class="js-tag color3">Integer</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Integer</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -526,11 +587,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">UDP</a>
+                <a href="javascript:void(0)" class="js-tag color3">me</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">me</a>
+                <a href="javascript:void(0)" class="js-tag color4">UDP</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -582,10 +643,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">zookeeper</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">汪国真</a>
               </li>
              
@@ -618,7 +675,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">zookeeper</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">动态代理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -626,7 +691,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
+                <a href="javascript:void(0)" class="js-tag color5">代码规范</a>
               </li>
              
               <li class="article-tag-list-item">
