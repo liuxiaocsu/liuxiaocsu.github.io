@@ -9,6 +9,7 @@
   <title>Quorum NWR | Byte_Liu&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="NWR是一种在分布式存储系统中用于控制一致性级别的一种策略。在Amazon的Dynamo云存储系统中，就应用NWR来控制一致性。让我们先来看看这三个字母的含义：123N：同一份数据的Replica的份数W：是更新一个数据对象的时候需要确保成功更新的份数R： 读取一个数据需要读取的Replica的份数 NWR值的不同组合会产生不同的一致性效果:  当W+R&amp;gt;N的时候，整个系统对于客户端来讲能保">
+<meta name="keywords" content="NWR">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Quorum NWR">
 <meta property="og:url" content="https://liuxiaocsu.github.io/2018/03/23/Quorum-NWR/index.html">
@@ -16,7 +17,7 @@
 <meta property="og:description" content="NWR是一种在分布式存储系统中用于控制一致性级别的一种策略。在Amazon的Dynamo云存储系统中，就应用NWR来控制一致性。让我们先来看看这三个字母的含义：123N：同一份数据的Replica的份数W：是更新一个数据对象的时候需要确保成功更新的份数R： 读取一个数据需要读取的Replica的份数 NWR值的不同组合会产生不同的一致性效果:  当W+R&amp;gt;N的时候，整个系统对于客户端来讲能保">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://liuxiaocsu.github.io/2018/03/23/Quorum-NWR/markdown-img-paste-20181130101500547.png">
-<meta property="og:updated_time" content="2018-11-30T02:17:25.561Z">
+<meta property="og:updated_time" content="2018-11-30T02:25:29.976Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Quorum NWR">
 <meta name="twitter:description" content="NWR是一种在分布式存储系统中用于控制一致性级别的一种策略。在Amazon的Dynamo云存储系统中，就应用NWR来控制一致性。让我们先来看看这三个字母的含义：123N：同一份数据的Replica的份数W：是更新一个数据对象的时候需要确保成功更新的份数R： 读取一个数据需要读取的Replica的份数 NWR值的不同组合会产生不同的一致性效果:  当W+R&amp;gt;N的时候，整个系统对于客户端来讲能保">
@@ -214,6 +215,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">NWR</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
@@ -476,6 +488,10 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">NWR</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">JUC</a>
               </li>
              
@@ -564,11 +580,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">汪国真</a>
+                <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
+                <a href="javascript:void(0)" class="js-tag color4">汪国真</a>
               </li>
              
               <li class="article-tag-list-item">

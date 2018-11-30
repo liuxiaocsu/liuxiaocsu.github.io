@@ -9,13 +9,14 @@
   <title>NWR理论 | Byte_Liu&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="Werner Vogels 在讲“Eventually Consistent”时，提到了NWR 理论，即：123456设一个存储系统有如下属性：N = 每个数据的副本数W = 每次写操作时，必须同步确认写成功的副本数（其他副本异步写入）R = 每次读操作时，需要读取的副本数（比较版本，取最新的值）则当W+R &amp;gt; N 时，该存储系统可以提供强一致性，该理论是显而易见的，强一致性等价于R 中至少">
+<meta name="keywords" content="NWR">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NWR理论">
 <meta property="og:url" content="https://liuxiaocsu.github.io/2018/03/19/NWR理论/index.html">
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
 <meta property="og:description" content="Werner Vogels 在讲“Eventually Consistent”时，提到了NWR 理论，即：123456设一个存储系统有如下属性：N = 每个数据的副本数W = 每次写操作时，必须同步确认写成功的副本数（其他副本异步写入）R = 每次读操作时，需要读取的副本数（比较版本，取最新的值）则当W+R &amp;gt; N 时，该存储系统可以提供强一致性，该理论是显而易见的，强一致性等价于R 中至少">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:updated_time" content="2018-11-30T02:12:35.592Z">
+<meta property="og:updated_time" content="2018-11-30T02:25:39.691Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NWR理论">
 <meta name="twitter:description" content="Werner Vogels 在讲“Eventually Consistent”时，提到了NWR 理论，即：123456设一个存储系统有如下属性：N = 每个数据的副本数W = 每次写操作时，必须同步确认写成功的副本数（其他副本异步写入）R = 每次读操作时，需要读取的副本数（比较版本，取最新的值）则当W+R &amp;gt; N 时，该存储系统可以提供强一致性，该理论是显而易见的，强一致性等价于R 中至少">
@@ -206,6 +207,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">NWR</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
@@ -468,6 +480,10 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">NWR</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">JUC</a>
               </li>
              
@@ -556,11 +572,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">汪国真</a>
+                <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
+                <a href="javascript:void(0)" class="js-tag color4">汪国真</a>
               </li>
              
               <li class="article-tag-list-item">
