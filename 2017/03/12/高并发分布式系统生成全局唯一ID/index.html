@@ -8,15 +8,20 @@
   <link rel="dns-prefetch" href="https://liuxiaocsu.github.io">
   <title>高并发分布式系统生成全局唯一ID | Byte_Liu&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="分布式">
+  <meta name="description" content="研究数据库分表分库，其中有一个关键的地方就是生成唯一键的问题，假如数据表有1亿条数据，而且还在不断的增加，这里我们就需要考虑到分库分表，假设我们采用Hash或者是用户取模求余的方法将这个表拆分成10个表，每个表的结构相同，其中有一个主键id，那么10个表中的id需要唯一不同，在单表的时候，使用数据表自增长是没有问题的。当分成10个表后，就无法用到数据库自增长了。当到这里的时候突然发现oracle数">
+<meta name="keywords" content="分布式">
 <meta property="og:type" content="article">
 <meta property="og:title" content="高并发分布式系统生成全局唯一ID">
 <meta property="og:url" content="https://liuxiaocsu.github.io/2017/03/12/高并发分布式系统生成全局唯一ID/index.html">
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
+<meta property="og:description" content="研究数据库分表分库，其中有一个关键的地方就是生成唯一键的问题，假如数据表有1亿条数据，而且还在不断的增加，这里我们就需要考虑到分库分表，假设我们采用Hash或者是用户取模求余的方法将这个表拆分成10个表，每个表的结构相同，其中有一个主键id，那么10个表中的id需要唯一不同，在单表的时候，使用数据表自增长是没有问题的。当分成10个表后，就无法用到数据库自增长了。当到这里的时候突然发现oracle数">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:updated_time" content="2018-11-29T03:27:00.340Z">
+<meta property="og:image" content="https://liuxiaocsu.github.io/2017/03/12/高并发分布式系统生成全局唯一ID/markdown-img-paste-20181130094910608.png">
+<meta property="og:updated_time" content="2018-11-30T02:04:39.551Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="高并发分布式系统生成全局唯一ID">
+<meta name="twitter:description" content="研究数据库分表分库，其中有一个关键的地方就是生成唯一键的问题，假如数据表有1亿条数据，而且还在不断的增加，这里我们就需要考虑到分库分表，假设我们采用Hash或者是用户取模求余的方法将这个表拆分成10个表，每个表的结构相同，其中有一个主键id，那么10个表中的id需要唯一不同，在单表的时候，使用数据表自增长是没有问题的。当分成10个表后，就无法用到数据库自增长了。当到这里的时候突然发现oracle数">
+<meta name="twitter:image" content="https://liuxiaocsu.github.io/2017/03/12/高并发分布式系统生成全局唯一ID/markdown-img-paste-20181130094910608.png">
   
     <link rel="alternative" href="/atom.xml" title="Byte_Liu&#39;s Blog" type="application/atom+xml">
   
@@ -192,7 +197,53 @@
       
 
   
-    
+    <p>研究数据库分表分库，其中有一个关键的地方就是生成唯一键的问题，假如数据表有1亿条数据，而且还在不断的增加，这里我们就需要考虑到分库分表，假设我们采用Hash或者是用户取模求余的方法将这个表拆分成10个表，每个表的结构相同，其中有一个主键id，那么10个表中的id需要唯一不同，在单表的时候，使用数据表自增长是没有问题的。当分成10个表后，就无法用到数据库自增长了。当到这里的时候突然发现oracle数据库的序列真是好东西。<br><strong>目前做唯一id的做法基本有三种：</strong></p>
+<ul>
+<li>1.使用uuid来实现，快速不重复，只是生成的id没有规则</li>
+<li>2.使用外部的id分发中心来实现，生存的id简短有规则，缺点是依赖于单点</li>
+<li>3.在数据库中做一个计数表来做，有点类是于oracle中的序列<a id="more"></a>
+</li>
+</ul>
+<p>数据在分片时，典型的是分库分表，就有一个全局ID生成的问题。<br>单纯的生成全局ID并不是什么难题，但是生成的ID通常要满足分片的一些要求：</p>
+<ul>
+<li>不能有单点故障。</li>
+<li>以时间为序，或者ID里包含时间。这样一是可以少一个索引，二是冷热数据容易分离。</li>
+<li>可以控制ShardingId。比如某一个用户的文章要放在同一个分片内，这样查询效率高，修改也容易。</li>
+<li>不要太长，最好64bit。使用long比较好操作，如果是96bit，那就要各种移位相当的不方便，还有可能有些组件不能支持这么大的ID。<h3 id="一-twitter-（id分发中心）"><a href="#一-twitter-（id分发中心）" class="headerlink" title="一 twitter （id分发中心）"></a>一 twitter （id分发中心）</h3>twitter在把存储系统从MySQL迁移到Cassandra的过程中由于Cassandra没有顺序ID生成机制，于是自己开发了一套全局唯一ID生成服务：Snowflake。<ul>
+<li>41位的时间序列（精确到毫秒，41位的长度可以使用69年）</li>
+<li>10位的机器标识（10位的长度最多支持部署1024个节点）</li>
+<li>12位的计数顺序号（12位的计数顺序号支持每个节点每毫秒产生4096个ID序号） 最高位是符号位，始终为0。</li>
+</ul>
+</li>
+</ul>
+<p>优点：高性能，低延迟；独立的应用；按时间有序。 缺点：需要独立的开发和部署。<br>原理</p>
+<p><img src="/2017/03/12/高并发分布式系统生成全局唯一ID/markdown-img-paste-20181130094910608.png" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">public class DistributeGlobalIdGenerator &#123;</span><br><span class="line">    private final long workerId;</span><br><span class="line">    private final static long twepoch = 1288834974657L;</span><br><span class="line">    private long sequence = 0L;</span><br><span class="line">    private final static long workerIdBits = 4L;</span><br><span class="line">    public final static long maxWorkerId = -1L ^ -1L &lt;&lt; workerIdBits;</span><br><span class="line">    private final static long sequenceBits = 10L;</span><br><span class="line">    private final static long workerIdShift = sequenceBits;</span><br><span class="line">    private final static long timestampLeftShift = sequenceBits + workerIdBits;</span><br><span class="line">    public final static long sequenceMask = -1L ^ -1L &lt;&lt; sequenceBits;</span><br><span class="line">    private long lastTimestamp = -1L;</span><br><span class="line"></span><br><span class="line">    public DistributeGlobalIdGenerator(final long workerId) &#123;</span><br><span class="line">        super();</span><br><span class="line">        if (workerId &gt; this.maxWorkerId || workerId &lt; 0) &#123;</span><br><span class="line">            throw new IllegalArgumentException(String.format(&quot;worker Id can&apos;t be greater than %d or less than 0&quot;, this.maxWorkerId));</span><br><span class="line">        &#125;</span><br><span class="line">        this.workerId = workerId;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public synchronized long nextId() &#123;</span><br><span class="line">        long timestamp = this.timeGen();</span><br><span class="line">        if (this.lastTimestamp == timestamp) &#123;</span><br><span class="line">            this.sequence = (this.sequence + 1) &amp; this.sequenceMask;</span><br><span class="line">            if (this.sequence == 0) &#123;</span><br><span class="line">                System.out.println(&quot;###########&quot; + sequenceMask);</span><br><span class="line">                timestamp = this.tilNextMillis(this.lastTimestamp);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            this.sequence = 0;</span><br><span class="line">        &#125;</span><br><span class="line">        if (timestamp &lt; this.lastTimestamp) &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                throw new Exception(String.format(&quot;Clock moved backwards. Refusing to generate id for %d milliseconds&quot;, this.lastTimestamp - timestamp));</span><br><span class="line">            &#125; catch (Exception e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        this.lastTimestamp = timestamp;</span><br><span class="line">        long nextId = ((timestamp - twepoch &lt;&lt; timestampLeftShift)) | (this.workerId &lt;&lt; this.workerIdShift) | (this.sequence);</span><br><span class="line">        System.out.println(&quot;timestamp:&quot; + timestamp + &quot;,timestampLeftShift:&quot; + timestampLeftShift + &quot;,nextId:&quot; + nextId + &quot;,workerId:&quot; + workerId + &quot;,sequence:&quot; + sequence);</span><br><span class="line">        return nextId;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private long tilNextMillis(final long lastTimestamp) &#123;</span><br><span class="line">        long timestamp = this.timeGen();</span><br><span class="line">        while (timestamp &lt;= lastTimestamp) &#123;</span><br><span class="line">            timestamp = this.timeGen();</span><br><span class="line">        &#125;</span><br><span class="line">        return timestamp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private long timeGen() &#123;</span><br><span class="line">        return System.currentTimeMillis();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        DistributeGlobalIdGenerator distributeGlobalIdGenerator = new DistributeGlobalIdGenerator(2);</span><br><span class="line">        System.out.println(distributeGlobalIdGenerator.nextId());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="二-来自Flicker的解决方案（数据库生存方式）"><a href="#二-来自Flicker的解决方案（数据库生存方式）" class="headerlink" title="二 来自Flicker的解决方案（数据库生存方式）"></a>二 来自Flicker的解决方案（数据库生存方式）</h3><p>因为MySQL本身支持auto_increment操作，很自然地，我们会想到借助这个特性来实现这个功能。<br>Flicker在解决全局ID生成方案里就采用了MySQL自增长ID的机制（auto_increment + replace into + MyISAM）。一个生成64位ID方案具体就是这样的：<br>先创建单独的数据库(eg:ticket)，然后创建一个表：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE tickets64 (id bigint(20) unsigned NOT NULL auto_increment,stub char(1) NOT NULL default &apos;&apos;,PRIMARY KEY (id),UNIQUE KEY stub (stub)) ENGINE=MyISAM</span><br></pre></td></tr></table></figure></p>
+<p>当我们插入记录后，执行SELECT * from tickets64，查询结果就是这样的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">+-------------------+------+</span><br><span class="line">| id | stub |</span><br><span class="line">+-------------------+------+</span><br><span class="line">| 72157623227190423 | a |</span><br><span class="line">+-------------------+------+</span><br></pre></td></tr></table></figure></p>
+<p>在我们的应用端需要做下面这两个操作，在一个事务会话里提交：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">REPLACE INTO Tickets64 (stub) VALUES (&apos;a&apos;);SELECT LAST_INSERT_ID();</span><br></pre></td></tr></table></figure></p>
+<p>这样我们就能拿到不断增长且不重复的ID了。<br>到上面为止，我们只是在单台数据库上生成ID，从高可用角度考虑，接下来就要解决单点故障问题：Flicker启用了两台数据库服务器来生成ID，通过区分auto_increment的起始值和步长来生成奇偶数的ID。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">TicketServer1:</span><br><span class="line">auto-increment-increment = 2</span><br><span class="line">auto-increment-offset = 1  </span><br><span class="line">TicketServer2:</span><br><span class="line">auto-increment-increment = 2</span><br><span class="line">auto-increment-offset = 2</span><br></pre></td></tr></table></figure></p>
+<p>最后，在客户端只需要通过轮询方式取ID就可以了。</p>
+<ul>
+<li>优点：充分借助数据库的自增ID机制，提供高可靠性，生成的ID有序。</li>
+<li>缺点：占用两个独立的MySQL实例，有些浪费资源，成本较高。<h3 id="三-UUID"><a href="#三-UUID" class="headerlink" title="三 UUID"></a>三 UUID</h3>UUID生成的是length=32的16进制格式的字符串，如果回退为byte数组共16个byte元素，即UUID是一个128bit长的数字，<br>一般用16进制表示。<br>算法的核心思想是结合机器的网卡、当地时间、一个随即数来生成UUID。<br>从理论上讲，如果一台机器每秒产生10000000个GUID，则可以保证（概率意义上）3240年不重复<br>优点：<br>（1）本地生成ID，不需要进行远程调用，时延低<br>（2）扩展性好，基本可以认为没有性能上限<br>缺点：<br>（1）无法保证趋势递增<br>（2）uuid过长，往往用字符串表示，作为主键建立索引查询效率低，常见优化方案为“转化为两个uint64整数存储”或者“折半存储”（折半后不能保证唯一性）</li>
+</ul>
+<p>UUID的目的，是让分散式系统中的所有元素，都能有唯一的辨识信息，而不需要通过中央控制端来做辨识信息的指定。如此一来，每个人都可以创建不与其它人冲突的UUID。在这样的情况下，就不需考虑数据库创建时的名称重复问题。</p>
+<p>一组UUID，是由一串16位组（亦称128位）的16进位数字所构成，是故UUID理论上的总数为216 x 8=2128，约等于3.4 x 1038。也就是说若每纳秒产生1兆个UUID，要花100亿年才会将所有UUID用完。</p>
+<p>UUID的标准型式包含32个16进位数字，以连字号分为五段，形式为8-4-4-4-12的36个字符。示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">550e8400-e29b-41d4-a716-446655440000</span><br></pre></td></tr></table></figure></p>
+<h3 id="四-基于redis的分布式ID生成器"><a href="#四-基于redis的分布式ID生成器" class="headerlink" title="四 基于redis的分布式ID生成器"></a>四 基于redis的分布式ID生成器</h3><p>首先，要知道redis的EVAL，EVALSHA命令：<br>原理<br>利用redis的lua脚本执行功能，在每个节点上通过lua脚本生成唯一ID。<br>生成的ID是64位的：<br>使用41 bit来存放时间，精确到毫秒，可以使用41年。<br>使用12 bit来存放逻辑分片ID，最大分片ID是4095<br>使用10 bit来存放自增长ID，意味着每个节点，每毫秒最多可以生成1024个ID<br>比如GTM时间 Fri Mar 13 10:00:00 CST 2015 ，它的距1970年的毫秒数是 1426212000000，假定分片ID是53，自增长序列是4，则生成的ID是：<br>5981966696448054276 = 1426212000000 &lt;&lt; 22 + 53 &lt;&lt; 10 + 41<br>redis提供了TIME命令，可以取得redis服务器上的秒数和微秒数。因些lua脚本返回的是一个四元组。<br>second, microSecond, partition, seq<br>客户端要自己处理，生成最终ID。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">((second * 1000 + microSecond / 1000) &lt;&lt; (12 + 10)) + (shardId &lt;&lt; 10) + seq;</span><br></pre></td></tr></table></figure></p>
+<h3 id="五-MongoDB文档（Document）全局唯一ID（类似UUID的方式）"><a href="#五-MongoDB文档（Document）全局唯一ID（类似UUID的方式）" class="headerlink" title="五 MongoDB文档（Document）全局唯一ID（类似UUID的方式）"></a>五 MongoDB文档（Document）全局唯一ID（类似UUID的方式）</h3><p>为了考虑分布式，“_id”要求不同的机器都能用全局唯一的同种方法方便的生成它。因此不能使用自增主键（需要多台服务器进行同步，既费时又费力），<br>因此选用了生成ObjectId对象的方法。<br>ObjectId使用12字节的存储空间，其生成方式如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">|0|1|2|3|4|5|6 |7|8|9|10|11|</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">|时间戳 |机器ID|PID|计数器 |</span><br></pre></td></tr></table></figure>
+<p>前四个字节时间戳是从标准纪元开始的时间戳，单位为秒，有如下特性：<br> 1 时间戳与后边5个字节一块，保证秒级别的唯一性；<br> 2 保证插入顺序大致按时间排序；<br> 3 隐含了文档创建时间；<br> 4 时间戳的实际值并不重要，不需要对服务器之间的时间进行同步（因为加上机器ID和进程ID已保证此值唯一，唯一性是ObjectId的最终诉求）。<br>机器ID是服务器主机标识，通常是机器主机名的散列值。<br>同一台机器上可以运行多个mongod实例，因此也需要加入进程标识符PID。<br>前9个字节保证了同一秒钟不同机器不同进程产生的ObjectId的唯一性。后三个字节是一个自动增加的计数器（一个mongod进程需要一个全局 的计数器），保证同一秒的ObjectId是唯一的。同一秒钟最多允许每个进程拥有（256^3 = 16777216）个不同的ObjectId。</p>
+<h3 id="六-Instagram采用的方式（UUID方式）"><a href="#六-Instagram采用的方式（UUID方式）" class="headerlink" title="六 Instagram采用的方式（UUID方式）"></a>六 Instagram采用的方式（UUID方式）</h3><p>Instagram要将其中存储的图片分片到多个PostgreSQL中，其中生成ID的方案和MongoDB ObjectID类似。整个ID的长度为64Bits，设定为这个长度是为了优化在redis中的存储。ID的编码格式如下：</p>
+<ul>
+<li>41bits以微秒为单位的timestamp，时间起点从2011-01-01开始。</li>
+<li>13bits表示进行逻辑分片的Shard ID。</li>
+<li>10bits表示一个累加计数器。</li>
+</ul>
+<p>ID的生成逻辑用PL/PGSQL语言写到PostgreSQL数据库中，当每次插入数据时由数据库自动计算生成。</p>
+<p>总结一下：时间戳保证秒级唯一，机器ID保证设计时考虑分布式，避免时钟同步，PID保证同一台服务器运行多个mongod实例时的唯一性，最后的计数器保证同一秒内的唯一性（选用几个字节既要考虑存储的经济性，也要考虑并发性能的上限）。<br>“_id”既可以在服务器端生成也可以在客户端生成，在客户端生成可以降低服务器端的压力。</p>
+
   
 
     </div>
@@ -323,7 +374,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    目录，不存在的…
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一-twitter-（id分发中心）"><span class="toc-number">1.</span> <span class="toc-text">一 twitter （id分发中心）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二-来自Flicker的解决方案（数据库生存方式）"><span class="toc-number">2.</span> <span class="toc-text">二 来自Flicker的解决方案（数据库生存方式）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三-UUID"><span class="toc-number">3.</span> <span class="toc-text">三 UUID</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四-基于redis的分布式ID生成器"><span class="toc-number">4.</span> <span class="toc-text">四 基于redis的分布式ID生成器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#五-MongoDB文档（Document）全局唯一ID（类似UUID的方式）"><span class="toc-number">5.</span> <span class="toc-text">五 MongoDB文档（Document）全局唯一ID（类似UUID的方式）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#六-Instagram采用的方式（UUID方式）"><span class="toc-number">6.</span> <span class="toc-text">六 Instagram采用的方式（UUID方式）</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -496,11 +547,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -508,11 +559,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">UDP</a>
+                <a href="javascript:void(0)" class="js-tag color3">me</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">me</a>
+                <a href="javascript:void(0)" class="js-tag color4">UDP</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -560,11 +611,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
+                <a href="javascript:void(0)" class="js-tag color4">汪国真</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">汪国真</a>
+                <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -573,10 +624,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">限流</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -604,11 +651,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DNS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
               </li>
              
               <li class="article-tag-list-item">
