@@ -8,15 +8,18 @@
   <link rel="dns-prefetch" href="https://liuxiaocsu.github.io">
   <title>TCP的四种定时器 | Byte_Liu&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="TCP">
+  <meta name="description" content="定时器在TCP可靠传输的过程中起着举足轻重的作用。TCP在建立连接之后可能(保活keep-alive定时器是可选的)会 启动四个定时器。TCP使用四种定时器(Timer，也称为“计时器”)：  重传计时器：Retransmission Timer 坚持计时器：Persistent Timer 保活计时器：Keeplive Timer 时间等待计时器（2MSL计时器）：Time_Wait Timer">
+<meta name="keywords" content="TCP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="TCP的四种定时器">
 <meta property="og:url" content="https://liuxiaocsu.github.io/2017/07/10/TCP的四种定时器/index.html">
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
+<meta property="og:description" content="定时器在TCP可靠传输的过程中起着举足轻重的作用。TCP在建立连接之后可能(保活keep-alive定时器是可选的)会 启动四个定时器。TCP使用四种定时器(Timer，也称为“计时器”)：  重传计时器：Retransmission Timer 坚持计时器：Persistent Timer 保活计时器：Keeplive Timer 时间等待计时器（2MSL计时器）：Time_Wait Timer">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:updated_time" content="2018-11-29T03:31:40.236Z">
+<meta property="og:updated_time" content="2018-11-30T06:20:59.906Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TCP的四种定时器">
+<meta name="twitter:description" content="定时器在TCP可靠传输的过程中起着举足轻重的作用。TCP在建立连接之后可能(保活keep-alive定时器是可选的)会 启动四个定时器。TCP使用四种定时器(Timer，也称为“计时器”)：  重传计时器：Retransmission Timer 坚持计时器：Persistent Timer 保活计时器：Keeplive Timer 时间等待计时器（2MSL计时器）：Time_Wait Timer">
   
     <link rel="alternative" href="/atom.xml" title="Byte_Liu&#39;s Blog" type="application/atom+xml">
   
@@ -192,7 +195,28 @@
       
 
   
-    
+    <p>定时器在TCP可靠传输的过程中起着举足轻重的作用。TCP在建立连接之后可能(保活keep-alive定时器是可选的)会 启动四个定时器。<br>TCP使用四种定时器(Timer，也称为“计时器”)：</p>
+<ul>
+<li>重传计时器：Retransmission Timer</li>
+<li>坚持计时器：Persistent Timer</li>
+<li>保活计时器：Keeplive Timer</li>
+<li>时间等待计时器（2MSL计时器）：Time_Wait Timer。<a id="more"></a>
+</li>
+</ul>
+<h3 id="1-重传计时器：Retransmission-Timer"><a href="#1-重传计时器：Retransmission-Timer" class="headerlink" title="(1)重传计时器：Retransmission Timer"></a>(1)重传计时器：Retransmission Timer</h3><p>重传定时器：为了控制丢失的报文段或丢弃的报文段，也就是对报文段确认的等待时间。当TCP发送报文段时，就创建这个特定报文段的重传计时器，可能 发生两种情况：若在计时器超时之前收到对报文段的确认，则撤销计时器;若在收到对特定报文段的确认之前计时器超时，则重传该报文，并把计时器复位;<br>重传时间=2<em>RTT;<br>RTT的值应该动态计算。常用的公式是：RTT=previous RTT</em>i + (1-i)*current RTT。i的值通常取90%，即新的RTT是以前的RTT值的90%加上当前RTT值的10%.<br>Karn算法：对重传报文，在计算新的RTT时，不考虑重传报文的RTT。因为无法推理出：发送端所收到的确认是对上一次报文段的确认还是对重传报文段的确认。干脆不计入。</p>
+<h3 id="2-坚持计时器：persistent-timer"><a href="#2-坚持计时器：persistent-timer" class="headerlink" title="(2)坚持计时器：persistent timer"></a>(2)坚持计时器：persistent timer</h3><p>专门为对付零窗口通知而设立的。<br>当发送端收到零窗口的确认时，就启动坚持计时器，当坚持计时器截止期到时，发送端TCP就发送一个特殊的报文段，叫探测报文段，这个报文段只有一个 字节的数据。探测报文段有序号，但序号永远不需要确认，甚至在计算对其他部分数据的确认时这个序号也被忽略。探测报文段提醒接收端TCP，确认已丢失，必 须重传。<br>坚持计时器的截止期设置为重传时间的值，但若没有收到从接收端来的响应，则发送另一个探测报文段，并将坚持计时器的值加倍和并复位，发送端继续发送 探测报文段，将坚持计时器的值加倍和复位，知道这个值增大到阈值为止(通常为60秒)。之后，发送端每隔60s就发送一个报文段，直到窗口重新打开为止;</p>
+<h5 id="补充："><a href="#补充：" class="headerlink" title="补充："></a>补充：</h5><p>坚持定时器的原理是简单的，当TCP服务器收到了客户端的0滑动窗口报文的时候，就启动一个定时器来计时，并在定时器溢出的时候向向客户端查询窗口 是否已经增大，如果得到非零的窗口就重新开始发送数据，如果得到0窗口就再开一个新的定时器准备下一次查询。通过观察可以得知，TCP的坚持定时器使用 1，2，4，8，16……64秒这样的普通指数退避序列来作为每一次的溢出时间。</p>
+<h5 id="糊涂窗口综合症"><a href="#糊涂窗口综合症" class="headerlink" title="糊涂窗口综合症"></a>糊涂窗口综合症</h5><p>TCP的窗口协议，会引起一种通常叫做糊涂窗口综合症的问题，具体表现为，当客户端通告一个小的非零窗口时，服务器立刻发送小数据给客户端并充满其缓冲区，一来二去就会让网络中充满小TCP数据报，从而影响网络利用率。对于发送方和接收端的这种糊涂行为。</p>
+<h6 id="再次补充："><a href="#再次补充：" class="headerlink" title="再次补充："></a>再次补充：</h6><p>TCP通过让接收方指明希望从发送方接收的数据字节数(即窗口大小)来进行流量控制。如果窗口大小为 0会发生什么情况呢?这将有效地阻止发送方传送数据，直到窗口变为非0为止。<br>TCP不对ACK报文段进行确认， TCP只确认那些包含有数据的ACK报文段。<br>如果一个确认丢失了(这个确认是”接收方“向”发送方“发送的ACK，通知”发送方“自己的窗口已经非0了)，则双方就有可能因为等待对方而使连接 终止：接收方等待接收数据(因为它已经向发送方通告了一个非 0的窗口)，而发送方在等待允许它继续发送数据的窗口更新。为防止这种死锁情况的发生，发送方使用一个坚持定时器 (persist timer)来周期性地向接收方查询，以便发现窗口是否已增大。这些从发送方发出的报文段称为窗口探查 (window probe)。</p>
+<h3 id="3-保活计时器：keeplive-timer"><a href="#3-保活计时器：keeplive-timer" class="headerlink" title="(3)保活计时器：keeplive timer"></a>(3)保活计时器：keeplive timer</h3><p>每当服务器收到客户的信息，就将keeplive timer复位，超时通常设置2小时，若服务器超过2小时还没有收到来自客户的信息，就发送探测报文段，若发送了10个探测报文段(没75秒发送一个)还没收到响应，则终止连接。</p>
+<h5 id="补充：-1"><a href="#补充：-1" class="headerlink" title="补充："></a>补充：</h5><p>保活定时器更加的简单，还记得FTP或者Http服务器都有Sesstion Time机制么?因为TCP是面向连接的，所以就会出现只连接不传送数据的“半开放连接”，服务器当然要检测到这种连接并且在某些情况下释放这种连接，这 就是保活定时器的作用。其时限根据服务器的实现不同而不通。另外要提到的是，当其中一端如果崩溃并重新启动的情况下，如果收到该端“前生”的保活探察，则 要发送一个RST数据报文帮助另一端结束连接。</p>
+<h3 id="4-时间等待计时器：Time-Wait-Timer"><a href="#4-时间等待计时器：Time-Wait-Timer" class="headerlink" title="(4)时间等待计时器：Time_Wait Timer"></a>(4)时间等待计时器：Time_Wait Timer</h3><p>在连接终止期使用，当TCP关闭连接时，并不认为这个连接就真正关闭了，在时间等待期间，连接还处于一种中间过度状态。这样就可以时重复的fin报文段在到达终点后被丢弃，这个计时器的值通常设置为一格报文段寿命期望值的两倍。</p>
+<h5 id="补充：-2"><a href="#补充：-2" class="headerlink" title="补充："></a>补充：</h5><p>2MSL定时器：MSL是报文段做大生存时间(Maximum Segment Lifetime),设置这个定时器有两个目的：</p>
+<ul>
+<li>其一是为了测量连接处于TIME_WAIT状态的时间.这样可以让TCP再次发送最后的ACK以防止这个ACK丢失(如果丢失，另一端会重传FIN)。</li>
+<li>其二，为允许老的重复分节在网络中消逝。具体可以解释为，如果一个TCP连接在断开之前有迷途分节尚未消逝，在断开该TCP连接之后立刻重启一个同 样的连接(双方的IP地址和端口port相同)，这时之前的迷途的老分节可能对新的新的TCP连接接收，从而造成未定义的错误。为了避免这种情况，TCP 规定在TIME_WAIT状态，不能启动一个连接的化身。既然TIME_WAIT状态维持2MSL，这就保证了一个连接上的分组及其应该在 2MSL内都会消失。</li>
+</ul>
+
   
 
     </div>
@@ -323,7 +347,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    目录，不存在的…
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-重传计时器：Retransmission-Timer"><span class="toc-number">1.</span> <span class="toc-text">(1)重传计时器：Retransmission Timer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-坚持计时器：persistent-timer"><span class="toc-number">2.</span> <span class="toc-text">(2)坚持计时器：persistent timer</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#补充："><span class="toc-number">2.0.1.</span> <span class="toc-text">补充：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#糊涂窗口综合症"><span class="toc-number">2.0.2.</span> <span class="toc-text">糊涂窗口综合症</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#再次补充："><span class="toc-number">2.0.2.1.</span> <span class="toc-text">再次补充：</span></a></li></ol></li></ol></li></ol><li class="toc-item toc-level-3"><a class="toc-link" href="#3-保活计时器：keeplive-timer"><span class="toc-number">3.</span> <span class="toc-text">(3)保活计时器：keeplive timer</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#补充：-1"><span class="toc-number">3.0.1.</span> <span class="toc-text">补充：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-时间等待计时器：Time-Wait-Timer"><span class="toc-number">4.</span> <span class="toc-text">(4)时间等待计时器：Time_Wait Timer</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#补充：-2"><span class="toc-number">4.0.1.</span> <span class="toc-text">补充：</span></a></li></ol></li>
                     </div>
                 </span>
             </div>
@@ -488,7 +512,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
+                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -496,15 +520,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+                <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Spring</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -517,10 +541,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">UDP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -564,11 +584,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">汪国真</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -608,11 +632,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
+                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
+                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
               </li>
              
               <li class="article-tag-list-item">
