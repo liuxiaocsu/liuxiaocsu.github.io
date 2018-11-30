@@ -280,77 +280,7 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-  
-    <h4 id="前后端分离背景"><a href="#前后端分离背景" class="headerlink" title="前后端分离背景"></a>前后端分离背景</h4><p>前后端本是一家，长期以来相生相杀。当然也有些公司比如FB，fullstack，开挂一样存在。就目前国内大部分团队现状来说，大家都在谋求一个前后端开发分离方案，发展历程大致如下：</p>
-<ol>
-<li><p>不区分前后端，都是程序员，什么都写，从jsp撸到mysql – 写出的页面丑的不能看了</p>
-</li>
-<li><p>前端提供模板，javaer往jsp里面套 – 页面调试，前后端都痛苦；生产bug，相互甩锅；这时候前端叫做切图狗。</p>
-</li>
-<li><p>前端ajax 搞定一切数据交互 – 前端js能力超强，需要自己撸路由、前端渲染模板，类似切图狗</p>
-</li>
-<li><p>前端mvvm spa mvc 框架、库出现 – 对第三个时代的改进，造轮子，和后端之间就json交互了，前后端都开心了，幸福的微笑。只是前端开发的入口文件需要放在war包中发布。虽然有交集，但是基本没有关系了。</p>
-</li>
-<li><p>阿里中途岛为代表的node 胶水层 – 前端挺起腰杆，脱离了程序员鄙视链的底层身份，也可以微笑的说我们也是程序员了，因为你要掌握web、网络、监控、运维等等技能。</p>
-</li>
-</ol>
-<h4 id="前后端分离的主流方法分析"><a href="#前后端分离的主流方法分析" class="headerlink" title="前后端分离的主流方法分析"></a>前后端分离的主流方法分析</h4><p>在前后端分离上，目前业内有两股主流：</p>
-<ol>
-<li>前端采用SPA、MVVM等技术，实现前端路由、渲染等，入口文件部署发布</li>
-<li>以阿里为代表的 node 中途岛方案，就是以前写jsp、php的人换成了jser</li>
-</ol>
-<p>比较而言，先看第二种做法，Node做中间层，需要更多的jser，对于前端人员不足、运维支持力度不足的团队，很难做到。</p>
-<p>而第一种方案很多团队都在使用，这样的好处很明显，既做到了前后端开发分离，也兼顾了权限控制（登录态拦截）。但问题在于入口文件（很多都是index.html）的部署。很多团队是把入口文件写成php或者jsp文件，放在动态服务器里面。</p>
-<p>我们团队之前也是这样的方式，不足的地方就是入口文件引用的js版本控件需要后端人员发版前手动修改版本号或者替换模板文件，发布和运维依赖后端团队，虽然后端只需要套一次模板，但还是和以前套jsp模板的开发模式一样。</p>
-<h4 id="唯品支付轻量级前后端分离方案"><a href="#唯品支付轻量级前后端分离方案" class="headerlink" title="唯品支付轻量级前后端分离方案"></a>唯品支付轻量级前后端分离方案</h4><p>于是我们对第一种方法进行了改良，唯一的区别是入口文件部署在静态服务器 nginx 上，rest接口请求通过 nginx 反向代理解决跨域问题。</p>
-<p><img src="/2016/11/05/唯品会支付轻量级前后端分离/markdown-img-paste-20181130103015236.png" alt=""></p>
-<p>以下是具体说明：</p>
-<p>这种部署方式改进地方在于剥离 html 部署，做到前端版本控制、运维、发布都不依赖后端服务；但是会产生一个问题，html和rest api不在同一个域。Nginx 自带反向代理功能，通过一个个 location 规则，实现不同域下 rest api 请求。</p>
-<p><img src="/2016/11/05/唯品会支付轻量级前后端分离/markdown-img-paste-20181130103101818.png" alt=""></p>
-<h4 id="nginx-服务器做了哪些事情？"><a href="#nginx-服务器做了哪些事情？" class="headerlink" title="nginx 服务器做了哪些事情？"></a>nginx 服务器做了哪些事情？</h4><ol>
-<li><p>返回静态文件 html，返回的 html 强制设置 head 信息 ： no-cache no-store，每次请求过来都是相应 200 。这样保证html不会被客户端缓存，有发版不会有缓存问题。我们需要缓存的是 CDN 的内容，不是 html。</p>
-</li>
-<li><p>接口请求代理转发，每个内网服务对应一条 location 规则。</p>
-</li>
-</ol>
-<p>优势</p>
-<ol>
-<li><p>前端开发、发布、运维独立<br>☑ 前端只关注 view 相关的开发，后端只关注 rest api 服务。<br>☑ 前端上线两个域，分别是主域和静态域，上线不依赖后端，可以分开发布。前端两个域上线顺序：先静态域、后主域。<br>☑ 关于静态域上线资源增量发布的问题，可以通过另一篇文章单独说明。也可以关注知乎其他大神的文章。<br>☑ 独立运维、发布，也增加了前端同学对主域的主动权。</p>
-</li>
-<li><p>前端发布不停服<br>☑ 所有的前端文件，打包发布的时候，不需要重启服务器，直接上生产。很美妙~</p>
-</li>
-<li><p>nginx 稳定，有强大的 IO 能力<br>☑ nginx 服务器作为主域，从来不用担心生产有问题；<br>☑ 高性能 IO 能力，也减少了生产服务器数量。原来放在 tomcat中的模板文件，需要6台机器，用了nginx 后，两台机器生产分流，相互backup，基本没有IO瓶颈问题。</p>
-</li>
-</ol>
-<p>劣势</p>
-<ol>
-<li><p>异常拦截需要多一次请求<br>所有的业务逻辑处理，全在客户端完成，对应异常场景，比如用户未登录需要跳转到登录页面，客户端需要根据接口请求返回的结果才能知道；相比动态服务器，会多一次跳转。如果是用java，在拦截器一层处理掉异常场景 302 到其他页面。</p>
-</li>
-<li><p>客户端302，在webview中 会存在问题<br>由于异常处理在客户端完成，比如客户端根据接口相应json：{code:405,msg:’not login’}，判断跳转到登录页面，js 的处理方式是</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">location.replace(&apos;https://login.domain.com?callback=xxx.domain.com/a.html&apos;)</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>在普通浏览器中，这个重定向都是起作用的，但是为 ios 和 Android 的webview 中，这样的写法还是会产生一次浏览器记录，等价于<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">location.href = &apos;https://login.domain.com?callback=xxx.domain.com/a.html&apos;</span><br></pre></td></tr></table></figure></p>
-<ol start="3">
-<li>异常处理前，用户能看到 html 内容<br>因为是客户端先加载html，再做接口请求。接口相应未登录 ，客户端再处理跳转。这时候用户是可以看到页面有闪动。</li>
-</ol>
-<p>处理方案是：在接口相应前，用页面loading状态遮挡页面内容。</p>
-<p>担心未登录用户看到 html 内容这个是会发生，但是没有安全风险。现在前端仅做UI展示和页面交互，所有业务都是服务做的，所以即使前端html、js等暴露出去，如果不是正常用户登录，也没法发起请求，影响业务。</p>
-<ol start="4">
-<li>业务接口调用，依赖nginx配置<br>每个内网域对应一个 location 配置，相对运维传统的使用方式，nginx 耦合了业务。这样运维同学在不了解业务的情况下，不敢动我们的配置文件。需要开发在场才能做变更~_~。</li>
-</ol>
-<p>其实这个也不算问题，只是原来子系统接口调用在动态服务器上代码级别做掉了，运维同学不适用这样的打开方式。</p>
-<p>说了这么多，贴个nginx文件的关键配置</p>
-<ol>
-<li><p>多html 入口</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">响应</span><br><span class="line">server &#123;</span><br><span class="line">    listen 443;</span><br><span class="line">    server_name www.doamin.com;</span><br><span class="line">    ssl on;</span><br><span class="line">    ssl_certificate /apps/svr/nginx/conf/server.crt;</span><br><span class="line">    ssl_certificate_key /apps/svr/nginx/conf/server.key;</span><br><span class="line"></span><br><span class="line">    location  ^~ /a-api/  &#123;</span><br><span class="line">        proxy_pass  http://a.domain-inside.com/api/; #内网域名</span><br><span class="line">    &#125;</span><br><span class="line">    location  ~ /(.*)\.(html)  &#123;</span><br><span class="line">        root  /apps/svr/www.domain.com; # html file dir</span><br><span class="line">        index index.html;</span><br><span class="line">        add_header Accept text/html,application/xhtml+xml,application/xml;</span><br><span class="line">        add_header Content-Type text/html;</span><br><span class="line">        add_header Cache-Control no-cache;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>单html入口（适用SPA）</p>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">响应</span><br><span class="line">server &#123;</span><br><span class="line">    listen 443;</span><br><span class="line">    server_name www.doamin.com;</span><br><span class="line">    ssl on;</span><br><span class="line">    ssl_certificate /apps/svr/nginx/conf/server.crt;</span><br><span class="line">    ssl_certificate_key /apps/svr/nginx/conf/server.key;</span><br><span class="line"></span><br><span class="line">    location  ^~ /a-api/  &#123;</span><br><span class="line">        proxy_pass  http://a.domain-inside.com/api/; #内网域名</span><br><span class="line">    &#125;</span><br><span class="line">    location  = / &#123;</span><br><span class="line">        root  /apps/svr/www.domain.com; # html file dir</span><br><span class="line">        index index.html;</span><br><span class="line">        add_header Accept text/html,application/xhtml+xml,application/xml;</span><br><span class="line">        add_header Content-Type text/html;</span><br><span class="line">        add_header Cache-Control no-cache;</span><br><span class="line">    &#125;</span><br><span class="line">    location  ~ /(.*)$ &#123;</span><br><span class="line">        alias /apps/svr/www.domain.com/index.html; # html file dir</span><br><span class="line">        add_header Accept text/html,application/xhtml+xml,application/xml;</span><br><span class="line">        add_header Content-Type text/html;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>回想一下目前我们在唯品支付现有的分离方案，不一定很牛逼，但是确实是在目前业务、运维场景下，一个相对较为优雅的方案，不论是在解决前端开发效率、还是提升服务质量方面，都发挥了很重要的作用。而且经过了前期 “迁移项目” 考验。</p>
-
+     <h4 id="前后端分离背景"><a href="#前后端分离背景" class="headerlink" title="前后端分离背景"></a>前后端分离背景</h4><p>前后端本是一家，长期以来相生相杀。当然也有些公司比如FB，fullstack，开挂一样存在。就目前国内大部分团队现状来说，大家都在谋求一个前后端开发分离方案，发展历程大致如下：<br></p>
   
 
     </div>
@@ -977,8 +907,7 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-  
-    
+     <p>在双十一等大促环节，系统需要限流，外部需要在我制定的速率限制来调用（超出的流量直接挡掉，系统不进行处理），有没有理论依据呢？这里看了两个算法<br>约定访问速率是流量管理中比较常用的方法之一，令牌桶算法，是目前最常用的流量限制的方法。</p>
   
 
     </div>
@@ -1208,19 +1137,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">HTTP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Integer</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1228,7 +1145,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1236,7 +1157,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">TCP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">UDP</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1244,7 +1173,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">UDP</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1288,15 +1217,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
+                <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">汪国真</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1313,6 +1238,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">C10K</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">HTTP</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1336,11 +1265,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
+                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
+                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
               </li>
              
               <li class="article-tag-list-item">

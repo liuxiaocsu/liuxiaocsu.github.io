@@ -281,8 +281,7 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-  
-    
+     <p>HTTP 是一个属于应用层的面向对象的协议，由于其简捷、快速的方式，适用于分布式超媒体信息系统。它于1990年提出，经过几年的使用与发展，得到不断地完善和 扩展。目前在WWW中使用的是HTTP/1.0的第六版，HTTP/1.1的规范化工作正在进行之中，而且HTTP-NG(Next Generation of HTTP)的建议已经提出。<br>HTTP协议的主要特点可概括如下：<br>1.支持客户/服务器模式。<br>2.简单快速：客户向服务器请求服务时，只需传送请求方法和路径。请求方法常用的有GET、HEAD、POST。每种方法规定了客户与服务器联系的类型不同。由于HTTP协议简单，使得HTTP服务器的程序规模小，因而通信速度很快。<br>3.灵活：HTTP允许传输任意类型的数据对象。正在传输的类型由Content-Type加以标记。<br>4.无连接：无连接的含义是限制每次连接只处理一个请求。服务器处理完客户的请求，并收到客户的应答后，即断开连接。采用这种方式可以节省传输时间。<br>5.无状态：HTTP协议是无状态协议。无状态是指协议对于事务处理没有记忆能力。缺少状态意味着如果后续处理需要前面的信息，则它必须重传，这样可能导致每次连接传送的数据量增大。另一方面，在服务器不需要先前信息时它的应答就较快。<br></p>
   
 
     </div>
@@ -371,20 +370,12 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-  
-    <h4 id="TCP保活的缘起"><a href="#TCP保活的缘起" class="headerlink" title="TCP保活的缘起"></a>TCP保活的缘起</h4><p>双方建立交互的连接，但是并不是一直存在数据交互，有些连接会在数据 交互完毕后，主动释放连接，而有些不会，那么在长时间无数据交互的时间段内，交互双方都有可能出现掉电、死机、异常重启等各种意外，当这些意外发生之后， 这些TCP连接并未来得及正常释放，那么，连接的另一方并不知道对端的情况，它会一直维护这个连接，长时间的积累会导致非常多的半打开连接，造成端系统资 源的消耗和浪费，为了解决这个问题，在传输层可以利用TCP的保活报文来实现。</p>
+     <h4 id="TCP保活的缘起"><a href="#TCP保活的缘起" class="headerlink" title="TCP保活的缘起"></a>TCP保活的缘起</h4><p>双方建立交互的连接，但是并不是一直存在数据交互，有些连接会在数据 交互完毕后，主动释放连接，而有些不会，那么在长时间无数据交互的时间段内，交互双方都有可能出现掉电、死机、异常重启等各种意外，当这些意外发生之后， 这些TCP连接并未来得及正常释放，那么，连接的另一方并不知道对端的情况，它会一直维护这个连接，长时间的积累会导致非常多的半打开连接，造成端系统资 源的消耗和浪费，为了解决这个问题，在传输层可以利用TCP的保活报文来实现。</p>
 <h4 id="TCP保活的作用"><a href="#TCP保活的作用" class="headerlink" title="TCP保活的作用"></a>TCP保活的作用</h4><p>1， 探测连接的对端是否存活<br>在应用交互的过程中，可能存在以下几种情况：</p>
 <ul>
 <li>客户端或服务器端意外断电、死机、崩溃、重启</li>
 <li>中间网络已经中断，而客户端与服务器端并不知道<pre><code>利用保活探测功能，可以探知这种对端的意外情况，从而保证在意外发生时，可以释放半打开的TCP连接。
-</code></pre>2， 防止中间设备因超时删除连接相关的连接表<br>中间设备如防火墙等，会为经过它的数据报文建立相关的连接信息表，并为其设置一个超时时间的定时器，如果超出预定时间，某连接无任何报文交互的话，中间设 备会将该连接信息从表中删除，在删除后，再有应用报文过来时，中间设备将丢弃该报文，从而导致应用出现异常，这个交互的过程大致如下图所示：</li>
-</ul>
-<p><img src="/2017/07/21/TCP保活/markdown-img-paste-20181130110352276.png" alt=""></p>
-<p>这种情况在有防火墙的应用环境下非常常见，这会给某些长时间无数据交 互但是又要长时间维持连接的应用（如数据库）带来很大的影响，为了解决这个问题，应用本身或TCP可以通过保活报文来维持中间设备中该连接的信息，（也可 以在中间设备上开启长连接属性或调高连接表的释放时间来解决，但是，这个影响可能较大，有机会再针对这个做详细的描述，在此不多说）。<br>常见应用故障场景：<br>       某财务应用，在客户端需要填写大量的表单数据，在客户端与服务器端建立TCP连接后，客户端终端使用者将花费几分钟甚至几十分钟填写表单相关信息，终端使 用者终于填好表单所需信息后，点击“提交”按钮，结果，这个时候由于中间设备早已经将这个TCP连接从连接表中删除了，其将直接丢弃这个报文或者给客户端 发送RST报文，应用故障产生，这将导致客户端终端使用者所有的工作将需要重新来过，给使用者带来极大的不便和损失。</p>
-<p>TCP保活报文交互过程<br>TCP保活的交互过程大致如下图所示：</p>
-<p><img src="/2017/07/21/TCP保活/markdown-img-paste-20181130110813436.png" alt=""></p>
-<p>TCP保活可能带来的问题<br>1， 中间设备因大量保活连接，导致其连接表满<br>       网关设备由于保活问题，导致其连接表满，无法新建连接（XX局网闸故障案例）或性能下降严重<br>2， 正常连接被释放<br>       当连接一端在发送保活探测报文时，中间网络正好由于各种异常（如链路中断、中间设备重启等）而无法将该保活探测报文正确转发至对端时，可能会导致探测的一 方释放本来正常的连接，但是这种可能情况发生的概率较小，另外，一般也可以增加保活探测报文发生的次数来减小这种情况发生的概率和影响。<br>TCP保活的设置<br>        一般而言，保活探测主要在服务器端实现，如果应用层有相应的保活机制时，传输层的TCP保活就可以不用。<br>        在windows系统中，我们可以通过修改注册表等来达到开启、调整保活相关<br>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters<br>KeepAliveInterval<br>项：Tcpip\Parameters<br>数值类型：REG_DWORD - 时间（以毫秒为单位）<br>有效范围：1 - 0xFFFFFFFF<br>默认值：1000（1 秒）<br>说明：此参数确定在收到响应之前，保活重传之间的时间间隔。一旦收到一个响应，将由 KeepAliveTime 值重新控制在下一次保活传输之前的延迟。如果经过 TcpMaxDataRetransmissions 指定的重新传输次数后仍无响应，将放弃连接。<br>KeepAliveTime<br>项：Tcpip\Parameters<br>数值类型：REG_DWORD - 时间（以毫秒为单位）<br>有效范围：1 - 0xFFFFFFFF<br>默认值：7,200,000（两个小时）<br>说明：此参数控制 TCP 试图通过发送保活数据包来验证空闲连接是否仍然保持的次数。如果远程系统仍然可以连接并且正在运行，它就会响应保活传输。默认情况下不发送保活数据包。应用程序可以在连接上启用此功能。</p>
-
+</code></pre>2， 防止中间设备因超时删除连接相关的连接表<br>中间设备如防火墙等，会为经过它的数据报文建立相关的连接信息表，并为其设置一个超时时间的定时器，如果超出预定时间，某连接无任何报文交互的话，中间设 备会将该连接信息从表中删除，在删除后，再有应用报文过来时，中间设备将丢弃该报文，从而导致应用出现异常，这个交互的过程大致如下图所示：</li></ul>
   
 
     </div>
@@ -1224,19 +1215,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">HTTP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Integer</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1244,7 +1223,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1252,7 +1235,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">TCP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">UDP</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1260,7 +1251,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">UDP</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1304,15 +1295,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
+                <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">汪国真</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1329,6 +1316,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">C10K</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">HTTP</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1352,11 +1343,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
+                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
+                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
               </li>
              
               <li class="article-tag-list-item">
