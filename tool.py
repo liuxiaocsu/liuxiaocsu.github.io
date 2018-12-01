@@ -37,12 +37,9 @@ def list_img_file(directory):
                 new_list.append(filename)
         except ValueError as e:
             print(filename+" parse ValueError------liuxiao-")
-        except IndentationError as e:
-            print(filename+" parse IndentationError------liuxiao-")
-        finally:
-
+        
     # print new_list
-            return new_list
+    return new_list
 
 
 def print_help():
