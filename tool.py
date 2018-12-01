@@ -31,12 +31,18 @@ def list_img_file(directory):
     # print old_list
     new_list = []
     for filename in old_list:
-        print("---liuxiao------"+filename)
-        name, fileformat = filename.split(".")
-        if fileformat.lower() == "jpg" or fileformat.lower() == "png" or fileformat.lower() == "jpeg" or fileformat.lower() == "gif":
-            new_list.append(filename)
+        try:
+            name, fileformat = filename.split(".")
+            if fileformat.lower() == "jpg" or fileformat.lower() == "png" or fileformat.lower() == "jpeg" or fileformat.lower() == "gif":
+                new_list.append(filename)
+        except ValueError as e:
+            print(filename+" parse ValueError------liuxiao-")
+        except IndentationError as e:
+            print(filename+" parse IndentationError------liuxiao-")
+        finally:
+
     # print new_list
-    return new_list
+            return new_list
 
 
 def print_help():
