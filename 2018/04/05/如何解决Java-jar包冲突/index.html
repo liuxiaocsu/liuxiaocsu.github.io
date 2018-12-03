@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
 <meta property="og:description" content="Jar包冲突是老生常谈的问题，几乎每一个Java程序猿都不可避免地遇到过，并且也都能想到通常的原因一般是同一个Jar包由于maven传递依赖等原因被引进了多个不同的版本而导致，可采用依赖排除、依赖管理等方式来尝试解决该问题，本文将围绕Jar包冲突的问题本质和相关的解决方案这两个点进行阐述。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:updated_time" content="2018-12-03T12:36:29.642Z">
+<meta property="og:updated_time" content="2018-12-03T13:00:37.109Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何解决Java jar包冲突">
 <meta name="twitter:description" content="Jar包冲突是老生常谈的问题，几乎每一个Java程序猿都不可避免地遇到过，并且也都能想到通常的原因一般是同一个Jar包由于maven传递依赖等原因被引进了多个不同的版本而导致，可采用依赖排除、依赖管理等方式来尝试解决该问题，本文将围绕Jar包冲突的问题本质和相关的解决方案这两个点进行阐述。">
@@ -210,9 +210,8 @@
 
   
     <p>Jar包冲突是老生常谈的问题，几乎每一个Java程序猿都不可避免地遇到过，并且也都能想到通常的原因一般是同一个Jar包由于maven传递依赖等原因被引进了多个不同的版本而导致，可采用依赖排除、依赖管理等方式来尝试解决该问题，本文将围绕Jar包冲突的问题本质和相关的解决方案这两个点进行阐述。<br><a id="more"></a></p>
-<h3 id="Jar包冲突问题"><a href="#Jar包冲突问题" class="headerlink" title="Jar包冲突问题"></a>Jar包冲突问题</h3><h4 id="一、冲突的本质"><a href="#一、冲突的本质" class="headerlink" title="一、冲突的本质"></a>一、冲突的本质</h4><p>Jar包冲突的本质是什么？Google了半天也没找到一个让人满意的完整定义。其实，我们可以从Jar包冲突产生的结果来总结，在这里给出如下定义（此处如有不妥，欢迎拍砖~-~）：</p>
-<p>Java应用程序因某种因素，加载不到正确的类而导致其行为跟预期不一致。</p>
-<p>具体来说可分为两种情况：1）应用程序依赖的同一个Jar包出现了多个不同版本，并选择了错误的版本而导致JVM加载不到需要的类或加载了错误版本的类，为了叙述的方便，笔者称之为第一类Jar包冲突问题；2）同样的类（类的全限定名完全一样）出现在多个不同的依赖Jar包中，即该类有多个版本，并由于Jar包加载的先后顺序导致JVM加载了错误版本的类，称之为第二类Jar包问题。这两种情况所导致的结果其实是一样的，都会使应用程序加载不到正确的类，那其行为自然会跟预期不一致了，以下对这两种类型进行详细分析。</p>
+<h3 id="Jar包冲突问题"><a href="#Jar包冲突问题" class="headerlink" title="Jar包冲突问题"></a>Jar包冲突问题</h3><h4 id="一、冲突的本质"><a href="#一、冲突的本质" class="headerlink" title="一、冲突的本质"></a>一、冲突的本质</h4><p>Jar包冲突的本质是什么？<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Java应用程序因某种因素，加载不到正确的类而导致其行为跟预期不一致。</span><br></pre></td></tr></table></figure></p>
+<p>具体来说可分为两种情况：1）第一类Jar包冲突问题，应用程序依赖的同一个Jar包出现了多个不同版本，并选择了错误的版本而导致JVM加载不到需要的类或加载了错误版本的类；2）第二类Jar包问题，同样的类（类的全限定名完全一样）出现在多个不同的依赖Jar包中，即该类有多个版本，并由于Jar包加载的先后顺序导致JVM加载了错误版本的类。这两种情况所导致的结果其实是一样的，都会使应用程序加载不到正确的类，那其行为自然会跟预期不一致了，以下对这两种类型进行详细分析。</p>
 <h5 id="1-1-同一个Jar包出现了多个不同版本"><a href="#1-1-同一个Jar包出现了多个不同版本" class="headerlink" title="1.1 同一个Jar包出现了多个不同版本"></a>1.1 同一个Jar包出现了多个不同版本</h5><p>随着Jar包迭代升级，我们所依赖的开源的或公司内部的Jar包工具都会存在若干不同的版本，而版本升级自然就避免不了类的方法签名变更，甚至于类名的更替，而我们当前的应用程序往往依赖特定版本的某个类 M ，由于maven的传递依赖而导致同一个Jar包出现了多个版本，当maven的仲裁机制选择了错误的版本时，而恰好类 M在该版本中被去掉了，或者方法签名改了，导致应用程序因找不到所需的类 M或找不到类 M中的特定方法，就会出现第一类Jar冲突问题。可总结出该类冲突问题发生的以下三个必要条件：</p>
 <ul>
 <li>由于maven的传递依赖导致依赖树中出现了同一个Jar包的多个版本</li>
@@ -256,7 +255,7 @@
 <h5 id="2-1-良好的习惯：依赖管理"><a href="#2-1-良好的习惯：依赖管理" class="headerlink" title="2.1 良好的习惯：依赖管理"></a>2.1 良好的习惯：依赖管理</h5><p>对于第一类Jar包冲突问题，通常的做法是用<excludes>排除不需要的版本，但这种做法带来的问题是每次引入带有传递性依赖的Jar包时，都需要一一进行排除，非常麻烦。maven为此提供了集中管理依赖信息的机制，即依赖管理元素<dependencymanagement>，对依赖Jar包进行统一版本管理，一劳永逸。通常的做法是，在parent模块的pom文件中尽可能地声明所有相关依赖Jar包的版本，并在子pom中简单引用该构件即可。</dependencymanagement></excludes></p>
 <p>来看个示例，当开发时确定使用的httpclient版本为4.5.1时，可在父pom中配置如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"> &lt;properties&gt;</span><br><span class="line"> &lt;httpclient.version&gt;4.5.1&lt;/httpclient.version&gt;</span><br><span class="line"> &lt;/properties&gt;</span><br><span class="line"> &lt;dependencyManagement&gt;</span><br><span class="line"> &lt;dependencies&gt;</span><br><span class="line"> &lt;dependency&gt;</span><br><span class="line"> &lt;groupId&gt;org.apache.httpcomponents&lt;/groupId&gt;</span><br><span class="line"> &lt;artifactId&gt;httpclient&lt;/artifactId&gt;</span><br><span class="line"> &lt;version&gt;$&#123;httpclient.version&#125;&lt;/version&gt;</span><br><span class="line"> &lt;/dependency&gt;</span><br><span class="line"> &lt;/dependencies&gt;</span><br><span class="line"> &lt;/dependencyManagement&gt;</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
 <p>然后各个需要依赖该Jar包的子pom中配置如下依赖：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"> &lt;dependencies&gt;</span><br><span class="line"> &lt;dependency&gt;</span><br><span class="line"> &lt;groupId&gt;org.apache.httpcomponents&lt;/groupId&gt;</span><br><span class="line"> &lt;artifactId&gt;httpclient&lt;/artifactId&gt;</span><br><span class="line"> &lt;/dependency&gt;</span><br><span class="line"> &lt;/dependencies&gt;</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
-<h5 id="2-2-冲突检测插件"><a href="#2-2-冲突检测插件" class="headerlink" title="2.2 冲突检测插件"></a>2.2 冲突检测插件</h5><p>对于第二类Jar包冲突问题，前面也提到过，其核心在于同名类出现在了多个不同的Jar包中，如果人工来排查该问题，则需要逐个点开每个Jar包，然后相互对比看有没同名的类，那得多么浪费精力啊？！好在这种费时费力的体力活能交给程序去干。maven-enforcer-plugin，这个强大的maven插件，配合extra-enforcer-rules工具，能自动扫描Jar包将冲突检测并打印出来，汗颜的是，笔者工作之前居然都没听过有这样一个插件的存在，也许是没遇到像工作中这样的冲突问题，算是涨姿势了。其原理其实也比较简单，通过扫描Jar包中的class，记录每个class对应的Jar包列表，如果有多个即是冲突了，故不必深究，我们只需要关注如何用它即可。</p>
+<h5 id="2-2-冲突检测插件"><a href="#2-2-冲突检测插件" class="headerlink" title="2.2 冲突检测插件"></a>2.2 冲突检测插件</h5><p>对于第二类Jar包冲突问题，前面也提到过，其核心在于同名类出现在了多个不同的Jar包中，如果人工来排查该问题，则需要逐个点开每个Jar包，然后相互对比看有没同名的类，那得多么浪费精力啊？！好在这种费时费力的体力活能交给程序去干。maven-enforcer-plugin，这个强大的maven插件，配合extra-enforcer-rules工具，能自动扫描Jar包将冲突检测并打印出来，。其原理其实也比较简单，通过扫描Jar包中的class，记录每个class对应的Jar包列表，如果有多个即是冲突了，故不必深究，我们只需要关注如何用它即可。</p>
 <p>在最终需要打包运行的应用模块pom中，引入maven-enforcer-plugin的依赖，在build阶段即可发现问题，并解决它。比如对于具有parent pom的多模块项目，需要将插件依赖声明在应用模块的pom中。这里有童鞋可能会疑问，为什么不把插件依赖声明在parent pom中呢？那样依赖它的应用子模块岂不是都能复用了？这里之所以强调“打包运行的应用模块pom”，是因为冲突检测针对的是最终集成的应用，关注的是应用运行时是否会出现冲突问题，而每个不同的应用模块，各自依赖的Jar包集合是不同的，由此而产生的<ignoreclasses>列表也是有差异的，因此只能针对应用模块pom分别引入该插件。</ignoreclasses></p>
 <p>先看示例用法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">&lt;plugin&gt;</span><br><span class="line"> &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line"> &lt;artifactId&gt;maven-enforcer-plugin&lt;/artifactId&gt;</span><br><span class="line"> &lt;version&gt;1.4.1&lt;/version&gt;</span><br><span class="line"> &lt;executions&gt;</span><br><span class="line"> &lt;execution&gt;</span><br><span class="line"> &lt;id&gt;enforce&lt;/id&gt;</span><br><span class="line"> &lt;configuration&gt;</span><br><span class="line"> &lt;rules&gt;</span><br><span class="line"> &lt;dependencyConvergence/&gt;</span><br><span class="line"> &lt;/rules&gt;</span><br><span class="line"> &lt;/configuration&gt;</span><br><span class="line"> &lt;goals&gt;</span><br><span class="line"> &lt;goal&gt;enforce&lt;/goal&gt;</span><br><span class="line"> &lt;/goals&gt;</span><br><span class="line"> &lt;/execution&gt;</span><br><span class="line"> &lt;execution&gt;</span><br><span class="line"> &lt;id&gt;enforce-ban-duplicate-classes&lt;/id&gt;</span><br><span class="line"> &lt;goals&gt;</span><br><span class="line"> &lt;goal&gt;enforce&lt;/goal&gt;</span><br><span class="line"> &lt;/goals&gt;</span><br><span class="line"> &lt;configuration&gt;</span><br><span class="line"> &lt;rules&gt;</span><br><span class="line"> &lt;banDuplicateClasses&gt;</span><br><span class="line"> &lt;ignoreClasses&gt;</span><br><span class="line"> &lt;ignoreClass&gt;javax.*&lt;/ignoreClass&gt;</span><br><span class="line"> &lt;ignoreClass&gt;org.junit.*&lt;/ignoreClass&gt;</span><br><span class="line"> &lt;ignoreClass&gt;net.sf.cglib.*&lt;/ignoreClass&gt;</span><br><span class="line"> &lt;ignoreClass&gt;org.apache.commons.logging.*&lt;/ignoreClass&gt;</span><br><span class="line"> &lt;ignoreClass&gt;org.springframework.remoting.rmi.RmiInvocationHandler&lt;/ignoreClass&gt;</span><br><span class="line"> &lt;/ignoreClasses&gt;</span><br><span class="line"> &lt;findAllDuplicates&gt;true&lt;/findAllDuplicates&gt;</span><br><span class="line"> &lt;/banDuplicateClasses&gt;</span><br><span class="line"> &lt;/rules&gt;</span><br><span class="line"> &lt;fail&gt;true&lt;/fail&gt;</span><br><span class="line"> &lt;/configuration&gt;</span><br><span class="line"> &lt;/execution&gt;</span><br><span class="line"> &lt;/executions&gt;</span><br><span class="line"> &lt;dependencies&gt;</span><br><span class="line"> &lt;dependency&gt;</span><br><span class="line"> &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;</span><br><span class="line"> &lt;artifactId&gt;extra-enforcer-rules&lt;/artifactId&gt;</span><br><span class="line"> &lt;version&gt;1.0-beta-6&lt;/version&gt;</span><br><span class="line"> &lt;/dependency&gt;</span><br><span class="line"> &lt;/dependencies&gt;</span><br><span class="line">&lt;/plugin&gt;</span><br></pre></td></tr></table></figure></p>
 <p>maven-enforcer-plugin是通过很多预定义的标准规则（standard rules）和用户自定义规则，来约束maven的环境因素，如maven版本、JDK版本等等，它有很多好用的特性，具体可参见官网。而Extra Enforcer Rules则是MojoHaus项目下的针对maven-enforcer-plugin而开发的提供额外规则的插件，这其中就包含前面所提的重复类检测功能，具体用法可参见官网。</p>
@@ -583,10 +582,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">tag1</a>
               </li>
              
@@ -627,15 +622,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">汪国真</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -691,11 +690,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
+                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
+                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
               </li>
              
               <li class="article-tag-list-item">
