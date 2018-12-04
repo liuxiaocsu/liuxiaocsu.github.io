@@ -5,38 +5,38 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="dns-prefetch" href="www.byteliu.com">
+  <link rel="dns-prefetch" href="http://www.byteliu.com">
   <title>数据库两大神器【索引和锁】 | Byte_Liu&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="原文链接https://juejin.im/post/5b55b842f265da0f9e589e79 索引，其实就是一种数据结构，可以在上面应用一种高效的查询算法，最终提高数据的查询速度。数据库在对资源进行高并发的读写操作时，为了保证数据的一致性，有效性，锁是很重要的机制。 一、索引在之前，我对索引有以下的认知：  索引可以加快数据库的检索速度 表经常进行INSERT/UPDATE/DELETE">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据库两大神器【索引和锁】">
-<meta property="og:url" content="www.byteliu.com/2018/11/28/数据库两大神器【索引和锁】/index.html">
+<meta property="og:url" content="http://www.byteliu.com/2018/11/28/数据库两大神器【索引和锁】/index.html">
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
 <meta property="og:description" content="原文链接https://juejin.im/post/5b55b842f265da0f9e589e79 索引，其实就是一种数据结构，可以在上面应用一种高效的查询算法，最终提高数据的查询速度。数据库在对资源进行高并发的读写操作时，为了保证数据的一致性，有效性，锁是很重要的机制。 一、索引在之前，我对索引有以下的认知：  索引可以加快数据库的检索速度 表经常进行INSERT/UPDATE/DELETE">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128124139870.png">
-<meta property="og:image" content="/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128124206689.png">
-<meta property="og:image" content="/28/数据库两大神器【索引和锁】/markdown-img-paste-2018112812442269.png">
-<meta property="og:image" content="/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128124446565.png">
-<meta property="og:image" content="/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128124621433.png">
-<meta property="og:image" content="/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128124900784.png">
-<meta property="og:image" content="/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128125201108.png">
-<meta property="og:image" content="/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128125533411.png">
-<meta property="og:image" content="/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128125917335.png">
-<meta property="og:image" content="/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128130156926.png">
-<meta property="og:image" content="/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128130720564.png">
-<meta property="og:image" content="/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128130740102.png">
-<meta property="og:image" content="/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128130934547.png">
-<meta property="og:image" content="/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128131148521.png">
-<meta property="og:image" content="/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128131215783.png">
-<meta property="og:image" content="/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128131250845.png">
-<meta property="og:image" content="/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128131313922.png">
+<meta property="og:image" content="http://www.byteliu.com/2018/11/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128124139870.png">
+<meta property="og:image" content="http://www.byteliu.com/2018/11/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128124206689.png">
+<meta property="og:image" content="http://www.byteliu.com/2018/11/28/数据库两大神器【索引和锁】/markdown-img-paste-2018112812442269.png">
+<meta property="og:image" content="http://www.byteliu.com/2018/11/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128124446565.png">
+<meta property="og:image" content="http://www.byteliu.com/2018/11/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128124621433.png">
+<meta property="og:image" content="http://www.byteliu.com/2018/11/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128124900784.png">
+<meta property="og:image" content="http://www.byteliu.com/2018/11/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128125201108.png">
+<meta property="og:image" content="http://www.byteliu.com/2018/11/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128125533411.png">
+<meta property="og:image" content="http://www.byteliu.com/2018/11/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128125917335.png">
+<meta property="og:image" content="http://www.byteliu.com/2018/11/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128130156926.png">
+<meta property="og:image" content="http://www.byteliu.com/2018/11/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128130720564.png">
+<meta property="og:image" content="http://www.byteliu.com/2018/11/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128130740102.png">
+<meta property="og:image" content="http://www.byteliu.com/2018/11/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128130934547.png">
+<meta property="og:image" content="http://www.byteliu.com/2018/11/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128131148521.png">
+<meta property="og:image" content="http://www.byteliu.com/2018/11/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128131215783.png">
+<meta property="og:image" content="http://www.byteliu.com/2018/11/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128131250845.png">
+<meta property="og:image" content="http://www.byteliu.com/2018/11/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128131313922.png">
 <meta property="og:updated_time" content="2018-11-28T05:24:15.507Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据库两大神器【索引和锁】">
 <meta name="twitter:description" content="原文链接https://juejin.im/post/5b55b842f265da0f9e589e79 索引，其实就是一种数据结构，可以在上面应用一种高效的查询算法，最终提高数据的查询速度。数据库在对资源进行高并发的读写操作时，为了保证数据的一致性，有效性，锁是很重要的机制。 一、索引在之前，我对索引有以下的认知：  索引可以加快数据库的检索速度 表经常进行INSERT/UPDATE/DELETE">
-<meta name="twitter:image" content="/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128124139870.png">
+<meta name="twitter:image" content="http://www.byteliu.com/2018/11/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128124139870.png">
   
     <link rel="alternative" href="/atom.xml" title="Byte_Liu&#39;s Blog" type="application/atom+xml">
   
@@ -242,8 +242,8 @@
 </li>
 </ul>
 <h3 id="1-1聊聊索引的基础知识"><a href="#1-1聊聊索引的基础知识" class="headerlink" title="1.1聊聊索引的基础知识"></a>1.1聊聊索引的基础知识</h3><p>首先Mysql的基本存储结构是页(记录都存在页里边)：</p>
-<p><img src="/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128124139870.png" alt=""></p>
-<p><img src="/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128124206689.png" alt=""></p>
+<p><img src="/2018/11/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128124139870.png" alt=""></p>
+<p><img src="/2018/11/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128124206689.png" alt=""></p>
 <ul>
 <li>各个数据页可以组成一个双向链表</li>
 <li><p>而每个数据页中的记录又可以组成一个单向链表</p>
@@ -266,14 +266,14 @@
 </ul>
 <p>很明显，在数据量很大的情况下这样查找会很慢！</p>
 <h3 id="1-2索引提高检索速度"><a href="#1-2索引提高检索速度" class="headerlink" title="1.2索引提高检索速度"></a>1.2索引提高检索速度</h3><p>索引做了些什么可以让我们查询加快速度呢？<br>其实就是将无序的数据变成有序(相对)：</p>
-<p><img src="/28/数据库两大神器【索引和锁】/markdown-img-paste-2018112812442269.png" alt=""></p>
+<p><img src="/2018/11/28/数据库两大神器【索引和锁】/markdown-img-paste-2018112812442269.png" alt=""></p>
 <p>要找到id为8的记录简要步骤：</p>
-<p><img src="/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128124446565.png" alt=""></p>
+<p><img src="/2018/11/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128124446565.png" alt=""></p>
 <p>很明显的是：没有用索引我们是需要遍历双向链表来定位对应的页，现在通过<strong>“目录”</strong>就可以很快地定位到对应的页上了！</p>
 <p>其实底层结构就是B+树，B+树作为树的一种实现，能够让我们很快地查找出对应的记录。</p>
 <p>参考资料：<a href="https://mp.weixin.qq.com/s?__biz=MzIxNTQ3NDMzMw==&amp;mid=2247483701&amp;idx=1&amp;sn=bd229dd584f51ef4fe545d44ad8cdbf9&amp;chksm=979688c7a0e101d1b5c752094013b78f5bd50ab905257ba82149d85d35ea07aba1a15b0e52b4&amp;mpshare=1&amp;scene=1&amp;srcid=0409Tn66UYWSWvqEVlOpwGtR&amp;key=6cd553e86912686a47d76f2d900b1b5b388c90b29708f016db3a6e1bcebe032220ba63626095c4298f32cda7d0d7bd11bded2365f05c32e522584dd149b98db0bb8549ef144cdca694665d31d35cfeef&amp;ascene=0&amp;uin=MzAzMjU4NDM3Nw%3D%3D&amp;devicetype=iMac+MacBookPro12%2C1+OSX+OSX+10.12.4+build(16E195" target="_blank" rel="noopener">Mysql索引</a>&amp;version=12020810&amp;nettype=WIFI&amp;lang=zh_CN&amp;fontScale=100&amp;pass_ticket=YHEmqDDX8hHkj5FiSVpQvjYqIMBDHHDS2po4mfJe%2BqIXlqwJI%2Bg7aJUZq0%2BDwGJ0)</p>
 <h3 id="1-3索引降低增删改的速度"><a href="#1-3索引降低增删改的速度" class="headerlink" title="1.3索引降低增删改的速度"></a>1.3索引降低增删改的速度</h3><p>B+树是平衡树的一种。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">平衡树：它是一棵空树或它的左右两个子树的高度差的绝对值不超过1，并且左右两个子树都是一棵平衡二叉树。</span><br></pre></td></tr></table></figure></p>
-<p>如果一棵普通的树在极端的情况下，是能退化成链表的(树的优点就不复存在了)<br><img src="/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128124621433.png" alt=""></p>
+<p>如果一棵普通的树在极端的情况下，是能退化成链表的(树的优点就不复存在了)<br><img src="/2018/11/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128124621433.png" alt=""></p>
 <p>B+树是平衡树的一种，是不会退化成链表的，树的高度都是相对比较低的(基本符合矮矮胖胖(均衡)的结构)【这样一来我们检索的时间复杂度就是O(logn)】！从上一节的图我们也可以看见，建立索引实际上就是建立一颗B+树。</p>
 <ul>
 <li>B+树是一颗平衡树，如果我们对这颗树增删改的话，那肯定会破坏它的原有结构。</li>
@@ -284,7 +284,7 @@
 <ul>
 <li>本质上就是把键值换算成新的哈希值，根据这个哈希值来定位。</li>
 </ul>
-<p><img src="/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128124900784.png" alt=""></p>
+<p><img src="/2018/11/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128124900784.png" alt=""></p>
 <p>看起来哈希索引很牛逼啊，但其实哈希索引有好几个局限(根据他本质的原理可得)：</p>
 <ul>
 <li>哈希索引也没办法利用索引完成排序</li>
@@ -293,7 +293,7 @@
 <li>不支持范围查询</li>
 </ul>
 <p>参考资料：<a href="http://www.cnblogs.com/zengkefu/p/5647279.html" target="_blank" rel="noopener">http://www.cnblogs.com/zengkefu/p/5647279.html</a> —hash索引和b+tree索引</p>
-<h3 id="1-5InnoDB支持哈希索引吗？"><a href="#1-5InnoDB支持哈希索引吗？" class="headerlink" title="1.5InnoDB支持哈希索引吗？"></a>1.5InnoDB支持哈希索引吗？</h3><p>主流的还是使用B+树索引比较多，对于哈希索引，InnoDB是自适应哈希索引的（hash索引的创建由InnoDB存储引擎引擎自动优化创建，我们干预不了）！<br><img src="/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128125201108.png" alt=""></p>
+<h3 id="1-5InnoDB支持哈希索引吗？"><a href="#1-5InnoDB支持哈希索引吗？" class="headerlink" title="1.5InnoDB支持哈希索引吗？"></a>1.5InnoDB支持哈希索引吗？</h3><p>主流的还是使用B+树索引比较多，对于哈希索引，InnoDB是自适应哈希索引的（hash索引的创建由InnoDB存储引擎引擎自动优化创建，我们干预不了）！<br><img src="/2018/11/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128125201108.png" alt=""></p>
 <p>参考资料：blog.csdn.net/doctor_who2…</p>
 <h3 id="1-6聚集和非聚集索引"><a href="#1-6聚集和非聚集索引" class="headerlink" title="1.6聚集和非聚集索引"></a>1.6聚集和非聚集索引</h3><p>简单概括：</p>
 <ul>
@@ -311,7 +311,7 @@
 <li>此时就涉及到了哪个列会走索引，哪个列不走索引的问题了(最左匹配原则–&gt;后面有说)</li>
 <li>创建多个单列(非聚集)索引的时候，会生成多个索引树(所以过多创建索引会占用磁盘空间)</li>
 </ul>
-<p><img src="/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128125533411.png" alt=""></p>
+<p><img src="/2018/11/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128125533411.png" alt=""></p>
 <p>在创建多列索引中也涉及到了一种特殊的索引–&gt;覆盖索引</p>
 <ul>
 <li>我们前面知道了，如果不是聚集索引，叶子节点存储的是主键+列值</li>
@@ -337,7 +337,7 @@
 <p>1，最左前缀匹配原则。这是非常重要、非常重要、非常重要（重要的事情说三遍）的原则，MySQL会一直向右匹配直到遇到范围查询（&gt;,&lt;,BETWEEN,LIKE）就停止匹配。<br>3，尽量选择区分度高的列作为索引，区分度的公式是 COUNT(DISTINCT col) / COUNT(*)。表示字段不重复的比率，比率越大我们扫描的记录数就越少。<br>4，索引列不能参与计算，尽量保持列“干净”。比如，FROM_UNIXTIME(create_time) = ‘2016-06-06’ 就不能使用索引，原因很简单，B+树中存储的都是数据表中的字段值，但是进行检索时，需要把所有元素都应用函数才能比较，显然这样的代价太大。所以语句要写成 ： create_time = UNIX_TIMESTAMP(‘2016-06-06’)。<br>5，尽可能的扩展索引，不要新建立索引。比如表中已经有了a的索引，现在要加（a,b）的索引，那么只需要修改原来的索引即可。<br>6，单个多列组合索引和多个单列索引的检索查询效果不同，因为在执行SQL时，MySQL只能使用一个索引，会从多个单列索引中选择一个限制最为严格的索引。</p>
 <p>参考资料：</p>
 <p><a href="https://zhuanlan.zhihu.com/p/23624390" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/23624390</a> –简单理解索引<br><a href="https://blog.csdn.net/mysteryhaohao/article/details/51719871" target="_blank" rel="noopener">https://blog.csdn.net/mysteryhaohao/article/details/51719871</a> –<br>MySQL学习之——索引(普通索引、唯一索引、全文索引、索引匹配原则、索引命中等)<br><a href="https://blog.csdn.net/mysteryhaohao/article/details/51719871" target="_blank" rel="noopener">https://blog.csdn.net/mysteryhaohao/article/details/51719871</a> —浅谈MySQL的B树索引与索引优化</p>
-<h2 id="二、锁"><a href="#二、锁" class="headerlink" title="二、锁"></a>二、锁</h2><p><img src="/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128125917335.png" alt=""></p>
+<h2 id="二、锁"><a href="#二、锁" class="headerlink" title="二、锁"></a>二、锁</h2><p><img src="/2018/11/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128125917335.png" alt=""></p>
 <p>在mysql中的锁看起来是很复杂的，因为有一大堆的东西和名词：排它锁，共享锁，表锁，页锁，间隙锁，意向排它锁，意向共享锁，行锁，读锁，写锁，乐观锁，悲观锁，死锁。这些名词有的博客又直接写锁的英文的简写—&gt;X锁，S锁，IS锁，IX锁，MMVC…<br>锁的相关知识又跟存储引擎，索引，事务的隔离级别都是关联的….<br>这就给初学数据库锁的人带来不少的麻烦<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 2.1为什么需要学习数据库锁知识</span><br><span class="line">不少人在开发的时候，应该很少会注意到这些锁的问题，也很少会给程序加锁(除了库存这些对数量准确性要求极高的情况下)</span><br><span class="line">一般也就听过常说的乐观锁和悲观锁，了解过基本的含义之后就没了</span><br></pre></td></tr></table></figure></p>
 <p>定心丸：即使我们不会这些锁知识，我们的程序在一般情况下还是可以跑得好好的。因为这些锁数据库隐式帮我们加了</p>
 <ul>
@@ -376,7 +376,7 @@
 <li>读写阻塞：当前用户在读数据，其他的用户不能修改当前用户读的数据，会加锁！</li>
 <li>写写阻塞：当前用户在修改数据，其他的用户不能修改当前用户正在修改的数据，会加锁！</li>
 </ul>
-<p><img src="/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128130156926.png" alt=""></p>
+<p><img src="/2018/11/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128130156926.png" alt=""></p>
 <p>从上面已经看到了：读锁和写锁是互斥的，读写操作是串行。</p>
 <ul>
 <li>如果某个进程想要获取读锁，同时另外一个进程想要获取写锁。在mysql里边，写锁是优先于读锁的！</li>
@@ -451,8 +451,8 @@
 <p>但Read committed出现的现象—&gt;不可重复读：一个事务读取到另外一个事务已经提交的数据，也就是说一个事务可以看到其他事务所做的修改</p>
 <p>注：A查询数据库得到数据，B去修改数据库的数据，导致A多次查询数据库的结果都不一样【危害：A每次查询的结果都是受B的影响的，那么A查询出来的信息就没有意思了】</p>
 <p>上面也说了，Read committed是语句级别的快照！每次读取的都是当前最新的版本！<br>Repeatable read避免不可重复读是事务级别的快照！每次读取的都是当前事务的版本，即使被修改了，也只会读取当前事务版本的数据。<br>呃…如果还是不太清楚，我们来看看InnoDB的MVCC是怎么样的吧(摘抄《高性能MySQL》)</p>
-<p><img src="/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128130720564.png" alt=""></p>
-<p><img src="/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128130740102.png" alt=""></p>
+<p><img src="/2018/11/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128130720564.png" alt=""></p>
+<p><img src="/2018/11/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128130740102.png" alt=""></p>
 <p>至于虚读(幻读)：是指在一个事务内读取到了别的事务插入的数据，导致前后读取不一致。</p>
 <p>注：和不可重复读类似，但虚读(幻读)会读到其他事务的插入的数据，导致前后读取不一致<br>MySQL的Repeatable read隔离级别加上GAP间隙锁已经处理了幻读了。</p>
 <p>参考资料：</p>
@@ -460,7 +460,7 @@
 <p>扩展阅读：</p>
 <p><a href="https://www.zhihu.com/question/67739617" target="_blank" rel="noopener">https://www.zhihu.com/question/67739617</a></p>
 <h3 id="2-3乐观锁和悲观锁"><a href="#2-3乐观锁和悲观锁" class="headerlink" title="2.3乐观锁和悲观锁"></a>2.3乐观锁和悲观锁</h3><p>无论是Read committed还是Repeatable read隔离级别，都是为了解决读写冲突的问题。<br>单纯在Repeatable read隔离级别下我们来考虑一个问题：</p>
-<p><img src="/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128130934547.png" alt=""></p>
+<p><img src="/2018/11/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128130934547.png" alt=""></p>
 <p>此时，用户李四的操作就丢失掉了：</p>
 <ul>
 <li>丢失更新：一个事务的更新覆盖了其它事务的更新结果。</li>
@@ -476,12 +476,12 @@
 <p>在select 语句后边加了 for update相当于加了排它锁(写锁)，加了写锁以后，其他的事务就不能对它修改了！需要等待当前事务修改完之后才可以修改.</p>
 <p>也就是说，如果张三使用<code>select ... for update</code>，李四就无法对该条记录修改了~</p>
 <h4 id="2-3-2乐观锁"><a href="#2-3-2乐观锁" class="headerlink" title="2.3.2乐观锁"></a>2.3.2乐观锁</h4><p>乐观锁不是数据库层面上的锁，是需要自己手动去加的锁。一般我们添加一个版本字段来实现：<br>具体过程是这样的：<br>张三select * from table  —&gt;会查询出记录出来，同时会有一个version字段</p>
-<p><img src="/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128131148521.png" alt=""></p>
-<p>李四select * from table —&gt;会查询出记录出来，同时会有一个version字段<br><img src="/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128131215783.png" alt=""></p>
+<p><img src="/2018/11/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128131148521.png" alt=""></p>
+<p>李四select * from table —&gt;会查询出记录出来，同时会有一个version字段<br><img src="/2018/11/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128131215783.png" alt=""></p>
 <p>李四对这条记录做修改：update A set Name=lisi,version=version+1 where ID=#{id} and version=#{version}，判断之前查询到的version与现在的数据的version进行比较，同时会更新version字段<br>此时数据库记录如下：</p>
-<p><img src="/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128131250845.png" alt=""></p>
+<p><img src="/2018/11/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128131250845.png" alt=""></p>
 <p>张三也对这条记录修改：update A set Name=lisi,version=version+1 where ID=#{id} and version=#{version}，但失败了！因为当前数据库中的版本跟查询出来的版本不一致！</p>
-<p><img src="/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128131313922.png" alt=""></p>
+<p><img src="/2018/11/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128131313922.png" alt=""></p>
 <p>参考资料：</p>
 <p><a href="https://zhuanlan.zhihu.com/p/31537871" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/31537871</a> —什么是悲观锁和乐观锁<br><a href="https://www.zhihu.com/question/27876575" target="_blank" rel="noopener">https://www.zhihu.com/question/27876575</a> —乐观锁和 MVCC 的区别？</p>
 <h3 id="2-4间隙锁GAP"><a href="#2-4间隙锁GAP" class="headerlink" title="2.4间隙锁GAP"></a>2.4间隙锁GAP</h3><p>当我们用范围条件检索数据而不是相等条件检索数据，并请求共享或排他锁时，InnoDB会给符合范围条件的已有数据记录的索引项加锁；对于键值在条件范围内但并不存在的记录，叫做“间隙（GAP)”。InnoDB也会对这个“间隙”加锁，这种锁机制就是所谓的间隙锁。<br>值得注意的是：间隙锁只会在Repeatable read隔离级别下使用~<br>例子：假如emp表中只有101条记录，其empid的值分别是1,2,…,100,101<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Select * from  emp where empid &gt; 100 for update;</span><br></pre></td></tr></table></figure></p>
@@ -575,7 +575,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http:www.byteliu.com/2018/11/28/数据库两大神器【索引和锁】/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://www.byteliu.com/2018/11/28/数据库两大神器【索引和锁】/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -652,7 +652,7 @@
 <script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "www.byteliu.com/2018/11/28/数据库两大神器【索引和锁】/",
+  id: "http://www.byteliu.com/2018/11/28/数据库两大神器【索引和锁】/",
   owner: 'liuxiaocsu',
   repo: 'liuxiaocsu.github.io',
   oauth: {
@@ -811,15 +811,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">me</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">UDP</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">me</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -863,14 +871,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">汪国真</a>
               </li>
              
@@ -887,11 +887,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Btrace</a>
+                <a href="javascript:void(0)" class="js-tag color5">C10K</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">C10K</a>
+                <a href="javascript:void(0)" class="js-tag color2">Btrace</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -927,19 +927,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Docker</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">代码规范</a>
+                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">velocity</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">代码规范</a>
               </li>
              
               <li class="article-tag-list-item">

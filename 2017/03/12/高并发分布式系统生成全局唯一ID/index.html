@@ -5,23 +5,23 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="dns-prefetch" href="www.byteliu.com">
+  <link rel="dns-prefetch" href="http://www.byteliu.com">
   <title>高并发分布式系统生成全局唯一ID | Byte_Liu&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="研究数据库分表分库，其中有一个关键的地方就是生成唯一键的问题，假如数据表有1亿条数据，而且还在不断的增加，这里我们就需要考虑到分库分表，假设我们采用Hash或者是用户取模求余的方法将这个表拆分成10个表，每个表的结构相同，其中有一个主键id，那么10个表中的id需要唯一不同，在单表的时候，使用数据表自增长是没有问题的。当分成10个表后，就无法用到数据库自增长了。当到这里的时候突然发现oracle数">
 <meta name="keywords" content="分布式">
 <meta property="og:type" content="article">
 <meta property="og:title" content="高并发分布式系统生成全局唯一ID">
-<meta property="og:url" content="www.byteliu.com/2017/03/12/高并发分布式系统生成全局唯一ID/index.html">
+<meta property="og:url" content="http://www.byteliu.com/2017/03/12/高并发分布式系统生成全局唯一ID/index.html">
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
 <meta property="og:description" content="研究数据库分表分库，其中有一个关键的地方就是生成唯一键的问题，假如数据表有1亿条数据，而且还在不断的增加，这里我们就需要考虑到分库分表，假设我们采用Hash或者是用户取模求余的方法将这个表拆分成10个表，每个表的结构相同，其中有一个主键id，那么10个表中的id需要唯一不同，在单表的时候，使用数据表自增长是没有问题的。当分成10个表后，就无法用到数据库自增长了。当到这里的时候突然发现oracle数">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="/12/高并发分布式系统生成全局唯一ID/markdown-img-paste-20181130094910608.png">
+<meta property="og:image" content="http://www.byteliu.com/2017/03/12/高并发分布式系统生成全局唯一ID/markdown-img-paste-20181130094910608.png">
 <meta property="og:updated_time" content="2018-11-30T02:04:39.551Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="高并发分布式系统生成全局唯一ID">
 <meta name="twitter:description" content="研究数据库分表分库，其中有一个关键的地方就是生成唯一键的问题，假如数据表有1亿条数据，而且还在不断的增加，这里我们就需要考虑到分库分表，假设我们采用Hash或者是用户取模求余的方法将这个表拆分成10个表，每个表的结构相同，其中有一个主键id，那么10个表中的id需要唯一不同，在单表的时候，使用数据表自增长是没有问题的。当分成10个表后，就无法用到数据库自增长了。当到这里的时候突然发现oracle数">
-<meta name="twitter:image" content="/12/高并发分布式系统生成全局唯一ID/markdown-img-paste-20181130094910608.png">
+<meta name="twitter:image" content="http://www.byteliu.com/2017/03/12/高并发分布式系统生成全局唯一ID/markdown-img-paste-20181130094910608.png">
   
     <link rel="alternative" href="/atom.xml" title="Byte_Liu&#39;s Blog" type="application/atom+xml">
   
@@ -226,7 +226,7 @@
 </li>
 </ul>
 <p>优点：高性能，低延迟；独立的应用；按时间有序。 缺点：需要独立的开发和部署。<br>原理</p>
-<p><img src="/12/高并发分布式系统生成全局唯一ID/markdown-img-paste-20181130094910608.png" alt=""></p>
+<p><img src="/2017/03/12/高并发分布式系统生成全局唯一ID/markdown-img-paste-20181130094910608.png" alt=""></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">public class DistributeGlobalIdGenerator &#123;</span><br><span class="line">    private final long workerId;</span><br><span class="line">    private final static long twepoch = 1288834974657L;</span><br><span class="line">    private long sequence = 0L;</span><br><span class="line">    private final static long workerIdBits = 4L;</span><br><span class="line">    public final static long maxWorkerId = -1L ^ -1L &lt;&lt; workerIdBits;</span><br><span class="line">    private final static long sequenceBits = 10L;</span><br><span class="line">    private final static long workerIdShift = sequenceBits;</span><br><span class="line">    private final static long timestampLeftShift = sequenceBits + workerIdBits;</span><br><span class="line">    public final static long sequenceMask = -1L ^ -1L &lt;&lt; sequenceBits;</span><br><span class="line">    private long lastTimestamp = -1L;</span><br><span class="line"></span><br><span class="line">    public DistributeGlobalIdGenerator(final long workerId) &#123;</span><br><span class="line">        super();</span><br><span class="line">        if (workerId &gt; this.maxWorkerId || workerId &lt; 0) &#123;</span><br><span class="line">            throw new IllegalArgumentException(String.format(&quot;worker Id can&apos;t be greater than %d or less than 0&quot;, this.maxWorkerId));</span><br><span class="line">        &#125;</span><br><span class="line">        this.workerId = workerId;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public synchronized long nextId() &#123;</span><br><span class="line">        long timestamp = this.timeGen();</span><br><span class="line">        if (this.lastTimestamp == timestamp) &#123;</span><br><span class="line">            this.sequence = (this.sequence + 1) &amp; this.sequenceMask;</span><br><span class="line">            if (this.sequence == 0) &#123;</span><br><span class="line">                System.out.println(&quot;###########&quot; + sequenceMask);</span><br><span class="line">                timestamp = this.tilNextMillis(this.lastTimestamp);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            this.sequence = 0;</span><br><span class="line">        &#125;</span><br><span class="line">        if (timestamp &lt; this.lastTimestamp) &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                throw new Exception(String.format(&quot;Clock moved backwards. Refusing to generate id for %d milliseconds&quot;, this.lastTimestamp - timestamp));</span><br><span class="line">            &#125; catch (Exception e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        this.lastTimestamp = timestamp;</span><br><span class="line">        long nextId = ((timestamp - twepoch &lt;&lt; timestampLeftShift)) | (this.workerId &lt;&lt; this.workerIdShift) | (this.sequence);</span><br><span class="line">        System.out.println(&quot;timestamp:&quot; + timestamp + &quot;,timestampLeftShift:&quot; + timestampLeftShift + &quot;,nextId:&quot; + nextId + &quot;,workerId:&quot; + workerId + &quot;,sequence:&quot; + sequence);</span><br><span class="line">        return nextId;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private long tilNextMillis(final long lastTimestamp) &#123;</span><br><span class="line">        long timestamp = this.timeGen();</span><br><span class="line">        while (timestamp &lt;= lastTimestamp) &#123;</span><br><span class="line">            timestamp = this.timeGen();</span><br><span class="line">        &#125;</span><br><span class="line">        return timestamp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private long timeGen() &#123;</span><br><span class="line">        return System.currentTimeMillis();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        DistributeGlobalIdGenerator distributeGlobalIdGenerator = new DistributeGlobalIdGenerator(2);</span><br><span class="line">        System.out.println(distributeGlobalIdGenerator.nextId());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="二-来自Flicker的解决方案（数据库生存方式）"><a href="#二-来自Flicker的解决方案（数据库生存方式）" class="headerlink" title="二 来自Flicker的解决方案（数据库生存方式）"></a>二 来自Flicker的解决方案（数据库生存方式）</h3><p>因为MySQL本身支持auto_increment操作，很自然地，我们会想到借助这个特性来实现这个功能。<br>Flicker在解决全局ID生成方案里就采用了MySQL自增长ID的机制（auto_increment + replace into + MyISAM）。一个生成64位ID方案具体就是这样的：<br>先创建单独的数据库(eg:ticket)，然后创建一个表：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE tickets64 (id bigint(20) unsigned NOT NULL auto_increment,stub char(1) NOT NULL default &apos;&apos;,PRIMARY KEY (id),UNIQUE KEY stub (stub)) ENGINE=MyISAM</span><br></pre></td></tr></table></figure></p>
 <p>当我们插入记录后，执行SELECT * from tickets64，查询结果就是这样的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">+-------------------+------+</span><br><span class="line">| id | stub |</span><br><span class="line">+-------------------+------+</span><br><span class="line">| 72157623227190423 | a |</span><br><span class="line">+-------------------+------+</span><br></pre></td></tr></table></figure></p>
@@ -331,7 +331,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http:www.byteliu.com/2017/03/12/高并发分布式系统生成全局唯一ID/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://www.byteliu.com/2017/03/12/高并发分布式系统生成全局唯一ID/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -408,7 +408,7 @@
 <script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "www.byteliu.com/2017/03/12/高并发分布式系统生成全局唯一ID/",
+  id: "http://www.byteliu.com/2017/03/12/高并发分布式系统生成全局唯一ID/",
   owner: 'liuxiaocsu',
   repo: 'liuxiaocsu.github.io',
   oauth: {
@@ -567,15 +567,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">me</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">UDP</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">me</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -619,14 +627,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">汪国真</a>
               </li>
              
@@ -643,11 +643,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Btrace</a>
+                <a href="javascript:void(0)" class="js-tag color5">C10K</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">C10K</a>
+                <a href="javascript:void(0)" class="js-tag color2">Btrace</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -683,19 +683,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Docker</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">代码规范</a>
+                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">velocity</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">代码规范</a>
               </li>
              
               <li class="article-tag-list-item">

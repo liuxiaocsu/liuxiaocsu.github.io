@@ -5,23 +5,23 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="dns-prefetch" href="www.byteliu.com">
+  <link rel="dns-prefetch" href="http://www.byteliu.com">
   <title>Quorum NWR | Byte_Liu&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="NWR是一种在分布式存储系统中用于控制一致性级别的一种策略。在Amazon的Dynamo云存储系统中，就应用NWR来控制一致性。让我们先来看看这三个字母的含义：123N：同一份数据的Replica的份数W：是更新一个数据对象的时候需要确保成功更新的份数R： 读取一个数据需要读取的Replica的份数 NWR值的不同组合会产生不同的一致性效果:  当W+R&amp;gt;N的时候，整个系统对于客户端来讲能保">
 <meta name="keywords" content="NWR">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Quorum NWR">
-<meta property="og:url" content="www.byteliu.com/2018/03/23/Quorum-NWR/index.html">
+<meta property="og:url" content="http://www.byteliu.com/2018/03/23/Quorum-NWR/index.html">
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
 <meta property="og:description" content="NWR是一种在分布式存储系统中用于控制一致性级别的一种策略。在Amazon的Dynamo云存储系统中，就应用NWR来控制一致性。让我们先来看看这三个字母的含义：123N：同一份数据的Replica的份数W：是更新一个数据对象的时候需要确保成功更新的份数R： 读取一个数据需要读取的Replica的份数 NWR值的不同组合会产生不同的一致性效果:  当W+R&amp;gt;N的时候，整个系统对于客户端来讲能保">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="/23/Quorum-NWR/markdown-img-paste-20181130101500547.png">
+<meta property="og:image" content="http://www.byteliu.com/2018/03/23/Quorum-NWR/markdown-img-paste-20181130101500547.png">
 <meta property="og:updated_time" content="2018-11-30T02:25:29.976Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Quorum NWR">
 <meta name="twitter:description" content="NWR是一种在分布式存储系统中用于控制一致性级别的一种策略。在Amazon的Dynamo云存储系统中，就应用NWR来控制一致性。让我们先来看看这三个字母的含义：123N：同一份数据的Replica的份数W：是更新一个数据对象的时候需要确保成功更新的份数R： 读取一个数据需要读取的Replica的份数 NWR值的不同组合会产生不同的一致性效果:  当W+R&amp;gt;N的时候，整个系统对于客户端来讲能保">
-<meta name="twitter:image" content="/23/Quorum-NWR/markdown-img-paste-20181130101500547.png">
+<meta name="twitter:image" content="http://www.byteliu.com/2018/03/23/Quorum-NWR/markdown-img-paste-20181130101500547.png">
   
     <link rel="alternative" href="/atom.xml" title="Byte_Liu&#39;s Blog" type="application/atom+xml">
   
@@ -214,7 +214,7 @@
 </li>
 </ul>
 <p>以常见的N=3、W=2、R=2为例：<br>N=3，表示，任何一个对象都必须有三个副本（Replica），W=2表示，对数据的修改操作（Write）只需要在3个Replica中的2个上面完成就返回，R=2表示，从三个对象中要读取到2个数据对象，才能返回。<br>在分布式系统中，数据的单点是不允许存在的。即线上正常存在的Replica数量是1的情况是非常危险的，因为一旦这个Replica再次错误，就 可能发生数据的永久性错误。假如我们把N设置成为2，那么，只要有一个存储节点发生损坏，就会有单点的存在。所以N必须大于2。N约高，系统的维护和整体 成本就越高。工业界通常把N设置为3。<br>当W是2、R是2的时候，W+R&gt;N，这种情况对于客户端就是强一致性的。</p>
-<p><img src="/23/Quorum-NWR/markdown-img-paste-20181130101500547.png" alt=""></p>
+<p><img src="/2018/03/23/Quorum-NWR/markdown-img-paste-20181130101500547.png" alt=""></p>
 <p>在上图所示的系统中，由于W等于2，所以更新操作只需要确保完成两份就可以了。无论存储在Node3上面的第三份数据是否完成，都直接返回。假设后 续的操作从Node1和Node3分别读取了两个数据。然而，Node3上面的数据尚未真正完成之前的更新操作。因此，客户端会发现读到的两个版本不一 致，这个时候，只需要选择出最新的数据就可以了。<br>从不等式中可以看到，当W+R&gt;N的时候，整个系统能够保证R&gt;N-W。也就是说，至少每次都能够读到一份最新的数据。因此只需要把最 新的数据返回即可。所以，虽然服务器上的三份Replica有不一致的情况，对于客户端来讲，每次读到的数据都是最新的。所以这种情况对于客户端来讲是强 一致性的。<br>另外的几种情况：&lt;N,W,R&gt;=&lt;1,1,1&gt;和单点运行的数据库是同一个配置。&lt;N,W,R&gt;=&lt; 2,1,1&gt;，则相当于Slave-Master模式。由于1+1不大于2，所以这种情况是可能读到非最新数据的。也就是这种配置是不一致的。<br>W越大，写性能越差。R越大，读性能越差。N越大，数据可靠性就越强。为了保障一致性，平衡读写性能，通常的配置是：W=Q, R=Q ，Q=N/2+1（N=3，R=2，W=2的配置就满足这个公式）。</p>
 <p>转自：<a href="http://ultimatearchitecture.net/index.php/2010/06/22/quorum-nwr/" target="_blank" rel="noopener">http://ultimatearchitecture.net/index.php/2010/06/22/quorum-nwr/</a></p>
 
@@ -296,7 +296,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http:www.byteliu.com/2018/03/23/Quorum-NWR/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://www.byteliu.com/2018/03/23/Quorum-NWR/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -373,7 +373,7 @@
 <script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "www.byteliu.com/2018/03/23/Quorum-NWR/",
+  id: "http://www.byteliu.com/2018/03/23/Quorum-NWR/",
   owner: 'liuxiaocsu',
   repo: 'liuxiaocsu.github.io',
   oauth: {
@@ -532,15 +532,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">me</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">UDP</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">me</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -584,14 +592,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">汪国真</a>
               </li>
              
@@ -608,11 +608,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Btrace</a>
+                <a href="javascript:void(0)" class="js-tag color5">C10K</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">C10K</a>
+                <a href="javascript:void(0)" class="js-tag color2">Btrace</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -648,19 +648,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Docker</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">代码规范</a>
+                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">velocity</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">代码规范</a>
               </li>
              
               <li class="article-tag-list-item">

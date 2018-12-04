@@ -5,24 +5,24 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="dns-prefetch" href="www.byteliu.com">
+  <link rel="dns-prefetch" href="http://www.byteliu.com">
   <title>CAS学习笔记 | Byte_Liu&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="CAS(Compare And Swap)，比较并交换，是CPU硬件级别提供的功能，比如IA64,X86指令集中用来完成CAS功能的指令集是cmpxchg。java.util.concurrent包中使用该技术实现乐观锁，换句话说java.util.concurrent包是完全建立在CAS之上，AQS同步组件、Atomic原子类操作等都是基于CAS实现的。CAS在JUC包中所处的位置如图：">
 <meta name="keywords" content="JUC">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CAS学习笔记">
-<meta property="og:url" content="www.byteliu.com/2017/05/15/CAS学习笔记/index.html">
+<meta property="og:url" content="http://www.byteliu.com/2017/05/15/CAS学习笔记/index.html">
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
 <meta property="og:description" content="CAS(Compare And Swap)，比较并交换，是CPU硬件级别提供的功能，比如IA64,X86指令集中用来完成CAS功能的指令集是cmpxchg。java.util.concurrent包中使用该技术实现乐观锁，换句话说java.util.concurrent包是完全建立在CAS之上，AQS同步组件、Atomic原子类操作等都是基于CAS实现的。CAS在JUC包中所处的位置如图：">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="/15/CAS学习笔记/markdown-img-paste-20181127143600737.png">
-<meta property="og:image" content="/15/CAS学习笔记/markdown-img-paste-2018112714415336.png">
+<meta property="og:image" content="http://www.byteliu.com/2017/05/15/CAS学习笔记/markdown-img-paste-20181127143600737.png">
+<meta property="og:image" content="http://www.byteliu.com/2017/05/15/CAS学习笔记/markdown-img-paste-2018112714415336.png">
 <meta property="og:updated_time" content="2018-11-27T07:04:36.715Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CAS学习笔记">
 <meta name="twitter:description" content="CAS(Compare And Swap)，比较并交换，是CPU硬件级别提供的功能，比如IA64,X86指令集中用来完成CAS功能的指令集是cmpxchg。java.util.concurrent包中使用该技术实现乐观锁，换句话说java.util.concurrent包是完全建立在CAS之上，AQS同步组件、Atomic原子类操作等都是基于CAS实现的。CAS在JUC包中所处的位置如图：">
-<meta name="twitter:image" content="/15/CAS学习笔记/markdown-img-paste-20181127143600737.png">
+<meta name="twitter:image" content="http://www.byteliu.com/2017/05/15/CAS学习笔记/markdown-img-paste-20181127143600737.png">
   
     <link rel="alternative" href="/atom.xml" title="Byte_Liu&#39;s Blog" type="application/atom+xml">
   
@@ -208,10 +208,10 @@
 
   
     <p>CAS(Compare And Swap)，比较并交换，是CPU硬件级别提供的功能，比如IA64,X86指令集中用来完成CAS功能的指令集是cmpxchg。java.util.concurrent包中使用该技术实现乐观锁，换句话说java.util.concurrent包是完全建立在CAS之上，AQS同步组件、Atomic原子类操作等都是基于CAS实现的。CAS在JUC包中所处的位置如图：<br><a id="more"></a></p>
-<p><img src="/15/CAS学习笔记/markdown-img-paste-20181127143600737.png" alt=""></p>
+<p><img src="/2017/05/15/CAS学习笔记/markdown-img-paste-20181127143600737.png" alt=""></p>
 <p>CAS有3个操作数，内存值V，旧的预期值A，要修改的新值B。当且仅当预期值A和内存值V相同时，将内存值V修改为B，否则什么都不做。</p>
 <h3 id="Java中的CAS"><a href="#Java中的CAS" class="headerlink" title="Java中的CAS"></a>Java中的CAS</h3><p>java中具体的CAS操作是由类sun.misc.Unsafe来负责的。Unsafe类提供了硬件级别的原子操作（即native方法），Java使用native方法来间接访问操作系统底层（如系统硬件等)，扩展Java程序的功能。native具体方法使用C++实现。sun.misc.Unsafe提供了三个CAS操作，从方法名即可看出，分别针对Object类型、int类型和long类型。上文说过CAS有3个操作数，内存值V，旧的预期值A，要修改的新值B，但是仔细看Unsafe提供的CAS操作有4个操作数，这是因为Unsafe提供的CAS操作具体实现是使用C++来实现的，C++可以直接操作内存，效提升操作效率，直接用对象和字段偏移量来获取内存值V，第一个参数是要修改field所在的对象 ，第二个参数是对象中需要修改的field的偏移量（field偏移量这个参数所代表的意思是某个字段相对Java对象的“起始地址”的偏移量，Unsafe提供了一个方法objectFieldOffset(Field var1)来获取这个参数值，对于field偏移量的理解可以参考<a href="http://hllvm.group.iteye.com/group/topic/37940" target="_blank" rel="noopener">这里</a>），第三个参数就是旧的预期值A，第四个参数是要修改的新值B。</p>
-<p><img src="/15/CAS学习笔记/markdown-img-paste-2018112714415336.png" alt=""></p>
+<p><img src="/2017/05/15/CAS学习笔记/markdown-img-paste-2018112714415336.png" alt=""></p>
 <h2 id="CAS缺陷"><a href="#CAS缺陷" class="headerlink" title="CAS缺陷"></a>CAS缺陷</h2><ol>
 <li><p>循环时间长导致CPU负载高<br>CAS操作一般和循环搭配使用（即我们所说的自旋CAS），直到修改成功才会退出循环。如果在某些并发量较大的情况下，变量的值始终被别的线程修改，自旋CAS长时间地不成功，则会给CPU带来非常大的开销。CAS 在并发量不是很高的情况下效率远远高于锁机制。还有一种策略就是限制CAS自旋的次数，在JUC中有些地方就使用了这种策略，例如阻塞队列中的SynchronousQueue。</p>
 </li>
@@ -299,7 +299,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http:www.byteliu.com/2017/05/15/CAS学习笔记/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://www.byteliu.com/2017/05/15/CAS学习笔记/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -376,7 +376,7 @@
 <script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "www.byteliu.com/2017/05/15/CAS学习笔记/",
+  id: "http://www.byteliu.com/2017/05/15/CAS学习笔记/",
   owner: 'liuxiaocsu',
   repo: 'liuxiaocsu.github.io',
   oauth: {
@@ -535,15 +535,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">me</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">UDP</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">me</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -587,14 +595,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">汪国真</a>
               </li>
              
@@ -611,11 +611,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Btrace</a>
+                <a href="javascript:void(0)" class="js-tag color5">C10K</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">C10K</a>
+                <a href="javascript:void(0)" class="js-tag color2">Btrace</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -651,19 +651,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Docker</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">代码规范</a>
+                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">velocity</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">代码规范</a>
               </li>
              
               <li class="article-tag-list-item">

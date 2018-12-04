@@ -5,24 +5,24 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="dns-prefetch" href="www.byteliu.com">
+  <link rel="dns-prefetch" href="http://www.byteliu.com">
   <title>Java线程池 | Byte_Liu&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="谈到线程池就会想到池化技术，其中最核心的思想就是把宝贵的资源放到一个池子中；每次使用都从里面获取，用完之后又放回池子供其他人重复使用。之前我们在使用多线程都是用Thread的start()来创建启动一个线程，但是在实际开发中，如果每个请求到达就创建一个新线程，开销是相当大的。服务器在创建和销毁线程上花费的时间和消耗的系统资源都相当大，甚至可能要比在处理实际的用请求的时间和资源要多的多。除了创建和销">
 <meta name="keywords" content="JUC">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java线程池">
-<meta property="og:url" content="www.byteliu.com/2017/05/10/Java线程池/index.html">
+<meta property="og:url" content="http://www.byteliu.com/2017/05/10/Java线程池/index.html">
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
 <meta property="og:description" content="谈到线程池就会想到池化技术，其中最核心的思想就是把宝贵的资源放到一个池子中；每次使用都从里面获取，用完之后又放回池子供其他人重复使用。之前我们在使用多线程都是用Thread的start()来创建启动一个线程，但是在实际开发中，如果每个请求到达就创建一个新线程，开销是相当大的。服务器在创建和销毁线程上花费的时间和消耗的系统资源都相当大，甚至可能要比在处理实际的用请求的时间和资源要多的多。除了创建和销">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="/10/Java线程池/markdown-img-paste-20181127174733942.png">
-<meta property="og:image" content="/10/Java线程池/markdown-img-paste-20181127173522280.png">
+<meta property="og:image" content="http://www.byteliu.com/2017/05/10/Java线程池/markdown-img-paste-20181127174733942.png">
+<meta property="og:image" content="http://www.byteliu.com/2017/05/10/Java线程池/markdown-img-paste-20181127173522280.png">
 <meta property="og:updated_time" content="2018-11-27T11:21:57.081Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java线程池">
 <meta name="twitter:description" content="谈到线程池就会想到池化技术，其中最核心的思想就是把宝贵的资源放到一个池子中；每次使用都从里面获取，用完之后又放回池子供其他人重复使用。之前我们在使用多线程都是用Thread的start()来创建启动一个线程，但是在实际开发中，如果每个请求到达就创建一个新线程，开销是相当大的。服务器在创建和销毁线程上花费的时间和消耗的系统资源都相当大，甚至可能要比在处理实际的用请求的时间和资源要多的多。除了创建和销">
-<meta name="twitter:image" content="/10/Java线程池/markdown-img-paste-20181127174733942.png">
+<meta name="twitter:image" content="http://www.byteliu.com/2017/05/10/Java线程池/markdown-img-paste-20181127174733942.png">
   
     <link rel="alternative" href="/atom.xml" title="Byte_Liu&#39;s Blog" type="application/atom+xml">
   
@@ -247,14 +247,14 @@
 <li>TIDYING 所有任务都执行完毕，在调用 shutdown()/shutdownNow() 中都会尝试更新为这个状态。</li>
 <li>TERMINATED 终止状态，当执行 terminated() 后会更新为这个状态。</li>
 </ul>
-<p>各个状态的转化关系：<br><img src="/10/Java线程池/markdown-img-paste-20181127174733942.png" alt=""></p>
+<p>各个状态的转化关系：<br><img src="/2017/05/10/Java线程池/markdown-img-paste-20181127174733942.png" alt=""></p>
 <h3 id="线程池的处理流程"><a href="#线程池的处理流程" class="headerlink" title="线程池的处理流程"></a>线程池的处理流程</h3><p>ThreadPoolExecutor会根据corePoolSize和maximumPoolSize来动态调整线程池的大小:poolSize。<br>当任务通过executor提交给线程池的时候：</p>
 <ul>
 <li>如果这个时候当前池子中的工作线程数小于corePoolSize，则新创建一个新的工作线程来执行这个任务，不管工作线程集合中有没有线程是处于空闲状态。</li>
 <li>如果池子中有比corePoolSize大的但是比maximumPoolSize小的工作线程，任务会首先被尝试着放入队列，这里有两种情况需要单独说一下：a、如果任务被成功的放入队列，则看看是否需要开启新的线程来执行任务，只有当当前工作线程数为0的时候才会创建新的线程，因为之前的线程有可能因为都处于空闲状态或因为工作结束而被移除。<br>b、如果放入队列失败，则才会去创建新的工作线程。</li>
 <li>如果corePoolSize和maximumPoolSize相同，则线程池的大小是固定的。<br>通过将maximumPoolSize设置为无限大，我们可以得到一个无上限的线程池。<br>除了通过构造参数设置这几个线程池参数之外我们还可以在运行时设置。</li>
 </ul>
-<p><img src="/10/Java线程池/markdown-img-paste-20181127173522280.png" alt=""></p>
+<p><img src="/2017/05/10/Java线程池/markdown-img-paste-20181127173522280.png" alt=""></p>
 <h4 id="核心线程WarmUp"><a href="#核心线程WarmUp" class="headerlink" title="核心线程WarmUp"></a>核心线程WarmUp</h4><p>默认情况下，核心工作线程值在初始的时候被创建，当新任务来到的时候被启动，但是我们可以通过重写prestartCoreThread或 prestartCoreThreads方法来改变这种行为。通常场景我们可以在应用启动的时候来WarmUp核心线程，从而达到任务过来能够立马执行的 结果，使得初始任务处理的时间得到一定优化。</p>
 <h4 id="定制工作线程的创建"><a href="#定制工作线程的创建" class="headerlink" title="定制工作线程的创建"></a>定制工作线程的创建</h4><p>新的线程是通过ThreadFactory来创建的，如果没有指定，默认的Executors#defaultThreadFactory将被使 用，这个时候创建的线程将都属于同一个线程组，拥有同样的优先级和daemon状态。扩展配置ThreadFactory，我们可以配置线程的名字、线程 组合daemon状态。如果调用ThreadFactory#createThread的时候失败，将返回null，executor将不会执行任何任 务。</p>
 <h4 id="空闲线程回收"><a href="#空闲线程回收" class="headerlink" title="空闲线程回收"></a>空闲线程回收</h4><p>如果当前池子中的工作线程数大于corePoolSize，如果超过这个数字的线程处于空闲的时间大于keepAliveTime，则这些线程将会 被终止，这是一种减少不必要资源消耗的策略。这个参数可以在运行时被改变，我们同样可以将这种策略应用给核心线程，我们可以通过调用 allowCoreThreadTimeout来实现。</p>
@@ -376,7 +376,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http:www.byteliu.com/2017/05/10/Java线程池/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://www.byteliu.com/2017/05/10/Java线程池/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -453,7 +453,7 @@
 <script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "www.byteliu.com/2017/05/10/Java线程池/",
+  id: "http://www.byteliu.com/2017/05/10/Java线程池/",
   owner: 'liuxiaocsu',
   repo: 'liuxiaocsu.github.io',
   oauth: {
@@ -612,15 +612,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">me</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">UDP</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">me</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -664,14 +672,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">汪国真</a>
               </li>
              
@@ -688,11 +688,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Btrace</a>
+                <a href="javascript:void(0)" class="js-tag color5">C10K</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">C10K</a>
+                <a href="javascript:void(0)" class="js-tag color2">Btrace</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -728,19 +728,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Docker</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">代码规范</a>
+                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">velocity</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">代码规范</a>
               </li>
              
               <li class="article-tag-list-item">

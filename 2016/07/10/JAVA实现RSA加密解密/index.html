@@ -5,29 +5,29 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="dns-prefetch" href="www.byteliu.com">
+  <link rel="dns-prefetch" href="http://www.byteliu.com">
   <title>JAVA实现RSA加密解密 | Byte_Liu&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="RSA是1977年由罗纳德·李维斯特（Ron Rivest）、阿迪·萨莫尔（Adi Shamir）和伦纳德·阿德曼（Leonard Adleman）一起提出的。当时他们三人都在麻省理工学院工作。RSA就是他们三人姓氏开头字母拼在一起组成的。">
 <meta name="keywords" content="加密解密">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JAVA实现RSA加密解密">
-<meta property="og:url" content="www.byteliu.com/2016/07/10/JAVA实现RSA加密解密/index.html">
+<meta property="og:url" content="http://www.byteliu.com/2016/07/10/JAVA实现RSA加密解密/index.html">
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
 <meta property="og:description" content="RSA是1977年由罗纳德·李维斯特（Ron Rivest）、阿迪·萨莫尔（Adi Shamir）和伦纳德·阿德曼（Leonard Adleman）一起提出的。当时他们三人都在麻省理工学院工作。RSA就是他们三人姓氏开头字母拼在一起组成的。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="/10/JAVA实现RSA加密解密/markdown-img-paste-20181124224133168.png">
-<meta property="og:image" content="/10/JAVA实现RSA加密解密/markdown-img-paste-20181124222908744.png">
-<meta property="og:image" content="/10/JAVA实现RSA加密解密/markdown-img-paste-20181124223009551.png">
-<meta property="og:image" content="/10/JAVA实现RSA加密解密/markdown-img-paste-20181124223212277.png">
-<meta property="og:image" content="/10/JAVA实现RSA加密解密/markdown-img-paste-20181124223328361.png">
-<meta property="og:image" content="/10/JAVA实现RSA加密解密/markdown-img-paste-20181124223444386.png">
-<meta property="og:image" content="/10/JAVA实现RSA加密解密/markdown-img-paste-20181124223621537.png">
+<meta property="og:image" content="http://www.byteliu.com/2016/07/10/JAVA实现RSA加密解密/markdown-img-paste-20181124224133168.png">
+<meta property="og:image" content="http://www.byteliu.com/2016/07/10/JAVA实现RSA加密解密/markdown-img-paste-20181124222908744.png">
+<meta property="og:image" content="http://www.byteliu.com/2016/07/10/JAVA实现RSA加密解密/markdown-img-paste-20181124223009551.png">
+<meta property="og:image" content="http://www.byteliu.com/2016/07/10/JAVA实现RSA加密解密/markdown-img-paste-20181124223212277.png">
+<meta property="og:image" content="http://www.byteliu.com/2016/07/10/JAVA实现RSA加密解密/markdown-img-paste-20181124223328361.png">
+<meta property="og:image" content="http://www.byteliu.com/2016/07/10/JAVA实现RSA加密解密/markdown-img-paste-20181124223444386.png">
+<meta property="og:image" content="http://www.byteliu.com/2016/07/10/JAVA实现RSA加密解密/markdown-img-paste-20181124223621537.png">
 <meta property="og:updated_time" content="2018-11-24T14:55:15.708Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA实现RSA加密解密">
 <meta name="twitter:description" content="RSA是1977年由罗纳德·李维斯特（Ron Rivest）、阿迪·萨莫尔（Adi Shamir）和伦纳德·阿德曼（Leonard Adleman）一起提出的。当时他们三人都在麻省理工学院工作。RSA就是他们三人姓氏开头字母拼在一起组成的。">
-<meta name="twitter:image" content="/10/JAVA实现RSA加密解密/markdown-img-paste-20181124224133168.png">
+<meta name="twitter:image" content="http://www.byteliu.com/2016/07/10/JAVA实现RSA加密解密/markdown-img-paste-20181124224133168.png">
   
     <link rel="alternative" href="/atom.xml" title="Byte_Liu&#39;s Blog" type="application/atom+xml">
   
@@ -212,7 +212,7 @@
       
 
   
-    <p><img src="/10/JAVA实现RSA加密解密/markdown-img-paste-20181124224133168.png" alt=""><br>RSA是1977年由罗纳德·李维斯特（Ron Rivest）、阿迪·萨莫尔（Adi Shamir）和伦纳德·阿德曼（Leonard Adleman）一起提出的。当时他们三人都在麻省理工学院工作。RSA就是他们三人姓氏开头字母拼在一起组成的。<br><a id="more"></a></p>
+    <p><img src="/2016/07/10/JAVA实现RSA加密解密/markdown-img-paste-20181124224133168.png" alt=""><br>RSA是1977年由罗纳德·李维斯特（Ron Rivest）、阿迪·萨莫尔（Adi Shamir）和伦纳德·阿德曼（Leonard Adleman）一起提出的。当时他们三人都在麻省理工学院工作。RSA就是他们三人姓氏开头字母拼在一起组成的。<br><a id="more"></a></p>
 <p>但实际上，在1973年，在英国政府通讯总部工作的数学家克利福德·柯克斯（Clifford Cocks）在一个内部文件中提出了一个相同的算法，但他的发现被列入机密，一直到1997年才被发表。</p>
 <p>所以谁是RSA算法的发明人呢？不好说，就好像贝尔并不是第一个发明电话的人但大家都记住的是贝尔一样，这个地方我们作为旁观者倒不用较真，重要的是这个算法的内容：</p>
 <h3 id="RSA算法的过程"><a href="#RSA算法的过程" class="headerlink" title="RSA算法的过程"></a>RSA算法的过程</h3><p>RSA算法用到的数学知识特别多，所以在中间介绍这个算法生成私钥和公钥的过程中会穿插一些数学知识。生成步骤如下：</p>
@@ -241,17 +241,17 @@
 <ol start="4">
 <li>销毁p和q<br>此时我们的(N , e)是公钥，(N, d)为私钥，爱丽丝会把公钥(N, e)传给鲍勃，然后将(N, d)自己藏起来。一对公钥和私钥就产生了，然后具体的使用方法呢？请看：SSL协议之数据加密过程详解</li>
 </ol>
-<h3 id="加密"><a href="#加密" class="headerlink" title="加密"></a>加密</h3><p><img src="/10/JAVA实现RSA加密解密/markdown-img-paste-20181124222908744.png" alt=""><br>E是加密（Encryption）的首字母，N是数字（Number）的首字母</p>
+<h3 id="加密"><a href="#加密" class="headerlink" title="加密"></a>加密</h3><p><img src="/2016/07/10/JAVA实现RSA加密解密/markdown-img-paste-20181124222908744.png" alt=""><br>E是加密（Encryption）的首字母，N是数字（Number）的首字母</p>
 <p>也就是说RSA加密是对明文的E次方后除以N后求余数的过程。</p>
 <p>从通式可知，只要知道E和N任何人都可以进行RSA加密了，所以说E、N是RSA加密的密钥，也就是说E和N的组合就是公钥，我们用(E,N)来表示公钥，E和N不并不是随便什么数都可以的，它们都是经过严格的数学计算得出的。</p>
-<p><img src="/10/JAVA实现RSA加密解密/markdown-img-paste-20181124223009551.png" alt=""></p>
-<h3 id="解密"><a href="#解密" class="headerlink" title="解密"></a>解密</h3><p><img src="/10/JAVA实现RSA加密解密/markdown-img-paste-20181124223212277.png" alt=""></p>
+<p><img src="/2016/07/10/JAVA实现RSA加密解密/markdown-img-paste-20181124223009551.png" alt=""></p>
+<h3 id="解密"><a href="#解密" class="headerlink" title="解密"></a>解密</h3><p><img src="/2016/07/10/JAVA实现RSA加密解密/markdown-img-paste-20181124223212277.png" alt=""></p>
 <p>也就是说对密文进行D次方后除以N的余数就是明文，这就是RSA解密过程。知道D和N就能进行解密密文了，所以D和N的组合就是私钥。</p>
-<p><img src="/10/JAVA实现RSA加密解密/markdown-img-paste-20181124223328361.png" alt=""></p>
+<p><img src="/2016/07/10/JAVA实现RSA加密解密/markdown-img-paste-20181124223328361.png" alt=""></p>
 <p>从上述可以看出RSA的加密方式和解密方式是相同的，加密是求“E次方的mod N”;解密是求“D次方的mod N”<br>此处D是解密（Decryption）的首字母；N是数字（Number）的首字母。</p>
-<p><img src="/10/JAVA实现RSA加密解密/markdown-img-paste-20181124223444386.png" alt=""></p>
+<p><img src="/2016/07/10/JAVA实现RSA加密解密/markdown-img-paste-20181124223444386.png" alt=""></p>
 <h3 id="生成密钥对"><a href="#生成密钥对" class="headerlink" title="生成密钥对"></a>生成密钥对</h3><p>既然公钥是（E，N），私钥是（D，N）所以密钥对即为（E，D，N）但密钥对是怎样生成的？步骤如下：</p>
-<p><img src="/10/JAVA实现RSA加密解密/markdown-img-paste-20181124223621537.png" alt=""></p>
+<p><img src="/2016/07/10/JAVA实现RSA加密解密/markdown-img-paste-20181124223621537.png" alt=""></p>
 <h3 id="RSA算法的安全性"><a href="#RSA算法的安全性" class="headerlink" title="RSA算法的安全性"></a>RSA算法的安全性</h3><p>我们知道像RSA这种非对称加密算法很安全，那么到底为什么安全呢？<br>我们来看看上面这几个过程产生的几个数字：</p>
 <ul>
 <li>p,q：我们随机挑选的两个大质数；</li>
@@ -358,7 +358,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http:www.byteliu.com/2016/07/10/JAVA实现RSA加密解密/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://www.byteliu.com/2016/07/10/JAVA实现RSA加密解密/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -435,7 +435,7 @@
 <script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "www.byteliu.com/2016/07/10/JAVA实现RSA加密解密/",
+  id: "http://www.byteliu.com/2016/07/10/JAVA实现RSA加密解密/",
   owner: 'liuxiaocsu',
   repo: 'liuxiaocsu.github.io',
   oauth: {
@@ -594,15 +594,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">me</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">UDP</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">me</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -646,14 +654,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">汪国真</a>
               </li>
              
@@ -670,11 +670,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Btrace</a>
+                <a href="javascript:void(0)" class="js-tag color5">C10K</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">C10K</a>
+                <a href="javascript:void(0)" class="js-tag color2">Btrace</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -710,19 +710,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Docker</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">代码规范</a>
+                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">velocity</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">代码规范</a>
               </li>
              
               <li class="article-tag-list-item">

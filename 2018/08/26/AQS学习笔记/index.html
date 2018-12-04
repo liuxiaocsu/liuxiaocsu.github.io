@@ -5,23 +5,23 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="dns-prefetch" href="www.byteliu.com">
+  <link rel="dns-prefetch" href="http://www.byteliu.com">
   <title>AQS学习笔记 | Byte_Liu&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="java的内置锁一直都是备受争议的，在JDK 1.6之前，synchronized这个重量级锁其性能一直都是较为低下，虽然在1.6后，进行大量的锁优化策略(偏向锁、轻量级锁、重量级锁、锁消除、锁粗化),但是与Lock相比synchronized还是存在一些缺陷的：虽然synchronized提供了便捷性的隐式获取锁释放锁机制（基于JVM机制），但是它却缺少了获取锁与释放锁的可操作性(获取锁和释放锁">
 <meta name="keywords" content="JUC">
 <meta property="og:type" content="article">
 <meta property="og:title" content="AQS学习笔记">
-<meta property="og:url" content="www.byteliu.com/2018/08/26/AQS学习笔记/index.html">
+<meta property="og:url" content="http://www.byteliu.com/2018/08/26/AQS学习笔记/index.html">
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
 <meta property="og:description" content="java的内置锁一直都是备受争议的，在JDK 1.6之前，synchronized这个重量级锁其性能一直都是较为低下，虽然在1.6后，进行大量的锁优化策略(偏向锁、轻量级锁、重量级锁、锁消除、锁粗化),但是与Lock相比synchronized还是存在一些缺陷的：虽然synchronized提供了便捷性的隐式获取锁释放锁机制（基于JVM机制），但是它却缺少了获取锁与释放锁的可操作性(获取锁和释放锁">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="/26/AQS学习笔记/markdown-img-paste-20181126145339965.png">
+<meta property="og:image" content="http://www.byteliu.com/2018/08/26/AQS学习笔记/markdown-img-paste-20181126145339965.png">
 <meta property="og:updated_time" content="2018-11-27T11:28:55.521Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AQS学习笔记">
 <meta name="twitter:description" content="java的内置锁一直都是备受争议的，在JDK 1.6之前，synchronized这个重量级锁其性能一直都是较为低下，虽然在1.6后，进行大量的锁优化策略(偏向锁、轻量级锁、重量级锁、锁消除、锁粗化),但是与Lock相比synchronized还是存在一些缺陷的：虽然synchronized提供了便捷性的隐式获取锁释放锁机制（基于JVM机制），但是它却缺少了获取锁与释放锁的可操作性(获取锁和释放锁">
-<meta name="twitter:image" content="/26/AQS学习笔记/markdown-img-paste-20181126145339965.png">
+<meta name="twitter:image" content="http://www.byteliu.com/2018/08/26/AQS学习笔记/markdown-img-paste-20181126145339965.png">
   
     <link rel="alternative" href="/atom.xml" title="Byte_Liu&#39;s Blog" type="application/atom+xml">
   
@@ -220,7 +220,7 @@
 </ul>
 <p>同步队列是FIFO先进先出，只有前一个节点的状态为SIGNAL时，当前节点的线程才能被挂起。</p>
 <p>抽象队列同步器AQS是用来构建锁或其他同步组件的基础框架，内部使用一个int成员变量表示同步状态（当state&gt;0时表示已经获取了锁，当state = 0时表示释放了锁；它提供了三个方法（getState()、setState(int newState)、compareAndSetState(int expect,int update)）采用CAS来对同步状态state进行操作，CAS操作可以确保对state的操作是安全的、高效的），通过内置的FIFO队列来完成资源获取线程的排队工作（如果当前线程获取同步状态（锁）失败时，AQS则会将当前线程以及等待状态等信息构造成一个节点（Node）并将其加入同步队列，同时会阻塞当前线程，当同步状态释放时，则会把节点中的线程唤醒，使其再次尝试获取同步状态），其中内部状态state，同步队列的头节点head和尾节点head，都是通过volatile修饰，保证了多线程之间的可见。AQS是通过头尾指针来管理同步队列，同时实现包括获取锁失败的线程进行入队，释放锁时对同步队列中的线程进行通知等核心方法。其示意图如下：</p>
-<p><img src="/26/AQS学习笔记/markdown-img-paste-20181126145339965.png" alt=""></p>
+<p><img src="/2018/08/26/AQS学习笔记/markdown-img-paste-20181126145339965.png" alt=""></p>
 <h3 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h3><p>AQS提供了两组模板方法，一组用于共享模式，一组用于排他模式。</p>
 <table>
 <thead>
@@ -373,7 +373,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http:www.byteliu.com/2018/08/26/AQS学习笔记/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://www.byteliu.com/2018/08/26/AQS学习笔记/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -450,7 +450,7 @@
 <script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "www.byteliu.com/2018/08/26/AQS学习笔记/",
+  id: "http://www.byteliu.com/2018/08/26/AQS学习笔记/",
   owner: 'liuxiaocsu',
   repo: 'liuxiaocsu.github.io',
   oauth: {
@@ -609,15 +609,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">me</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">UDP</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">me</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -661,14 +669,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">汪国真</a>
               </li>
              
@@ -685,11 +685,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Btrace</a>
+                <a href="javascript:void(0)" class="js-tag color5">C10K</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">C10K</a>
+                <a href="javascript:void(0)" class="js-tag color2">Btrace</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -725,19 +725,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Docker</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">代码规范</a>
+                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">velocity</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">代码规范</a>
               </li>
              
               <li class="article-tag-list-item">
