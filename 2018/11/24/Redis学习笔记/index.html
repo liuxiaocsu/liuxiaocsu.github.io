@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="https://liuxiaocsu.github.io">
   <title>Redis学习笔记 | Byte_Liu&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Redis 是一种快速、开源、内存键值数据结构存储库。Redis提供了一组通用的内存数据结构，您可以通过这些结构轻松创建各种自定义的应用程序。关于Redis的主要使用案例包括缓存、会话管理、pub/sub以及排行榜。这是当今广受欢迎的键值存储数据库。它由BSD授权、采用优化的C语言代码编写，并支持多种开发语言。Redis是REmoteDIctionary Server 的首字母缩略词。由于其速度和">
+  <meta name="description" content="Redis 是一种快速、开源、内存键值数据结构存储库。Redis提供了一组通用的内存数据结构，可以通过这些结构轻松创建各种自定义的应用程序。关于Redis的主要使用案例包括缓存、会话管理、pub/sub以及排行榜。这是当今广受欢迎的键值存储数据库。它由BSD授权、采用优化的C语言代码编写，并支持多种开发语言。Redis是REmoteDIctionary Server 的首字母缩略词。由于其速度和易">
 <meta name="keywords" content="Redis">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis学习笔记">
 <meta property="og:url" content="https://liuxiaocsu.github.io/2018/11/24/Redis学习笔记/index.html">
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
-<meta property="og:description" content="Redis 是一种快速、开源、内存键值数据结构存储库。Redis提供了一组通用的内存数据结构，您可以通过这些结构轻松创建各种自定义的应用程序。关于Redis的主要使用案例包括缓存、会话管理、pub/sub以及排行榜。这是当今广受欢迎的键值存储数据库。它由BSD授权、采用优化的C语言代码编写，并支持多种开发语言。Redis是REmoteDIctionary Server 的首字母缩略词。由于其速度和">
+<meta property="og:description" content="Redis 是一种快速、开源、内存键值数据结构存储库。Redis提供了一组通用的内存数据结构，可以通过这些结构轻松创建各种自定义的应用程序。关于Redis的主要使用案例包括缓存、会话管理、pub/sub以及排行榜。这是当今广受欢迎的键值存储数据库。它由BSD授权、采用优化的C语言代码编写，并支持多种开发语言。Redis是REmoteDIctionary Server 的首字母缩略词。由于其速度和易">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:updated_time" content="2018-11-27T07:05:59.476Z">
+<meta property="og:updated_time" content="2018-12-04T02:17:19.648Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis学习笔记">
-<meta name="twitter:description" content="Redis 是一种快速、开源、内存键值数据结构存储库。Redis提供了一组通用的内存数据结构，您可以通过这些结构轻松创建各种自定义的应用程序。关于Redis的主要使用案例包括缓存、会话管理、pub/sub以及排行榜。这是当今广受欢迎的键值存储数据库。它由BSD授权、采用优化的C语言代码编写，并支持多种开发语言。Redis是REmoteDIctionary Server 的首字母缩略词。由于其速度和">
+<meta name="twitter:description" content="Redis 是一种快速、开源、内存键值数据结构存储库。Redis提供了一组通用的内存数据结构，可以通过这些结构轻松创建各种自定义的应用程序。关于Redis的主要使用案例包括缓存、会话管理、pub/sub以及排行榜。这是当今广受欢迎的键值存储数据库。它由BSD授权、采用优化的C语言代码编写，并支持多种开发语言。Redis是REmoteDIctionary Server 的首字母缩略词。由于其速度和易">
   
     <link rel="alternative" href="/atom.xml" title="Byte_Liu&#39;s Blog" type="application/atom+xml">
   
@@ -209,7 +209,7 @@
       
 
   
-    <p>Redis 是一种快速、开源、内存键值数据结构存储库。Redis提供了一组通用的内存数据结构，您可以通过这些结构轻松创建各种自定义的应用程序。关于Redis的主要使用案例包括缓存、会话管理、pub/sub以及排行榜。这是当今广受欢迎的键值存储数据库。它由BSD授权、采用优化的C语言代码编写，并支持多种开发语言。Redis是REmoteDIctionary Server 的首字母缩略词。<br>由于其速度和易用性，Redis 成为需要一流性能的 Web、移动、游戏、广告技术、物联网应用程序的理想之选。<br><a id="more"></a></p>
+    <p>Redis 是一种快速、开源、内存键值数据结构存储库。Redis提供了一组通用的内存数据结构，可以通过这些结构轻松创建各种自定义的应用程序。关于Redis的主要使用案例包括缓存、会话管理、pub/sub以及排行榜。这是当今广受欢迎的键值存储数据库。它由BSD授权、采用优化的C语言代码编写，并支持多种开发语言。Redis是REmoteDIctionary Server 的首字母缩略词。<br>由于其速度和易用性，Redis 成为需要一流性能的 Web、移动、游戏、广告技术、物联网应用程序的理想之选。<br><a id="more"></a></p>
 <h2 id="Redis-的优点"><a href="#Redis-的优点" class="headerlink" title="Redis 的优点"></a>Redis 的优点</h2><h4 id="性能极高"><a href="#性能极高" class="headerlink" title="性能极高"></a>性能极高</h4><p>Redis 的所有数据均位于其服务器的主内存中，而大部分的数据库管理系统则将数据存储在磁盘或 SSD 上。由于不再需要访问磁盘，Redis 等内存数据库可以避免时间延迟，借助较简单的使用较少 CPU 指令的算法访问数据。执行典型操作的时间不超过 1 毫秒。Redis能读的速度是110000次/s,写的速度是81000次/s 。</p>
 <h4 id="丰富的内存数据结构"><a href="#丰富的内存数据结构" class="headerlink" title="丰富的内存数据结构"></a>丰富的内存数据结构</h4><p>Redis 允许客户存储映射到各种数据类型的键。基本的数据类型是字符串，它可以是大小最多为 512MB 的文本或二进制数据。Redis 还支持按添加顺序列出的字符串列表、无序字符串的集合、按分数排序的有序集、存储一系列字段和值的哈希表、计算一个数据集中唯一项目的 HyperLogLog。使用 Redis 可以在内存中几乎存储所有类型的数据。（Redis支持二进制案例的 Strings, Lists, Hashes, Sets 及 Ordered Sets 数据类型操作。）</p>
 <h4 id="通用性和易用性"><a href="#通用性和易用性" class="headerlink" title="通用性和易用性"></a>通用性和易用性</h4><p>Redis 带有许多工具，借助这些工具，可以加快开发和运营的进程并使之简单化，其中包括 Pub/Sub，它会将要提供给订阅者的消息发布到渠道，是聊天和消息传送系统的理想之选；TTL 密钥，它们可以拥有确定的生存时间，在该时间之后，它们会将自身删除，这有助于避免数据库中充满不需要的数据；原子计数器，可以确保竞争条件不会产生不一致的结果，Redis的所有操作都是原子性的，同时Redis还支持对几个操作全并后的原子性执行。Lua，一种功能强大的轻量级脚本语言。</p>
@@ -217,11 +217,11 @@
 <h4 id="支持常用的开发语言"><a href="#支持常用的开发语言" class="headerlink" title="支持常用的开发语言"></a>支持常用的开发语言</h4><p>一百多个开源客户端可供 Redis 开发者使用。支持的语言包括 Java、Python、PHP、C、C++、C#、JavaScript、Node.js、Ruby、R、Go 等。</p>
 <h2 id="Redis与其他key-value存储有什么不同？"><a href="#Redis与其他key-value存储有什么不同？" class="headerlink" title="Redis与其他key-value存储有什么不同？"></a>Redis与其他key-value存储有什么不同？</h2><p>Redis有着更为复杂的数据结构并且提供对他们的原子性操作，这是一个不同于其他数据库的进化路径。Redis的数据类型都是基于基本数据结构的同时对程序员透明，无需进行额外的抽象。<br>Redis运行在内存中但是可以持久化到磁盘，所以在对不同数据集进行高速读写时需要权衡内存，应为数据量不能大于硬件内存。在内存数据库方面的另一个优点是， 相比在磁盘上相同的复杂的数据结构，在内存中操作起来非常简单，这样Redis可以做很多内部复杂性很强的事情。 同时，在磁盘格式方面他们是紧凑的以追加的方式产生的，因为他们并不需要进行随机访问。</p>
 <h2 id="Redis-使用案例"><a href="#Redis-使用案例" class="headerlink" title="Redis 使用案例"></a>Redis 使用案例</h2><h4 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h4><p>Redis 位于另一数据库的“前端”，可以创建一个高性能的内存中的缓存，以降低访问延迟、提高吞吐量、减轻关系数据库或 NoSQL 数据库的负载。</p>
-<h4 id="会话管理"><a href="#会话管理" class="headerlink" title="会话管理"></a>会话管理</h4><p>Redis 非常适合会话管理任务。可借助会话密钥上适当的 TTL 直接使用 Redis 作为快速键值存储库，来管理您的会话信息。一些在线应用程序 (包括游戏、电子商务网站和社交媒体平台) 通常都需要进行会话管理。</p>
+<h4 id="会话管理"><a href="#会话管理" class="headerlink" title="会话管理"></a>会话管理</h4><p>Redis 非常适合会话管理任务。可借助会话密钥上适当的 TTL 直接使用 Redis 作为快速键值存储库，来管理会话信息。一些在线应用程序 (包括游戏、电子商务网站和社交媒体平台) 通常都需要进行会话管理。</p>
 <h4 id="实时排行榜"><a href="#实时排行榜" class="headerlink" title="实时排行榜"></a>实时排行榜</h4><p>借助 Redis 有序集数据结构，元素可以保留在列表中，并按其分数进行排序。这样，用户便能够轻松创建动态排行榜，以展示谁是游戏赢家，或谁发布了最受欢迎的消息，或用于展示谁处于领先地位的任何其他内容。</p>
-<h4 id="速率限制"><a href="#速率限制" class="headerlink" title="速率限制"></a>速率限制</h4><p>需要时，Redis 可以测量并限制事件的速率。您可以使用与客户端 API 密钥关联的 Redis 计数器，计算某个特定时间段内的访问请求数量，并在超过限制时采取一定的措施。限速器通常用于限制论坛上的帖子数量、限制资源使用率，以及控制垃圾邮件的影响。</p>
+<h4 id="速率限制"><a href="#速率限制" class="headerlink" title="速率限制"></a>速率限制</h4><p>需要时，Redis 可以测量并限制事件的速率。可以使用与客户端 API 密钥关联的 Redis 计数器，计算某个特定时间段内的访问请求数量，并在超过限制时采取一定的措施。限速器通常用于限制论坛上的帖子数量、限制资源使用率，以及控制垃圾邮件的影响。</p>
 <h4 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h4><p>借助 Redis 列表数据结构，客户能够轻松实施一个轻量级、持久化的队列。这类列表提供了原子操作和屏蔽功能，适用于各种需要可靠消息代理或循环表的应用程序。</p>
-<h4 id="聊天和消息传送"><a href="#聊天和消息传送" class="headerlink" title="聊天和消息传送"></a>聊天和消息传送</h4><p>Redis 支持 PUB/SUB 标准功能和模式匹配。这使得 Redis 能够支持高性能的聊天室、实时评论流以及服务器内部通信。您也可以使用 PUB/SUB 基于发布的事件触发操作。</p>
+<h4 id="聊天和消息传送"><a href="#聊天和消息传送" class="headerlink" title="聊天和消息传送"></a>聊天和消息传送</h4><p>Redis 支持 PUB/SUB 标准功能和模式匹配。这使得 Redis 能够支持高性能的聊天室、实时评论流以及服务器内部通信。也可以使用 PUB/SUB 基于发布的事件触发操作。</p>
 
   
 
@@ -537,11 +537,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">UDP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">me</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">UDP</a>
+                <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -589,15 +597,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">汪国真</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -621,11 +621,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">加密解密</a>
+                <a href="javascript:void(0)" class="js-tag color5">HTTP</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">HTTP</a>
+                <a href="javascript:void(0)" class="js-tag color5">加密解密</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -661,10 +661,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">velocity</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">代码规范</a>
               </li>
              
@@ -674,6 +670,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">大型网站</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">velocity</a>
               </li>
             
             <div class="clearfix"></div>
