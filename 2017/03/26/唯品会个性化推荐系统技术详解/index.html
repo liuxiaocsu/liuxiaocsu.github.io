@@ -5,28 +5,28 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="dns-prefetch" href="https://liuxiaocsu.github.io">
+  <link rel="dns-prefetch" href="www.byteliu.com">
   <title>唯品会个性化推荐系统技术详解 | Byte_Liu&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="2017年3月25日，唯品会在广州同创汇举行了Open Talk No.30《如何打造高性能高可用的电商平台——Open Talk 唯品会专场》，资深开发工程师吴官林带来了《个性化推荐系统的演变》的精彩演讲，分享在唯品会产业链下，个性化推荐系统的演进过程。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="唯品会个性化推荐系统技术详解">
-<meta property="og:url" content="https://liuxiaocsu.github.io/2017/03/26/唯品会个性化推荐系统技术详解/index.html">
+<meta property="og:url" content="www.byteliu.com/2017/03/26/唯品会个性化推荐系统技术详解/index.html">
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
 <meta property="og:description" content="2017年3月25日，唯品会在广州同创汇举行了Open Talk No.30《如何打造高性能高可用的电商平台——Open Talk 唯品会专场》，资深开发工程师吴官林带来了《个性化推荐系统的演变》的精彩演讲，分享在唯品会产业链下，个性化推荐系统的演进过程。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://liuxiaocsu.github.io/2017/03/26/唯品会个性化推荐系统技术详解/markdown-img-paste-20181130104931262.png">
-<meta property="og:image" content="https://liuxiaocsu.github.io/2017/03/26/唯品会个性化推荐系统技术详解/markdown-img-paste-20181130105004674.png">
-<meta property="og:image" content="https://liuxiaocsu.github.io/2017/03/26/唯品会个性化推荐系统技术详解/markdown-img-paste-2018113010511574.png">
-<meta property="og:image" content="https://liuxiaocsu.github.io/2017/03/26/唯品会个性化推荐系统技术详解/markdown-img-paste-20181130105156513.png">
-<meta property="og:image" content="https://liuxiaocsu.github.io/2017/03/26/唯品会个性化推荐系统技术详解/markdown-img-paste-20181130105236546.png">
-<meta property="og:image" content="https://liuxiaocsu.github.io/2017/03/26/唯品会个性化推荐系统技术详解/markdown-img-paste-20181130105324518.png">
-<meta property="og:image" content="https://liuxiaocsu.github.io/2017/03/26/唯品会个性化推荐系统技术详解/markdown-img-paste-20181130105450325.png">
+<meta property="og:image" content="/26/唯品会个性化推荐系统技术详解/markdown-img-paste-20181130104931262.png">
+<meta property="og:image" content="/26/唯品会个性化推荐系统技术详解/markdown-img-paste-20181130105004674.png">
+<meta property="og:image" content="/26/唯品会个性化推荐系统技术详解/markdown-img-paste-2018113010511574.png">
+<meta property="og:image" content="/26/唯品会个性化推荐系统技术详解/markdown-img-paste-20181130105156513.png">
+<meta property="og:image" content="/26/唯品会个性化推荐系统技术详解/markdown-img-paste-20181130105236546.png">
+<meta property="og:image" content="/26/唯品会个性化推荐系统技术详解/markdown-img-paste-20181130105324518.png">
+<meta property="og:image" content="/26/唯品会个性化推荐系统技术详解/markdown-img-paste-20181130105450325.png">
 <meta property="og:updated_time" content="2018-11-30T02:59:22.147Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="唯品会个性化推荐系统技术详解">
 <meta name="twitter:description" content="2017年3月25日，唯品会在广州同创汇举行了Open Talk No.30《如何打造高性能高可用的电商平台——Open Talk 唯品会专场》，资深开发工程师吴官林带来了《个性化推荐系统的演变》的精彩演讲，分享在唯品会产业链下，个性化推荐系统的演进过程。">
-<meta name="twitter:image" content="https://liuxiaocsu.github.io/2017/03/26/唯品会个性化推荐系统技术详解/markdown-img-paste-20181130104931262.png">
+<meta name="twitter:image" content="/26/唯品会个性化推荐系统技术详解/markdown-img-paste-20181130104931262.png">
   
     <link rel="alternative" href="/atom.xml" title="Byte_Liu&#39;s Blog" type="application/atom+xml">
   
@@ -218,15 +218,15 @@
 <p>而构造一个完整的推荐系统，要从算法、数据和系统三方面考虑。举例来说，建设推荐系统就像做面包，数据相当于面粉和水，系统相当于各种锅碗瓢盆即厨具，算法相当于面包的配方或厨师的灵感，三者缺一不可。</p>
 <p>推荐系统的技术难点在于很短时间内做高并发实时预测，每天大约完成千亿次计算，为数千亿次的计算需接入1T+的日志数据，针对日志数据要做千亿次的指标统计和查询量。</p>
 <h3 id="唯品会精准推荐架构的演进"><a href="#唯品会精准推荐架构的演进" class="headerlink" title="唯品会精准推荐架构的演进"></a>唯品会精准推荐架构的演进</h3><p> ① 精准推荐第一代架构</p>
-<p> <img src="/2017/03/26/唯品会个性化推荐系统技术详解/markdown-img-paste-20181130104931262.png" alt=""></p>
+<p> <img src="/26/唯品会个性化推荐系统技术详解/markdown-img-paste-20181130104931262.png" alt=""></p>
 <p> // 特征<br>◆ 离线文件传输<br>◆ 批量暴力计算<br>◆ 实时匹配查询</p>
 <p>上图所示，通过业务系统把所有的用户信息和商品信息通过接口的方式同步到离线平台，进行离线暴力式地批量计算，把结果推荐到实时查询引擎上去提供对外服务。<br>但精准推荐第一代架构存在数据时延高、人群聚类粗、扩展性差的问题。</p>
-<p><img src="/2017/03/26/唯品会个性化推荐系统技术详解/markdown-img-paste-20181130105004674.png" alt=""></p>
+<p><img src="/26/唯品会个性化推荐系统技术详解/markdown-img-paste-20181130105004674.png" alt=""></p>
 <p> 特征<br>◆ 实时数据传输<br>◆ 在线实时计算</p>
 <p>精准推荐第二代架构，增加了实时接入，利用API或提供接入的工具，把数据实时回炉到系统，并引入流式计算。比如感知广州市某一个20-30岁用户在5分钟之前对哪些东西进行了点击，就把它写到缓存，完成数据的实时接入。</p>
 <p>此外，精准推荐第二代架构还开发了在线推荐的计算引擎，完成部分规则和匹配算法的实时计算，整套架构基本上完成了数据的接入和数据消费的耦合，并把从15分钟到做到秒级的提升。</p>
 <p>精准推荐第二代架构的优点是秒级延迟，模块边界相对清楚，低耦合和易扩展。</p>
-<p><img src="/2017/03/26/唯品会个性化推荐系统技术详解/markdown-img-paste-2018113010511574.png" alt=""></p>
+<p><img src="/26/唯品会个性化推荐系统技术详解/markdown-img-paste-2018113010511574.png" alt=""></p>
 <p>但随着数据量变大，精准推荐系统第二代架构会出现数据不对齐和数据丢失情况，性能会受到挑战，而且随着产品越来越多，流程越来越复杂，推荐引擎为了某个业务定制的维护成本很高。</p>
 <p>对此唯品会精准推荐系统第三代架构引入采用VDProcess版本的流式计算，推荐引擎也进行了升级，整个架构变成离线方式，变成半实时和实时预测的综合体。</p>
 <h3 id="推荐引擎设计与实现"><a href="#推荐引擎设计与实现" class="headerlink" title="推荐引擎设计与实现"></a>推荐引擎设计与实现</h3><p>唯品会个性化推荐系统的核心技术挑战：<br>◆ “数亿用户 ↔ 数百万实时变化商品”的相关度计算非常复杂<br>◆ 100ms内完成<br>◆ 特卖会每天执行数十亿次这样的预测</p>
@@ -236,20 +236,20 @@
 <p>第三个模块是预测，在1000个商品中，把转化目标和转化率分成三个模型，相应的预测过程根据这三个模型来进行打分，但会有人为影响的因素存在。</p>
 <p>第四个模块是重排，引入重排引擎把机器排完的结果再进行小幅度的个性化调整。</p>
 <p>最后展示合适的商品，这个流程都是在推荐引擎上实现的。</p>
-<p><img src="/2017/03/26/唯品会个性化推荐系统技术详解/markdown-img-paste-20181130105156513.png" alt=""></p>
+<p><img src="/26/唯品会个性化推荐系统技术详解/markdown-img-paste-20181130105156513.png" alt=""></p>
 <p>核心需求：<br>◆ 海量+实时：计算复杂响应时耗要求高；<br>◆ 大规模分布式系统流量、算法和数据管理。</p>
 <p>主要痛点：<br>◆ 扩展难；<br>◆ 静态路由，关联系统各自为政；<br>◆ 可运营性差。</p>
 <p>VRE一代架构采用分层架构，每层的路由信息在上一层中注册，逻辑层加载影响的数据和算法。逻辑层server中内置MR分拆合并功能，如果计算任务量大，可以通过MR将任务拆分成多个子任务到task层server中做实时计算。</p>
 <p>VRE一代架构存在的问题是，每一层扩容或缩容都需要被上一层所理解，导致扩展难；且各关联系统各自为政，可运营性较差。</p>
-<p><img src="/2017/03/26/唯品会个性化推荐系统技术详解/markdown-img-paste-20181130105236546.png" alt=""></p>
+<p><img src="/26/唯品会个性化推荐系统技术详解/markdown-img-paste-20181130105236546.png" alt=""></p>
 <p>主要优点：<br>◆ 易扩展；<br>◆ 动态智能路由；<br>◆ 集群透明。</p>
 <p>为解决上一代架构存在扩展难的问题，唯品会VRE二代架构把各自为正的系统完全打散，每一个系统都定义为一个子系统，所有的子系统通过中间环节做打通，所有信息都通过中间环节做交互。</p>
 <p>而关于静态路由很难控制的问题，第二代架构在服务器上建立了动态路由器进行交互，演变成一个中心节点的结构，整个环节变得可动态扩展，集群的状态也能加透明，能清楚知道正在进行的任务，或者需要下一步需要处理的事情。</p>
-<p> <img src="/2017/03/26/唯品会个性化推荐系统技术详解/markdown-img-paste-20181130105324518.png" alt=""></p>
+<p> <img src="/26/唯品会个性化推荐系统技术详解/markdown-img-paste-20181130105324518.png" alt=""></p>
 <p> 核心需求：<br>◆ 针对不同流量建模<br>◆ 支持100+在线，实验算法效果调优，频繁更新，上下架<br>◆ 支持多种业务流程</p>
 <p> 特色功能：<br>◆ 插件式管理<br>◆ 支持动态上下架<br>◆ 算法作为系统调度的路由依据<br>◆ 接口解耦，状态机分离<br>◆ 配置驱动流程调度</p>
 <p>同一算法在不同的场景所表现出来的效果会不一样，算法需根据业务场景进行参数的调整，对此唯品会的解决方案是把算法写成动态命令库控制路由信息，再通过路由 选择相应的算法做计算。路由系统将算法和set之前对应关系维护起来，根据请求配置选择响应的机器处理，并且根据配置完成算法间的多种融合或者并行计算。</p>
-<p><img src="/2017/03/26/唯品会个性化推荐系统技术详解/markdown-img-paste-20181130105450325.png" alt=""></p>
+<p><img src="/26/唯品会个性化推荐系统技术详解/markdown-img-paste-20181130105450325.png" alt=""></p>
 <p>核心需求：<br>◆ 保证算法模型一致性<br>◆ 支持100+在线实验算法模型数据推送<br>◆ 每15分钟粒度定期推送到线上几百台服务器<br>◆ 保证关键性数据查询命中</p>
 <p>特色功能：<br>◆ 文件Pipeline任务调度<br>◆ 100MB文件，10S内发送到集群所有集群上<br>◆ 实时流数据毫秒级更新到server缓存<br>◆ 数据快照，支持计算节点快速恢复</p>
 <p>数据更新方面，唯品会把整个集群构造成一个推送链，由一台机器顺势往后面做推送，然后再把所有的机器做同时加载，达到集群一致性的状态，该推送链支持100+在线实验算法模型数据推送。如何在10秒内把100M的文件在100台机器里生效，是唯品会解决的技术难点。</p>
@@ -312,7 +312,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://liuxiaocsu.github.io/2017/03/26/唯品会个性化推荐系统技术详解/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http:www.byteliu.com/2017/03/26/唯品会个性化推荐系统技术详解/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -389,7 +389,7 @@
 <script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "https://liuxiaocsu.github.io/2017/03/26/唯品会个性化推荐系统技术详解/",
+  id: "www.byteliu.com/2017/03/26/唯品会个性化推荐系统技术详解/",
   owner: 'liuxiaocsu',
   repo: 'liuxiaocsu.github.io',
   oauth: {
@@ -528,11 +528,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -548,15 +548,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">me</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">UDP</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">me</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -660,7 +660,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">CGLIB</a>
+                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -668,7 +668,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
+                <a href="javascript:void(0)" class="js-tag color1">CGLIB</a>
               </li>
              
               <li class="article-tag-list-item">

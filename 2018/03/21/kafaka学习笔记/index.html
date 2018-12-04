@@ -5,25 +5,25 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="dns-prefetch" href="https://liuxiaocsu.github.io">
+  <link rel="dns-prefetch" href="www.byteliu.com">
   <title>kafaka学习笔记 | Byte_Liu&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="现代的互联网分布式系统，只要稍微大一些，就一定逃不开3类中间件：远程调用（RPC）框架、消息队列、数据库访问中间件。Kafka 是消息队列中间件的代表产品，用 Scala 语言实现。">
 <meta name="keywords" content="kafaka">
 <meta property="og:type" content="article">
 <meta property="og:title" content="kafaka学习笔记">
-<meta property="og:url" content="https://liuxiaocsu.github.io/2018/03/21/kafaka学习笔记/index.html">
+<meta property="og:url" content="www.byteliu.com/2018/03/21/kafaka学习笔记/index.html">
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
 <meta property="og:description" content="现代的互联网分布式系统，只要稍微大一些，就一定逃不开3类中间件：远程调用（RPC）框架、消息队列、数据库访问中间件。Kafka 是消息队列中间件的代表产品，用 Scala 语言实现。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://liuxiaocsu.github.io/2018/03/21/kafaka学习笔记/markdown-img-paste-20181129170144262.png">
-<meta property="og:image" content="https://liuxiaocsu.github.io/2018/03/21/kafaka学习笔记/markdown-img-paste-20181129170344444.png">
-<meta property="og:image" content="https://liuxiaocsu.github.io/2018/03/21/kafaka学习笔记/markdown-img-paste-20181129170401398.png">
+<meta property="og:image" content="/21/kafaka学习笔记/markdown-img-paste-20181129170144262.png">
+<meta property="og:image" content="/21/kafaka学习笔记/markdown-img-paste-20181129170344444.png">
+<meta property="og:image" content="/21/kafaka学习笔记/markdown-img-paste-20181129170401398.png">
 <meta property="og:updated_time" content="2018-11-29T09:10:02.185Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="kafaka学习笔记">
 <meta name="twitter:description" content="现代的互联网分布式系统，只要稍微大一些，就一定逃不开3类中间件：远程调用（RPC）框架、消息队列、数据库访问中间件。Kafka 是消息队列中间件的代表产品，用 Scala 语言实现。">
-<meta name="twitter:image" content="https://liuxiaocsu.github.io/2018/03/21/kafaka学习笔记/markdown-img-paste-20181129170144262.png">
+<meta name="twitter:image" content="/21/kafaka学习笔记/markdown-img-paste-20181129170144262.png">
   
     <link rel="alternative" href="/atom.xml" title="Byte_Liu&#39;s Blog" type="application/atom+xml">
   
@@ -218,14 +218,14 @@
 <li>Broker，指消息服务器，Producer 产生的消息都是写到这里，Consumer 读消息也是从这里读；</li>
 <li>Zookeeper，是 Kafka 的注册中心，Broker 和 Consumer 之间的协调器，包含状态信息、配置信息和一些 Topic 的信息；</li>
 <li>Partition，指消息的水平分区，一个 Topic 可以有多个分区；</li>
-<li>Replica，指消息的副本，为了提高可用性，将消息副本保存在其他 Broker 上。<br>特别说明，Broker 是指单个消息服务进程，一般情况下，Kafka 是集群运行的，Broker 只是集群中的一个服务进程，而非代指整个 Kafka 服务，可以简单将 Broker 理解成服务器（Server）。Kafka 引入的术语都比较常见，从字面上理解相对直观。Kafka 的大致结构图是这样：<br><img src="/2018/03/21/kafaka学习笔记/markdown-img-paste-20181129170144262.png" alt="http://p1.pstatp.com/large/pgc-image/acdad6b2a71148b7906fa384f62fc098"></li>
+<li>Replica，指消息的副本，为了提高可用性，将消息副本保存在其他 Broker 上。<br>特别说明，Broker 是指单个消息服务进程，一般情况下，Kafka 是集群运行的，Broker 只是集群中的一个服务进程，而非代指整个 Kafka 服务，可以简单将 Broker 理解成服务器（Server）。Kafka 引入的术语都比较常见，从字面上理解相对直观。Kafka 的大致结构图是这样：<br><img src="/21/kafaka学习笔记/markdown-img-paste-20181129170144262.png" alt="http://p1.pstatp.com/large/pgc-image/acdad6b2a71148b7906fa384f62fc098"></li>
 </ul>
 <p>Kafka 是 Pull 模式的消息队列，即 Consumer 连到消息队列服务上，主动请求新消息，如果要做到实时性，需要采用长轮询，Kafka 在0.8的时候已经支持长轮询模式。上图中 Consumer 的连接箭头方向可能会让读者误以为是 Push 模式，特此注明。更多关于 Kafka 设计的文章可以参考官方文档，或者一些比较好的博客文章 3。</p>
 <h3 id="关于顺序和分区"><a href="#关于顺序和分区" class="headerlink" title="关于顺序和分区"></a>关于顺序和分区</h3><p>Kafka 是一个力求保持消息顺序性的消息队列，但不是完全保证，其保证的是 Partition 级别的顺序性，如下图：</p>
-<p><img src="/2018/03/21/kafaka学习笔记/markdown-img-paste-20181129170344444.png" alt="http://p1.pstatp.com/large/pgc-image/1c7546aaf44b4efbb3dfe783e969cc4a"></p>
+<p><img src="/21/kafaka学习笔记/markdown-img-paste-20181129170344444.png" alt="http://p1.pstatp.com/large/pgc-image/1c7546aaf44b4efbb3dfe783e969cc4a"></p>
 <p>此图是 Topic 的分区 log 的示意图，可见，每个分区上的 log 都是一个有序的队列，所以，Kafka 是分区级别有序的。如果，某个 Topic 只有一个分区，那么这个 Topic 下的消息就都是有序的。</p>
 <p>分区是为了提升消息处理的吞吐率而产生的，将一个 Topic 中的消息分成几份，分别给不同的 Broker 处理。如下图：</p>
-<p><img src="/2018/03/21/kafaka学习笔记/markdown-img-paste-20181129170401398.png" alt="http://p3.pstatp.com/large/pgc-image/116800e2f03746868af2b95bab58004b"></p>
+<p><img src="/21/kafaka学习笔记/markdown-img-paste-20181129170401398.png" alt="http://p3.pstatp.com/large/pgc-image/116800e2f03746868af2b95bab58004b"></p>
 <p>此图中有2个 Broker，Server 1 和 Server 2，每个 Broker 上有2个分区，总共4个分区，P0 ~ P3；有2个 Consumer Group，Consumer Group A 有2个 Consumer，Consumer Group B 有4个 Consumer。Kafka 的实现是，在稳定的情况下，维持固定的连接，每个 Consumer 稳定的消费其中某几个分区的消息，以上图举例，Consumer Group A 中的 C1 稳定消费 P0、P3，C2 稳定消费 P1、P2。这样的连接分配可能会导致消息消费的不均匀分布，但好处是比较容易保证顺序性。</p>
 <p>维持完全的顺序性在分布式系统看来几乎是无意义的。因为，如果需要维持顺序性，那么就只能有一条线程阻塞的处理顺序消息，即，Producer -&gt; MQ -&gt; Consumer 必须线程上一一对应。这与分布式系统的初衷是相违背的。但是局部的有序性，是可以维持的。比如，有30000条消息，每3条之间有关联，1-&gt;2-&gt;3，4-&gt;5-&gt;6，……，但是全局范围来看，并不需要保证 1-&gt;4-&gt;7，可以 7-&gt;4-&gt;1 的顺序来执行，这样可以达到最大并行度10000，而这通常是现实中我们面对的情况。通常应用中，将有先后关系的消息发送到相同的分区上，即可解决大部分问题。</p>
 <h3 id="关于副本"><a href="#关于副本" class="headerlink" title="关于副本"></a>关于副本</h3><p>副本是高可用 Kafka 集群的实现方式。假设集群中有3个 Broker，那么可以指定3个副本，这3个副本是对等的，对于某个 Topic 的分区来说，其中一个是 Leader，即主节点，另外2个副本是 Follower，即从节点，每个副本在一个 Broker 上。当 Leader 收到消息的时候，会将消息写一份到副本中，通常情况，只有 Leader 处于工作状态。在 Leader 发生故障宕机的时候，Follwer 会取代 Leader 继续传送消息，而不会发生消息丢失。Kafka 的副本是以分区为单位的，也就是说，即使是同一个 Topic，其不同分区的 Leader 节点也不同。甚至，Kafka 倾向于用不同的 Broker 来做分区的 Leader，因为这样能做到更好的负载均衡。</p>
@@ -311,7 +311,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://liuxiaocsu.github.io/2018/03/21/kafaka学习笔记/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http:www.byteliu.com/2018/03/21/kafaka学习笔记/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -388,7 +388,7 @@
 <script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "https://liuxiaocsu.github.io/2018/03/21/kafaka学习笔记/",
+  id: "www.byteliu.com/2018/03/21/kafaka学习笔记/",
   owner: 'liuxiaocsu',
   repo: 'liuxiaocsu.github.io',
   oauth: {
@@ -527,11 +527,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -547,15 +547,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">me</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">UDP</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">me</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -659,7 +659,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">CGLIB</a>
+                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -667,7 +667,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
+                <a href="javascript:void(0)" class="js-tag color1">CGLIB</a>
               </li>
              
               <li class="article-tag-list-item">

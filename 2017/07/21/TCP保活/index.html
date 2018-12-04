@@ -5,24 +5,24 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="dns-prefetch" href="https://liuxiaocsu.github.io">
+  <link rel="dns-prefetch" href="www.byteliu.com">
   <title>TCP保活 | Byte_Liu&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="TCP保活的缘起双方建立交互的连接，但是并不是一直存在数据交互，有些连接会在数据 交互完毕后，主动释放连接，而有些不会，那么在长时间无数据交互的时间段内，交互双方都有可能出现掉电、死机、异常重启等各种意外，当这些意外发生之后， 这些TCP连接并未来得及正常释放，那么，连接的另一方并不知道对端的情况，它会一直维护这个连接，长时间的积累会导致非常多的半打开连接，造成端系统资 源的消耗和浪费，为了解决这">
 <meta name="keywords" content="TCP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="TCP保活">
-<meta property="og:url" content="https://liuxiaocsu.github.io/2017/07/21/TCP保活/index.html">
+<meta property="og:url" content="www.byteliu.com/2017/07/21/TCP保活/index.html">
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
 <meta property="og:description" content="TCP保活的缘起双方建立交互的连接，但是并不是一直存在数据交互，有些连接会在数据 交互完毕后，主动释放连接，而有些不会，那么在长时间无数据交互的时间段内，交互双方都有可能出现掉电、死机、异常重启等各种意外，当这些意外发生之后， 这些TCP连接并未来得及正常释放，那么，连接的另一方并不知道对端的情况，它会一直维护这个连接，长时间的积累会导致非常多的半打开连接，造成端系统资 源的消耗和浪费，为了解决这">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://liuxiaocsu.github.io/2017/07/21/TCP保活/markdown-img-paste-20181130110352276.png">
-<meta property="og:image" content="https://liuxiaocsu.github.io/2017/07/21/TCP保活/markdown-img-paste-20181130110813436.png">
+<meta property="og:image" content="/21/TCP保活/markdown-img-paste-20181130110352276.png">
+<meta property="og:image" content="/21/TCP保活/markdown-img-paste-20181130110813436.png">
 <meta property="og:updated_time" content="2018-11-30T07:37:01.719Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TCP保活">
 <meta name="twitter:description" content="TCP保活的缘起双方建立交互的连接，但是并不是一直存在数据交互，有些连接会在数据 交互完毕后，主动释放连接，而有些不会，那么在长时间无数据交互的时间段内，交互双方都有可能出现掉电、死机、异常重启等各种意外，当这些意外发生之后， 这些TCP连接并未来得及正常释放，那么，连接的另一方并不知道对端的情况，它会一直维护这个连接，长时间的积累会导致非常多的半打开连接，造成端系统资 源的消耗和浪费，为了解决这">
-<meta name="twitter:image" content="https://liuxiaocsu.github.io/2017/07/21/TCP保活/markdown-img-paste-20181130110352276.png">
+<meta name="twitter:image" content="/21/TCP保活/markdown-img-paste-20181130110352276.png">
   
     <link rel="alternative" href="/atom.xml" title="Byte_Liu&#39;s Blog" type="application/atom+xml">
   
@@ -215,10 +215,10 @@
 </code></pre>2， 防止中间设备因超时删除连接相关的连接表<br>中间设备如防火墙等，会为经过它的数据报文建立相关的连接信息表，并为其设置一个超时时间的定时器，如果超出预定时间，某连接无任何报文交互的话，中间设 备会将该连接信息从表中删除，在删除后，再有应用报文过来时，中间设备将丢弃该报文，从而导致应用出现异常，这个交互的过程大致如下图所示：<a id="more"></a>
 </li>
 </ul>
-<p><img src="/2017/07/21/TCP保活/markdown-img-paste-20181130110352276.png" alt=""></p>
+<p><img src="/21/TCP保活/markdown-img-paste-20181130110352276.png" alt=""></p>
 <p>这种情况在有防火墙的应用环境下非常常见，这会给某些长时间无数据交 互但是又要长时间维持连接的应用（如数据库）带来很大的影响，为了解决这个问题，应用本身或TCP可以通过保活报文来维持中间设备中该连接的信息，（也可 以在中间设备上开启长连接属性或调高连接表的释放时间来解决，但是，这个影响可能较大，有机会再针对这个做详细的描述，在此不多说）。<br>常见应用故障场景：<br>       某财务应用，在客户端需要填写大量的表单数据，在客户端与服务器端建立TCP连接后，客户端终端使用者将花费几分钟甚至几十分钟填写表单相关信息，终端使 用者终于填好表单所需信息后，点击“提交”按钮，结果，这个时候由于中间设备早已经将这个TCP连接从连接表中删除了，其将直接丢弃这个报文或者给客户端 发送RST报文，应用故障产生，这将导致客户端终端使用者所有的工作将需要重新来过，给使用者带来极大的不便和损失。</p>
 <p>TCP保活报文交互过程<br>TCP保活的交互过程大致如下图所示：</p>
-<p><img src="/2017/07/21/TCP保活/markdown-img-paste-20181130110813436.png" alt=""></p>
+<p><img src="/21/TCP保活/markdown-img-paste-20181130110813436.png" alt=""></p>
 <p>TCP保活可能带来的问题<br>1， 中间设备因大量保活连接，导致其连接表满<br>       网关设备由于保活问题，导致其连接表满，无法新建连接（XX局网闸故障案例）或性能下降严重<br>2， 正常连接被释放<br>       当连接一端在发送保活探测报文时，中间网络正好由于各种异常（如链路中断、中间设备重启等）而无法将该保活探测报文正确转发至对端时，可能会导致探测的一 方释放本来正常的连接，但是这种可能情况发生的概率较小，另外，一般也可以增加保活探测报文发生的次数来减小这种情况发生的概率和影响。<br>TCP保活的设置<br>        一般而言，保活探测主要在服务器端实现，如果应用层有相应的保活机制时，传输层的TCP保活就可以不用。<br>        在windows系统中，我们可以通过修改注册表等来达到开启、调整保活相关<br>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters<br>KeepAliveInterval<br>项：Tcpip\Parameters<br>数值类型：REG_DWORD - 时间（以毫秒为单位）<br>有效范围：1 - 0xFFFFFFFF<br>默认值：1000（1 秒）<br>说明：此参数确定在收到响应之前，保活重传之间的时间间隔。一旦收到一个响应，将由 KeepAliveTime 值重新控制在下一次保活传输之前的延迟。如果经过 TcpMaxDataRetransmissions 指定的重新传输次数后仍无响应，将放弃连接。<br>KeepAliveTime<br>项：Tcpip\Parameters<br>数值类型：REG_DWORD - 时间（以毫秒为单位）<br>有效范围：1 - 0xFFFFFFFF<br>默认值：7,200,000（两个小时）<br>说明：此参数控制 TCP 试图通过发送保活数据包来验证空闲连接是否仍然保持的次数。如果远程系统仍然可以连接并且正在运行，它就会响应保活传输。默认情况下不发送保活数据包。应用程序可以在连接上启用此功能。</p>
 
   
@@ -299,7 +299,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://liuxiaocsu.github.io/2017/07/21/TCP保活/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http:www.byteliu.com/2017/07/21/TCP保活/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -376,7 +376,7 @@
 <script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "https://liuxiaocsu.github.io/2017/07/21/TCP保活/",
+  id: "www.byteliu.com/2017/07/21/TCP保活/",
   owner: 'liuxiaocsu',
   repo: 'liuxiaocsu.github.io',
   oauth: {
@@ -515,11 +515,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -535,15 +535,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">me</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">UDP</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">me</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -647,7 +647,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">CGLIB</a>
+                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -655,7 +655,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
+                <a href="javascript:void(0)" class="js-tag color1">CGLIB</a>
               </li>
              
               <li class="article-tag-list-item">

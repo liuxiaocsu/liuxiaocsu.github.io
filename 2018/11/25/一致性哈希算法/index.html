@@ -5,24 +5,24 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="dns-prefetch" href="https://liuxiaocsu.github.io">
+  <link rel="dns-prefetch" href="www.byteliu.com">
   <title>一致性哈希算法 | Byte_Liu&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="一致性哈希算法在1997年由麻省理工学院的Karger等人在解决分布式Cache中提出的，设计目标是为了解决因特网中的热点(Hot spot)问题，初衷和CARP十分类似。一致性哈希修正了CARP使用的简单哈希算法带来的问题，使得DHT可以在P2P环境中真正得到应用。">
 <meta name="keywords" content="一致性哈希">
 <meta property="og:type" content="article">
 <meta property="og:title" content="一致性哈希算法">
-<meta property="og:url" content="https://liuxiaocsu.github.io/2018/11/25/一致性哈希算法/index.html">
+<meta property="og:url" content="www.byteliu.com/2018/11/25/一致性哈希算法/index.html">
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
 <meta property="og:description" content="一致性哈希算法在1997年由麻省理工学院的Karger等人在解决分布式Cache中提出的，设计目标是为了解决因特网中的热点(Hot spot)问题，初衷和CARP十分类似。一致性哈希修正了CARP使用的简单哈希算法带来的问题，使得DHT可以在P2P环境中真正得到应用。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://liuxiaocsu.github.io/2018/11/25/一致性哈希算法/markdown-img-paste-20181122203847449.png">
-<meta property="og:image" content="https://liuxiaocsu.github.io/2018/11/25/一致性哈希算法/markdown-img-paste-20181122204013650.png">
+<meta property="og:image" content="/25/一致性哈希算法/markdown-img-paste-20181122203847449.png">
+<meta property="og:image" content="/25/一致性哈希算法/markdown-img-paste-20181122204013650.png">
 <meta property="og:updated_time" content="2018-11-25T09:58:00.439Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一致性哈希算法">
 <meta name="twitter:description" content="一致性哈希算法在1997年由麻省理工学院的Karger等人在解决分布式Cache中提出的，设计目标是为了解决因特网中的热点(Hot spot)问题，初衷和CARP十分类似。一致性哈希修正了CARP使用的简单哈希算法带来的问题，使得DHT可以在P2P环境中真正得到应用。">
-<meta name="twitter:image" content="https://liuxiaocsu.github.io/2018/11/25/一致性哈希算法/markdown-img-paste-20181122203847449.png">
+<meta name="twitter:image" content="/25/一致性哈希算法/markdown-img-paste-20181122203847449.png">
   
     <link rel="alternative" href="/atom.xml" title="Byte_Liu&#39;s Blog" type="application/atom+xml">
   
@@ -212,11 +212,11 @@
 <li>首先求出memcached服务器（节点）的哈希值，并将其配置到0～232的圆（continuum）上。</li>
 <li>然后采用同样的方法求出存储数据的键的哈希值，并映射到相同的圆上。</li>
 <li><p>然后从数据映射到的位置开始顺时针查找，将数据保存到找到的第一个服务器上。如果超过232仍然找不到服务器，就会保存到第一台memcached服务器上。</p>
-<p><img src="/2018/11/25/一致性哈希算法/markdown-img-paste-20181122203847449.png" alt=""></p>
+<p><img src="/25/一致性哈希算法/markdown-img-paste-20181122203847449.png" alt=""></p>
 </li>
 </ol>
 <p>从上图的状态中添加一台memcached服务器。余数分布式算法由于保存键的服务器会发生巨大变化而影响缓存的命中率，但Consistent Hashing中，只有在圆（continuum）上增加服务器的地点逆时针方向的第一台服务器上的键会受到影响，如下图所示：</p>
-<p><img src="/2018/11/25/一致性哈希算法/markdown-img-paste-20181122204013650.png" alt=""></p>
+<p><img src="/25/一致性哈希算法/markdown-img-paste-20181122204013650.png" alt=""></p>
 <h2 id="一致性Hash性质"><a href="#一致性Hash性质" class="headerlink" title="一致性Hash性质"></a>一致性Hash性质</h2><p>　　考虑到分布式系统每个节点都有可能失效，并且新的节点很可能动态的增加进来，如何保证当系统的节点数目发生变化时仍然能够对外提供良好的服务，这是值得考虑的，尤其实在设计分布式缓存系统时，如果某台服务器失效，对于整个系统来说如果不采用合适的算法来保证一致性，那么缓存于系统中的所有数据都可能会失效（即由于系统节点数目变少，客户端在请求某一对象时需要重新计算其hash值（通常与系统中的节点数目有关），由于hash值已经改变，所以很可能找不到保存该对象的服务器节点），因此一致性hash就显得至关重要，良好的分布式cahce系统中的一致性hash算法应该满足以下几个方面：</p>
 <ul>
 <li>平衡性(Balance)<br>平衡性是指哈希的结果能够尽可能分布到所有的缓冲中去，这样可以使得所有的缓冲空间都得到利用。很多哈希算法都能够满足这一条件。</li>
@@ -304,7 +304,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://liuxiaocsu.github.io/2018/11/25/一致性哈希算法/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http:www.byteliu.com/2018/11/25/一致性哈希算法/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -381,7 +381,7 @@
 <script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "https://liuxiaocsu.github.io/2018/11/25/一致性哈希算法/",
+  id: "www.byteliu.com/2018/11/25/一致性哈希算法/",
   owner: 'liuxiaocsu',
   repo: 'liuxiaocsu.github.io',
   oauth: {
@@ -520,11 +520,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -540,15 +540,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">me</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">UDP</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">me</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -652,7 +652,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">CGLIB</a>
+                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -660,7 +660,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
+                <a href="javascript:void(0)" class="js-tag color1">CGLIB</a>
               </li>
              
               <li class="article-tag-list-item">

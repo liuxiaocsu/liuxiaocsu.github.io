@@ -5,24 +5,24 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="dns-prefetch" href="https://liuxiaocsu.github.io">
+  <link rel="dns-prefetch" href="www.byteliu.com">
   <title>new对象JVM底层实现 | Byte_Liu&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="JVM内存结构">
 <meta name="keywords" content="Java基础">
 <meta property="og:type" content="article">
 <meta property="og:title" content="new对象JVM底层实现">
-<meta property="og:url" content="https://liuxiaocsu.github.io/2018/04/02/new对象JVM底层实现/index.html">
+<meta property="og:url" content="www.byteliu.com/2018/04/02/new对象JVM底层实现/index.html">
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
 <meta property="og:description" content="JVM内存结构">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://liuxiaocsu.github.io/2018/04/02/new对象JVM底层实现/markdown-img-paste-20181202223059836.png">
-<meta property="og:image" content="https://liuxiaocsu.github.io/2018/04/02/new对象JVM底层实现/markdown-img-paste-20181202223337510.png">
+<meta property="og:image" content="/02/new对象JVM底层实现/markdown-img-paste-20181202223059836.png">
+<meta property="og:image" content="/02/new对象JVM底层实现/markdown-img-paste-20181202223337510.png">
 <meta property="og:updated_time" content="2018-12-02T14:41:18.744Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="new对象JVM底层实现">
 <meta name="twitter:description" content="JVM内存结构">
-<meta name="twitter:image" content="https://liuxiaocsu.github.io/2018/04/02/new对象JVM底层实现/markdown-img-paste-20181202223059836.png">
+<meta name="twitter:image" content="/02/new对象JVM底层实现/markdown-img-paste-20181202223059836.png">
   
     <link rel="alternative" href="/atom.xml" title="Byte_Liu&#39;s Blog" type="application/atom+xml">
   
@@ -208,7 +208,7 @@
 
   
     <p>JVM内存结构</p>
-<p><img src="/2018/04/02/new对象JVM底层实现/markdown-img-paste-20181202223059836.png" alt="http://p99.pstatp.com/large/pgc-image/720ac9fb1ca94c04b5a2cdb61ada4239"></p>
+<p><img src="/02/new对象JVM底层实现/markdown-img-paste-20181202223059836.png" alt="http://p99.pstatp.com/large/pgc-image/720ac9fb1ca94c04b5a2cdb61ada4239"></p>
 <a id="more"></a>
 <p>先看一下JVM内存结构：</p>
 <ul>
@@ -221,7 +221,7 @@
 <li>直接内存（Direct Memory）并不是虚拟机运行时数据区的一部分，也不是Java虚拟机规范中定义的内存区域。但是这部分内存也被频繁地使用，而且也可能导致OutOfMemoryError异常出现。</li>
 </ul>
 <p>如何new对象</p>
-<p><img src="/2018/04/02/new对象JVM底层实现/markdown-img-paste-20181202223337510.png" alt="http://p3.pstatp.com/large/pgc-image/77d7ded1bd9f4cdca441d62544199f3e"></p>
+<p><img src="/02/new对象JVM底层实现/markdown-img-paste-20181202223337510.png" alt="http://p3.pstatp.com/large/pgc-image/77d7ded1bd9f4cdca441d62544199f3e"></p>
 <p>new对象</p>
 <ol>
 <li>虚拟机遇到一条new指令时，首先将去检查这个指令的参数是否能在常量池中定位到一个类的符号引用，并且检查这个符号引用代表的类是否已被加载、解析和初始化过，如果没有，那必须先执行相应的类加载过程。</li>
@@ -317,7 +317,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://liuxiaocsu.github.io/2018/04/02/new对象JVM底层实现/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http:www.byteliu.com/2018/04/02/new对象JVM底层实现/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -394,7 +394,7 @@
 <script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "https://liuxiaocsu.github.io/2018/04/02/new对象JVM底层实现/",
+  id: "www.byteliu.com/2018/04/02/new对象JVM底层实现/",
   owner: 'liuxiaocsu',
   repo: 'liuxiaocsu.github.io',
   oauth: {
@@ -533,11 +533,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -553,15 +553,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">me</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">UDP</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">me</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -665,7 +665,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">CGLIB</a>
+                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -673,7 +673,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
+                <a href="javascript:void(0)" class="js-tag color1">CGLIB</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -5,24 +5,24 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="dns-prefetch" href="https://liuxiaocsu.github.io">
+  <link rel="dns-prefetch" href="www.byteliu.com">
   <title>DNS学习笔记 | Byte_Liu&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="访问一台机器要靠IP地址和MAC地址，其中，MAC地址可以通过ARP协议得到，所以这对用户是透明的，但是IP地址就不行，无论如何用户都需要用一个指定的IP来访问一台计算机，而IP地址又非常不好记，于是就出现了DNS系统。DNS（Domain Name System，域名系统），万维网上作为域名和IP地址相互映射的一个分布式数据库，能够使用户更方便的访问互联网，而不用去记住能够被机器直接读取的IP地">
 <meta name="keywords" content="DNS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="DNS学习笔记">
-<meta property="og:url" content="https://liuxiaocsu.github.io/2016/05/21/DNS学习笔记/index.html">
+<meta property="og:url" content="www.byteliu.com/2016/05/21/DNS学习笔记/index.html">
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
 <meta property="og:description" content="访问一台机器要靠IP地址和MAC地址，其中，MAC地址可以通过ARP协议得到，所以这对用户是透明的，但是IP地址就不行，无论如何用户都需要用一个指定的IP来访问一台计算机，而IP地址又非常不好记，于是就出现了DNS系统。DNS（Domain Name System，域名系统），万维网上作为域名和IP地址相互映射的一个分布式数据库，能够使用户更方便的访问互联网，而不用去记住能够被机器直接读取的IP地">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://liuxiaocsu.github.io/2016/05/21/DNS学习笔记/markdown-img-paste-20181124182650657.png">
-<meta property="og:image" content="https://liuxiaocsu.github.io/2016/05/21/DNS学习笔记/markdown-img-paste-2018112418454685.png">
+<meta property="og:image" content="/21/DNS学习笔记/markdown-img-paste-20181124182650657.png">
+<meta property="og:image" content="/21/DNS学习笔记/markdown-img-paste-2018112418454685.png">
 <meta property="og:updated_time" content="2018-11-25T03:58:54.818Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DNS学习笔记">
 <meta name="twitter:description" content="访问一台机器要靠IP地址和MAC地址，其中，MAC地址可以通过ARP协议得到，所以这对用户是透明的，但是IP地址就不行，无论如何用户都需要用一个指定的IP来访问一台计算机，而IP地址又非常不好记，于是就出现了DNS系统。DNS（Domain Name System，域名系统），万维网上作为域名和IP地址相互映射的一个分布式数据库，能够使用户更方便的访问互联网，而不用去记住能够被机器直接读取的IP地">
-<meta name="twitter:image" content="https://liuxiaocsu.github.io/2016/05/21/DNS学习笔记/markdown-img-paste-20181124182650657.png">
+<meta name="twitter:image" content="/21/DNS学习笔记/markdown-img-paste-20181124182650657.png">
   
     <link rel="alternative" href="/atom.xml" title="Byte_Liu&#39;s Blog" type="application/atom+xml">
   
@@ -221,7 +221,7 @@
 <li>如果你的电脑没有配置域名服务器，那么这时就会出现网站的域名无法解析错误。过程也结束了。如果你设置了域名服务器，那么电脑会向这个域名服务器发送一个域名查询的请求，如果这台域名服务器始终没有回应，则也会出现浏览器报错。</li>
 <li>如果域名服务器回应了，那么电脑可以根据域名服务器返回的应答信息得到域名的ip地址。然后，浏览器就会想这个ip地址对应的web服务器发送http请求。</li>
 </ul>
-<h3 id="DNS的分类"><a href="#DNS的分类" class="headerlink" title="DNS的分类"></a>DNS的分类</h3><p><img src="/2016/05/21/DNS学习笔记/markdown-img-paste-20181124182650657.png" alt=""></p>
+<h3 id="DNS的分类"><a href="#DNS的分类" class="headerlink" title="DNS的分类"></a>DNS的分类</h3><p><img src="/21/DNS学习笔记/markdown-img-paste-20181124182650657.png" alt=""></p>
 <ol>
 <li>根DNS服务器<br>根服务器主要用来管理互联网的主目录，全世界只有13台（这13台根域名服务器名字分别为“A”至“M”），1个为主根服务器在美国。其余12个均为辅根服务器，其中9个在美国，欧洲2个，位于英国和瑞典，亚洲1个位于日本。<br>所有根服务器均由美国政府授权的互联网域名与号码分配机构ICANN统一管理，负责全球互联网域名根服务器、域名体系和IP地址等的管理，这13台根服务器可以指挥Firefox或Internet Explorer这样的Web浏览器和电子邮件程序控制互联网通信，由于根服务器中有经美国政府批准的260个左右的互联网后缀（如 .com、.xyz、.net、.top等）和一些国家的指定符（如法国的 .fr、挪威的.no等），美国政府对其管理拥有很大发言权。根域名服务器是架构因特网所必须的基础设施。在国外，许多计算机科学家将根域名服务器称作“真理”（TRUTH），足见其重要性。换句话说——攻击整个因特网最有力、最直接，也是最致命的方法恐怕就是攻击根域名服务器了。</li>
 <li>顶级域DNS服务器<br>也叫做TLD服务器，负责顶级域名com、org、net、edu、gov以及所有国家的顶级域名uk、fr、ca、ch等。</li>
@@ -236,7 +236,7 @@
 <li>递归查询：去查询dns时问的谁谁就直接告诉你答案。如果主机所询问的本地域名服务器不知道被查询的域名的IP地址，那么本地域名服务器就以DNS客户的身份，向其它根域名服务器继续发出查询请求报文(即替主机继续查询)，而不是让主机自己进行下一步查询。因此，递归查询返回的查询结果或者是所要查询的IP地址，或者是报错，表示无法查询到所需的IP地址。</li>
 </ul>
 <p>一个主机查询的过程分为两个部分，主机到本地DNS服务器之间是递归查询，本地服务器向根和相关服务器查询是迭代查询。</p>
-<p><img src="/2016/05/21/DNS学习笔记/markdown-img-paste-2018112418454685.png" alt=""></p>
+<p><img src="/21/DNS学习笔记/markdown-img-paste-2018112418454685.png" alt=""></p>
 <ol>
 <li>首先客户端怎样发起一个DNS查询请求，例如此时你在浏览器地址栏输入<a href="http://www.163.com" target="_blank" rel="noopener">www.163.com</a> 敲回车之后，那么浏览器并没有发起DNS请求，而是先查询本机的DNS缓存中是否有该域名对应的地址，有的话直接访问该地址，没有的话查询本机的hosts文件，如果刚好你本机的hosts文件中有该域名对应的地址，那么此刻客户端是不会发起dns请求的，但是通常情况下本地的host文件是空的，所以就有了第二步。</li>
 <li>经历是前面两次本机内部的查询之后发现并没有该域名对应的IP地址，于是客户端正式向本地的DNS服务器发起DNS查询请求。</li>
@@ -386,7 +386,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://liuxiaocsu.github.io/2016/05/21/DNS学习笔记/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http:www.byteliu.com/2016/05/21/DNS学习笔记/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -463,7 +463,7 @@
 <script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "https://liuxiaocsu.github.io/2016/05/21/DNS学习笔记/",
+  id: "www.byteliu.com/2016/05/21/DNS学习笔记/",
   owner: 'liuxiaocsu',
   repo: 'liuxiaocsu.github.io',
   oauth: {
@@ -602,11 +602,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -622,15 +622,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">me</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">UDP</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">me</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -734,7 +734,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">CGLIB</a>
+                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -742,7 +742,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
+                <a href="javascript:void(0)" class="js-tag color1">CGLIB</a>
               </li>
              
               <li class="article-tag-list-item">

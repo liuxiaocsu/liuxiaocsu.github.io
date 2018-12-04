@@ -5,23 +5,23 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="dns-prefetch" href="https://liuxiaocsu.github.io">
+  <link rel="dns-prefetch" href="www.byteliu.com">
   <title>深入理解ThreadLocal | Byte_Liu&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="ThreadLocal是一个关于创建线程局部变量的类。通常情况下，我们创建的变量是可以被任何一个线程访问并修改的。而使用ThreadLocal创建的变量只能被当前线程访问，其他线程则无法访问和修改。ThreadLocal提供了线程本地的实例，它与普通变量的区别在于，每个使用该变量的线程都会初始化一个完全独立的实例副本，所以每个线程可以访问自己内部的副本变量，不同线程之间不会互相干扰。。Thread">
 <meta name="keywords" content="JUC">
 <meta property="og:type" content="article">
 <meta property="og:title" content="深入理解ThreadLocal">
-<meta property="og:url" content="https://liuxiaocsu.github.io/2018/04/27/深入理解ThreadLocal/index.html">
+<meta property="og:url" content="www.byteliu.com/2018/04/27/深入理解ThreadLocal/index.html">
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
 <meta property="og:description" content="ThreadLocal是一个关于创建线程局部变量的类。通常情况下，我们创建的变量是可以被任何一个线程访问并修改的。而使用ThreadLocal创建的变量只能被当前线程访问，其他线程则无法访问和修改。ThreadLocal提供了线程本地的实例，它与普通变量的区别在于，每个使用该变量的线程都会初始化一个完全独立的实例副本，所以每个线程可以访问自己内部的副本变量，不同线程之间不会互相干扰。。Thread">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://liuxiaocsu.github.io/2018/04/27/深入理解ThreadLocal/markdown-img-paste-20181128104507456.png">
+<meta property="og:image" content="/27/深入理解ThreadLocal/markdown-img-paste-20181128104507456.png">
 <meta property="og:updated_time" content="2018-11-28T04:36:33.827Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解ThreadLocal">
 <meta name="twitter:description" content="ThreadLocal是一个关于创建线程局部变量的类。通常情况下，我们创建的变量是可以被任何一个线程访问并修改的。而使用ThreadLocal创建的变量只能被当前线程访问，其他线程则无法访问和修改。ThreadLocal提供了线程本地的实例，它与普通变量的区别在于，每个使用该变量的线程都会初始化一个完全独立的实例副本，所以每个线程可以访问自己内部的副本变量，不同线程之间不会互相干扰。。Thread">
-<meta name="twitter:image" content="https://liuxiaocsu.github.io/2018/04/27/深入理解ThreadLocal/markdown-img-paste-20181128104507456.png">
+<meta name="twitter:image" content="/27/深入理解ThreadLocal/markdown-img-paste-20181128104507456.png">
   
     <link rel="alternative" href="/atom.xml" title="Byte_Liu&#39;s Blog" type="application/atom+xml">
   
@@ -213,7 +213,7 @@
 <li>实现线程安全，非线程安全的对象使用ThreadLocal之后就会变得线程安全，因为每个线程都会有一个对应的实例。</li>
 <li>承载一些线程相关的数据，如果某个参数需要在多个模块中使用，采用参数传递的方式，显然会增加模块之间的耦合性,使用ThreadLocal就可以避免在方法中来回传递参数。</li>
 </ul>
-<h3 id="内部实现"><a href="#内部实现" class="headerlink" title="内部实现"></a>内部实现</h3><p>从线程Thread的角度来看，每个线程内部都会持有一个对ThreadLocalMap实例的引用，ThreadLocalMap实例相当于线程的局部变量空间，存储着线程各自的数据，具体如下：<br><img src="/2018/04/27/深入理解ThreadLocal/markdown-img-paste-20181128104507456.png" alt=""></p>
+<h3 id="内部实现"><a href="#内部实现" class="headerlink" title="内部实现"></a>内部实现</h3><p>从线程Thread的角度来看，每个线程内部都会持有一个对ThreadLocalMap实例的引用，ThreadLocalMap实例相当于线程的局部变量空间，存储着线程各自的数据，具体如下：<br><img src="/27/深入理解ThreadLocal/markdown-img-paste-20181128104507456.png" alt=""></p>
 <ul>
 <li>每个Thread维护着一个ThreadLocalMap的引用。</li>
 <li>ThreadLocalMap是ThreadLocal的内部类，用Entry来进行存储。</li>
@@ -335,7 +335,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://liuxiaocsu.github.io/2018/04/27/深入理解ThreadLocal/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http:www.byteliu.com/2018/04/27/深入理解ThreadLocal/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -412,7 +412,7 @@
 <script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "https://liuxiaocsu.github.io/2018/04/27/深入理解ThreadLocal/",
+  id: "www.byteliu.com/2018/04/27/深入理解ThreadLocal/",
   owner: 'liuxiaocsu',
   repo: 'liuxiaocsu.github.io',
   oauth: {
@@ -551,11 +551,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -571,15 +571,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">me</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">UDP</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">me</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -683,7 +683,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">CGLIB</a>
+                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -691,7 +691,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
+                <a href="javascript:void(0)" class="js-tag color1">CGLIB</a>
               </li>
              
               <li class="article-tag-list-item">

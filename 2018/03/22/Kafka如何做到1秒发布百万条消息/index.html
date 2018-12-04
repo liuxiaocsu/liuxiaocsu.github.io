@@ -5,26 +5,26 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="dns-prefetch" href="https://liuxiaocsu.github.io">
+  <link rel="dns-prefetch" href="www.byteliu.com">
   <title>Kafka如何做到1秒发布百万条消息 | Byte_Liu&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="Kafka 是分布式发布-订阅消息系统，是一个分布式的，可划分的，冗余备份的持久性的日志服务。它主要用于处理活跃的流式数据。 现在被广泛地应用于构建实时数据管道和流应用的场景中，具有横向扩展，容错，快等优点，并已经运行在众多大中型公司的生产环境中，成功应用于大数据领域。">
 <meta name="keywords" content="kafaka">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Kafka如何做到1秒发布百万条消息">
-<meta property="og:url" content="https://liuxiaocsu.github.io/2018/03/22/Kafka如何做到1秒发布百万条消息/index.html">
+<meta property="og:url" content="www.byteliu.com/2018/03/22/Kafka如何做到1秒发布百万条消息/index.html">
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
 <meta property="og:description" content="Kafka 是分布式发布-订阅消息系统，是一个分布式的，可划分的，冗余备份的持久性的日志服务。它主要用于处理活跃的流式数据。 现在被广泛地应用于构建实时数据管道和流应用的场景中，具有横向扩展，容错，快等优点，并已经运行在众多大中型公司的生产环境中，成功应用于大数据领域。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://liuxiaocsu.github.io/2018/03/22/Kafka如何做到1秒发布百万条消息/markdown-img-paste-20181202220616316.png">
-<meta property="og:image" content="https://liuxiaocsu.github.io/2018/03/22/Kafka如何做到1秒发布百万条消息/markdown-img-paste-20181202220658849.png">
-<meta property="og:image" content="https://liuxiaocsu.github.io/2018/03/22/Kafka如何做到1秒发布百万条消息/markdown-img-paste-20181202220728922.png">
-<meta property="og:image" content="https://liuxiaocsu.github.io/2018/03/22/Kafka如何做到1秒发布百万条消息/markdown-img-paste-20181202220819449.png">
+<meta property="og:image" content="/22/Kafka如何做到1秒发布百万条消息/markdown-img-paste-20181202220616316.png">
+<meta property="og:image" content="/22/Kafka如何做到1秒发布百万条消息/markdown-img-paste-20181202220658849.png">
+<meta property="og:image" content="/22/Kafka如何做到1秒发布百万条消息/markdown-img-paste-20181202220728922.png">
+<meta property="og:image" content="/22/Kafka如何做到1秒发布百万条消息/markdown-img-paste-20181202220819449.png">
 <meta property="og:updated_time" content="2018-12-02T14:28:59.920Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kafka如何做到1秒发布百万条消息">
 <meta name="twitter:description" content="Kafka 是分布式发布-订阅消息系统，是一个分布式的，可划分的，冗余备份的持久性的日志服务。它主要用于处理活跃的流式数据。 现在被广泛地应用于构建实时数据管道和流应用的场景中，具有横向扩展，容错，快等优点，并已经运行在众多大中型公司的生产环境中，成功应用于大数据领域。">
-<meta name="twitter:image" content="https://liuxiaocsu.github.io/2018/03/22/Kafka如何做到1秒发布百万条消息/markdown-img-paste-20181202220616316.png">
+<meta name="twitter:image" content="/22/Kafka如何做到1秒发布百万条消息/markdown-img-paste-20181202220616316.png">
   
     <link rel="alternative" href="/atom.xml" title="Byte_Liu&#39;s Blog" type="application/atom+xml">
   
@@ -219,7 +219,7 @@
 <p>k 表示 offset，称之为偏移量，一个 64 位整型的唯一标识，offset 代表了 Topic 分区中所有消息流中该消息的起始字节位置。<br>v 就是实际的消息内容，每个分区中的每个 offset 都是唯一存在的，所有分区的消息都是一次写入，在消息未过期之前都可以调整 offset 来实现多次读取。</p>
 <p><strong>以上提到 Kafka “快”的第一个因素：消息顺序写入磁盘。</strong></p>
 <p>我们知道现在的磁盘大多数都还是机械结构（SSD不在讨论的范围内），如果将消息以随机写的方式存入磁盘，就会按柱面、磁头、扇区的方式进行（寻址过程），缓慢的机械运动（相对内存）会消耗大量时间，导致磁盘的写入速度只能达到内存写入速度的几百万分之一，为了规避随机写带来的时间消耗，KAFKA采取顺序写的方式存储数据，如下图所示：</p>
-<p><img src="/2018/03/22/Kafka如何做到1秒发布百万条消息/markdown-img-paste-20181202220616316.png" alt="http://p3.pstatp.com/large/pgc-image/077539724c3e447ea8e7dc33beb9979e"></p>
+<p><img src="/22/Kafka如何做到1秒发布百万条消息/markdown-img-paste-20181202220616316.png" alt="http://p3.pstatp.com/large/pgc-image/077539724c3e447ea8e7dc33beb9979e"></p>
 <p>新来的消息只能追加到已有消息的末尾，并且已经生产的消息不支持随机删除以及随机访问，但是消费者可以通过重置offset的方式来访问已经消费过的数据。</p>
 <p>即使顺序读写，过于频繁的大量小 I/O 操作一样会造成磁盘的瓶颈，所以 Kafka 在此处的处理是把这些消息集合在一起批量发送，这样减少对磁盘 IO 的过度读写，而不是一次发送单个消息。</p>
 <p>另一个是无效率的字节复制，尤其是在负载比较高的情况下影响是显着的。为了避免这种情况，<strong><em>Kafka采用由Producer，broker和consumer共享的标准化二进制消息格式，这样数据块就可以在它们之间自由传输，无需转换，降低了字节复制的成本开销。</em></strong></p>
@@ -248,14 +248,14 @@
 </ul>
 <p>这里有四次拷贝，两次系统调用，这是非常低效的做法。如果使用sendfile，只需要一次拷贝就行：允许操作系统将数据直接从页缓存发送到网络上。所以在这个优化的路径中，只有最后一步将数据拷贝到网卡缓存中是需要的。</p>
 <p>常规文件传输和zeroCopy方式的性能对比：</p>
-<p><img src="/2018/03/22/Kafka如何做到1秒发布百万条消息/markdown-img-paste-20181202220658849.png" alt="http://p3.pstatp.com/large/pgc-image/6995025ce9d74bf1bf12b71e93fd1930"></p>
+<p><img src="/22/Kafka如何做到1秒发布百万条消息/markdown-img-paste-20181202220658849.png" alt="http://p3.pstatp.com/large/pgc-image/6995025ce9d74bf1bf12b71e93fd1930"></p>
 <p>假设一个Topic有多个消费者的情况，并使用上面的零拷贝优化，数据被复制到页缓存中一次，并在每个消费上重复使用，而不是存储在存储器中，也不在每次读取时复制到用户空间。这使得以接近网络连接限制的速度消费消息。</p>
 <p>这种页缓存和sendfile组合，意味着Kafka集群的消费者大多数都完全从缓存消费消息，而磁盘没有任何读取活动。</p>
 <h5 id="批量压缩"><a href="#批量压缩" class="headerlink" title="批量压缩"></a>批量压缩</h5><p>在很多情况下，系统的瓶颈不是CPU或磁盘，而是网络带宽，对于需要在广域网上的数据中心之间发送消息的数据流水线尤其如此。所以数据压缩就很重要。可以每个消息都压缩，但是压缩率相对很低。所以Kafka使用了批量压缩，即将多个消息一起压缩而不是单个消息压缩。</p>
 <p>Kafka允许使用递归的消息集合，批量的消息可以通过压缩的形式传输并且在日志中也可以保持压缩格式，直到被消费者解压缩。</p>
 <p>Kafka支持Gzip和Snappy压缩协议。</p>
 <p>Kafka数据可靠性深度解读</p>
-<p><img src="/2018/03/22/Kafka如何做到1秒发布百万条消息/markdown-img-paste-20181202220728922.png" alt="http://p3.pstatp.com/large/pgc-image/b1463c3232c149068b3288e2deab875a"></p>
+<p><img src="/22/Kafka如何做到1秒发布百万条消息/markdown-img-paste-20181202220728922.png" alt="http://p3.pstatp.com/large/pgc-image/b1463c3232c149068b3288e2deab875a"></p>
 <p>Kafka的消息保存在Topic中，Topic可分为多个分区，为保证数据的安全性，每个分区又有多个Replia。</p>
 <p>▪ 多分区的设计的特点：</p>
 <p>为了并发读写，加快读写速度；<br>是利用多分区的存储，利于数据的均衡；<br>是为了加快数据的恢复速率，一但某台机器挂了，整个集群只需要恢复一部分数据，可加快故障恢复的时间。<br>每个Partition分为多个Segment，每个Segment有.log 和.index 两个文件，每个log文件承载具体的数据，每条消息都有一个递增的offset，Index 文件是对log文件的索引，Consumer查找offset 时使用的是二分法根据文件名去定位到哪个Segment，然后解析 msg，匹配到对应的offset的msg。</p>
@@ -264,7 +264,7 @@
 <p>每个Partition会在磁盘记录一个RecoveryPoint,记录已经 flush 到磁盘的最大 offset。当 broker 失败重启时，会进行 loadLogs。首先会读取该 Partition 的 RecoveryPoint，找到包含 RecoveryPoint 的 segment 及以后的 segment， 这些 segment 就是可能没有完全 flush 到磁盘 segments。然后调用 segment 的 recover，重新读取各个 segment 的 msg，并重建索引。每次重启 Kafka 的 broker 时，都可以在输出的日志看到重建各个索引的过程。</p>
 <p>&lt;数据同步&gt;</p>
 <p>Producer和Consumer都只与Leader交互，每个Follower从Leader拉取数据进行同步.</p>
-<p><img src="/2018/03/22/Kafka如何做到1秒发布百万条消息/markdown-img-paste-20181202220819449.png" alt="http://p3.pstatp.com/large/pgc-image/47919e441d9d41ca960dda204a5c7d4e"></p>
+<p><img src="/22/Kafka如何做到1秒发布百万条消息/markdown-img-paste-20181202220819449.png" alt="http://p3.pstatp.com/large/pgc-image/47919e441d9d41ca960dda204a5c7d4e"></p>
 <p>如上图所示，ISR是所有不落后的replica集合，不落后有两层含义：距离上次 FetchRequest的时间不大于某一个值或落后的消息数不大于某一个值，Leader失 败后会从 ISR 中随机选取一个Follower做Leader，该过程对用户是透明的。</p>
 <p>当Producer向Broker发送数据时，可以通过request.required.acks参数设置数据可靠性的级别。</p>
 <p>此配置是表明当一次Producer请求被认为完成时的确认值。特别是，多少个其他 brokers 必须已经提交了数据到它们的 log 并且向它们的 Leader 确认了这些信息。</p>
@@ -357,7 +357,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://liuxiaocsu.github.io/2018/03/22/Kafka如何做到1秒发布百万条消息/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http:www.byteliu.com/2018/03/22/Kafka如何做到1秒发布百万条消息/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -434,7 +434,7 @@
 <script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "https://liuxiaocsu.github.io/2018/03/22/Kafka如何做到1秒发布百万条消息/",
+  id: "www.byteliu.com/2018/03/22/Kafka如何做到1秒发布百万条消息/",
   owner: 'liuxiaocsu',
   repo: 'liuxiaocsu.github.io',
   oauth: {
@@ -573,11 +573,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -593,15 +593,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">me</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">UDP</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">me</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -705,7 +705,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">CGLIB</a>
+                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -713,7 +713,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
+                <a href="javascript:void(0)" class="js-tag color1">CGLIB</a>
               </li>
              
               <li class="article-tag-list-item">
