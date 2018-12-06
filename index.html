@@ -961,20 +961,20 @@
 
 
   
-    <article id="post-Java代码规范-1" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-数据库事务的四个特性及mysql的四种隔离级别" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/10/11/Java代码规范-1/">Java代码规范(1)</a>
+      <a class="article-title" href="/2018/11/06/数据库事务的四个特性及mysql的四种隔离级别/">数据库事务的四个特性及mysql的四种隔离级别</a>
     </h1>
   
 
         
-        <a href="/2018/10/11/Java代码规范-1/" class="archive-article-date">
-  	<time datetime="2018-10-11T02:10:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-11</time>
+        <a href="/2018/11/06/数据库事务的四个特性及mysql的四种隔离级别/" class="archive-article-date">
+  	<time datetime="2018-11-06T11:18:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-06</time>
 </a>
         
       </header>
@@ -982,8 +982,11 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <h4 id="关于基本数据类型与包装数据类型的使用标准如下："><a href="#关于基本数据类型与包装数据类型的使用标准如下：" class="headerlink" title="关于基本数据类型与包装数据类型的使用标准如下："></a>关于基本数据类型与包装数据类型的使用标准如下：</h4><p>1） 所有的POJO类属性使用包装数据类型。<br>2） RPC方法的返回值和参数必须使用包装数据类型。<br>3） 所有的局部变量使用基本数据类型。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public class DemoDO &#123;</span><br><span class="line">    String str;</span><br><span class="line">    Integer a;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h4 id="类、类属性、类方法的注释必须使用javadoc规范，使用-内容-格式，不得使用-xxx方式和-xxx-方式。"><a href="#类、类属性、类方法的注释必须使用javadoc规范，使用-内容-格式，不得使用-xxx方式和-xxx-方式。" class="headerlink" title="类、类属性、类方法的注释必须使用javadoc规范，使用/*内容/格式，不得使用//xxx方式和/xxx/方式。"></a>类、类属性、类方法的注释必须使用javadoc规范，使用/*<em>内容</em>/格式，不得使用//xxx方式和/<em>xxx</em>/方式。</h4><p>说明：在IDE编辑窗口中，javadoc方式会提示相关注释，生成javadoc可以正确输出相应注释；在IDE中，工程调用方法时，不进入方法即可悬浮提示方法、参数、返回值的意义，提高阅读效率。<br></p>
+     <h4 id="1、原子性"><a href="#1、原子性" class="headerlink" title="1、原子性"></a>1、原子性</h4><p><strong>在同一个事务内部的一组操作必须全部执行成功（或者全部失败）。</strong></p>
+<p>为了保证事务操作的原子性，必须实现基于日志的REDO/UNDO机制：将所有对数据的更新操作都写入日志，如果一个事务中的一部分操作已经成功，但以后的操作，由于断电/系统崩溃/其它的软硬件错误而无法继续，则通过回溯日志，将已经执行成功的操作撤销，从而达到“全部操作失败”的目的。</p>
+<p>最常见的场景是，数据库系统崩溃后重启，此时数据库处于不一致的状态，必须先执行一个crash recovery的过程：读取日志进行REDO（重演将所有已经执行成功但尚未写入到磁盘的操作，保证持久性），再对所有到崩溃时尚未成功提交的事务进行UNDO（撤销所有执行了一部分但尚未提交的操作，保证原子性）。crash recovery结束后，数据库恢复到一致性状态，可以继续被使用。</p>
+<p>某个应用在执行转帐的数据库操作时，必须在同一个事务内部调用对帐户A和帐户B的操作，才能保证数据的一致性。</p>
+<p>但是，原子性并不能完全保证一致性。在多个事务并行进行的情况下，即使保证了每一个事务的原子性，仍然可能导致数据不一致的结果。<br></p>
   
 
     </div>
@@ -995,7 +998,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">代码规范</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">ACID</a>
         		</li>
       		
 		</ul>
@@ -1007,7 +1010,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/代码规范//" class="article-tag-list-link color5">代码规范</a>
+        			<a href="/categories/数据库//" class="article-tag-list-link color4">数据库</a>
         		</li>
       		
 		</ul>
@@ -1016,7 +1019,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/10/11/Java代码规范-1/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/11/06/数据库事务的四个特性及mysql的四种隔离级别/">展开全文 >></a>
         </p>
       
 
@@ -1046,20 +1049,20 @@
 
 
   
-    <article id="post-zookeeper学习笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-数据存储的选型" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/10/08/zookeeper学习笔记/">zookeeper学习笔记</a>
+      <a class="article-title" href="/2018/11/01/数据存储的选型/">数据存储的选型</a>
     </h1>
   
 
         
-        <a href="/2018/10/08/zookeeper学习笔记/" class="archive-article-date">
-  	<time datetime="2018-10-08T12:37:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-08</time>
+        <a href="/2018/11/01/数据存储的选型/" class="archive-article-date">
+  	<time datetime="2018-11-01T11:46:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-01</time>
 </a>
         
       </header>
@@ -1067,32 +1070,20 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p>Zookeeper是Hadoop分布式调度服务，用来构建分布式应用系统。构建一个分布式应用是一个很复杂的事情，主要的原因是我们需要合理有效 的处理分布式集群中的部分失败的问题。例如，集群中的节点在相互通信时，A节点向B节点发送消息。A节点如果想知道消息是否发送成功，只能由B节点告诉A 节点。那么如果B节点关机或者由于其他的原因脱离集群网络，问题就出现了。A节点不断的向B发送消息，并且无法获得B的响应。B也没有办法通知A节点已经 离线或者关机。集群中其他的节点完全不知道B发生了什么情况，还在不断的向B发送消息。这时，你的整个集群就发生了部分失败的故障。<br>Zookeeper不能让部分失败的问题彻底消失，但是它提供了一些工具能够让你的分布式应用安全合理的处理部分失败的问题。</p>
-<p>Zookeeper 是分布式服务框架，主要是用来解决分布式应用中经常遇到的一些数据管理问题，如：统一命名服务、状态同步服务、集群管理、分布式应用配置项的管理等等。<br></p>
+     <p>在服务端会经常遇到数据存储的选型问题，是选择使用关系型数据库 MySQL，还是选择内存数据库 Redis，还是选择文档数据库 MongoDB，还是选择列族数据库 HBase， 还是选择全文搜索引擎 ElasticSearch 呢？下面主要介绍如何选择合适的数据存储方案。<br></p>
   
 
     </div>
     <div class="article-info article-info-index">
       
       
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">zookeeper</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/zookeeper//" class="article-tag-list-link color5">zookeeper</a>
+        			<a href="/categories/数据库//" class="article-tag-list-link color4">数据库</a>
         		</li>
       		
 		</ul>
@@ -1101,7 +1092,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/10/08/zookeeper学习笔记/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/11/01/数据存储的选型/">展开全文 >></a>
         </p>
       
 
@@ -1133,7 +1124,7 @@
   
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 
@@ -1293,11 +1284,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
+                <a href="javascript:void(0)" class="js-tag color4">JUC</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JUC</a>
+                <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1317,7 +1308,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">TCP</a>
+                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1325,11 +1316,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">UDP</a>
+                <a href="javascript:void(0)" class="js-tag color4">TCP</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1337,11 +1324,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
+                <a href="javascript:void(0)" class="js-tag color3">me</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">me</a>
+                <a href="javascript:void(0)" class="js-tag color4">UDP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1429,15 +1420,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">zookeeper</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">synchronize</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">zookeeper</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">动态代理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ACID</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1449,11 +1444,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
+                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
+                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1469,15 +1464,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">velocity</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">中间件</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">大型网站</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">velocity</a>
               </li>
             
             <div class="clearfix"></div>

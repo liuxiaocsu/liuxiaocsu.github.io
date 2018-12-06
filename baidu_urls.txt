@@ -6,6 +6,8 @@ http://www.byteliu.com/2018/11/24/Redis学习笔记/
 http://www.byteliu.com/2018/11/20/MySQL常见的三种存储引擎/
 http://www.byteliu.com/2018/11/18/MySQL都有哪些-零件/
 http://www.byteliu.com/2018/11/12/MySQL优化原理/
+http://www.byteliu.com/2018/11/06/数据库事务的四个特性及mysql的四种隔离级别/
+http://www.byteliu.com/2018/11/01/数据存储的选型/
 http://www.byteliu.com/2018/10/11/Java代码规范-1/
 http://www.byteliu.com/2018/10/08/zookeeper学习笔记/
 http://www.byteliu.com/2018/09/28/Velocity学习笔记/
