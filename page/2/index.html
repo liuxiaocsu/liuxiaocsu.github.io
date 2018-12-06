@@ -434,6 +434,122 @@
 
 
   
+    <article id="post-AQS条件队列Condition实现详解" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/01/AQS条件队列Condition实现详解/">AQS条件队列Condition实现详解</a>
+    </h1>
+  
+
+        
+        <a href="/2018/09/01/AQS条件队列Condition实现详解/" class="archive-article-date">
+  	<time datetime="2018-09-01T11:55:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+  
+    <p>AQS如何实现条件队列</p>
+<p>AQS提供一个内部类ConditionObject，由这个ConditionObject实现条件队列。</p>
+<p>例如，经典代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Lock lock = new ReentrantLock();</span><br><span class="line">Condition condition = lock.newCondition();</span><br><span class="line">...</span><br><span class="line">lock.lock();</span><br><span class="line">try &#123;</span><br><span class="line">  while ( 某条件A ) &#123;</span><br><span class="line">    condition.await();</span><br><span class="line">  &#125;</span><br><span class="line">  // 条件A满足时应执行的代码</span><br><span class="line">&#125; finally &#123;</span><br><span class="line">   lock.unlock();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>以上代码中的condition实际就是ConditionObject类。</p>
+<p>首先，分析其声明：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public class ConditionObject implements Condition, java.io.Serializable &#123;</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li><p>首先，它实现了java.util.concurrent.locks.Condition接口，表示自己是一个条件队列。作为内部类，它没有被static关键字修饰，表示它不能脱离外部的AQS类独立存在，必须与外部类AQS实例建立关联。</p>
+</li>
+<li><p>然后，它设置了一个单链表，firstWaiter字段指向链表的头结点，lastWaiter指向尾结点。最先开始等待的线程位于头结点，最后等待的线程位于尾结点。</p>
+</li>
+</ol>
+<p><img src="/2018/09/01/AQS条件队列Condition实现详解/markdown-img-paste-20181206195618820.png" alt="http://p3.pstatp.com/large/pgc-image/ec24c7fe1ebd4028b351803868614c85"></p>
+<ol start="3">
+<li>接下来我们分析条件队列中的两个最核心的两个方法 signal 和 await()。至于signalAll，它与signalAll()几乎一致，区别只在于signal()只处理一个线程，而signalAll()处理条件队列中的所有线程。而awaitUninterruptibly(), awaitNanos(), awaitUntil()等awaitX()方法都与await()类似。</li>
+</ol>
+<p>假设有以下代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Lock lock1 = new ReentrantLock();</span><br><span class="line">Condition condtion1 = lock1.newCondition();</span><br><span class="line">// 线程1调用下面这段代码：</span><br><span class="line">lock1.lock();</span><br><span class="line">while(某个条件) &#123;</span><br><span class="line">  condition1.await();</span><br><span class="line">&#125;</span><br><span class="line">lock1.unlock();</span><br></pre></td></tr></table></figure></p>
+<p>参照await的代码进行分析。首先，await()可以响应线程中断，所以一开始先判断这个时候有没有被中断（即await还没开始任何操作就遇到了中断，也许是不耐烦的用户操作引起的）。然后，把当前线程放入条件队列，释放之前已持有的锁（锁中的状态保存到线程的本地变量）。再然后，不断的查询代表当前线程的结点是否已经在锁队列上，如果不在锁队列上则阻塞。因为，把当前线程结点移到锁队列上的一定是另外一个线程（通过调用signal()）。当阻塞唤醒（即从LockSupport.park()放回）之后，且查询到当前线程结点已在锁队列上时，说明此时已有其他线程成功调用了signal()或signalAll()，然后执行争夺锁的操作并把之前的锁状态还原回去，即通过acquireQueued()完成。acquireQueued()只有在成功获得锁以后才会返回，最后检查一下在前面的时间里有没有中断，如果有中断则抛出异常。Javadoc中说中断与方法的成功返回之前，中断必须优先响应，这就是因为前面的中断信息只是被记录了下来，没有及时处理，很可能是在很早之前就收到了，直到最后才有机会处理。所以，中断比上述的阻塞循环结果优先。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public final void await() throws InterruptedException &#123;</span><br><span class="line">    if (Thread.interrupted())</span><br><span class="line">        throw new InterruptedException();</span><br><span class="line">    Node node = addConditionWaiter();</span><br><span class="line">    int savedState = fullyRelease(node);</span><br><span class="line">    int interruptMode = 0;</span><br><span class="line">    while (!isOnSyncQueue(node)) &#123;</span><br><span class="line">        LockSupport.park(this);</span><br><span class="line">        if ((interruptMode = checkInterruptWhileWaiting(node)) != 0)</span><br><span class="line">            break;</span><br><span class="line">    &#125;</span><br><span class="line">    if (acquireQueued(node, savedState) &amp;&amp; interruptMode != THROW_IE)</span><br><span class="line">    interruptMode = REINTERRUPT;</span><br><span class="line">    if (node.nextWaiter != null) // clean up if cancelled</span><br><span class="line">    unlinkCancelledWaiters();</span><br><span class="line">    if (interruptMode != 0)</span><br><span class="line">    reportInterruptAfterWait(interruptMode);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>其他的awaitX()系列操作，只是在阻塞循环体中增加了等待时间判断、检查有没有中断以尽早跳出循环的逻辑而已。</p>
+<p>在await()进行等待的操作中，第一个操作是把线程放入等待队列，这是addConditionWaiter()完成的。addConditionWaiter()负责把线程放入条件队列。它先检查是否持有锁（未持有锁则抛出IllegalMonitorStateException）。然后，在进入条件队列之前，检查最后一个结点是否已经取消等待（cancelled），如果是，则触发一次对从条件队列开头直到末尾的遍历，把队列中所有已经取消等待的线程摘除。其实，这个遍历操作是一个优化措施，可以避免在遇到大量线程取消等待后（取消风暴 cancel storm）的无效锁竞争。最后，把当前线程放入条件队列末尾。</p>
+<p>最后，我们分析signal()，如代码所示。signal() 通常是另外一个线程调用的，内部主要工作是调用doSignal()。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public final void signal() &#123;</span><br><span class="line">    if (!isHeldExclusively())</span><br><span class="line">        throw new IllegalMonitorStateException();</span><br><span class="line">    Node first = firstWaiter;</span><br><span class="line">    if (first != null)</span><br><span class="line">        doSignal(first);</span><br><span class="line">&#125;</span><br><span class="line">private void doSignal(Node first) &#123;</span><br><span class="line">    do &#123;</span><br><span class="line">        if ( (firstWaiter = first.nextWaiter) == null)</span><br><span class="line">            lastWaiter = null;</span><br><span class="line">        first.nextWaiter = null;</span><br><span class="line">    &#125; while (!transferForSignal(first) &amp;&amp; (first = firstWaiter) != null);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在doSignal()的实现代码中，从条件队列头部开始，找到第一个未取消等待的线程，并把线程由条件等待状态改为就绪状态（waitStatus=0），并且从条件队列取下来放入锁队列。进入锁队列以后，把这个线程用CAS操作设为等待锁状态(waitStatus=-1)，如果设置失败（此期间有取消等待操作发生），则将这个线程唤醒（通过LockSupport.unpark()）。把结点放入锁队列，并设置等待状态的相关操作在transferForSignal()方法中完成。</p>
+<p>顺便说一下，doSignalAll()把条件队列中的所有线程取出，然后对于这些线程，逐个设为就绪状态。然后也按照doSignal的做法，放入锁队列，设置为等待锁的状态，CAS设置失败则唤醒这个线程。</p>
+<ol start="4">
+<li>Lock与Condition的不同点</li>
+</ol>
+<p>Lock有自旋而Condition没有自旋。因为lock的加锁操作是无条件的，自旋可以减少线程上下文切换；而Condition是在检测到一个条件不满足时，主动进入阻塞。自旋对于Condition来说意义不大，因为条件不满足时，很大概率在接下来的一小段时间内依然不满足，所以它如果自旋只会浪费cpu计算资源。</p>
+<p>Lock中的队列操作需要大量谨慎的CAS操作，因为没有锁的保护；而Condition因为有锁的保护，所以在把结点在条件队列和锁队列之间移动时，无需太多谨慎的CAS操作，只是在修改等待状态时，需要用到CAS操作，以应对突然发生的取消等待操作。</p>
+<ol start="5">
+<li>总结</li>
+</ol>
+<p>看完Condition的实现之后你是不是对Condition的运行和使用又有了更深入的体会呢。假如你需要面试，可以重点看这里。总结一下，你要知道Condtion与一个AQS对象建立了关联，并且内部有一个单链表，所有等待线程（调用await）都在这个单链表里面等待。条件的等待和唤醒是通过把代表线程的结点在条件队列和锁队列之间移动来实现的。当有线程在这个Condition上调用await时，它就会把自身放入条件队列并且阻塞，而阻塞是通过一个循环来完成的，在这个循环中交替执行阻塞（LockSupport.park）、判断是否在锁队列上。当有线程在这个Condition上调用了signal时，就会把线程从条件队列转移到它锁关联的那个AQS的锁队列上，并且将它唤醒（此时，阻塞循环中的判断是否在锁队列的条件就会满足，导致跳出循环）。</p>
+
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JUC</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/并发-多线程//" class="article-tag-list-link color2">并发/多线程</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/09/01/AQS条件队列Condition实现详解/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-AQS学习笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -575,6 +691,165 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/07/11/Docker学习笔记/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-netty拆包器" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/01/netty拆包器/">Netty拆包器</a>
+    </h1>
+  
+
+        
+        <a href="/2018/05/01/netty拆包器/" class="archive-article-date">
+  	<time datetime="2018-05-01T12:21:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+  
+    <h3 id="为什么要粘包"><a href="#为什么要粘包" class="headerlink" title="为什么要粘包"></a>为什么要粘包</h3><p>首先得了解一下TCP/IP协议，在用户数据量非常小的情况下，极端情况下，一个字节，该TCP数据包的有效载荷非常低，传递100字节的数据，需要100次TCP传送，100次ACK，在应用及时性要求不高的情况下，将这100个有效数据拼接成一个数据包，那会缩短到一个TCP数据包，以及一个ack，有效载荷提高了，带宽也节省了。</p>
+<p>非极端情况，有可能两个数据包拼接成一个数据包，也有可能一个半的数据包拼接成一个数据包，也有可能两个半的数据包拼接成一个数据包。</p>
+<h3 id="为什么要拆包"><a href="#为什么要拆包" class="headerlink" title="为什么要拆包"></a>为什么要拆包</h3><p>拆包和粘包是相对的，一端粘了包，另外一端就需要将粘过的包拆开，举个栗子，发送端将三个数据包粘成两个TCP数据包发送到接收端，接收端就需要根据应用协议将两个数据包拆分成三个数据包。</p>
+<p>还有一种情况就是用户数据包超过了mss(最大报文长度)，那么这个数据包在发送的时候必须拆分成几个数据包，接收端收到之后需要将这些数据包粘合起来之后再解析。</p>
+<h3 id="拆包的原理"><a href="#拆包的原理" class="headerlink" title="拆包的原理"></a>拆包的原理</h3><p>在没有netty的情况下，用户如果自己需要拆包，基本原理就是不断从TCP缓冲区中读取数据，每次读取完都需要判断是否是一个完整的数据包。</p>
+<ol>
+<li><p>如果当前读取的数据不足以拼接成一个完整的业务数据包，那就保留该数据，继续从tcp缓冲区中读取，直到得到一个完整的数据包。</p>
+</li>
+<li><p>如果当前读到的数据加上已经读取的数据足够拼接成一个数据包，那就将已经读取的数据拼接上本次读取的数据，够成一个完整的业务数据包传递到业务逻辑，多余的数据仍然保留，以便和下次读到的数据尝试拼接。</p>
+</li>
+</ol>
+<h3 id="netty中拆包的基类"><a href="#netty中拆包的基类" class="headerlink" title="netty中拆包的基类"></a>netty中拆包的基类</h3><p>netty 中的拆包也是如上这个原理，内部会有一个累加器，每次读取到数据都会不断累加，然后尝试对累加到的数据进行拆包，拆成一个完整的业务数据包，这个基类叫做 ByteToMessageDecoder，下面先详细分析下这个类：</p>
+<h4 id="累加器"><a href="#累加器" class="headerlink" title="累加器"></a>累加器</h4><p>ByteToMessageDecoder 中定义了两个累加器:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">public static final Cumulator MERGE_CUMULATOR = ...;</span><br><span class="line">public static final Cumulator COMPOSITE_CUMULATOR = ...;</span><br></pre></td></tr></table></figure></p>
+<p>默认情况下，会使用 MERGE_CUMULATOR<br>private Cumulator cumulator = MERGE_CUMULATOR;</p>
+<p>MERGE_CUMULATOR 的原理是每次都将读取到的数据通过内存拷贝的方式，拼接到一个大的字节容器中，这个字节容器在 ByteToMessageDecoder中叫做 cumulation<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ByteBuf cumulation;</span><br></pre></td></tr></table></figure></p>
+<p>看一下 MERGE_CUMULATOR 是如何将新读取到的数据累加到字节容器里的:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public ByteBuf cumulate(ByteBufAllocator alloc, ByteBuf cumulation, ByteBuf in) &#123;</span><br><span class="line">        ByteBuf buffer;</span><br><span class="line">        if (cumulation.writerIndex() &gt; cumulation.maxCapacity() - in.readableBytes()</span><br><span class="line">                || cumulation.refCnt() &gt; 1) &#123;</span><br><span class="line">            buffer = expandCumulation(alloc, cumulation, in.readableBytes());</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            buffer = cumulation;</span><br><span class="line">        &#125;</span><br><span class="line">        buffer.writeBytes(in);</span><br><span class="line">        in.release();</span><br><span class="line">        return buffer;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>netty 中ByteBuf的抽象，使得累加非常简单，通过一个简单的api调用 buffer.writeBytes(in);便将新数据累加到字节容器中，为了防止字节容器大小不够，在累加之前还进行了扩容处理。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">static ByteBuf expandCumulation(ByteBufAllocator alloc, ByteBuf cumulation, int readable) &#123;</span><br><span class="line">        ByteBuf oldCumulation = cumulation;</span><br><span class="line">        cumulation = alloc.buffer(oldCumulation.readableBytes() + readable);</span><br><span class="line">        cumulation.writeBytes(oldCumulation);</span><br><span class="line">        oldCumulation.release();</span><br><span class="line">        return cumulation;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>扩容也是一个内存拷贝操作，新增的大小即是新读取数据的大小。</p>
+<h4 id="拆包抽象"><a href="#拆包抽象" class="headerlink" title="拆包抽象"></a>拆包抽象</h4><p>累加器原理清楚之后，下面我们回到主流程，目光集中在 channelRead 方法，channelRead方法是每次从TCP缓冲区读到数据都会调用的方法，触发点在AbstractNioByteChannel的read方法中，里面有个while循环不断读取，读取到一次就触发一次channelRead<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception &#123;</span><br><span class="line">        if (msg instanceof ByteBuf) &#123;</span><br><span class="line">            CodecOutputList out = CodecOutputList.newInstance();</span><br><span class="line">            try &#123;</span><br><span class="line">                ByteBuf data = (ByteBuf) msg;</span><br><span class="line">                first = cumulation == null;</span><br><span class="line">                if (first) &#123;</span><br><span class="line">                    cumulation = data;</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    cumulation = cumulator.cumulate(ctx.alloc(), cumulation, data);</span><br><span class="line">                &#125;</span><br><span class="line">                callDecode(ctx, cumulation, out);</span><br><span class="line">            &#125; catch (DecoderException e) &#123;</span><br><span class="line">                throw e;</span><br><span class="line">            &#125; catch (Throwable t) &#123;</span><br><span class="line">                throw new DecoderException(t);</span><br><span class="line">            &#125; finally &#123;</span><br><span class="line">                if (cumulation != null &amp;&amp; !cumulation.isReadable()) &#123;</span><br><span class="line">                    numReads = 0;</span><br><span class="line">                    cumulation.release();</span><br><span class="line">                    cumulation = null;</span><br><span class="line">                &#125; else if (++ numReads &gt;= discardAfterReads) &#123;</span><br><span class="line">                    numReads = 0;</span><br><span class="line">                    discardSomeReadBytes();</span><br><span class="line">                &#125;</span><br><span class="line">                int size = out.size();</span><br><span class="line">                decodeWasNull = !out.insertSinceRecycled();</span><br><span class="line">                fireChannelRead(ctx, out, size);</span><br><span class="line">                out.recycle();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            ctx.fireChannelRead(msg);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>方法体可以分为以下几个逻辑步骤:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.累加数据</span><br><span class="line">2.将累加到的数据传递给业务进行业务拆包</span><br><span class="line">3.清理字节容器</span><br><span class="line">4.传递业务数据包给业务解码器处理</span><br></pre></td></tr></table></figure></p>
+<h5 id="1-累加数据"><a href="#1-累加数据" class="headerlink" title="1 累加数据"></a>1 累加数据</h5><p>如果当前累加器没有数据，就直接跳过内存拷贝，直接将字节容器的指针指向新读取的数据，否则，调用累加器累加数据至字节容器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ByteBuf data = (ByteBuf) msg;</span><br><span class="line">first = cumulation == null;</span><br><span class="line">if (first) &#123;</span><br><span class="line">    cumulation = data;</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    cumulation = cumulator.cumulate(ctx.alloc(), cumulation, data);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h5 id="2-将累加到的数据传递给业务进行拆包"><a href="#2-将累加到的数据传递给业务进行拆包" class="headerlink" title="2 将累加到的数据传递给业务进行拆包"></a>2 将累加到的数据传递给业务进行拆包</h5><p>到这一步，字节容器里的数据已是目前未拆包部分的所有的数据了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CodecOutputList out = CodecOutputList.newInstance();</span><br><span class="line">callDecode(ctx, cumulation, out);</span><br></pre></td></tr></table></figure></p>
+<p>callDecode 将尝试将字节容器的数据拆分成业务数据包塞到业务数据容器out中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">protected void callDecode(ChannelHandlerContext ctx, ByteBuf in, List&lt;Object&gt; out) &#123;</span><br><span class="line">        while (in.isReadable()) &#123;</span><br><span class="line">            // 记录一下字节容器中有多少字节待拆</span><br><span class="line">            int oldInputLength = in.readableBytes();</span><br><span class="line">            decode(ctx, in, out);</span><br><span class="line">            if (out.size() == 0) &#123;</span><br><span class="line">                // 拆包器未读取任何数据</span><br><span class="line">                if (oldInputLength == in.readableBytes()) &#123;</span><br><span class="line">                    break;</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    // 拆包器已读取部分数据，还需要继续</span><br><span class="line">                    continue;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            if (oldInputLength == in.readableBytes()) &#123;</span><br><span class="line">                throw new DecoderException(</span><br><span class="line">                        StringUtil.simpleClassName(getClass()) +</span><br><span class="line">                                &quot;.decode() did not read anything but decoded a message.&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">            if (isSingleDecode()) &#123;</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>我将原始代码做了一些精简，在解码之前，先记录一下字节容器中有多少字节待拆，然后调用抽象函数 decode 进行拆包<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">protected abstract void decode(ChannelHandlerContext ctx, ByteBuf in, List&lt;Object&gt; out) throws Exception;</span><br></pre></td></tr></table></figure></p>
+<p>netty中对各种用户协议的支持就体现在这个抽象函数中，传进去的是当前读取到的未被消费的所有的数据，以及业务协议包容器，所有的拆包器最终都实现了该抽象方法</p>
+<p>业务拆包完成之后，如果发现并没有拆到一个完整的数据包，这个时候又分两种情况:</p>
+<ol>
+<li>一个是拆包器什么数据也没读取，可能数据还不够业务拆包器处理，直接break等待新的数据</li>
+<li>拆包器已读取部分数据，说明解码器仍然在工作，继续解码</li>
+</ol>
+<p>业务拆包完成之后，如果发现已经解到了数据包，但是，发现并没有读取任何数据，这个时候就会抛出一个Runtime异常 DecoderException，告诉你，你什么数据都没读取，却解析出一个业务数据包，这是有问题的</p>
+<h5 id="3-清理字节容器"><a href="#3-清理字节容器" class="headerlink" title="3 清理字节容器"></a>3 清理字节容器</h5><p>业务拆包完成之后，只是从字节容器中取走了数据，但是这部分空间对于字节容器来说依然保留着，而字节容器每次累加字节数据的时候都是将字节数据追加到尾部，如果不对字节容器做清理，那么时间一长就会OOM</p>
+<p>正常情况下，其实每次读取完数据，netty都会在下面这个方法中将字节容器清理，只不过，当发送端发送数据过快，channelReadComplete可能会很久才被调用一次<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public void channelReadComplete(ChannelHandlerContext ctx) throws Exception &#123;</span><br><span class="line">        numReads = 0;</span><br><span class="line">        discardSomeReadBytes();</span><br><span class="line">        if (decodeWasNull) &#123;</span><br><span class="line">            decodeWasNull = false;</span><br><span class="line">            if (!ctx.channel().config().isAutoRead()) &#123;</span><br><span class="line">                ctx.read();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        ctx.fireChannelReadComplete();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里顺带插一句，如果一次数据读取完毕之后(可能接收端一边收，发送端一边发，这里的读取完毕指的是接收端在某个时间不再接受到数据为止），发现仍然没有拆到一个完整的用户数据包，即使该channel的设置为非自动读取，也会触发一次读取操作 ctx.read()，该操作会重新向selector注册op_read事件，以便于下一次能读到数据之后拼接成一个完整的数据包</p>
+<p>所以为了防止发送端发送数据过快，netty会在每次读取到一次数据，业务拆包之后对字节字节容器做清理，清理部分的代码如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">if (cumulation != null &amp;&amp; !cumulation.isReadable()) &#123;</span><br><span class="line">        numReads = 0;</span><br><span class="line">        cumulation.release();</span><br><span class="line">        cumulation = null;</span><br><span class="line">    &#125; else if (++ numReads &gt;= discardAfterReads) &#123;</span><br><span class="line">        numReads = 0;</span><br><span class="line">        discardSomeReadBytes();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果字节容器当前已无数据可读取，直接销毁字节容器，并且标注一下当前字节容器一次数据也没读取</p>
+<p>如果连续16次（discardAfterReads的默认值），字节容器中仍然有未被业务拆包器读取的数据，那就做一次压缩，有效数据段整体移到容器首部</p>
+<p>discardSomeReadBytes之前，字节累加器中的数据分布<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">+--------------+----------+----------+</span><br><span class="line">| readed | unreaded | writable |</span><br><span class="line">+--------------+----------+----------+</span><br></pre></td></tr></table></figure></p>
+<p>discardSomeReadBytes之后，字节容器中的数据分布<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">+----------+-------------------------+</span><br><span class="line">| unreaded | writable |</span><br><span class="line">+----------+-------------------------+</span><br></pre></td></tr></table></figure></p>
+<p>这样字节容器又可以承载更多的数据了</p>
+<h5 id="4-传递业务数据包给业务解码器处理"><a href="#4-传递业务数据包给业务解码器处理" class="headerlink" title="4 传递业务数据包给业务解码器处理"></a>4 传递业务数据包给业务解码器处理</h5><p>以上三个步骤完成之后，就可以将拆成的包丢到业务解码器处理了，代码如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">int size = out.size();</span><br><span class="line">decodeWasNull = !out.insertSinceRecycled();</span><br><span class="line">fireChannelRead(ctx, out, size);</span><br><span class="line">out.recycle();</span><br></pre></td></tr></table></figure></p>
+<p>期间用一个成员变量 decodeWasNull 来标识本次读取数据是否拆到一个业务数据包，然后调用 fireChannelRead 将拆到的业务数据包都传递到后续的handler<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">static void fireChannelRead(ChannelHandlerContext ctx, CodecOutputList msgs, int numElements) &#123;</span><br><span class="line">    for (int i = 0; i &lt; numElements; i ++) &#123;</span><br><span class="line">        ctx.fireChannelRead(msgs.getUnsafe(i));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样，就可以把一个个完整的业务数据包传递到后续的业务解码器进行解码，随后处理业务逻辑</p>
+<h4 id="行拆包器"><a href="#行拆包器" class="headerlink" title="行拆包器"></a>行拆包器</h4><p>下面，以一个具体的例子来看看业netty自带的拆包器是如何来拆包的</p>
+<p>这个类叫做 LineBasedFrameDecoder，基于行分隔符的拆包器，TA可以同时处理 以及 两种类型的行分隔符，核心方法都在继承的 decode 方法中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">protected final void decode(ChannelHandlerContext ctx, ByteBuf in, List&lt;Object&gt; out) throws Exception &#123;</span><br><span class="line">    Object decoded = decode(ctx, in);</span><br><span class="line">    if (decoded != null) &#123;</span><br><span class="line">        out.add(decoded);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>netty 中自带的拆包器都是如上这种模板，其实可以加一层，把这这层模板抽取出来的，不知道为什么netty没有这么做，我们接着跟进去，代码比较长，我们还是分模块来剖析</p>
+<ol>
+<li>找到换行符位置<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">final int eol = findEndOfLine(buffer);</span><br><span class="line">private static int findEndOfLine(final ByteBuf buffer) &#123;</span><br><span class="line">        int i = buffer.forEachByte(ByteProcessor.FIND_LF);</span><br><span class="line">        if (i &gt; 0 &amp;&amp; buffer.getByte(i - 1) == &apos; &apos;) &#123;</span><br><span class="line">            i--;</span><br><span class="line">        &#125;</span><br><span class="line">        return i;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">ByteProcessor FIND_LF = new IndexOfProcessor((byte) &apos;&apos;);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>for循环遍历，找到第一个 的位置,如果 前面的字符为 ，那就返回 的位置</p>
+<ol start="2">
+<li>非discarding模式的处理</li>
+</ol>
+<p>接下来，netty会判断，当前拆包是否属于丢弃模式，用一个成员变量来标识<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">private boolean discarding;</span><br></pre></td></tr></table></figure></p>
+<p>第一次拆包不在discarding模式（ 后面的分支会讲何为非discarding模式），于是进入以下环节</p>
+<p>2.1 非discarding模式下找到行分隔符的处理<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">// 1.计算分隔符和包长度</span><br><span class="line">final ByteBuf frame;</span><br><span class="line">final int length = eol - buffer.readerIndex();</span><br><span class="line">final int delimLength = buffer.getByte(eol) == &apos;&apos;? 2 : 1;</span><br><span class="line">// 丢弃异常数据</span><br><span class="line">if (length &gt; maxLength) &#123;</span><br><span class="line">    buffer.readerIndex(eol + delimLength);</span><br><span class="line">    fail(ctx, length);</span><br><span class="line">    return null;</span><br><span class="line">&#125;</span><br><span class="line">// 取包的时候是否包括分隔符</span><br><span class="line">if (stripDelimiter) &#123;</span><br><span class="line">    frame = buffer.readRetainedSlice(length);</span><br><span class="line">    buffer.skipBytes(delimLength);</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    frame = buffer.readRetainedSlice(length + delimLength);</span><br><span class="line">&#125;</span><br><span class="line">return frame;</span><br></pre></td></tr></table></figure></p>
+<p>1.首先，新建一个帧，计算一下当前包的长度和分隔符的长度（因为有两种分隔符）<br>2.然后判断一下需要拆包的长度是否大于该拆包器允许的最大长度(maxLength)，这个参数在构造函数中被传递进来，如超出允许的最大长度，就将这段数据抛弃，返回null<br>3.最后，将一个完整的数据包取出，如果构造本解包器的时候指定 stripDelimiter为false，即解析出来的包包含分隔符，默认为不包含分隔符</p>
+<p>2.2 非discarding模式下未找到分隔符的处理</p>
+<p>没有找到对应的行分隔符，说明字节容器没有足够的数据拼接成一个完整的业务数据包，进入如下流程处理<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">final int length = buffer.readableBytes();</span><br><span class="line">if (length &gt; maxLength) &#123;</span><br><span class="line">    discardedBytes = length;</span><br><span class="line">    buffer.readerIndex(buffer.writerIndex());</span><br><span class="line">    discarding = true;</span><br><span class="line">    if (failFast) &#123;</span><br><span class="line">        fail(ctx, &quot;over &quot; + discardedBytes);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">return null;</span><br></pre></td></tr></table></figure></p>
+<p>首先取得当前字节容器的可读字节个数，接着，判断一下是否已经超过可允许的最大长度，如果没有超过，直接返回null，字节容器中的数据没有任何改变，否则，就需要进入丢弃模式。</p>
+<p>使用一个成员变量 discardedBytes 来表示已经丢弃了多少数据，然后将字节容器的读指针移到写指针，意味着丢弃这一部分数据，设置成员变量discarding为true表示当前处于丢弃模式。如果设置了failFast，那么直接抛出异常，默认情况下failFast为false，即安静得丢弃数据。</p>
+<ol start="3">
+<li>discarding模式</li>
+</ol>
+<p>如果解包的时候处在discarding模式，也会有两种情况发生</p>
+<p>3.1 discarding模式下找到行分隔符</p>
+<p>在discarding模式下，如果找到分隔符，那可以将分隔符之前的都丢弃掉<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">final int length = discardedBytes + eol - buffer.readerIndex();</span><br><span class="line">final int delimLength = buffer.getByte(eol) == &apos;&apos;? 2 : 1;</span><br><span class="line">buffer.readerIndex(eol + delimLength);</span><br><span class="line">discardedBytes = 0;</span><br><span class="line">discarding = false;</span><br><span class="line">if (!failFast) &#123;</span><br><span class="line">    fail(ctx, length);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>计算出分隔符的长度之后，直接把分隔符之前的数据全部丢弃，当然丢弃的字符也包括分隔符，经过这么一次丢弃，后面就有可能是正常的数据包，下一次解包的时候就会进入正常的解包流程</p>
+<p>3.2 discarding模式下未找到行分隔符</p>
+<p>这种情况比较简单，因为当前还在丢弃模式，没有找到行分隔符意味着当前一个完整的数据包还没丢弃完，当前读取的数据是丢弃的一部分，所以直接丢弃<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">discardedBytes += buffer.readableBytes();</span><br><span class="line">buffer.readerIndex(buffer.writerIndex());</span><br></pre></td></tr></table></figure></p>
+<p>特定分隔符拆包</p>
+<p>这个类叫做 DelimiterBasedFrameDecoder，可以传递给TA一个分隔符列表，数据包会按照分隔符列表进行拆分，读者可以完全根据行拆包器的思路去分析这个DelimiterBasedFrameDecoder，这里不在赘述，有问题可以留言</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>netty中的拆包过程其实是和你自己去拆包过程一样，只不过T它将拆包过程中逻辑比较独立的部分抽象出来变成几个不同层次的类，方便各种协议的扩展，我们平时在写代码过程中，也必须培养这种抽象能力，这样你的coding水平才会不断提高。</p>
+
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Netty</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Netty//" class="article-tag-list-link color1">Netty</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/05/01/netty拆包器/">展开全文 >></a>
         </p>
       
 
@@ -858,182 +1133,6 @@
 
 
   
-    <article id="post-Amazon-Dynamo的NWR模型" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/29/Amazon-Dynamo的NWR模型/">Amazon Dynamo的NWR模型</a>
-    </h1>
-  
-
-        
-        <a href="/2018/03/29/Amazon-Dynamo的NWR模型/" class="archive-article-date">
-  	<time datetime="2018-03-29T02:18:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-     <p>Amazon Dynamo的NWR模型，把CAP的选择权交给了用户，让用户自己选择CAP中的哪两个。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">N代表N个副本（replication），W代表写入数据时至少要写入W份副本才认为成功，R表示读取数据时至少要读取R份副本。对于R和W的选择，要求W+R &gt; N。</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>优化写性能(AP)<br>当我们需要优化写性能（写多读少）的时候，可以配置W = 1 （写完一个副本就成功，其他的副本就异步去慢慢复制都可以），如果N=3，那么根据公式W+R&gt;N，则R = 3（读取数据的时候需要读3个副本以判断数据是否有冲突）。 这种情况只要写任何节点成功就认为成功，但是读的时候必须从所有的节点都读出数据。</li>
-<li>优化读性能(CP)<br>当我们需要优化读性能（读多写少）的时候，可以配置 W=N（写完所有的副本才成功，只能同步复制），根据公式W+R&gt;N，则 R=1（只需读一个副本即可）。这种情况任何一个节点读成功就认为成功，但是写的时候必须写所有三个节点成功才认为成功。</li>
-<li>平衡读写性能(AC)<br>当我们数据不多，单台能搞定，且不需要容错和扩展性的时候，可以配置N=1（只有一份数据），根据公式W+R&gt;N，则W=1，R=1。这种情况就简化为单机问题了。</li></ul>
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">NWR</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/分布式//" class="article-tag-list-link color4">分布式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/29/Amazon-Dynamo的NWR模型/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Quorum-NWR" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/23/Quorum-NWR/">Quorum NWR</a>
-    </h1>
-  
-
-        
-        <a href="/2018/03/23/Quorum-NWR/" class="archive-article-date">
-  	<time datetime="2018-03-23T02:13:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-     <p>NWR是一种在分布式存储系统中用于控制一致性级别的一种策略。在Amazon的Dynamo云存储系统中，就应用NWR来控制一致性。<br>让我们先来看看这三个字母的含义：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">N：同一份数据的Replica的份数</span><br><span class="line">W：是更新一个数据对象的时候需要确保成功更新的份数</span><br><span class="line">R： 读取一个数据需要读取的Replica的份数</span><br></pre></td></tr></table></figure></p>
-<p>NWR值的不同组合会产生不同的一致性效果:</p>
-<ul>
-<li>当W+R&gt;N的时候，整个系统对于客户端来讲能保证强一致性。</li>
-<li>当W+R&lt;N的时候只能保证最终一致性。</li></ul>
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">NWR</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/分布式//" class="article-tag-list-link color4">分布式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/23/Quorum-NWR/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
@@ -1220,11 +1319,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1236,11 +1335,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">me</a>
+                <a href="javascript:void(0)" class="js-tag color4">UDP</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">UDP</a>
+                <a href="javascript:void(0)" class="js-tag color3">me</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1361,6 +1460,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Netty</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
 <meta property="og:description" content="1、原子性在同一个事务内部的一组操作必须全部执行成功（或者全部失败）。 为了保证事务操作的原子性，必须实现基于日志的REDO/UNDO机制：将所有对数据的更新操作都写入日志，如果一个事务中的一部分操作已经成功，但以后的操作，由于断电/系统崩溃/其它的软硬件错误而无法继续，则通过回溯日志，将已经执行成功的操作撤销，从而达到“全部操作失败”的目的。 最常见的场景是，数据库系统崩溃后重启，此时数据库处于">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:updated_time" content="2018-12-06T11:50:44.127Z">
+<meta property="og:updated_time" content="2018-12-06T12:19:45.860Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据库事务的四个特性及mysql的四种隔离级别">
 <meta name="twitter:description" content="1、原子性在同一个事务内部的一组操作必须全部执行成功（或者全部失败）。 为了保证事务操作的原子性，必须实现基于日志的REDO/UNDO机制：将所有对数据的更新操作都写入日志，如果一个事务中的一部分操作已经成功，但以后的操作，由于断电/系统崩溃/其它的软硬件错误而无法继续，则通过回溯日志，将已经执行成功的操作撤销，从而达到“全部操作失败”的目的。 最常见的场景是，数据库系统崩溃后重启，此时数据库处于">
@@ -216,9 +216,10 @@
 <h4 id="3、隔离性"><a href="#3、隔离性" class="headerlink" title="3、隔离性"></a>3、隔离性</h4><p>数据库四种隔离级别，以及常见的几种读异常，大家应该都是耳熟能详的，但数据库底层是怎么实现隔离性的呢？都采用了哪些技术呢？</p>
 <p>主要有两个技术：MVCC(多版本并发控制)和锁。</p>
 <p>#####（1）MVCC(多版本并发控制)</p>
-<p>多版本并发控制，顾名思义，在并发访问的时候，数据存在版本的概念，可以有效地提升数据库并发能力，常见的数据库如MySQL、MS SQL Server、IBM DB2、Hbase、MongoDB等等都在使用。</p>
-<p>简单讲，如果没有MVCC，当想要读取的数据被其他事务用排它锁锁住时，只能互斥等待；而这时MVCC可以通过提供历史版本从而实现读取被锁的数据的历史版本，从而避免了互斥等待。</p>
-<p>InnoDB采用的MVCC实现方式是：在需要时，通过undo日志构造出历史版本。</p>
+<p>多版本并发控制，顾名思义，在并发访问的时候，数据存在版本的概念，可以有效地提升数据库并发能力，常见的数据库如MySQL、MS SQL Server、IBM DB2、Hbase、MongoDB等等都在使用。InnoDB采用的MVCC实现方式是：在需要时，通过undo日志构造出历史版本。</p>
+<p>简单讲，如果没有MVCC，当想要读取的数据被其他事务用排它锁锁住时，只能互斥等待(锁机制可以控制并发操作，但是其系统开销较大)；而这时MVCC可以通过提供历史版本从而实现读取被锁的数据的历史版本，从而避免了互斥等待。</p>
+<p>MVCC是通过保存数据在某个时间点的快照来实现的。 不同存储引擎的MVCC、不同存储引擎的MVCC实现是不同的，典型的有乐观并发控制和悲观并发控制。</p>
+<p>InnoDB的MVCC,是通过在每行记录后面保存两个隐藏的列来实现的，这两个列，分别保存了这个行的创建时间，一个保存的是行的删除时间。这里存储的并不是实际的时间值,而是系统版本号(可以理解为事务的ID)，没开始一个新的事务，系统版本号就会自动递增，事务开始时刻的系统版本号会作为事务的ID。</p>
 <h5 id="（2）锁"><a href="#（2）锁" class="headerlink" title="（2）锁"></a>（2）锁</h5><h6 id="锁的分类"><a href="#锁的分类" class="headerlink" title="锁的分类"></a>锁的分类</h6><ul>
 <li><p>Shared Locks(共享锁/S锁)<br>若事务T对数据对象A加上S锁，则事务T只能读A；其他事务只能再对A加S锁，而不能加X锁，直到T释放A上的S锁。这就保证了其他事务可以读A，但在T释放A上的S锁之前不能对A做任何修改。</p>
 </li>
@@ -575,11 +576,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -591,11 +592,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">me</a>
+                <a href="javascript:void(0)" class="js-tag color4">UDP</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">UDP</a>
+                <a href="javascript:void(0)" class="js-tag color3">me</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -716,6 +717,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Netty</a>
               </li>
              
               <li class="article-tag-list-item">
