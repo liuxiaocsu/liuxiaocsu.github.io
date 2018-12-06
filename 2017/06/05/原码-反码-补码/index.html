@@ -16,10 +16,12 @@
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
 <meta property="og:description" content="本篇文章讲解了计算机的原码, 反码和补码。并且进行了深入探求了为何要使用反码和补码, 以及更进一步的论证了为何可以用反码, 补码的加法计算原码的减法。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:updated_time" content="2018-12-05T11:51:50.692Z">
+<meta property="og:image" content="http://www.byteliu.com/2017/06/05/原码-反码-补码/markdown-img-paste-20181205202410409.png">
+<meta property="og:updated_time" content="2018-12-05T12:26:54.460Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="原码,反码,补码">
 <meta name="twitter:description" content="本篇文章讲解了计算机的原码, 反码和补码。并且进行了深入探求了为何要使用反码和补码, 以及更进一步的论证了为何可以用反码, 补码的加法计算原码的减法。">
+<meta name="twitter:image" content="http://www.byteliu.com/2017/06/05/原码-反码-补码/markdown-img-paste-20181205202410409.png">
   
     <link rel="alternative" href="/atom.xml" title="Byte_Liu&#39;s Blog" type="application/atom+xml">
   
@@ -256,8 +258,7 @@
 <p>举例说明:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">4 mod 12 = 4</span><br><span class="line"></span><br><span class="line">16 mod 12 = 4</span><br><span class="line"></span><br><span class="line">28 mod 12 = 4</span><br></pre></td></tr></table></figure></p>
 <p>所以4, 16, 28关于模 12 同余.</p>
 <h4 id="负数取模"><a href="#负数取模" class="headerlink" title="负数取模"></a>负数取模</h4><p>正数进行mod运算是很简单的. 但是负数呢?</p>
-<p>下面是关于mod运算的数学定义:</p>
-<p>原码，反码，补码 详解（彻底搞懂它）<br>上面是截图, “取下界”符号找不到如何输入(word中粘贴过来后乱码). 下面是使用”L”和”J”替换上图的”取下界”符号:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x mod y = x - y L x / y J</span><br></pre></td></tr></table></figure></p>
+<p>下面是关于mod运算的数学定义:<br><img src="/2017/06/05/原码-反码-补码/markdown-img-paste-20181205202410409.png" alt=""></p>
 <p>上面公式的意思是:</p>
 <p>x mod y等于 x 减去 y 乘上 x与y的商的下界.</p>
 <p>以 -3 mod 2 举例:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">-3 mod 2</span><br><span class="line"></span><br><span class="line">= -3 - 2xL -3/2 J</span><br><span class="line"></span><br><span class="line">= -3 - 2xL-1.5J</span><br><span class="line"></span><br><span class="line">= -3 - 2x(-2)</span><br><span class="line"></span><br><span class="line">= -3 + 4 = 1</span><br></pre></td></tr></table></figure></p>
@@ -385,11 +386,11 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/06/21/Atomic包学习笔记/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/06/12/Class-getResource和ClassLoader-getResource的区别/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          Atomic包学习笔记
+          Class.getResource和ClassLoader.getResource的区别
         
       </div>
     </a>
@@ -575,6 +576,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">JUC</a>
               </li>
              
@@ -583,15 +588,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Mysql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">TCP</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -600,14 +609,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Spring</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">TCP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">me</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -620,6 +621,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">me</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -707,11 +712,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">synchronize</a>
+                <a href="javascript:void(0)" class="js-tag color5">zookeeper</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">zookeeper</a>
+                <a href="javascript:void(0)" class="js-tag color2">synchronize</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -735,11 +740,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">代码规范</a>
+                <a href="javascript:void(0)" class="js-tag color1">数据库索引</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">velocity</a>
+                <a href="javascript:void(0)" class="js-tag color5">数据库锁</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">代码规范</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -748,6 +757,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">大型网站</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">velocity</a>
               </li>
             
             <div class="clearfix"></div>

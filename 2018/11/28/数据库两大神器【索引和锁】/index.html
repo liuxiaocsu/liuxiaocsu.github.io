@@ -9,6 +9,7 @@
   <title>数据库两大神器【索引和锁】 | Byte_Liu&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="原文链接https://juejin.im/post/5b55b842f265da0f9e589e79 索引，其实就是一种数据结构，可以在上面应用一种高效的查询算法，最终提高数据的查询速度。数据库在对资源进行高并发的读写操作时，为了保证数据的一致性，有效性，锁是很重要的机制。 一、索引在之前，我对索引有以下的认知：  索引可以加快数据库的检索速度 表经常进行INSERT/UPDATE/DELETE">
+<meta name="keywords" content="数据库索引,数据库锁">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据库两大神器【索引和锁】">
 <meta property="og:url" content="http://www.byteliu.com/2018/11/28/数据库两大神器【索引和锁】/index.html">
@@ -32,7 +33,7 @@
 <meta property="og:image" content="http://www.byteliu.com/2018/11/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128131215783.png">
 <meta property="og:image" content="http://www.byteliu.com/2018/11/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128131250845.png">
 <meta property="og:image" content="http://www.byteliu.com/2018/11/28/数据库两大神器【索引和锁】/markdown-img-paste-20181128131313922.png">
-<meta property="og:updated_time" content="2018-12-04T10:02:49.434Z">
+<meta property="og:updated_time" content="2018-12-06T04:33:41.460Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据库两大神器【索引和锁】">
 <meta name="twitter:description" content="原文链接https://juejin.im/post/5b55b842f265da0f9e589e79 索引，其实就是一种数据结构，可以在上面应用一种高效的查询算法，最终提高数据的查询速度。数据库在对资源进行高并发的读写操作时，为了保证数据的一致性，有效性，锁是很重要的机制。 一、索引在之前，我对索引有以下的认知：  索引可以加快数据库的检索速度 表经常进行INSERT/UPDATE/DELETE">
@@ -525,7 +526,33 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">数据库索引</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据库锁</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据库//" class="article-tag-list-link color4">数据库</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
 
@@ -779,6 +806,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">JUC</a>
               </li>
              
@@ -787,15 +818,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Mysql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">TCP</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -804,14 +839,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Spring</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">TCP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">me</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -824,6 +851,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">me</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -911,11 +942,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">synchronize</a>
+                <a href="javascript:void(0)" class="js-tag color5">zookeeper</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">zookeeper</a>
+                <a href="javascript:void(0)" class="js-tag color2">synchronize</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -939,11 +970,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">代码规范</a>
+                <a href="javascript:void(0)" class="js-tag color1">数据库索引</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">velocity</a>
+                <a href="javascript:void(0)" class="js-tag color5">数据库锁</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">代码规范</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -952,6 +987,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">大型网站</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">velocity</a>
               </li>
             
             <div class="clearfix"></div>

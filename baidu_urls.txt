@@ -3,6 +3,9 @@ http://www.byteliu.com/2018/12/02/Redis缓存设计原则/
 http://www.byteliu.com/2018/11/28/数据库两大神器【索引和锁】/
 http://www.byteliu.com/2018/11/25/一致性哈希算法/
 http://www.byteliu.com/2018/11/24/Redis学习笔记/
+http://www.byteliu.com/2018/11/20/MySQL常见的三种存储引擎/
+http://www.byteliu.com/2018/11/18/MySQL都有哪些-零件/
+http://www.byteliu.com/2018/11/12/MySQL优化原理/
 http://www.byteliu.com/2018/10/11/Java代码规范-1/
 http://www.byteliu.com/2018/10/08/zookeeper学习笔记/
 http://www.byteliu.com/2018/09/28/Velocity学习笔记/
@@ -35,6 +38,7 @@ http://www.byteliu.com/2017/07/07/TCP滑动窗口/
 http://www.byteliu.com/2017/07/03/TCP协议简介/
 http://www.byteliu.com/2017/06/27/ForkJoinPool学习笔记/
 http://www.byteliu.com/2017/06/21/Atomic包学习笔记/
+http://www.byteliu.com/2017/06/12/Class-getResource和ClassLoader-getResource的区别/
 http://www.byteliu.com/2017/06/05/原码-反码-补码/
 http://www.byteliu.com/2017/06/01/浅析CPU中断技术/
 http://www.byteliu.com/2017/05/23/LinkedList和ArrayList的区别/
