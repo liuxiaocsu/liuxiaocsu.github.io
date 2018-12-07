@@ -1,3 +1,4 @@
+http://www.byteliu.com/2018/12/07/Redis开发规范/
 http://www.byteliu.com/2018/12/04/文件IO操作的一些最佳实践/
 http://www.byteliu.com/2018/12/02/Redis缓存设计原则/
 http://www.byteliu.com/2018/11/28/数据库两大神器【索引和锁】/
