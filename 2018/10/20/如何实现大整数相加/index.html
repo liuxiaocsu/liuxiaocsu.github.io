@@ -6,15 +6,15 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://www.byteliu.com">
-  <title>如何实现大整数相加 | Byte_Liu&#39;s Blog</title>
+  <title>如何实现大正整数相加 | Byte_Liu&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在不使用BigInteger类的情况下，如何计算两个大整数的和？ 程序不可能通过一条指令计算出两个大整数的和，但我们可以把一个大运算拆分成多个小运算, 像小学生一样列竖式进行按位运算。这里还有一个问题，我们都知道long类型的取值范围是:12最小值：Long.MIN_VALUE=-9223372036854775808 （-2的63次方）最大值：Long.MAX_VALUE=92233720368">
+  <meta name="description" content="在不使用BigInteger类的情况下，如何计算两个大正整数的和？ 程序不可能通过一条指令计算出两个大整数的和，但我们可以把一个大运算拆分成多个小运算, 像小学生一样列竖式进行按位运算。这里还有一个问题，我们都知道long类型的取值范围是:12最小值：Long.MIN_VALUE=-9223372036854775808 （-2的63次方）最大值：Long.MAX_VALUE=9223372036">
 <meta name="keywords" content="算法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="如何实现大整数相加">
+<meta property="og:title" content="如何实现大正整数相加">
 <meta property="og:url" content="http://www.byteliu.com/2018/10/20/如何实现大整数相加/index.html">
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
-<meta property="og:description" content="在不使用BigInteger类的情况下，如何计算两个大整数的和？ 程序不可能通过一条指令计算出两个大整数的和，但我们可以把一个大运算拆分成多个小运算, 像小学生一样列竖式进行按位运算。这里还有一个问题，我们都知道long类型的取值范围是:12最小值：Long.MIN_VALUE=-9223372036854775808 （-2的63次方）最大值：Long.MAX_VALUE=92233720368">
+<meta property="og:description" content="在不使用BigInteger类的情况下，如何计算两个大正整数的和？ 程序不可能通过一条指令计算出两个大整数的和，但我们可以把一个大运算拆分成多个小运算, 像小学生一样列竖式进行按位运算。这里还有一个问题，我们都知道long类型的取值范围是:12最小值：Long.MIN_VALUE=-9223372036854775808 （-2的63次方）最大值：Long.MAX_VALUE=9223372036">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://www.byteliu.com/2018/10/20/如何实现大整数相加/markdown-img-paste-20181208113749138.png">
 <meta property="og:image" content="http://www.byteliu.com/2018/10/20/如何实现大整数相加/markdown-img-paste-20181208114848218.png">
@@ -25,10 +25,10 @@
 <meta property="og:image" content="http://www.byteliu.com/2018/10/20/如何实现大整数相加/markdown-img-paste-2018120811504064.png">
 <meta property="og:image" content="http://www.byteliu.com/2018/10/20/如何实现大整数相加/markdown-img-paste-20181208115057423.png">
 <meta property="og:image" content="http://www.byteliu.com/2018/10/20/如何实现大整数相加/markdown-img-paste-20181208115124960.png">
-<meta property="og:updated_time" content="2018-12-08T05:58:19.546Z">
+<meta property="og:updated_time" content="2018-12-08T06:14:55.206Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="如何实现大整数相加">
-<meta name="twitter:description" content="在不使用BigInteger类的情况下，如何计算两个大整数的和？ 程序不可能通过一条指令计算出两个大整数的和，但我们可以把一个大运算拆分成多个小运算, 像小学生一样列竖式进行按位运算。这里还有一个问题，我们都知道long类型的取值范围是:12最小值：Long.MIN_VALUE=-9223372036854775808 （-2的63次方）最大值：Long.MAX_VALUE=92233720368">
+<meta name="twitter:title" content="如何实现大正整数相加">
+<meta name="twitter:description" content="在不使用BigInteger类的情况下，如何计算两个大正整数的和？ 程序不可能通过一条指令计算出两个大整数的和，但我们可以把一个大运算拆分成多个小运算, 像小学生一样列竖式进行按位运算。这里还有一个问题，我们都知道long类型的取值范围是:12最小值：Long.MIN_VALUE=-9223372036854775808 （-2的63次方）最大值：Long.MAX_VALUE=9223372036">
 <meta name="twitter:image" content="http://www.byteliu.com/2018/10/20/如何实现大整数相加/markdown-img-paste-20181208113749138.png">
   
     <link rel="alternative" href="/atom.xml" title="Byte_Liu&#39;s Blog" type="application/atom+xml">
@@ -199,7 +199,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      如何实现大整数相加
+      如何实现大正整数相加
     </h1>
   
 
@@ -214,7 +214,7 @@
       
 
   
-    <p><strong>在不使用BigInteger类的情况下，如何计算两个大整数的和？</strong></p>
+    <p><strong>在不使用BigInteger类的情况下，如何计算两个大正整数的和？</strong></p>
 <p>程序不可能通过一条指令计算出两个大整数的和，但我们可以把一个大运算拆分成多个小运算, 像小学生一样列竖式进行按位运算。这里还有一个问题，我们都知道long类型的取值范围是:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">最小值：Long.MIN_VALUE=-9223372036854775808 （-2的63次方）</span><br><span class="line">最大值：Long.MAX_VALUE=9223372036854775807 （2的63次方-1）</span><br></pre></td></tr></table></figure></p>
 <p>如果大整数超出了long类型能表示的范围,我们如何存储这样的整数呢？<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">很容易想到，使用数组存储即可，数组的每一个元素对应大整数的每一个位数。</span><br></pre></td></tr></table></figure></p>
 <p>在程序中列出的 “竖式” 究竟是什么样子呢？我们以 426709752318 + 95481253129 为例，来看看大整数相加的详细步骤：<br><a id="more"></a></p>
@@ -517,11 +517,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JUC</a>
+                <a href="javascript:void(0)" class="js-tag color4">NWR</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">NWR</a>
+                <a href="javascript:void(0)" class="js-tag color4">JUC</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -561,15 +561,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">UDP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">UDP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -613,10 +617,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">汪国真</a>
               </li>
              
@@ -625,11 +625,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -681,15 +681,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">CGLIB</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DNS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -705,11 +705,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">velocity</a>
+                <a href="javascript:void(0)" class="js-tag color5">代码规范</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">代码规范</a>
+                <a href="javascript:void(0)" class="js-tag color4">velocity</a>
               </li>
              
               <li class="article-tag-list-item">
