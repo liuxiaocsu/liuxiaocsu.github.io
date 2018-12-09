@@ -179,6 +179,250 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-netty拆包器" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/01/netty拆包器/">Netty拆包器</a>
+    </h1>
+  
+
+        
+        <a href="/2018/05/01/netty拆包器/" class="archive-article-date">
+  	<time datetime="2018-05-01T12:21:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+  
+    <h3 id="为什么要粘包"><a href="#为什么要粘包" class="headerlink" title="为什么要粘包"></a>为什么要粘包</h3><p>首先得了解一下TCP/IP协议，在用户数据量非常小的情况下，极端情况下，一个字节，该TCP数据包的有效载荷非常低，传递100字节的数据，需要100次TCP传送，100次ACK，在应用及时性要求不高的情况下，将这100个有效数据拼接成一个数据包，那会缩短到一个TCP数据包，以及一个ack，有效载荷提高了，带宽也节省了。</p>
+<p>非极端情况，有可能两个数据包拼接成一个数据包，也有可能一个半的数据包拼接成一个数据包，也有可能两个半的数据包拼接成一个数据包。</p>
+<h3 id="为什么要拆包"><a href="#为什么要拆包" class="headerlink" title="为什么要拆包"></a>为什么要拆包</h3><p>拆包和粘包是相对的，一端粘了包，另外一端就需要将粘过的包拆开，举个栗子，发送端将三个数据包粘成两个TCP数据包发送到接收端，接收端就需要根据应用协议将两个数据包拆分成三个数据包。</p>
+<p>还有一种情况就是用户数据包超过了mss(最大报文长度)，那么这个数据包在发送的时候必须拆分成几个数据包，接收端收到之后需要将这些数据包粘合起来之后再解析。</p>
+<h3 id="拆包的原理"><a href="#拆包的原理" class="headerlink" title="拆包的原理"></a>拆包的原理</h3><p>在没有netty的情况下，用户如果自己需要拆包，基本原理就是不断从TCP缓冲区中读取数据，每次读取完都需要判断是否是一个完整的数据包。</p>
+<ol>
+<li><p>如果当前读取的数据不足以拼接成一个完整的业务数据包，那就保留该数据，继续从tcp缓冲区中读取，直到得到一个完整的数据包。</p>
+</li>
+<li><p>如果当前读到的数据加上已经读取的数据足够拼接成一个数据包，那就将已经读取的数据拼接上本次读取的数据，够成一个完整的业务数据包传递到业务逻辑，多余的数据仍然保留，以便和下次读到的数据尝试拼接。</p>
+</li>
+</ol>
+<h3 id="netty中拆包的基类"><a href="#netty中拆包的基类" class="headerlink" title="netty中拆包的基类"></a>netty中拆包的基类</h3><p>netty 中的拆包也是如上这个原理，内部会有一个累加器，每次读取到数据都会不断累加，然后尝试对累加到的数据进行拆包，拆成一个完整的业务数据包，这个基类叫做 ByteToMessageDecoder，下面先详细分析下这个类：</p>
+<h4 id="累加器"><a href="#累加器" class="headerlink" title="累加器"></a>累加器</h4><p>ByteToMessageDecoder 中定义了两个累加器:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">public static final Cumulator MERGE_CUMULATOR = ...;</span><br><span class="line">public static final Cumulator COMPOSITE_CUMULATOR = ...;</span><br></pre></td></tr></table></figure></p>
+<p>默认情况下，会使用 MERGE_CUMULATOR<br>private Cumulator cumulator = MERGE_CUMULATOR;</p>
+<p>MERGE_CUMULATOR 的原理是每次都将读取到的数据通过内存拷贝的方式，拼接到一个大的字节容器中，这个字节容器在 ByteToMessageDecoder中叫做 cumulation<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ByteBuf cumulation;</span><br></pre></td></tr></table></figure></p>
+<p>看一下 MERGE_CUMULATOR 是如何将新读取到的数据累加到字节容器里的:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public ByteBuf cumulate(ByteBufAllocator alloc, ByteBuf cumulation, ByteBuf in) &#123;</span><br><span class="line">        ByteBuf buffer;</span><br><span class="line">        if (cumulation.writerIndex() &gt; cumulation.maxCapacity() - in.readableBytes()</span><br><span class="line">                || cumulation.refCnt() &gt; 1) &#123;</span><br><span class="line">            buffer = expandCumulation(alloc, cumulation, in.readableBytes());</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            buffer = cumulation;</span><br><span class="line">        &#125;</span><br><span class="line">        buffer.writeBytes(in);</span><br><span class="line">        in.release();</span><br><span class="line">        return buffer;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>netty 中ByteBuf的抽象，使得累加非常简单，通过一个简单的api调用 buffer.writeBytes(in);便将新数据累加到字节容器中，为了防止字节容器大小不够，在累加之前还进行了扩容处理。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">static ByteBuf expandCumulation(ByteBufAllocator alloc, ByteBuf cumulation, int readable) &#123;</span><br><span class="line">        ByteBuf oldCumulation = cumulation;</span><br><span class="line">        cumulation = alloc.buffer(oldCumulation.readableBytes() + readable);</span><br><span class="line">        cumulation.writeBytes(oldCumulation);</span><br><span class="line">        oldCumulation.release();</span><br><span class="line">        return cumulation;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>扩容也是一个内存拷贝操作，新增的大小即是新读取数据的大小。</p>
+<h4 id="拆包抽象"><a href="#拆包抽象" class="headerlink" title="拆包抽象"></a>拆包抽象</h4><p>累加器原理清楚之后，下面我们回到主流程，目光集中在 channelRead 方法，channelRead方法是每次从TCP缓冲区读到数据都会调用的方法，触发点在AbstractNioByteChannel的read方法中，里面有个while循环不断读取，读取到一次就触发一次channelRead<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception &#123;</span><br><span class="line">        if (msg instanceof ByteBuf) &#123;</span><br><span class="line">            CodecOutputList out = CodecOutputList.newInstance();</span><br><span class="line">            try &#123;</span><br><span class="line">                ByteBuf data = (ByteBuf) msg;</span><br><span class="line">                first = cumulation == null;</span><br><span class="line">                if (first) &#123;</span><br><span class="line">                    cumulation = data;</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    cumulation = cumulator.cumulate(ctx.alloc(), cumulation, data);</span><br><span class="line">                &#125;</span><br><span class="line">                callDecode(ctx, cumulation, out);</span><br><span class="line">            &#125; catch (DecoderException e) &#123;</span><br><span class="line">                throw e;</span><br><span class="line">            &#125; catch (Throwable t) &#123;</span><br><span class="line">                throw new DecoderException(t);</span><br><span class="line">            &#125; finally &#123;</span><br><span class="line">                if (cumulation != null &amp;&amp; !cumulation.isReadable()) &#123;</span><br><span class="line">                    numReads = 0;</span><br><span class="line">                    cumulation.release();</span><br><span class="line">                    cumulation = null;</span><br><span class="line">                &#125; else if (++ numReads &gt;= discardAfterReads) &#123;</span><br><span class="line">                    numReads = 0;</span><br><span class="line">                    discardSomeReadBytes();</span><br><span class="line">                &#125;</span><br><span class="line">                int size = out.size();</span><br><span class="line">                decodeWasNull = !out.insertSinceRecycled();</span><br><span class="line">                fireChannelRead(ctx, out, size);</span><br><span class="line">                out.recycle();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            ctx.fireChannelRead(msg);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>方法体可以分为以下几个逻辑步骤:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.累加数据</span><br><span class="line">2.将累加到的数据传递给业务进行业务拆包</span><br><span class="line">3.清理字节容器</span><br><span class="line">4.传递业务数据包给业务解码器处理</span><br></pre></td></tr></table></figure></p>
+<h5 id="1-累加数据"><a href="#1-累加数据" class="headerlink" title="1 累加数据"></a>1 累加数据</h5><p>如果当前累加器没有数据，就直接跳过内存拷贝，直接将字节容器的指针指向新读取的数据，否则，调用累加器累加数据至字节容器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ByteBuf data = (ByteBuf) msg;</span><br><span class="line">first = cumulation == null;</span><br><span class="line">if (first) &#123;</span><br><span class="line">    cumulation = data;</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    cumulation = cumulator.cumulate(ctx.alloc(), cumulation, data);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h5 id="2-将累加到的数据传递给业务进行拆包"><a href="#2-将累加到的数据传递给业务进行拆包" class="headerlink" title="2 将累加到的数据传递给业务进行拆包"></a>2 将累加到的数据传递给业务进行拆包</h5><p>到这一步，字节容器里的数据已是目前未拆包部分的所有的数据了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CodecOutputList out = CodecOutputList.newInstance();</span><br><span class="line">callDecode(ctx, cumulation, out);</span><br></pre></td></tr></table></figure></p>
+<p>callDecode 将尝试将字节容器的数据拆分成业务数据包塞到业务数据容器out中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">protected void callDecode(ChannelHandlerContext ctx, ByteBuf in, List&lt;Object&gt; out) &#123;</span><br><span class="line">        while (in.isReadable()) &#123;</span><br><span class="line">            // 记录一下字节容器中有多少字节待拆</span><br><span class="line">            int oldInputLength = in.readableBytes();</span><br><span class="line">            decode(ctx, in, out);</span><br><span class="line">            if (out.size() == 0) &#123;</span><br><span class="line">                // 拆包器未读取任何数据</span><br><span class="line">                if (oldInputLength == in.readableBytes()) &#123;</span><br><span class="line">                    break;</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    // 拆包器已读取部分数据，还需要继续</span><br><span class="line">                    continue;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            if (oldInputLength == in.readableBytes()) &#123;</span><br><span class="line">                throw new DecoderException(</span><br><span class="line">                        StringUtil.simpleClassName(getClass()) +</span><br><span class="line">                                &quot;.decode() did not read anything but decoded a message.&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">            if (isSingleDecode()) &#123;</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>我将原始代码做了一些精简，在解码之前，先记录一下字节容器中有多少字节待拆，然后调用抽象函数 decode 进行拆包<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">protected abstract void decode(ChannelHandlerContext ctx, ByteBuf in, List&lt;Object&gt; out) throws Exception;</span><br></pre></td></tr></table></figure></p>
+<p>netty中对各种用户协议的支持就体现在这个抽象函数中，传进去的是当前读取到的未被消费的所有的数据，以及业务协议包容器，所有的拆包器最终都实现了该抽象方法</p>
+<p>业务拆包完成之后，如果发现并没有拆到一个完整的数据包，这个时候又分两种情况:</p>
+<ol>
+<li>一个是拆包器什么数据也没读取，可能数据还不够业务拆包器处理，直接break等待新的数据</li>
+<li>拆包器已读取部分数据，说明解码器仍然在工作，继续解码</li>
+</ol>
+<p>业务拆包完成之后，如果发现已经解到了数据包，但是，发现并没有读取任何数据，这个时候就会抛出一个Runtime异常 DecoderException，告诉你，你什么数据都没读取，却解析出一个业务数据包，这是有问题的</p>
+<h5 id="3-清理字节容器"><a href="#3-清理字节容器" class="headerlink" title="3 清理字节容器"></a>3 清理字节容器</h5><p>业务拆包完成之后，只是从字节容器中取走了数据，但是这部分空间对于字节容器来说依然保留着，而字节容器每次累加字节数据的时候都是将字节数据追加到尾部，如果不对字节容器做清理，那么时间一长就会OOM</p>
+<p>正常情况下，其实每次读取完数据，netty都会在下面这个方法中将字节容器清理，只不过，当发送端发送数据过快，channelReadComplete可能会很久才被调用一次<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public void channelReadComplete(ChannelHandlerContext ctx) throws Exception &#123;</span><br><span class="line">        numReads = 0;</span><br><span class="line">        discardSomeReadBytes();</span><br><span class="line">        if (decodeWasNull) &#123;</span><br><span class="line">            decodeWasNull = false;</span><br><span class="line">            if (!ctx.channel().config().isAutoRead()) &#123;</span><br><span class="line">                ctx.read();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        ctx.fireChannelReadComplete();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里顺带插一句，如果一次数据读取完毕之后(可能接收端一边收，发送端一边发，这里的读取完毕指的是接收端在某个时间不再接受到数据为止），发现仍然没有拆到一个完整的用户数据包，即使该channel的设置为非自动读取，也会触发一次读取操作 ctx.read()，该操作会重新向selector注册op_read事件，以便于下一次能读到数据之后拼接成一个完整的数据包</p>
+<p>所以为了防止发送端发送数据过快，netty会在每次读取到一次数据，业务拆包之后对字节字节容器做清理，清理部分的代码如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">if (cumulation != null &amp;&amp; !cumulation.isReadable()) &#123;</span><br><span class="line">        numReads = 0;</span><br><span class="line">        cumulation.release();</span><br><span class="line">        cumulation = null;</span><br><span class="line">    &#125; else if (++ numReads &gt;= discardAfterReads) &#123;</span><br><span class="line">        numReads = 0;</span><br><span class="line">        discardSomeReadBytes();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果字节容器当前已无数据可读取，直接销毁字节容器，并且标注一下当前字节容器一次数据也没读取</p>
+<p>如果连续16次（discardAfterReads的默认值），字节容器中仍然有未被业务拆包器读取的数据，那就做一次压缩，有效数据段整体移到容器首部</p>
+<p>discardSomeReadBytes之前，字节累加器中的数据分布<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">+--------------+----------+----------+</span><br><span class="line">| readed | unreaded | writable |</span><br><span class="line">+--------------+----------+----------+</span><br></pre></td></tr></table></figure></p>
+<p>discardSomeReadBytes之后，字节容器中的数据分布<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">+----------+-------------------------+</span><br><span class="line">| unreaded | writable |</span><br><span class="line">+----------+-------------------------+</span><br></pre></td></tr></table></figure></p>
+<p>这样字节容器又可以承载更多的数据了</p>
+<h5 id="4-传递业务数据包给业务解码器处理"><a href="#4-传递业务数据包给业务解码器处理" class="headerlink" title="4 传递业务数据包给业务解码器处理"></a>4 传递业务数据包给业务解码器处理</h5><p>以上三个步骤完成之后，就可以将拆成的包丢到业务解码器处理了，代码如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">int size = out.size();</span><br><span class="line">decodeWasNull = !out.insertSinceRecycled();</span><br><span class="line">fireChannelRead(ctx, out, size);</span><br><span class="line">out.recycle();</span><br></pre></td></tr></table></figure></p>
+<p>期间用一个成员变量 decodeWasNull 来标识本次读取数据是否拆到一个业务数据包，然后调用 fireChannelRead 将拆到的业务数据包都传递到后续的handler<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">static void fireChannelRead(ChannelHandlerContext ctx, CodecOutputList msgs, int numElements) &#123;</span><br><span class="line">    for (int i = 0; i &lt; numElements; i ++) &#123;</span><br><span class="line">        ctx.fireChannelRead(msgs.getUnsafe(i));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样，就可以把一个个完整的业务数据包传递到后续的业务解码器进行解码，随后处理业务逻辑</p>
+<h4 id="行拆包器"><a href="#行拆包器" class="headerlink" title="行拆包器"></a>行拆包器</h4><p>下面，以一个具体的例子来看看业netty自带的拆包器是如何来拆包的</p>
+<p>这个类叫做 LineBasedFrameDecoder，基于行分隔符的拆包器，TA可以同时处理 以及 两种类型的行分隔符，核心方法都在继承的 decode 方法中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">protected final void decode(ChannelHandlerContext ctx, ByteBuf in, List&lt;Object&gt; out) throws Exception &#123;</span><br><span class="line">    Object decoded = decode(ctx, in);</span><br><span class="line">    if (decoded != null) &#123;</span><br><span class="line">        out.add(decoded);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>netty 中自带的拆包器都是如上这种模板，其实可以加一层，把这这层模板抽取出来的，不知道为什么netty没有这么做，我们接着跟进去，代码比较长，我们还是分模块来剖析</p>
+<ol>
+<li>找到换行符位置<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">final int eol = findEndOfLine(buffer);</span><br><span class="line">private static int findEndOfLine(final ByteBuf buffer) &#123;</span><br><span class="line">        int i = buffer.forEachByte(ByteProcessor.FIND_LF);</span><br><span class="line">        if (i &gt; 0 &amp;&amp; buffer.getByte(i - 1) == &apos; &apos;) &#123;</span><br><span class="line">            i--;</span><br><span class="line">        &#125;</span><br><span class="line">        return i;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">ByteProcessor FIND_LF = new IndexOfProcessor((byte) &apos;&apos;);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>for循环遍历，找到第一个 的位置,如果 前面的字符为 ，那就返回 的位置</p>
+<ol start="2">
+<li>非discarding模式的处理</li>
+</ol>
+<p>接下来，netty会判断，当前拆包是否属于丢弃模式，用一个成员变量来标识<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">private boolean discarding;</span><br></pre></td></tr></table></figure></p>
+<p>第一次拆包不在discarding模式（ 后面的分支会讲何为非discarding模式），于是进入以下环节</p>
+<p>2.1 非discarding模式下找到行分隔符的处理<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">// 1.计算分隔符和包长度</span><br><span class="line">final ByteBuf frame;</span><br><span class="line">final int length = eol - buffer.readerIndex();</span><br><span class="line">final int delimLength = buffer.getByte(eol) == &apos;&apos;? 2 : 1;</span><br><span class="line">// 丢弃异常数据</span><br><span class="line">if (length &gt; maxLength) &#123;</span><br><span class="line">    buffer.readerIndex(eol + delimLength);</span><br><span class="line">    fail(ctx, length);</span><br><span class="line">    return null;</span><br><span class="line">&#125;</span><br><span class="line">// 取包的时候是否包括分隔符</span><br><span class="line">if (stripDelimiter) &#123;</span><br><span class="line">    frame = buffer.readRetainedSlice(length);</span><br><span class="line">    buffer.skipBytes(delimLength);</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    frame = buffer.readRetainedSlice(length + delimLength);</span><br><span class="line">&#125;</span><br><span class="line">return frame;</span><br></pre></td></tr></table></figure></p>
+<p>1.首先，新建一个帧，计算一下当前包的长度和分隔符的长度（因为有两种分隔符）<br>2.然后判断一下需要拆包的长度是否大于该拆包器允许的最大长度(maxLength)，这个参数在构造函数中被传递进来，如超出允许的最大长度，就将这段数据抛弃，返回null<br>3.最后，将一个完整的数据包取出，如果构造本解包器的时候指定 stripDelimiter为false，即解析出来的包包含分隔符，默认为不包含分隔符</p>
+<p>2.2 非discarding模式下未找到分隔符的处理</p>
+<p>没有找到对应的行分隔符，说明字节容器没有足够的数据拼接成一个完整的业务数据包，进入如下流程处理<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">final int length = buffer.readableBytes();</span><br><span class="line">if (length &gt; maxLength) &#123;</span><br><span class="line">    discardedBytes = length;</span><br><span class="line">    buffer.readerIndex(buffer.writerIndex());</span><br><span class="line">    discarding = true;</span><br><span class="line">    if (failFast) &#123;</span><br><span class="line">        fail(ctx, &quot;over &quot; + discardedBytes);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">return null;</span><br></pre></td></tr></table></figure></p>
+<p>首先取得当前字节容器的可读字节个数，接着，判断一下是否已经超过可允许的最大长度，如果没有超过，直接返回null，字节容器中的数据没有任何改变，否则，就需要进入丢弃模式。</p>
+<p>使用一个成员变量 discardedBytes 来表示已经丢弃了多少数据，然后将字节容器的读指针移到写指针，意味着丢弃这一部分数据，设置成员变量discarding为true表示当前处于丢弃模式。如果设置了failFast，那么直接抛出异常，默认情况下failFast为false，即安静得丢弃数据。</p>
+<ol start="3">
+<li>discarding模式</li>
+</ol>
+<p>如果解包的时候处在discarding模式，也会有两种情况发生</p>
+<p>3.1 discarding模式下找到行分隔符</p>
+<p>在discarding模式下，如果找到分隔符，那可以将分隔符之前的都丢弃掉<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">final int length = discardedBytes + eol - buffer.readerIndex();</span><br><span class="line">final int delimLength = buffer.getByte(eol) == &apos;&apos;? 2 : 1;</span><br><span class="line">buffer.readerIndex(eol + delimLength);</span><br><span class="line">discardedBytes = 0;</span><br><span class="line">discarding = false;</span><br><span class="line">if (!failFast) &#123;</span><br><span class="line">    fail(ctx, length);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>计算出分隔符的长度之后，直接把分隔符之前的数据全部丢弃，当然丢弃的字符也包括分隔符，经过这么一次丢弃，后面就有可能是正常的数据包，下一次解包的时候就会进入正常的解包流程</p>
+<p>3.2 discarding模式下未找到行分隔符</p>
+<p>这种情况比较简单，因为当前还在丢弃模式，没有找到行分隔符意味着当前一个完整的数据包还没丢弃完，当前读取的数据是丢弃的一部分，所以直接丢弃<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">discardedBytes += buffer.readableBytes();</span><br><span class="line">buffer.readerIndex(buffer.writerIndex());</span><br></pre></td></tr></table></figure></p>
+<p>特定分隔符拆包</p>
+<p>这个类叫做 DelimiterBasedFrameDecoder，可以传递给TA一个分隔符列表，数据包会按照分隔符列表进行拆分，读者可以完全根据行拆包器的思路去分析这个DelimiterBasedFrameDecoder，这里不在赘述，有问题可以留言</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>netty中的拆包过程其实是和你自己去拆包过程一样，只不过T它将拆包过程中逻辑比较独立的部分抽象出来变成几个不同层次的类，方便各种协议的扩展，我们平时在写代码过程中，也必须培养这种抽象能力，这样你的coding水平才会不断提高。</p>
+
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Netty</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Netty//" class="article-tag-list-link color1">Netty</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/05/01/netty拆包器/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-深入理解ThreadLocal" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/27/深入理解ThreadLocal/">深入理解ThreadLocal</a>
+    </h1>
+  
+
+        
+        <a href="/2018/04/27/深入理解ThreadLocal/" class="archive-article-date">
+  	<time datetime="2018-04-27T12:40:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+     <p>ThreadLocal是一个关于创建线程局部变量的类。<br>通常情况下，我们创建的变量是可以被任何一个线程访问并修改的。而使用ThreadLocal创建的变量只能被当前线程访问，其他线程则无法访问和修改。<br>ThreadLocal提供了线程本地的实例，它与普通变量的区别在于，每个使用该变量的线程都会初始化一个完全独立的实例副本，所以每个线程可以访问自己内部的副本变量，不同线程之间不会互相干扰。。ThreadLocal 变量通常被private static修饰。当一个线程结束时，它所使用的所有 ThreadLocal 相对的实例副本都可被回收。</p>
+<p>总的来说，ThreadLocal 适用于每个线程需要自己独立的实例且该实例需要在多个方法中被使用，也即变量在线程间隔离而在方法或类间共享的场景。<br><strong>Synchronized用于线程间的数据共享，而ThreadLocal则用于线程间的数据隔离。</strong><br></p>
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JUC</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/并发-多线程//" class="article-tag-list-link color2">并发/多线程</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/04/27/深入理解ThreadLocal/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-如何解决Java-jar包冲突" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -857,157 +1101,9 @@
 
 
   
-    <article id="post-分布式一致性协议之Raft" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/07/分布式一致性协议之Raft/">分布式一致性协议之Raft</a>
-    </h1>
-  
-
-        
-        <a href="/2018/03/07/分布式一致性协议之Raft/" class="archive-article-date">
-  	<time datetime="2018-03-07T02:17:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-07</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-  
-    
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/分布式//" class="article-tag-list-link color4">分布式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/07/分布式一致性协议之Raft/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-分布式一致性协议之Paxos" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/02/分布式一致性协议之Paxos/">分布式一致性协议之Paxos</a>
-    </h1>
-  
-
-        
-        <a href="/2018/03/02/分布式一致性协议之Paxos/" class="archive-article-date">
-  	<time datetime="2018-03-02T02:17:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-  
-    
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/分布式//" class="article-tag-list-link color4">分布式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/02/分布式一致性协议之Paxos/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
     </nav>
   
 
@@ -1163,11 +1259,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">NWR</a>
+                <a href="javascript:void(0)" class="js-tag color4">JUC</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JUC</a>
+                <a href="javascript:void(0)" class="js-tag color4">NWR</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1180,6 +1276,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机基础</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1207,19 +1307,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">UDP</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
+                <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1263,6 +1359,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Java虚拟机</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">汪国真</a>
               </li>
              
@@ -1276,10 +1380,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机基础</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1315,6 +1415,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">动态代理</a>
               </li>
              
@@ -1339,7 +1443,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">iptables</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Netty</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">tcpdump</a>
               </li>
              
               <li class="article-tag-list-item">

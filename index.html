@@ -179,6 +179,251 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-java方法调用的虚拟机字节码指令" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/08/java方法调用的虚拟机字节码指令/">java方法调用的虚拟机字节码指令</a>
+    </h1>
+  
+
+        
+        <a href="/2018/12/08/java方法调用的虚拟机字节码指令/" class="archive-article-date">
+  	<time datetime="2018-12-08T14:29:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-08</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+  
+    <p>我们在写java程序的时候会进行各种方法调用，虚拟机在执行这些调用的时候会用到不同的字节码指令，共有如下五种：</p>
+<ol>
+<li><p>invokespecial：调用私有实例方法；</p>
+</li>
+<li><p>invokestatic：调用静态方法；</p>
+</li>
+<li><p>invokevirtual：调用实例方法；</p>
+</li>
+<li><p>invokeinterface：调用接口方法;</p>
+</li>
+<li><p>invokedynamic：调用动态方法，包括lamada表达式；</p>
+</li>
+</ol>
+
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Java虚拟机</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Java虚拟机//" class="article-tag-list-link color3">Java虚拟机</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/12/08/java方法调用的虚拟机字节码指令/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-关于操作系统的一些事" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/08/关于操作系统的一些事/">关于操作系统的一些事</a>
+    </h1>
+  
+
+        
+        <a href="/2018/12/08/关于操作系统的一些事/" class="archive-article-date">
+  	<time datetime="2018-12-08T11:47:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-08</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+  
+    <h4 id="操作系统的运行机制"><a href="#操作系统的运行机制" class="headerlink" title="操作系统的运行机制"></a>操作系统的运行机制</h4><ul>
+<li>计算机系统中，通常CPU执行两种不同性质的程序：一种是操作系统内核程序；另一种是用户自编程序或系统外层的应用程序。对操作系统而言，这两种程序的作用不同，前者是后者的管理者，因此“管理程序”要执行一些特权指令，而“被管理程序”出于安全考虑不能执行这些指令。所谓特权指令，是指计算机中不允许用户直接使用的指令，如I/O指令、 置中断指令，存取用于内存保护的寄存器、送程序状态字到程序状态字寄存器等指令。操作系统在具体实现上划分了用户态（目态）和核心态（管态)，以严格区分两类程序。</li>
+<li>现代计算机几乎都是层次结构，操作系统的各项功能分别设置在不同层次上，一些与硬件关联较紧密的模块，诸如时钟管理、中断处理、设备驱动等处于最底层。其次是运行频率较髙的程序，诸如进程管理、存储器管理和设备管理等。这两部分内容构成了操作系统的内核。这部分内容的指令操作工作在核心态。</li>
+</ul>
+<p>内核一般包括四个方面的内容：</p>
+<ol>
+<li>时钟管理：<br>在计算机的各种部件中，时钟是最关键的设备。</li>
+</ol>
+<p>时钟的第一功能是计时，操作系统需要通过时钟管理，向用户提供标准的系统时间。另外，通过时钟中断的管理，可以实现进程的切换。诸如，在分时操作系统中，釆用时间片轮转调度的实现；在实时系统中，按截止时间控制运行的实现；在批处理系统中，通过时钟管理来衡量一个作业的运行程度等。因此，系统管理的方方面面无不依赖于时钟。</p>
+<ol start="2">
+<li><p>中断机制<br>引入中断技术的初衷是提高多道程序运行环境中CPU的利用率，而且主要是针对外部设备的。</p>
+</li>
+<li><p>原语<br>按层次结构设计的操作系统，底层必然是一些可被调用的公用小程序，它们各自完成一个规定的操作。其特点是：</p>
+</li>
+</ol>
+<ul>
+<li>它们处于操作系统的最底层，是最接近硬件的部分。</li>
+<li>这些程序的运行具有原子性——其操作只能一气呵成</li>
+<li>这些程序的运行时间都较短，而且调用频繁。</li>
+</ul>
+<ol start="4">
+<li>系统控制的数据结构及处理<br>系统中用来登记状态信息的数据结构很多，比如作业控制块、进程控制块(PCB)、设备控制块、各类链表、消息队列、缓冲区、空闲区登记表、内存分配表等。为了实现有效的管理，系统需要一些基本的操作，常见的操作有以下三种：<ul>
+<li>进程管理：进程状态管理、进程调度和分派、创建与撤销进程控制块等。</li>
+<li>存储器管理：存储器的空间分配和回收、内存信息保护程序、代码对换程序等。</li>
+<li>设备管理：缓冲区管理、设备分配和回收等。</li>
+</ul>
+</li>
+</ol>
+<h4 id="中断和异常的概念"><a href="#中断和异常的概念" class="headerlink" title="中断和异常的概念"></a>中断和异常的概念</h4><p>当中断或异常发生时，运行用户态的CPU会立即进入核心态，这是通过硬件实现的。</p>
+<ul>
+<li>中断(Interruption)，也称外中断，指来自CPU执行指令以外的事件的发生，如设备发出的I/O结束中断，表示设备输入/输出处理已经完成，希望处理机能够向设备发下一个输入 / 输出请求，同时让完成输入/输出后的程序继续运行。时钟中断，表示一个固定的时间片已到，让处理机处理计时、启动定时运行的任务等。这一类中断通常是与当前程序运行无关的事件，即它们与当前处理机运行的程序无关。</li>
+<li>异常(Exception)，也称内中断、例外或陷入(Trap)，指源自CPU执行指令内部的事件，如程序的非法操作码、 地址越界、算术溢出、虚存系统的缺页以及专门的陷入指令等引起的事件。对异常的处理一般要依赖于当前程序的运行现场，而且异常不能被屏蔽，一旦出现应立即处理。关于内中断和外中断的联系与区别如下图：</li>
+</ul>
+<p><img src="/2018/12/08/关于操作系统的一些事/markdown-img-paste-20181208195635164.png" alt="http://p99.pstatp.com/large/pgc-image/1536745893687ee125a0a49"></p>
+<h4 id="系统调用"><a href="#系统调用" class="headerlink" title="系统调用"></a>系统调用</h4><p>所谓系统调用就是用户在程序中调用操作系统所提供的一些子功能，系统调用可以被看做特殊的公共子程序。系统中的各种共享资源都由操作系统统一掌管，因此在用户程序中，凡是与资源有关的操作（如存储分配、进行I/0传输以及管理文件等)，都必须通过系统调用方式向操作系统提出服务请求，并由操作系统代为完成。通常，一个操作系统提供的系统调用命令有几十乃至上百条之多。</p>
+<p>这些系统调用按功能大致可分为如下几类：</p>
+<ul>
+<li>设备管理。完成设备的请求或释放，以及设备启动等功能。</li>
+<li>文件管理。完成文件的读、写、创建及删除等功能。</li>
+<li>进程控制。完成进程的创建、撤销、阻塞及唤醒等功能。</li>
+<li>进程通信。完成进程之间的消息传递或信号传递等功能。</li>
+<li>内存管理。完成内存的分配、回收以及获取作业占用内存区大小及始址等功能。</li>
+<li>系统调用运行在系统的核心态。通过系统调用的方式来使用系统功能，可以保证系统的稳定性和安全性，防止用户随意更改或访问系统的数据或命令。系统调用命令是由操作系统提供的一个或多个子程序模块实现的。</li>
+</ul>
+<p>操作系统的运行环境可以理解为：用户通过操作系统运行上层程序（如系统提供的命令解释程序或用户自编程序)，而这个上层程序的运行依赖于操作系统的底层管理程序提供服务支持，当需要管理程序服务时，系统则通过硬件中断机制进入核心态，运行管理程序；也可能是程序运行出现异常情况，被动地需要管理程序的服务，这时就通过异常处理来进入核心态。当管理程序运行结束时，用户程序需要继续运行，则通过相应的保存的程序现场退出中断处理程序或异常处理程序，返回断点处继续执行。</p>
+<p>由用户态转向核心态的例子：</p>
+<ul>
+<li>用户程序要求操作系统的服务，即系统调用。</li>
+<li>发生一次中断。</li>
+<li>用户程序中产生了一个错误状态。</li>
+<li>用户程序中企图执行一条特权指令。</li>
+<li>从核心态转向用户态由一条指令实现，这条指令也是特权命令。一般是中断返回指令。</li>
+</ul>
+<h4 id="用户态和内核态"><a href="#用户态和内核态" class="headerlink" title="用户态和内核态"></a>用户态和内核态</h4><p>内核态和用户态是操作系统的两种运行级别，用于区分不同程序的不同权利。</p>
+<p>内核态就是拥有资源多的状态，或者说访问资源多的状态，也称为特权态。相对来说，用户态就是非特权态，访问的而资源将受到限制。如果一个程序运行在特权态，该程序就可以访问计算机的任何资源，它的资源访问权限不受限制。如果一个程序运行在用户态，其资源需求将受到各种限制。如：要访问操作系统的内核数据结构，如进程表，则需要在特选态下才能办到。如果要访问用户程序里的数据，在用户态即可。</p>
+<h4 id="用户栈和内核栈"><a href="#用户栈和内核栈" class="headerlink" title="用户栈和内核栈"></a>用户栈和内核栈</h4><p>内核在创建进程的时候，在创建task_struct的同时，会为进程创建相应的堆栈。每一个进程都有两个栈，一个用户栈，存在于用户空间；一个内核栈，存在于内核空间。当进程在用户空间运行时，CPU堆栈指针寄存器里面的内容都是用户栈地址，使用用户栈；当进程在内核空间时，CPU堆栈指针寄存器里面的内容是内核栈空间地址，使用内核栈。</p>
+<p>当进程因为中断或者系统调用陷入到内核态时，进程所使用的堆栈也要从用户栈转到内核栈。进程陷入到内核态后，先把用户态堆栈的地址保存在内核栈之中，然后设置堆栈指针寄存器的内容为内核栈的地址，这样就完成了用户栈向内核栈的转换；当进程从内核态恢复到用户态之后时，在内核态之后的最后将保存在内核栈里面的用户栈的地址恢复到堆栈指针寄存器即可。这样就实现了用户栈和内核栈的互转。</p>
+<p>那么，知道从内核转到用户态时，用户栈的地址是在陷入内核的时候保存在内核栈里面的，但是在陷入内核的时候，如何知道内核栈的地址？关键在进程从用户态转到内核态的时候，进程的内核栈总是空的。这是因为当进程在用户态运行时，使用的用户栈，当进程陷入到内核态时，内核保存进程在内核态运行的相关信息，但是一旦进程返回到用户态后，内核栈中保存的信息无效，会全部恢复，因此每次进程从用户态陷入内核的时候得到的内核栈都是空的。所以在进程陷入内核的时候，直接把内核栈的栈顶地址给堆栈指针寄存器就可以了。</p>
+<h4 id="中断机制"><a href="#中断机制" class="headerlink" title="中断机制"></a>中断机制</h4><p>相信很多家里有电脑的人偶尔会遇到蓝屏问题。出现这种情况的原因有很多，在这里就不再细说，总之是电脑出现了运行异常。出现bug在电脑中是经常的事情，电脑CPU每秒处理成千上万条指令或代码，经常出现错误是非常正常的事情。但是我们却并没有会经常遇到电脑无法运行的问题。原因就在于计算机有一套完整的异常处理机制。再者，当你在电脑上正在玩游戏时，忽然想要听歌，于是打开了音乐播放器，然而对于CPU来说，它正在运行着你的游戏，如何运行你的播放器呢？其实只要你打开了电脑，CPU就已经开始运行很多种系统软件了。然而我们知道，CPU在每一时刻都只能运行一条指令，也就是说单个CPU是无法同时运行多个程序的，之所以你能够正常使用计算机不至于经常出现蓝屏而且还能同时听歌和打游戏，正是依赖于中断机制。</p>
+<h5 id="中断机制的原理"><a href="#中断机制的原理" class="headerlink" title="中断机制的原理"></a>中断机制的原理</h5><p>中断机制是计算机的非常重要的运行机制，它的出现是操作系统的基础前提。在一个程序运行过程中，会占用CPU进行运算，同时这时如果有另外一个程序也需要使用CPU，这个程序就会发出中断请求，然后CPU将会保存现在所处理程序的运行状态，之后执行中断处理程序。看起来时比较简单的。<br><img src="/2018/12/08/关于操作系统的一些事/markdown-img-paste-2018120915534590.png" alt="http://p3.pstatp.com/large/pgc-image/1538550258182f8fd024cde"><br>以上知识粗略的来讲，其实中断和异常是由区别的，中断为异步，异常为同步，但他们的处理机制是完全一致的。当CPU接收到了中断请求的信号，那么当前正在运行的程序状态将会被保存，只要保存在程序计数器（PC）和程序状态字寄存器（PSW）中，这两个都是CPU寄存器组中的寄存器。当程序执行完中断处理之后，将会从PC和PSW中读取数据，恢复被中断的程序继续执行，这称为恢复现场。</p>
+<h5 id="多级中断"><a href="#多级中断" class="headerlink" title="多级中断"></a>多级中断</h5><p>当CPU在执行中断程序时，此时又来了一个中断请求，那现在应该怎么办呢？前辈们早已想好了办法。中断分级，高级中断可以打断低级中断，比如说当正在执行一个低级中断，此时来了一个高级中断，那么这个高级中断请求就可以占用CPU运行，此时低级中断就会被保存，等待高级中断执行完成，那么低级中断再继续运行。如果在低级中断之上是更加低级的中断请求，那不好意思，你不够格，只能拒绝这种更加低级的请求。<br><img src="/2018/12/08/关于操作系统的一些事/markdown-img-paste-20181209155412546.png" alt="http://p9.pstatp.com/large/pgc-image/1538551369858003637e5bc"></p>
+<h5 id="自陷指令"><a href="#自陷指令" class="headerlink" title="自陷指令"></a>自陷指令</h5><p>自陷指令又称为访管指令，它也和中断机制密切相关。在了解这个指令之前我们先要了解另外一些东西。CPU在运行程序时可以分为两种状态：用户态（又称目态）和系统态（又称管态）。当CPU处于用户态时，它运行用户的应用程序，在系统态时，它运行操作系统的程序。而有时候当我们的应用程序需要用到系统功能时，CPU就需要转换状态，从用户态转换到系统态，完成这个转换的正是自陷指令。在程序状态字存储器（PSW）的首位保存着CPU目前的运行状态。由于修改程序状态字是特权指令，是不允许用户程序使用的，所以通过发出自陷指令，使CPU转换为系统态，并修改PSW。当系统态转换为用户态时，CPU直接修改PSW，变为用户态。自陷指令提供了应用程序使用系统功能的接口，使应用程序能够正常运行，与系统联系更加紧密。</p>
+
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">操作系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/操作系统//" class="article-tag-list-link color5">操作系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/12/08/关于操作系统的一些事/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Redis开发规范" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -893,186 +1138,9 @@
 
 
   
-    <article id="post-MySQL优化原理" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/12/MySQL优化原理/">MySQL优化原理</a>
-    </h1>
-  
-
-        
-        <a href="/2018/11/12/MySQL优化原理/" class="archive-article-date">
-  	<time datetime="2018-11-12T05:09:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-     <p>说起MySQL的查询优化，相信大家收藏了一堆奇技淫巧：不能使用SELECT *、不使用NULL字段、合理创建索引、为字段选择合适的数据类型….. 你是否真的理解这些优化技巧？是否理解其背后的工作原理？在实际场景下性能真有提升吗？理解这些优化建议背后的原理尤为重要，可以让你在实际业务场景下合理的运用。</p>
-<h3 id="MySQL逻辑架构"><a href="#MySQL逻辑架构" class="headerlink" title="MySQL逻辑架构"></a>MySQL逻辑架构</h3><p>如果能在头脑中构建一幅MySQL各组件之间如何协同工作的架构图，有助于深入理解MySQL服务器。下图展示了MySQL的逻辑架构图</p>
-<p><img src="/2018/11/12/MySQL优化原理/markdown-img-paste-20181206130931427.png" alt=""></p>
-<p>MySQL逻辑架构整体分为三层，最上层为客户端层，并非MySQL所独有，诸如：连接处理、授权认证、安全等功能均在这一层处理。</p>
-<p>MySQL大多数核心服务均在中间这一层，包括查询解析、分析、优化、缓存、内置函数(比如：时间、数学、加密等函数)。所有的跨存储引擎的功能也在这一层实现：存储过程、触发器、视图等。</p>
-<p>最下层为存储引擎，其负责MySQL中的数据存储和提取。和Linux下的文件系统类似，每种存储引擎都有其优势和劣势。中间的服务层通过API与存储引擎通信，这些API接口屏蔽了不同存储引擎间的差异。<br></p>
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Mysql</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/数据库//" class="article-tag-list-link color4">数据库</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/11/12/MySQL优化原理/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-数据库事务的四个特性及mysql的四种隔离级别" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/06/数据库事务的四个特性及mysql的四种隔离级别/">数据库事务的四个特性及mysql的四种隔离级别</a>
-    </h1>
-  
-
-        
-        <a href="/2018/11/06/数据库事务的四个特性及mysql的四种隔离级别/" class="archive-article-date">
-  	<time datetime="2018-11-06T11:18:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-     <h4 id="1、原子性"><a href="#1、原子性" class="headerlink" title="1、原子性"></a>1、原子性</h4><p><strong>在同一个事务内部的一组操作必须全部执行成功（或者全部失败）。</strong></p>
-<p>为了保证事务操作的原子性，必须实现基于日志的REDO/UNDO机制：将所有对数据的更新操作都写入日志，如果一个事务中的一部分操作已经成功，但以后的操作，由于断电/系统崩溃/其它的软硬件错误而无法继续，则通过回溯日志，将已经执行成功的操作撤销，从而达到“全部操作失败”的目的。</p>
-<p>最常见的场景是，数据库系统崩溃后重启，此时数据库处于不一致的状态，必须先执行一个crash recovery的过程：读取日志进行REDO（重演将所有已经执行成功但尚未写入到磁盘的操作，保证持久性），再对所有到崩溃时尚未成功提交的事务进行UNDO（撤销所有执行了一部分但尚未提交的操作，保证原子性）。crash recovery结束后，数据库恢复到一致性状态，可以继续被使用。</p>
-<p>某个应用在执行转帐的数据库操作时，必须在同一个事务内部调用对帐户A和帐户B的操作，才能保证数据的一致性。</p>
-<p>但是，原子性并不能完全保证一致性。在多个事务并行进行的情况下，即使保证了每一个事务的原子性，仍然可能导致数据不一致的结果。<br></p>
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">ACID</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/数据库//" class="article-tag-list-link color4">数据库</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/11/06/数据库事务的四个特性及mysql的四种隔离级别/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 
@@ -1228,11 +1296,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">NWR</a>
+                <a href="javascript:void(0)" class="js-tag color4">JUC</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JUC</a>
+                <a href="javascript:void(0)" class="js-tag color4">NWR</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1245,6 +1313,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机基础</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1272,19 +1344,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">UDP</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
+                <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1328,6 +1396,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Java虚拟机</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">汪国真</a>
               </li>
              
@@ -1341,10 +1417,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机基础</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1380,6 +1452,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">动态代理</a>
               </li>
              
@@ -1404,7 +1480,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">iptables</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Netty</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">tcpdump</a>
               </li>
              
               <li class="article-tag-list-item">

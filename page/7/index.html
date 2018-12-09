@@ -179,20 +179,20 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-Mybatis学习笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-CAS学习笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/19/Mybatis学习笔记/">Mybatis学习笔记</a>
+      <a class="article-title" href="/2017/05/15/CAS学习笔记/">CAS学习笔记</a>
     </h1>
   
 
         
-        <a href="/2017/03/19/Mybatis学习笔记/" class="archive-article-date">
-  	<time datetime="2017-03-19T12:38:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-19</time>
+        <a href="/2017/05/15/CAS学习笔记/" class="archive-article-date">
+  	<time datetime="2017-05-15T08:52:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-15</time>
 </a>
         
       </header>
@@ -200,8 +200,7 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-  
-    
+     <p>CAS(Compare And Swap)，比较并交换，是CPU硬件级别提供的功能，比如IA64,X86指令集中用来完成CAS功能的指令集是cmpxchg。java.util.concurrent包中使用该技术实现乐观锁，换句话说java.util.concurrent包是完全建立在CAS之上，AQS同步组件、Atomic原子类操作等都是基于CAS实现的。CAS在JUC包中所处的位置如图：<br></p>
   
 
     </div>
@@ -213,7 +212,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Mybatis</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JUC</a>
         		</li>
       		
 		</ul>
@@ -225,7 +224,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/ORM框架//" class="article-tag-list-link color1">ORM框架</a>
+        			<a href="/categories/并发-多线程//" class="article-tag-list-link color2">并发/多线程</a>
         		</li>
       		
 		</ul>
@@ -234,7 +233,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/03/19/Mybatis学习笔记/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/05/15/CAS学习笔记/">展开全文 >></a>
         </p>
       
 
@@ -264,20 +263,20 @@
 
 
   
-    <article id="post-高并发分布式系统生成全局唯一ID" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-Java线程池" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/12/高并发分布式系统生成全局唯一ID/">高并发分布式系统生成全局唯一ID</a>
+      <a class="article-title" href="/2017/05/10/Java线程池/">Java线程池</a>
     </h1>
   
 
         
-        <a href="/2017/03/12/高并发分布式系统生成全局唯一ID/" class="archive-article-date">
-  	<time datetime="2017-03-12T02:30:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-12</time>
+        <a href="/2017/05/10/Java线程池/" class="archive-article-date">
+  	<time datetime="2017-05-10T08:53:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-10</time>
 </a>
         
       </header>
@@ -285,11 +284,7 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p>研究数据库分表分库，其中有一个关键的地方就是生成唯一键的问题，假如数据表有1亿条数据，而且还在不断的增加，这里我们就需要考虑到分库分表，假设我们采用Hash或者是用户取模求余的方法将这个表拆分成10个表，每个表的结构相同，其中有一个主键id，那么10个表中的id需要唯一不同，在单表的时候，使用数据表自增长是没有问题的。当分成10个表后，就无法用到数据库自增长了。当到这里的时候突然发现oracle数据库的序列真是好东西。<br><strong>目前做唯一id的做法基本有三种：</strong></p>
-<ul>
-<li>1.使用uuid来实现，快速不重复，只是生成的id没有规则</li>
-<li>2.使用外部的id分发中心来实现，生存的id简短有规则，缺点是依赖于单点</li>
-<li>3.在数据库中做一个计数表来做，有点类是于oracle中的序列</li></ul>
+     <p>谈到线程池就会想到池化技术，其中最核心的思想就是把宝贵的资源放到一个池子中；每次使用都从里面获取，用完之后又放回池子供其他人重复使用。之前我们在使用多线程都是用Thread的start()来创建启动一个线程，但是在实际开发中，如果每个请求到达就创建一个新线程，开销是相当大的。服务器在创建和销毁线程上花费的时间和消耗的系统资源都相当大，甚至可能要比在处理实际的用请求的时间和资源要多的多。除了创建和销毁线程的开销之外，活动的线程也需要消耗系统资源。如果在一个jvm里创建太多的线程，可能会使系统由于过度消耗内存或“切换过度”而导致系统资源不足。这就引入了线程池概念。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">new Thread的弊端：</span><br><span class="line">- 新建和销毁线程对象都比较好资源，比性能差。</span><br><span class="line">- 线程缺乏统一管理，可能无限制新建线程，相互之间竞争，及可能占用过多系统资源导致死机或oom。</span><br><span class="line">- 缺乏更多功能，如定时执行、定期执行、线程中断。</span><br><span class="line"></span><br><span class="line">相比new Thread，Java提供的四种线程池的好处在于：</span><br><span class="line">- 重用存在的线程，减少对象创建、消亡的开销，性能佳。</span><br><span class="line">- 可有效控制最大并发线程数，提高系统资源的使用率，同时避免过多资源竞争，避免堵塞。</span><br><span class="line">- 提供定时执行、定期执行、单线程、并发数控制等功能。</span><br></pre></td></tr></table></figure></p>
   
 
     </div>
@@ -301,7 +296,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">分布式</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JUC</a>
         		</li>
       		
 		</ul>
@@ -313,7 +308,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/分布式//" class="article-tag-list-link color4">分布式</a>
+        			<a href="/categories/并发-多线程//" class="article-tag-list-link color2">并发/多线程</a>
         		</li>
       		
 		</ul>
@@ -322,7 +317,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/03/12/高并发分布式系统生成全局唯一ID/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/05/10/Java线程池/">展开全文 >></a>
         </p>
       
 
@@ -352,20 +347,20 @@
 
 
   
-    <article id="post-《大型网站系统与Java中间件实践》读书笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-MAC地址和IP地址的关系" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/28/《大型网站系统与Java中间件实践》读书笔记/">《大型网站系统与Java中间件实践》读书笔记</a>
+      <a class="article-title" href="/2017/05/08/MAC地址和IP地址的关系/">MAC地址和IP地址的关系</a>
     </h1>
   
 
         
-        <a href="/2016/11/28/《大型网站系统与Java中间件实践》读书笔记/" class="archive-article-date">
-  	<time datetime="2016-11-28T02:34:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-11-28</time>
+        <a href="/2017/05/08/MAC地址和IP地址的关系/" class="archive-article-date">
+  	<time datetime="2017-05-08T09:43:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-08</time>
 </a>
         
       </header>
@@ -373,7 +368,23 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p>a)–&gt;负载均衡(硬件、软件)/DNS<br>–&gt;名称服务<br>–&gt;规则服务器<br>–&gt;Master-Worker<br>–&gt;阿姆达尔定律<br>–&gt;多线程交互模式<br>–&gt;互不通信，没有交集，各自执行各自的任务和逻辑<br>–&gt;基于共享容器（如队列）协同的多线程模式-&gt;生产者-消费者-&gt;队列<br>–&gt;通过事件协同的多线程模式-&gt;如B线程需要等到某个状态或事件发生后才能继续工作，而这个状态改变或者事件产生和A线程相关<br>—&gt;避免死锁<br>–&gt;网络通信基础知识<br>–&gt;OSI、TCP/IP<br>–&gt;网络IO实现方式<br>-&gt;BIO<br>-&gt;NIO-&gt;Reactor模式<br>-&gt;AIO-&gt;Proactor模式</p>
+  
+    <p>简单地说：ip地址是服务商给你的，mac地址是你的网卡物理地址。</p>
+<h4 id="一、IP地址"><a href="#一、IP地址" class="headerlink" title="一、IP地址"></a>一、IP地址</h4><p>对于IP地址，相信大家都很熟悉，即指使用TCP/IP协议指定给主机的32位地址。IP地址由用点分隔开的4个8八位组构成，如192.168.0.1就是一个IP地址，这种写法叫点分十进制格式。IP地址由网络地址和主机地址两部分组成，分配给这两部分的位数随地址类（A类、B类、C类等）的不同而不同。网络地址用于路由选择，而主机地址用于在网络或子网内部寻找一个单独的主机。一个IP地址使得将来自源地址的数据通过路由而传送到目的地址变为可能。</p>
+<p>　　</p>
+<h4 id="二、MAC地址"><a href="#二、MAC地址" class="headerlink" title="二、MAC地址"></a>二、MAC地址</h4><p>对于MAC地址，由于我们不直接和它接触，所以大家不一定很熟悉。在OSI（Open System Interconnection，开放系统互连）7层网络协议（物理层，数据链路层，网络层，传输层，会话层，表示层，应用层）参考模型中，第二层为数据链路层（Data Link）。它包含两个子层，上一层是逻辑链路控制（LLC：Logical Link Control），下一层即是我们前面所提到的MAC（Media Access Control）层，即介质访问控制层。所谓介质（Media），是指传输信号所通过的多种物理环境。常用网络介质包括电缆（如：双绞线，同轴电缆，光纤），还有微波、激光、红外线等，有时也称介质为物理介质。MAC地址也叫物理地址、硬件地址或链路地址，由网络设备制造商生产时写在硬件内部。这个地址与网络无关，也即无论将带有这个地址的硬件（如网卡、集线器、路由器等）接入到网络的何处，它都有相同的MAC地址，MAC地址一般不可改变，不能由用户自己设定。</p>
+<h4 id="三、MAC地址的长度、表示方法、分配方法及其唯一性"><a href="#三、MAC地址的长度、表示方法、分配方法及其唯一性" class="headerlink" title="三、MAC地址的长度、表示方法、分配方法及其唯一性"></a>三、MAC地址的长度、表示方法、分配方法及其唯一性</h4><p>MAC地址的长度为48位（6个字节），通常表示为12个16进制数，每2个16进制数之间用冒号隔开，如：08:00:20:0A:8C:6D就是一个MAC地址，其中前6位16进制数08:00:20代表网络硬件制造商的编号，它由IEEE（Istitute of Electrical and Electronics Engineers，电气与电子工程师协会）分配，而后3位16进制数0A:8C:6D代表该制造商所制造的某个网络产品（如网卡）的系列号。每个网络制造商必须确保它所制造的每个以太网设备都具有相同的前三字节以及不同的后三个字节。这样就可保证世界上每个以太网设备都具有唯一的MAC地址。</p>
+<h4 id="四、IP地址与MAC地址在互连网中的作用"><a href="#四、IP地址与MAC地址在互连网中的作用" class="headerlink" title="四、IP地址与MAC地址在互连网中的作用"></a>四、IP地址与MAC地址在互连网中的作用</h4><p>既然每个以太网设备在出厂时都有一个唯一的MAC地址了，那为什么还需要为每台主机再分配一个IP地址呢？或者说为什么每台主机都分配唯一的IP地址了，为什么还要在网络设备（如网卡，集线器，路由器等）生产时内嵌一个唯一的MAC地址呢？主要原因有以下几点：（1）IP地址的分配是根据网络的拓朴结构，而不是根据谁制造了网络设置。若将高效的路由选择方案建立在设备制造商的基础上而不是网络所处的拓朴位置基础上，这种方案是不可行的。（2）当存在一个附加层的地址寻址时，设备更易于移动和维修。例如，如果一个以太网卡坏了，可以被更换，而无须取得一个新的IP地址。如果一个IP主机从一个网络移到另一个网络，可以给它一个新的IP地址，而无须换一个新的网卡。（3）无论是局域网，还是广域网中的计算机之间的通信，最终都表现为将数据包从某种形式的链路上的初始节点出发，从一个节点传递到另一个节点，最终传送到目的节点。数据包在这些节点之间的移动都是由ARP（Address Resolution Protocol：地址解析协议）负责将IP地址映射到MAC地址上来完成的。下面我们来通过一个例子看看IP地址和MAC地址是怎样结合来传送数据包的。</p>
+<p>　　</p>
+<p>假设网络上要将一个数据包（名为PAC）由北京的一台主机（名称为A，IP地址为IP_A，MAC地址为MAC_A）发送到华盛顿的一台主机（名称为B，IP地址为IP_B，MAC地址为MAC_B）。这两台主机之间不可能是直接连接起来的，因而数据包在传递时必然要经过许多中间节点（如路由器，服务器等等），我们假定在传输过程中要经过C1、C2、C3（其MAC地址分别为M1，M2，M3）三个节点。A在将PAC发出之前，先发送一个ARP请求，找到其要到达IP_B所必须经历的第一个中间节点C1的MAC地址M1，然后在其数据包中封装（Encapsulation）这些地址：IP_A、IP_B，MAC_A和M1。当PAC传到C1后，再由ARP根据其目的IP地址IP_B，找到其要经历的第二个中间节点C2的MAC地址M2，然后再将带有M2的数据包传送到C2。如此类推，直到最后找到带有IP地址为IP_B的B主机的地址MAC_B，最终传送给主机B。在传输过程中，IP_A、IP_B和MAC_A不变，而中间节点的MAC地址通过ARP在不断改变（M1，M2，M3），直至目的地址MAC_B。</p>
+<p>综合上面所述，我们可以归纳出IP地址和MAC地址相同点是它们都唯一，不同的特点主要有：</p>
+<ol>
+<li>对于网络上的某一设备，如一台计算机或一台路由器，其IP地址可变（但必须唯一），而MAC地址不可变。我们可以根据需要给一台主机指定任意的IP地址，如我们可以给局域网上的某台计算机分配IP地址为192.168.0.112 ，也可以将它改成192.168.0.200。而任一网络设备（如网卡，路由器）一旦生产出来以后，其MAC地址永远唯一且不能由用户改变。</li>
+<li>长度不同。IP地址为32位，MAC地址为48位。</li>
+<li>分配依据不同。IP地址的分配是基于网络拓朴，MAC地址的分配是基于制造商。</li>
+<li>寻址协议层不同。IP地址应用于OSI第三层，即网络层，而MAC地址应用在OSI第二层，即数据链路层。 数据链路层协议可以使数据从一个节点传递到相同链路的另一个节点上（通过MAC地址），而网络层协议使数据可以从一个网络传递到另一个网络上（ARP根据目的IP地址，找到中间节点的MAC地址，通过中间节点传送，从而最终到达目的网络）。</li>
+</ol>
+
   
 
     </div>
@@ -385,11 +396,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">中间件</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">大型网站</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机基础</a>
         		</li>
       		
 		</ul>
@@ -401,7 +408,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/中间件//" class="article-tag-list-link color4">中间件</a>
+        			<a href="/categories/计算机基础//" class="article-tag-list-link color1">计算机基础</a>
         		</li>
       		
 		</ul>
@@ -410,7 +417,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2016/11/28/《大型网站系统与Java中间件实践》读书笔记/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/05/08/MAC地址和IP地址的关系/">展开全文 >></a>
         </p>
       
 
@@ -440,20 +447,20 @@
 
 
   
-    <article id="post-Java泛型详解" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-CGLIB学习" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/19/Java泛型详解/">Java泛型详解</a>
+      <a class="article-title" href="/2017/05/03/CGLIB学习/">CGLIB学习</a>
     </h1>
   
 
         
-        <a href="/2016/11/19/Java泛型详解/" class="archive-article-date">
-  	<time datetime="2016-11-19T08:49:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-11-19</time>
+        <a href="/2017/05/03/CGLIB学习/" class="archive-article-date">
+  	<time datetime="2017-05-03T11:21:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-03</time>
 </a>
         
       </header>
@@ -461,7 +468,327 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p>Java 泛型（generics）是 JDK 5 中引入的一个新特性, 泛型提供了编译时类型安全检测机制，该机制允许程序员在编译时检测到非法的类型。<br>泛型的本质是参数化类型，也就是说所操作的数据类型被指定为一个参数。<br></p>
+     <p>CGLIB（Code Generation Library）是一个功能强大，高性能的代码生成包。它为没有实现接口的类提供代理，为JDK的动态代理提供了很好的补充。通常可以使用Java的动态代理创建代理，但当要代理的类没有实现接口或者为了更好的性能，CGLIB是一个好的选择。</p>
+<p><img src="/2017/05/03/CGLIB学习/markdown-img-paste-20181203192824208.png" alt=""></p>
+<p>CGLIB底层使用了ASM（一个短小精悍的字节码操作框架）来操作字节码生成新的类。除了CGLIB库外，脚本语言（如Groovy和BeanShell）也使用ASM生成字节码。ASM使用类似SAX的解析器来实现高性能。</p>
+<p>CGLIB作为一个开源项目，其代码托管在github，地址为:<a href="https://github.com/cglib/cglib" target="_blank" rel="noopener">https://github.com/cglib/cglib</a></p>
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">CGLIB</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/动态代理//" class="article-tag-list-link color5">动态代理</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/05/03/CGLIB学习/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-动态代理" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/28/动态代理/">动态代理</a>
+    </h1>
+  
+
+        
+        <a href="/2017/04/28/动态代理/" class="archive-article-date">
+  	<time datetime="2017-04-28T08:47:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+     <p>代理模式<br>代理(Proxy)是一种设计模式,提供了对目标对象另外的访问方式;即通过代理对象访问目标对象。这样做的好处是:可以在目标对象实现的基础上,增强额外的功能操作,即扩展目标对象的功能。简单来说就是说代理就是增强方法，让方法实现更多的额功能。<br>在编写程序与实现某些功能时,我们经常会使用到动态代理。动态代理是个很简单但是很有效的东西。在我们平时使用的框架中,像servlet的filter、包括spring提供的aop以及struts2的拦截器都使用了动态代理功能。我们日常看到的mybatis分页插件,以及日志拦截、事务拦截、权限拦截这些几乎全部由动态代理的身影。它的实现原理是非常简单的,就是在方法实现前后加入对应的公共功能。动态代理实现有三种方式，jdk动态代理（基于接口），cglib动态代理（基于继承），javassist（hibernate中使用这种方式）实现动态代理。<br></p>
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">动态代理</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/动态代理//" class="article-tag-list-link color5">动态代理</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/04/28/动态代理/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Btrace使用简介" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/23/Btrace使用简介/">Btrace使用简介</a>
+    </h1>
+  
+
+        
+        <a href="/2017/04/23/Btrace使用简介/" class="archive-article-date">
+  	<time datetime="2017-04-23T02:14:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-23</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+     <p>BTrace是sun公司推出的一款Java 动态、安全追踪（监控）工具，可以在不用重启的情况下监控系统运行情况，方便的获取程序运行时的数据信息，如方法参数、返回值、全局变量和堆栈信息等，并且做到最少的侵入，占用最少的系统资源。<br>项目地址：<a href="http://github.com/btraceio/btrace" target="_blank" rel="noopener">Btrace</a><br>用户指南：<a href="https://kenai.com/projects/btrace/pages/UserGuide" target="_blank" rel="noopener">UserGuide</a><br>由于Btrace会把脚本逻辑直接侵入到运行的代码中，所以在使用上做很多限制：<br>1、不能创建对象<br>2、不能使用数组<br>3、不能抛出或捕获异常<br>4、不能使用循环<br>5、不能使用synchronized关键字<br>6、属性和方法必须使用static修饰</p>
+<p>根据官方声明，不恰当的使用BTrace可能导致JVM崩溃，如在BTrace脚本使用错误的class文件，所以在上生产环境之前，务必在本地充分的验证脚本的正确性。<br>Btrace可以做什么？<br>1、接口性能变慢，分析每个方法的耗时情况；<br>2、当在Map中插入大量数据，分析其扩容情况；<br>3、分析哪个方法调用了System.gc()，调用栈如何；<br>4、执行某个方法抛出异常时，分析运行时参数；<br></p>
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Btrace</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Btrace//" class="article-tag-list-link color2">Btrace</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/04/23/Btrace使用简介/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-唯品会个性化推荐系统技术详解" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/26/唯品会个性化推荐系统技术详解/">唯品会个性化推荐系统技术详解</a>
+    </h1>
+  
+
+        
+        <a href="/2017/03/26/唯品会个性化推荐系统技术详解/" class="archive-article-date">
+  	<time datetime="2017-03-26T02:47:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+     <p>2017年3月25日，唯品会在广州同创汇举行了Open Talk No.30《如何打造高性能高可用的电商平台——Open Talk 唯品会专场》，资深开发工程师吴官林带来了《个性化推荐系统的演变》的精彩演讲，分享在唯品会产业链下，个性化推荐系统的演进过程。<br></p>
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/03/26/唯品会个性化推荐系统技术详解/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-String堆内存和栈内存" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/25/String堆内存和栈内存/">String堆内存和栈内存</a>
+    </h1>
+  
+
+        
+        <a href="/2017/03/25/String堆内存和栈内存/" class="archive-article-date">
+  	<time datetime="2017-03-25T05:06:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-25</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+     <p>java把内存划分为两种：一种是栈（stack）内存，一种是堆（heap）内存。</p>
+<p>在函数中定义的一些基本类型的变量和对象的引用变量都在栈内存中分配，当在一段代码块定义一个变量时，java就在栈中为这个变量分配内存空间，当超过变量的作用域后，java会自动释放掉为该变量所分配的内存空间，该内存空间可以立即被另作他用。</p>
+<p>堆内存用来存放由new创建的对象和数组，在堆中分配的内存，由jvm（java virtual machine）的自动垃圾回收器来管理，在堆中产生了一个数组或对象后，还可以在栈中定义一个特殊的变量，让栈中这个变量的取值等于数组或对象在堆内存中的首地址，栈中的这个变量就成了数组或对象的引用变量。引用变量就相当于是为数组或对象起的一个名称，以后就可以在程序中使用栈中的引用变量来访问堆中的数组或对象。<br></p>
   
 
     </div>
@@ -494,7 +821,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2016/11/19/Java泛型详解/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/03/25/String堆内存和栈内存/">展开全文 >></a>
         </p>
       
 
@@ -524,20 +851,20 @@
 
 
   
-    <article id="post-唯品会支付轻量级前后端分离" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-序列化" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/05/唯品会支付轻量级前后端分离/">唯品会支付轻量级前后端分离</a>
+      <a class="article-title" href="/2017/03/22/序列化/">序列化</a>
     </h1>
   
 
         
-        <a href="/2016/11/05/唯品会支付轻量级前后端分离/" class="archive-article-date">
-  	<time datetime="2016-11-05T02:36:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-11-05</time>
+        <a href="/2017/03/22/序列化/" class="archive-article-date">
+  	<time datetime="2017-03-22T08:47:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-22</time>
 </a>
         
       </header>
@@ -545,82 +872,31 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <h4 id="前后端分离背景"><a href="#前后端分离背景" class="headerlink" title="前后端分离背景"></a>前后端分离背景</h4><p>前后端本是一家，长期以来相生相杀。当然也有些公司比如FB，fullstack，开挂一样存在。就目前国内大部分团队现状来说，大家都在谋求一个前后端开发分离方案，发展历程大致如下：<br></p>
+     <p>Java序列化是指把Java对象保存为二进制字节码的过程，Java反序列化是指把二进制字节码重新转换成Java对象的过程。<br>那么为什么需要序列化呢？<br>第一种情况是：一般情况下Java对象的声明周期都比Java虚拟机的要短，实际应用中我们希望在JVM停止运行之后能够持久化指定的对象，这时候就需要把对象进行序列化之后保存。<br>第二种情况是：需要把Java对象通过网络进行传输的时候。因为数据只能够以二进制的形式在网络中进行传输，因此当把对象通过网络发送出去之前需要先序列化成二进制数据，在接收端读到二进制数据之后反序列化成Java对象。<br>总结起来就是两个主要原因：持久化和网络传输。<br></p>
   
 
     </div>
     <div class="article-info article-info-index">
       
       
-      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Java基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
 
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/11/05/唯品会支付轻量级前后端分离/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-大型分布式网站术语" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/01/大型分布式网站术语/">大型分布式网站术语</a>
-    </h1>
-  
-
-        
-        <a href="/2016/11/01/大型分布式网站术语/" class="archive-article-date">
-  	<time datetime="2016-11-01T02:34:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-11-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-     <h4 id="1-I-O优化"><a href="#1-I-O优化" class="headerlink" title="1. I/O优化"></a>1. I/O优化</h4><p>增加缓存，减少磁盘的访问次数。<br>优化磁盘的管理系统，设计最优的磁盘方式策略，以及磁盘的寻址策略，这是在底层操作系统层面考虑的。<br>设计合理的磁盘存储数据块，以及访问这些数据库的策略，这是在应用层面考虑的。例如，我们可以给存放的数据设计索引，通过寻址索引来加快和减少磁盘的访问量，还可以采用异步和非阻塞的方式加快磁盘的访问速度。<br>应用合理的RAID策略提升磁盘I/O。<br></p>
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/分布式//" class="article-tag-list-link color4">分布式</a>
+        			<a href="/categories/Java基础//" class="article-tag-list-link color2">Java基础</a>
         		</li>
       		
 		</ul>
@@ -629,7 +905,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2016/11/01/大型分布式网站术语/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/03/22/序列化/">展开全文 >></a>
         </p>
       
 
@@ -659,20 +935,20 @@
 
 
   
-    <article id="post-《鹧鸪天》-辛弃疾" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-Mybatis获取自增主键值" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/26/《鹧鸪天》-辛弃疾/">《鹧鸪天》-辛弃疾</a>
+      <a class="article-title" href="/2017/03/20/Mybatis获取自增主键值/">Mybatis获取自增主键值</a>
     </h1>
   
 
         
-        <a href="/2016/10/26/《鹧鸪天》-辛弃疾/" class="archive-article-date">
-  	<time datetime="2016-10-26T02:23:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-10-26</time>
+        <a href="/2017/03/20/Mybatis获取自增主键值/" class="archive-article-date">
+  	<time datetime="2017-03-20T04:54:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-20</time>
 </a>
         
       </header>
@@ -680,83 +956,13 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-  
-    <p>晚日寒鸦一片愁，柳塘新绿却温柔。<br>若教眼底无离恨，不信人间有白头。<br>肠已断，泪难收。相思重上小红楼。<br>情知已被山遮断，频倚阑干不自由。</p>
-<p>傍晚黄昏，本就让人情绪低落，而现在的离别愁绪更增添了内心的苦楚，如果没有亲身经历，永远不会体会那种一夜白头的崩溃情绪。这些恼人的情绪却没有人分担，除了独自落泪，忍受，又能如何。无奈，孤独，寂寞，伤心，寒夜里更加增加了寒意。除了一声叹息，又能如何排解这人世间的苦痛。</p>
-
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/诗词//" class="article-tag-list-link color3">诗词</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/10/26/《鹧鸪天》-辛弃疾/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-《洛神赋》-曹植" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/21/《洛神赋》-曹植/">《洛神赋》-曹植</a>
-    </h1>
-  
-
-        
-        <a href="/2016/10/21/《洛神赋》-曹植/" class="archive-article-date">
-  	<time datetime="2016-10-21T02:24:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-10-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-     <h3 id="一、【原文】"><a href="#一、【原文】" class="headerlink" title="一、【原文】"></a>一、【原文】</h3><p>黄初三年，余朝京师，还济洛川 (济：渡。洛川：洛水)。古人有言，斯水之神，名曰宓妃。感宋玉对楚王说神女之事，(神女之事：指宋玉《高唐赋》、《神女赋》中所写楚庄王与神女相遇之 事。)遂作斯赋。其词曰：余从京域（京域：京城洛阳地区。），言归东藩（言：发语词。东藩：指在洛阳东北的曹植封地鄄城。藩，诸侯为王室屏藩，故称藩 国。），背伊阙（背：背离，过而弃于后。伊阙：山名，在洛阳南，又名龙门山、阙塞山。），越轘辕（轘[huán]辕：山名，在今河南偃师市东南），经通谷 (通谷：谷名，在洛阳城南)，陵景山(陵：登上。景山：山名，在今河南偃师市)。日既西倾，车殆马烦(殆：通”怠”，困顿。此指车行缓慢。烦：疲乏)。尔 乃税驾乎蘅皋(尔乃：于是。税驾：停车。税，停。蘅皋：生长杜蘅香草的河岸。皋，河边高地。)，秣驷乎芝田(秣驷：喂马。秣，喂食料。驷，拉同一车的四匹 马，此指马。芝田：种芝草的田野)，容与乎阳林(容与：徜徉，优游。阳林：地名，未详)，流盼乎洛川(流盼：转动目光观看。盼，一作”眄[miǎn 免])。于是精移神骇(骇：散)，忽焉思散。俯则未察(察：看清)，仰以殊观(殊观：谓看到特殊景象)。睹一丽人，于岩之畔。乃援御者而告之曰(援：拉 着。御者：驾马车的仆人)：“尔有觌于彼者乎(觌[dí敌]：见)？彼何人斯，若此之艳也！”御者对曰：“臣闻河洛之神，名曰宓妃。然则君王之所见也，无 乃是乎(是：这，代指洛神)？其状若何？臣愿闻之。”<br></p>
+     <p>在某些场景下，我们需要使用mybatis返回生成的主键值。Mybatis在insert和update标签中就提供了这种功能。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;insert id=”indetifyId” useGeneratedKeys=”true” keyProperty=”id” keyColumn=&quot;id&quot;&gt;</span><br><span class="line">    ...</span><br><span class="line">&lt;/insert&gt;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>useGeneratedKeys： 是否自动生成主键，默认false</li>
+<li>keyProperty :返回的主键值赋给那个属性</li>
+<li>keyColumn： 数据库中的自增主键的列名，默认是数据库表的第一列。当主键列不是表中的第一列的时候需要设置，PostgreSQL必须设置。</li>
+</ul>
+<p>主键自动生成，取决于数据库是否支持自增主键。实际上当设置了useGeneratedKeys=“true”，Mybatis会调用JDBC的getGeneratedKeys方法，并将获取的主键值赋值给keyProperty 指定的属性。</p>
   
 
     </div>
@@ -764,167 +970,10 @@
       
       
       
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/诗词//" class="article-tag-list-link color3">诗词</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2016/10/21/《洛神赋》-曹植/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-李昱最美的20首诗词" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/19/李昱最美的20首诗词/">李昱最美的20首诗词</a>
-    </h1>
-  
-
-        
-        <a href="/2016/10/19/李昱最美的20首诗词/" class="archive-article-date">
-  	<time datetime="2016-10-19T02:21:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-10-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-     <p>李煜，五代十国时南唐国君，字重光，初名从嘉，号钟隐、莲峰居士。南唐 元宗李璟第六子，史称李后主。李煜虽不通政治，但其艺术才华却非凡。精书法，善绘画，通音律，诗和文均有一定造诣，尤以词的成就最高。在政治上失败的李 煜，却在词坛上留下了不朽的篇章，被称为“千古词帝”。<br></p>
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/诗词//" class="article-tag-list-link color3">诗词</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/10/19/李昱最美的20首诗词/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-十大词牌" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/10/十大词牌/">十大词牌</a>
-    </h1>
-  
-
-        
-        <a href="/2016/10/10/十大词牌/" class="archive-article-date">
-  	<time datetime="2016-10-10T02:22:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-10-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-     <h3 id="NO-1-念奴娇"><a href="#NO-1-念奴娇" class="headerlink" title="NO.1 念奴娇"></a>NO.1 念奴娇</h3><p>“念奴”是个人名，她是唐朝天宝年间的著名歌妓，据记载：念奴“善歌唱，声出于朝霞之上，虽钟鼓笙竽，嘈杂而莫能遏”。传说唐玄宗曾亲自作曲填词，命念奴歌唱，其声“娇滴滴如夜莺啼鸣，婉转转似百灵放歌，活泼泼如鸳鸯戏水”。玄宗龙颜大悦，遂将此曲定名为“念奴娇”。<br>以“念奴娇”为词牌名最著名的当属苏轼。<br>故垒西边，人道是，三国周郎赤壁。<br>乱石穿空，惊涛拍岸，卷起千堆雪。<br>江山如画，一时多少豪杰。<br>人生如梦，一尊还酹江月。<br></p>
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/诗词//" class="article-tag-list-link color3">诗词</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/10/10/十大词牌/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/03/20/Mybatis获取自增主键值/">展开全文 >></a>
         </p>
       
 
@@ -956,7 +1005,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/6/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/8/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/6/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/8/">Next &raquo;</a>
     </nav>
   
 
@@ -1112,11 +1161,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">NWR</a>
+                <a href="javascript:void(0)" class="js-tag color4">JUC</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JUC</a>
+                <a href="javascript:void(0)" class="js-tag color4">NWR</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1129,6 +1178,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机基础</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1156,19 +1209,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">UDP</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
+                <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1212,6 +1261,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Java虚拟机</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">汪国真</a>
               </li>
              
@@ -1225,10 +1282,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机基础</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1264,6 +1317,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">动态代理</a>
               </li>
              
@@ -1288,7 +1345,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">iptables</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Netty</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">tcpdump</a>
               </li>
              
               <li class="article-tag-list-item">
