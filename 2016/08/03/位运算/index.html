@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
 <meta property="og:description" content="Java位运算表示方法　在Java语言中，二进制数使用补码表示，最高位为符号位，正数的符号位为0，负数为1。补码的表示需要满足如下要求。 　(1)正数的最高位为0，其余各位代表数值本身(二进制数)。 　(2)对于负数，通过对该数绝对值的补码按位取反，再对整个数加1。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:updated_time" content="2018-12-10T14:26:53.963Z">
+<meta property="og:updated_time" content="2018-12-10T14:47:19.888Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="位运算">
 <meta name="twitter:description" content="Java位运算表示方法　在Java语言中，二进制数使用补码表示，最高位为符号位，正数的符号位为0，负数为1。补码的表示需要满足如下要求。 　(1)正数的最高位为0，其余各位代表数值本身(二进制数)。 　(2)对于负数，通过对该数绝对值的补码按位取反，再对整个数加1。">
@@ -278,16 +278,16 @@
 <li><p>取绝对值</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">abs</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">      <span class="keyword">return</span> (n ^ (n &gt;&gt; <span class="number">31</span>)) - (n &gt;&gt; <span class="number">31</span>);</span><br><span class="line">  &#125;</span><br><span class="line"><span class="comment">/* n&gt;&gt;31 取得n的符号，若n为正数，n&gt;&gt;31等于0，若n为负数，n&gt;&gt;31等于-1</span></span><br><span class="line"><span class="comment">若n为正数 n^0=0,数不变，若n为负数有n^-1 需要计算n和-1的补码，然后进行异或运算， 结果n变号并且为n的绝对值减1，再减去-1就是绝对值 */</span></span><br></pre></td></tr></table></figure>
 </li>
-<li><p>只出现一次的数字</p>
+<li><p>只出现一次的数字<br>给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。<br>说明:你的算法应该具有线性时间复杂度。 你可以不使用额外空间来实现吗？<br>示例 1:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">输入: [2,2,1]输出: 1</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<p>给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。<br>说明:你的算法应该具有线性时间复杂度。 你可以不使用额外空间来实现吗？<br>示例 1:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">输入: [2,2,1]输出: 1</span><br></pre></td></tr></table></figure></p>
 <p>示例 2:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">输入: [4,1,2,1,2]输出: 4</span><br></pre></td></tr></table></figure></p>
 <p>这个题首先想到的就是异或的特性。相同的数字异或的结果为 0，那么出现奇数次的一定就是最后我们想要的结果。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public int singleNum(int[] nums)&#123;</span><br><span class="line">    int res = num[0];</span><br><span class="line">    for(int i=1;i&lt;nums.length;i++)&#123;</span><br><span class="line">        res ^= nums[i];</span><br><span class="line">    &#125;</span><br><span class="line">    return res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <ol start="25">
-<li>寻找重复数</li>
+<li>寻找重复数<br>给定一个包含 n + 1 个整数的数组 nums，其数字都在 1 到 n 之间（包括 1 和 n），可知至少存在一个重复的整数。假设只有一个重复的整数，找出这个重复的数。<br>示例 1:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">输入: [1,3,4,2,2]输出: 2</span><br></pre></td></tr></table></figure>
+</li>
 </ol>
-<p>给定一个包含 n + 1 个整数的数组 nums，其数字都在 1 到 n 之间（包括 1 和 n），可知至少存在一个重复的整数。假设只有一个重复的整数，找出这个重复的数。<br>示例 1:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">输入: [1,3,4,2,2]输出: 2</span><br></pre></td></tr></table></figure></p>
 <p>示例 2:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">输入: [3,1,3,4,2]输出: 3</span><br></pre></td></tr></table></figure></p>
 <p>说明：</p>
 <ul>
@@ -299,12 +299,12 @@
 <p>我们注意看下题目，题目明确说明了数组 nums 包含 1 和 n ，并且只有一个重复的整数，如果不考虑说明中的第四点的话这段代码是正确的。解释一下原理。a 从 1 一直异或到 n，其中有一个重复的数字 x ，那么就是 1 ^ 2 ^ 3 ··· ^ x ^ x ^ ··· ^ n。异或操作因为是半加运算，因此是满足交换律的，我们把 x 拿到最后面， 即 1 ^ 2 ^ 3 ··· ^ n ^ x ^ x，而 x ^ x 一定是 0 ，因此 1 ~ n 每个数异或了 2 次，而 x 异或了 3 次，所以最后 res 的值就是我们要找的 x 的值。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//先不考虑“数组中只有一个重复的数字，但它可能不止重复出现一次”这个条件</span><br><span class="line">public int findDumplicate(int[] nums)&#123;</span><br><span class="line">    int res = 0;</span><br><span class="line">    for(int i=0;i&lt;nums.length;i++)&#123;</span><br><span class="line">        res ^= nums[i];</span><br><span class="line">        res ^= i;</span><br><span class="line">    &#125;</span><br><span class="line">    return res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>但是有了第四点，这个方法就不太好用了，下面是一个正确的解法，由于跟异或没有太多的关系，因此就不过多解释。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public int findDumplicate(int[] nums)&#123;</span><br><span class="line">    if(nums.length&gt;1)&#123;</span><br><span class="line">        int slow = nums[0];</span><br><span class="line">        int fast = nums[nums[0]];</span><br><span class="line">        while(slow != fast)&#123;</span><br><span class="line">            slow = nums[slow];</span><br><span class="line">            fast = nums[nums[fast]];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        fast = 0;</span><br><span class="line">        while(fast != slow)&#123;</span><br><span class="line">            fast = nums[fast];</span><br><span class="line">            slow = nums[slow];</span><br><span class="line">        &#125;</span><br><span class="line">        return slow;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return -1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <ol start="26">
-<li>找不同</li>
+<li>找不同<br>给定两个字符串 s 和 t，它们只包含小写字母。字符串 t 由字符串 s 随机重排，然后在随机位置添加一个字母。请找出在 t 中被添加的字母。</li>
 </ol>
-<p>给定两个字符串 s 和 t，它们只包含小写字母。字符串 t 由字符串 s 随机重排，然后在随机位置添加一个字母。请找出在 t 中被添加的字母。</p>
-<p>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">输入：s = &quot;abcd&quot;  t = &quot;abcde&quot;输出：e</span><br></pre></td></tr></table></figure></p>
+<p>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">输入：s = &quot;abcd&quot;  t = &quot;abcde&quot;  输出：e</span><br></pre></td></tr></table></figure></p>
 <p>解释：’e’ 是那个被添加的字母。</p>
-<p>这个题目如果想不到用异或运算的话，写起来可能真的会有点麻烦。我们想到异或运算的特点，a ^ a = 0，如果插入了一个字母的话，那么这个两个字符串中，出现的次数肯定是奇数次，而其他的都是偶数次，所以直接把所有的字符都异或一遍，答案自然就出来了！<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public char findTheDifference(String s,String t)&#123;</span><br><span class="line">    char res = t.charAt(0);</span><br><span class="line">    for (int i = 0; i &lt; s.length(); i++) &#123;</span><br><span class="line">        res ^= (s.charAt(i));</span><br><span class="line">    &#125;</span><br><span class="line">    for (int i = 1; i &lt; t.length(); i++) &#123;</span><br><span class="line">        res ^= (t.charAt(i));</span><br><span class="line">    &#125;</span><br><span class="line">    return res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这个题目如果想不到用异或运算的话，写起来可能真的会有点麻烦。我们想到异或运算的特点，a ^ a = 0，如果插入了一个字母的话，那么这个两个字符串中，出现的次数肯定是奇数次，而其他的都是偶数次，所以直接把所有的字符都异或一遍，答案自然就出来了！<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public char findTheDifference(String s,String t) &#123;</span><br><span class="line">    char res = t.charAt(0);</span><br><span class="line">    for (int i = 0; i &lt; s.length(); i++) &#123;</span><br><span class="line">        res ^= s.charAt(i);</span><br><span class="line">    &#125;</span><br><span class="line">    for (int i = 1; i &lt; t.length(); i++) &#123;</span><br><span class="line">        res ^= t.charAt(i);</span><br><span class="line">    &#125;</span><br><span class="line">    return res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">public char findTheDifference2(String s, String t) &#123;</span><br><span class="line">    char c = 0;</span><br><span class="line">    for (int i = 0; i &lt; s.length(); i++) &#123;</span><br><span class="line">        c ^= s.charAt(i);</span><br><span class="line">    &#125;</span><br><span class="line">    for (int i = 0; i &lt; t.length(); i++) &#123;</span><br><span class="line">        c ^= t.charAt(i);</span><br><span class="line">    &#125;</span><br><span class="line">    return c;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>注意上面两种写法，方法一第二次循环从1开始，方法二第二次循环从0开始，why?</p>
 <p>之前还有一个面试题目，就是有 N + 1 块相同容量的硬盘，其中 N 块用来存储数据，如果利用多余的 1 块硬盘来存储 N 块硬盘的数据备份，假设硬盘最多同时只会损坏 1 块。我想通过上面几个题，大家应该很快想到存储办法了吧，答案就是多余的 1 块硬盘存储 N 块硬盘异或的结果，那么当其中 1 块硬盘损坏的时候，只需要把其他好的硬盘数据再异或一遍，即可得到损坏的硬盘的数据了。</p>
 <p>通过上面的例子，我们发现在查找“奇数个”的数据的时候，异或运算用起来还是非常方便的。异或运算还有很多其他的应用，比如简单的加密数据，加密：result = a ^ password，解密：a = result ^ password。<br>异或运算很简单，难点在于遇到问题能不能想到利用异或运算来解决问题，这就需要我们在编程过程中一点点积累经验。</p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><table>
@@ -706,11 +706,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">NWR</a>
+                <a href="javascript:void(0)" class="js-tag color4">ARP</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ARP</a>
+                <a href="javascript:void(0)" class="js-tag color4">NWR</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -738,11 +738,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">TCP</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
+                <a href="javascript:void(0)" class="js-tag color3">me</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -750,7 +754,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">me</a>
+                <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -822,10 +826,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Socket</a>
               </li>
              
@@ -842,11 +842,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Integer</a>
+                <a href="javascript:void(0)" class="js-tag color5">HTTP</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">HTTP</a>
+                <a href="javascript:void(0)" class="js-tag color3">Integer</a>
               </li>
              
               <li class="article-tag-list-item">
