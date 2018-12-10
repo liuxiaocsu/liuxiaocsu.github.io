@@ -179,6 +179,237 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-动态代理" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/28/动态代理/">动态代理</a>
+    </h1>
+  
+
+        
+        <a href="/2017/04/28/动态代理/" class="archive-article-date">
+  	<time datetime="2017-04-28T08:47:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+     <p>代理模式<br>代理(Proxy)是一种设计模式,提供了对目标对象另外的访问方式;即通过代理对象访问目标对象。这样做的好处是:可以在目标对象实现的基础上,增强额外的功能操作,即扩展目标对象的功能。简单来说就是说代理就是增强方法，让方法实现更多的额功能。<br>在编写程序与实现某些功能时,我们经常会使用到动态代理。动态代理是个很简单但是很有效的东西。在我们平时使用的框架中,像servlet的filter、包括spring提供的aop以及struts2的拦截器都使用了动态代理功能。我们日常看到的mybatis分页插件,以及日志拦截、事务拦截、权限拦截这些几乎全部由动态代理的身影。它的实现原理是非常简单的,就是在方法实现前后加入对应的公共功能。动态代理实现有三种方式，jdk动态代理（基于接口），cglib动态代理（基于继承），javassist（hibernate中使用这种方式）实现动态代理。<br></p>
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">动态代理</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/动态代理//" class="article-tag-list-link color5">动态代理</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/04/28/动态代理/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Btrace使用简介" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/23/Btrace使用简介/">Btrace使用简介</a>
+    </h1>
+  
+
+        
+        <a href="/2017/04/23/Btrace使用简介/" class="archive-article-date">
+  	<time datetime="2017-04-23T02:14:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-23</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+     <p>BTrace是sun公司推出的一款Java 动态、安全追踪（监控）工具，可以在不用重启的情况下监控系统运行情况，方便的获取程序运行时的数据信息，如方法参数、返回值、全局变量和堆栈信息等，并且做到最少的侵入，占用最少的系统资源。<br>项目地址：<a href="http://github.com/btraceio/btrace" target="_blank" rel="noopener">Btrace</a><br>用户指南：<a href="https://kenai.com/projects/btrace/pages/UserGuide" target="_blank" rel="noopener">UserGuide</a><br>由于Btrace会把脚本逻辑直接侵入到运行的代码中，所以在使用上做很多限制：<br>1、不能创建对象<br>2、不能使用数组<br>3、不能抛出或捕获异常<br>4、不能使用循环<br>5、不能使用synchronized关键字<br>6、属性和方法必须使用static修饰</p>
+<p>根据官方声明，不恰当的使用BTrace可能导致JVM崩溃，如在BTrace脚本使用错误的class文件，所以在上生产环境之前，务必在本地充分的验证脚本的正确性。<br>Btrace可以做什么？<br>1、接口性能变慢，分析每个方法的耗时情况；<br>2、当在Map中插入大量数据，分析其扩容情况；<br>3、分析哪个方法调用了System.gc()，调用栈如何；<br>4、执行某个方法抛出异常时，分析运行时参数；<br></p>
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Btrace</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Btrace//" class="article-tag-list-link color2">Btrace</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/04/23/Btrace使用简介/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-唯品会个性化推荐系统技术详解" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/26/唯品会个性化推荐系统技术详解/">唯品会个性化推荐系统技术详解</a>
+    </h1>
+  
+
+        
+        <a href="/2017/03/26/唯品会个性化推荐系统技术详解/" class="archive-article-date">
+  	<time datetime="2017-03-26T02:47:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+     <p>2017年3月25日，唯品会在广州同创汇举行了Open Talk No.30《如何打造高性能高可用的电商平台——Open Talk 唯品会专场》，资深开发工程师吴官林带来了《个性化推荐系统的演变》的精彩演讲，分享在唯品会产业链下，个性化推荐系统的演进过程。<br></p>
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/03/26/唯品会个性化推荐系统技术详解/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-String堆内存和栈内存" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -762,217 +993,6 @@
 
 
   
-    <article id="post-唯品会支付轻量级前后端分离" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/05/唯品会支付轻量级前后端分离/">唯品会支付轻量级前后端分离</a>
-    </h1>
-  
-
-        
-        <a href="/2016/11/05/唯品会支付轻量级前后端分离/" class="archive-article-date">
-  	<time datetime="2016-11-05T02:36:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-11-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-     <h4 id="前后端分离背景"><a href="#前后端分离背景" class="headerlink" title="前后端分离背景"></a>前后端分离背景</h4><p>前后端本是一家，长期以来相生相杀。当然也有些公司比如FB，fullstack，开挂一样存在。就目前国内大部分团队现状来说，大家都在谋求一个前后端开发分离方案，发展历程大致如下：<br></p>
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/11/05/唯品会支付轻量级前后端分离/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-大型分布式网站术语" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/01/大型分布式网站术语/">大型分布式网站术语</a>
-    </h1>
-  
-
-        
-        <a href="/2016/11/01/大型分布式网站术语/" class="archive-article-date">
-  	<time datetime="2016-11-01T02:34:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-11-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-     <h4 id="1-I-O优化"><a href="#1-I-O优化" class="headerlink" title="1. I/O优化"></a>1. I/O优化</h4><p>增加缓存，减少磁盘的访问次数。<br>优化磁盘的管理系统，设计最优的磁盘方式策略，以及磁盘的寻址策略，这是在底层操作系统层面考虑的。<br>设计合理的磁盘存储数据块，以及访问这些数据库的策略，这是在应用层面考虑的。例如，我们可以给存放的数据设计索引，通过寻址索引来加快和减少磁盘的访问量，还可以采用异步和非阻塞的方式加快磁盘的访问速度。<br>应用合理的RAID策略提升磁盘I/O。<br></p>
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/分布式//" class="article-tag-list-link color4">分布式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/11/01/大型分布式网站术语/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-《鹧鸪天》-辛弃疾" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/26/《鹧鸪天》-辛弃疾/">《鹧鸪天》-辛弃疾</a>
-    </h1>
-  
-
-        
-        <a href="/2016/10/26/《鹧鸪天》-辛弃疾/" class="archive-article-date">
-  	<time datetime="2016-10-26T02:23:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-10-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-  
-    <p>晚日寒鸦一片愁，柳塘新绿却温柔。<br>若教眼底无离恨，不信人间有白头。<br>肠已断，泪难收。相思重上小红楼。<br>情知已被山遮断，频倚阑干不自由。</p>
-<p>傍晚黄昏，本就让人情绪低落，而现在的离别愁绪更增添了内心的苦楚，如果没有亲身经历，永远不会体会那种一夜白头的崩溃情绪。这些恼人的情绪却没有人分担，除了独自落泪，忍受，又能如何。无奈，孤独，寂寞，伤心，寒夜里更加增加了寒意。除了一声叹息，又能如何排解这人世间的苦痛。</p>
-
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/诗词//" class="article-tag-list-link color3">诗词</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/10/26/《鹧鸪天》-辛弃疾/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/7/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/9/">Next &raquo;</a>
@@ -1139,11 +1159,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
+                <a href="javascript:void(0)" class="js-tag color4">ARP</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Integer</a>
+                <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1255,6 +1275,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Socket</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">限流</a>
               </li>
              
@@ -1272,6 +1296,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">加密解密</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Integer</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1319,11 +1347,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Netty</a>
+                <a href="javascript:void(0)" class="js-tag color4">iptables</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iptables</a>
+                <a href="javascript:void(0)" class="js-tag color1">Netty</a>
               </li>
              
               <li class="article-tag-list-item">

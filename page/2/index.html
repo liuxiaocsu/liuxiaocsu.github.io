@@ -360,38 +360,8 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-  
-    <h4 id="ArrayList的subList结果不可强转成ArrayList，否则会抛出ClassCastException异常pmd-ClassCastExceptionWithSubListToArrayListRule"><a href="#ArrayList的subList结果不可强转成ArrayList，否则会抛出ClassCastException异常pmd-ClassCastExceptionWithSubListToArrayListRule" class="headerlink" title="ArrayList的subList结果不可强转成ArrayList，否则会抛出ClassCastException异常pmd:ClassCastExceptionWithSubListToArrayListRule"></a>ArrayList的subList结果不可强转成ArrayList，否则会抛出ClassCastException异常pmd:ClassCastExceptionWithSubListToArrayListRule</h4><p>Critical</p>
+     <h4 id="ArrayList的subList结果不可强转成ArrayList，否则会抛出ClassCastException异常pmd-ClassCastExceptionWithSubListToArrayListRule"><a href="#ArrayList的subList结果不可强转成ArrayList，否则会抛出ClassCastException异常pmd-ClassCastExceptionWithSubListToArrayListRule" class="headerlink" title="ArrayList的subList结果不可强转成ArrayList，否则会抛出ClassCastException异常pmd:ClassCastExceptionWithSubListToArrayListRule"></a>ArrayList的subList结果不可强转成ArrayList，否则会抛出ClassCastException异常pmd:ClassCastExceptionWithSubListToArrayListRule</h4><p>Critical</p>
 <p>ArrayList的subList结果不可强转成ArrayList，否则会抛出ClassCastException异常。<br>说明：禁止强转，如果需要用到集合特性方法，请新建一个集合，然后置入sublist,new 集合(sublist结果)。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">反例:</span><br><span class="line">List list = new ArrayList();</span><br><span class="line">list.add(&quot;22&quot;);</span><br><span class="line">//warn</span><br><span class="line">List test = (ArrayList) list.subList(0, 1);</span><br><span class="line"></span><br><span class="line">正例:</span><br><span class="line">List list2 = new ArrayList(list.subList(0, 1));</span><br></pre></td></tr></table></figure></p>
-<h4 id="“File-createTempFile”-should-not-be-used-to-create-a-directory"><a href="#“File-createTempFile”-should-not-be-used-to-create-a-directory" class="headerlink" title="“File.createTempFile” should not be used to create a directory"></a>“File.createTempFile” should not be used to create a directory</h4><p> Critical</p>
-<p>Using File.createTempFile as the first step in creating a temporary directory causes a race condition and is inherently unreliable and insecure. Instead, Files.createTempDirectory(Java 7+) or a library function such as Guava’s similarly-named Files.createTempDir should be used.<br>This rule raises an issue when the following steps are taken in immediate sequence:<br>call to File.createTempFile<br>delete resulting file<br>call mkdir on the File object<br>Note that this rule is automatically disabled when the project’s sonar.java.source is lower than 7.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Noncompliant Code Example</span><br><span class="line">File tempDir;</span><br><span class="line">tempDir = File.createTempFile(&quot;&quot;, &quot;.&quot;);</span><br><span class="line">tempDir.delete();</span><br><span class="line">tempDir.mkdir();  // Noncompliant</span><br><span class="line"></span><br><span class="line">Compliant Solution</span><br><span class="line">Path tempPath = Files.createTempDirectory(&quot;&quot;);</span><br><span class="line">File tempDir = tempPath.toFile();</span><br></pre></td></tr></table></figure></p>
-<h4 id="“-equals-”-should-not-be-used-to-test-the-values-of-“Atomic”-classes"><a href="#“-equals-”-should-not-be-used-to-test-the-values-of-“Atomic”-classes" class="headerlink" title="“.equals()” should not be used to test the values of “Atomic” classes"></a>“.equals()” should not be used to test the values of “Atomic” classes</h4><p> Major</p>
-<p>AtomicInteger, and AtomicLong extend Number, but they’re distinct from Integer and Long and should be handled differently. AtomicInteger and AtomicLong are designed to support lock-free, thread-safe programming on single variables. As such, an AtomicInteger will only ever be “equal” to itself. Instead, you should .get() the value and make comparisons on it.<br>This applies to all the atomic, seeming-primitive wrapper classes: AtomicInteger, AtomicLong, and AtomicBoolean.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Noncompliant Code Example</span><br><span class="line">AtomicInteger aInt1 = new AtomicInteger(0);</span><br><span class="line">AtomicInteger aInt2 = new AtomicInteger(0);</span><br><span class="line"></span><br><span class="line">if (aInt1.equals(aInt2)) &#123; ... &#125;  // Noncompliant</span><br><span class="line"></span><br><span class="line">Compliant Solution</span><br><span class="line">AtomicInteger aInt1 = new AtomicInteger(0);</span><br><span class="line">AtomicInteger aInt2 = new AtomicInteger(0);</span><br><span class="line"></span><br><span class="line">if (aInt1.get() == aInt2.get()) &#123; ... &#125;</span><br></pre></td></tr></table></figure></p>
-<h4 id="“BigDecimal-double-”-should-not-be-used"><a href="#“BigDecimal-double-”-should-not-be-used" class="headerlink" title="“BigDecimal(double)” should not be used"></a>“BigDecimal(double)” should not be used</h4><p> Major</p>
-<p>Because of floating point imprecision, you’re unlikely to get the value you expect from the BigDecimal(double) constructor.<br>From the JavaDocs:<br>The results of this constructor can be somewhat unpredictable. One might assume that writing new BigDecimal(0.1) in Java creates a BigDecimal which is exactly equal to 0.1 (an unscaled value of 1, with a scale of 1), but it is actually equal to 0.1000000000000000055511151231257827021181583404541015625. This is because 0.1 cannot be represented exactly as a double (or, for that matter, as a binary fraction of any finite length). Thus, the value that is being passed in to the constructor is not exactly equal to 0.1, appearances notwithstanding.<br>Instead, you should use BigDecimal.valueOf, which uses a string under the covers to eliminate floating point rounding errors.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Noncompliant Code Example</span><br><span class="line">double d = 1.1;</span><br><span class="line"></span><br><span class="line">BigDecimal bd1 = new BigDecimal(d); // Noncompliant; see comment above</span><br><span class="line">BigDecimal bd2 = new BigDecimal(1.1); // Noncompliant; same result</span><br><span class="line"></span><br><span class="line">Compliant Solution</span><br><span class="line">double d = 1.1;</span><br><span class="line"></span><br><span class="line">BigDecimal bd1 = BigDecimal.valueOf(d);</span><br><span class="line">BigDecimal bd2 = BigDecimal.valueOf(1.1);</span><br></pre></td></tr></table></figure></p>
-<h4 id="Constructors-should-only-call-non-overridable-methods"><a href="#Constructors-should-only-call-non-overridable-methods" class="headerlink" title="Constructors should only call non-overridable methods"></a>Constructors should only call non-overridable methods</h4><p>code smell</p>
-<p>Calling an overridable method from a constructor could result in failures or strange behaviors when instantiating a subclass which overrides the method.<br>For example:<br>The subclass class constructor starts by contract by calling the parent class constructor.<br>The parent class constructor calls the method, which has been overridden in the child class.<br>If the behavior of the child class method depends on fields that are initialized in the child class constructor, unexpected behavior (like a NullPointerException) can result, because the fields aren’t initialized yet.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">Noncompliant Code Example</span><br><span class="line">public class Parent &#123;</span><br><span class="line"></span><br><span class="line">  public Parent () &#123;</span><br><span class="line">    doSomething();  // Noncompliant</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public void doSomething () &#123;  // not final; can be overridden</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Child extends Parent &#123;</span><br><span class="line"></span><br><span class="line">  private String foo;</span><br><span class="line"></span><br><span class="line">  public Child(String foo) &#123;</span><br><span class="line">    super(); // leads to call doSomething() in Parent constructor which triggers a NullPointerException as foo has not yet been initialized</span><br><span class="line">    this.foo = foo;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public void doSomething () &#123;</span><br><span class="line">    System.out.println(this.foo.length());</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h4 id="Constructors-should-not-be-used-to-instantiate-“String”-and-primitive-wrapper-classes"><a href="#Constructors-should-not-be-used-to-instantiate-“String”-and-primitive-wrapper-classes" class="headerlink" title="Constructors should not be used to instantiate “String” and primitive-wrapper classes"></a>Constructors should not be used to instantiate “String” and primitive-wrapper classes</h4><p> Minor</p>
-<p>Constructors for Strings and the objects used to wrap primitives should never be used. Doing so is less clear and uses more memory than simply using the desired value in the case of strings, and using valueOf for everything else.<br>Further, these constructors are deprecated in Java 9, which is an indication that they will eventually be removed from the language altogether.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Noncompliant Code Example</span><br><span class="line">String empty = new String(); // Noncompliant; yields essentially &quot;&quot;, so just use that.</span><br><span class="line">String nonempty = new String(&quot;Hello world&quot;); // Noncompliant</span><br><span class="line">Double myDouble = new Double(1.1); // Noncompliant; use valueOf</span><br><span class="line">Integer integer = new Integer(1); // Noncompliant</span><br><span class="line">Boolean bool = new Boolean(true); // Noncompliant</span><br><span class="line"></span><br><span class="line">Compliant Solution</span><br><span class="line">String empty = &quot;&quot;;</span><br><span class="line">String nonempty = &quot;Hello world&quot;;</span><br><span class="line">Double myDouble = Double.valueOf(1.1);</span><br><span class="line">Integer integer = Integer.valueOf(1);</span><br><span class="line">Boolean bool = Boolean.valueOf(true);</span><br></pre></td></tr></table></figure></p>
-<h4 id="Constants-should-not-be-defined-in-interfaces"><a href="#Constants-should-not-be-defined-in-interfaces" class="headerlink" title="Constants should not be defined in interfaces"></a>Constants should not be defined in interfaces</h4><p>Code Smell</p>
-<p>According to Joshua Bloch, author of “Effective Java”:<br>The constant interface pattern is a poor use of interfaces.<br>That a class uses some constants internally is an implementation detail.<br>Implementing a constant interface causes this implementation detail to leak into the class’s exported API. It is of no consequence to the users of a class that the class implements a constant interface. In fact, it may even confuse them. Worse, it represents a commitment: if in a future release the class is modified so that it no longer needs to use the constants, it still must implement the interface to ensure binary compatibility. If a nonfinal class implements a constant interface,<br>all of its subclasses will have their namespaces polluted by the constants in the interface.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Noncompliant Code Example</span><br><span class="line">interface Status &#123;                      // Noncompliant</span><br><span class="line">   int OPEN = 1;</span><br><span class="line">   int CLOSED = 2;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Compliant Solution</span><br><span class="line">public enum Status &#123;                    // Compliant</span><br><span class="line">  OPEN,</span><br><span class="line">  CLOSED;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">or</span><br><span class="line">public final class Status &#123;             // Compliant</span><br><span class="line">   public static final int OPEN = 1;</span><br><span class="line">   public static final int CLOSED = 2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h4 id="Comparators-should-be-“Serializable”"><a href="#Comparators-should-be-“Serializable”" class="headerlink" title="Comparators should be “Serializable”"></a>Comparators should be “Serializable”</h4><p>Code Smell</p>
-<p>A non-serializable Comparator can prevent an otherwise-Serializable ordered collection from being serializable. Since the overhead to make a Comparator serializable is usually low, doing so can be considered good defensive programming.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Noncompliant Code Example</span><br><span class="line">public class FruitComparator implements Comparator&lt;Fruit&gt; &#123;  // Noncompliant</span><br><span class="line">  int compare(Fruit f1, Fruit f2) &#123;...&#125;</span><br><span class="line">  boolean equals(Object obj) &#123;...&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Compliant Solution</span><br><span class="line">public class FruitComparator implements Comparator&lt;Fruit&gt;, Serializable &#123;</span><br><span class="line">  private static final long serialVersionUID = 1;</span><br><span class="line"></span><br><span class="line">  int compare(Fruit f1, Fruit f2) &#123;...&#125;</span><br><span class="line">  boolean equals(Object obj) &#123;...&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h4 id="Collection-isEmpty-should-be-used-to-test-for-emptiness"><a href="#Collection-isEmpty-should-be-used-to-test-for-emptiness" class="headerlink" title="Collection.isEmpty() should be used to test for emptiness"></a>Collection.isEmpty() should be used to test for emptiness</h4><p> Minor</p>
-<p>Using Collection.size() to test for emptiness works, but using Collection.isEmpty() makes the code more readable and can be more performant. The time complexity of any isEmpty() method implementation should be O(1) whereas some implementations of size() can be O(n).<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Noncompliant Code Example</span><br><span class="line">if (myCollection.size() == 0) &#123;  // Noncompliant</span><br><span class="line">  /* ... */</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Compliant Solution</span><br><span class="line">if (myCollection.isEmpty()) &#123;</span><br><span class="line">  /* ... */</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h4 id="Classes-without-“public”-constructors-should-be-“final”"><a href="#Classes-without-“public”-constructors-should-be-“final”" class="headerlink" title="Classes without “public” constructors should be “final”"></a>Classes without “public” constructors should be “final”</h4><p>Code Smell<br> Minor</p>
-<p>Classes with only private constructors should be marked final to prevent any mistaken extension attempts.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Noncompliant Code Example</span><br><span class="line">public class PrivateConstructorClass &#123;  // Noncompliant</span><br><span class="line">  private PrivateConstructorClass() &#123;</span><br><span class="line">    // ...</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public static int magic()&#123;</span><br><span class="line">    return 42;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Compliant Solution</span><br><span class="line">public final class PrivateConstructorClass &#123;  // Compliant</span><br><span class="line">  private PrivateConstructorClass() &#123;</span><br><span class="line">    // ...</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public static int magic()&#123;</span><br><span class="line">    return 42;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h4 id="Classes-that-override-“clone”-should-be-“Cloneable”-and-call-“super-clone-”"><a href="#Classes-that-override-“clone”-should-be-“Cloneable”-and-call-“super-clone-”" class="headerlink" title="Classes that override “clone” should be “Cloneable” and call “super.clone()”"></a>Classes that override “clone” should be “Cloneable” and call “super.clone()”</h4><p> Minor</p>
-<p>Cloneable is the marker Interface that indicates that clone() may be called on an object. Overriding clone() without implementing Cloneable can be useful if you want to control how subclasses clone themselves, but otherwise, it’s probably a mistake.<br>The usual convention for Object.clone() according to Oracle’s Javadoc is:<br>x.clone() != x<br>x.clone().getClass() == x.getClass()<br>x.clone().equals(x)<br>Obtaining the object that will be returned by calling super.clone() helps to satisfy those invariants:<br>super.clone() returns a new object instance<br>super.clone() returns an object of the same type as the one clone() was called on<br>Object.clone() performs a shallow copy of the object’s state<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">Noncompliant Code Example</span><br><span class="line">class BaseClass &#123;  // Noncompliant; should implement Cloneable</span><br><span class="line">  @Override</span><br><span class="line">  public Object clone() throws CloneNotSupportedException &#123;    // Noncompliant; should return the super.clone() instance</span><br><span class="line">    return new BaseClass();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class DerivedClass extends BaseClass implements Cloneable &#123;</span><br><span class="line">  /* Does not override clone() */</span><br><span class="line"></span><br><span class="line">  public void sayHello() &#123;</span><br><span class="line">    System.out.println(&quot;Hello, world!&quot;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Application &#123;</span><br><span class="line">  public static void main(String[] args) throws Exception &#123;</span><br><span class="line">    DerivedClass instance = new DerivedClass();</span><br><span class="line">    ((DerivedClass) instance.clone()).sayHello();              // Throws a ClassCastException because invariant #2 is violated</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Compliant Solution</span><br><span class="line">class BaseClass implements Cloneable &#123;</span><br><span class="line">  @Override</span><br><span class="line">  public Object clone() throws CloneNotSupportedException &#123;    // Compliant</span><br><span class="line">    return super.clone();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class DerivedClass extends BaseClass implements Cloneable &#123;</span><br><span class="line">  /* Does not override clone() */</span><br><span class="line"></span><br><span class="line">  public void sayHello() &#123;</span><br><span class="line">    System.out.println(&quot;Hello, world!&quot;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Application &#123;</span><br><span class="line">  public static void main(String[] args) throws Exception &#123;</span><br><span class="line">    DerivedClass instance = new DerivedClass();</span><br><span class="line">    ((DerivedClass) instance.clone()).sayHello();              // Displays &quot;Hello, world!&quot; as expected. Invariant #2 is satisfied</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h4 id="Child-class-fields-should-not-shadow-parent-class-fields"><a href="#Child-class-fields-should-not-shadow-parent-class-fields" class="headerlink" title="Child class fields should not shadow parent class fields"></a>Child class fields should not shadow parent class fields</h4><p>Code Smell<br> Blocker</p>
-<p>Having a variable with the same name in two unrelated classes is fine, but do the same thing within a class hierarchy and you’ll get confusion at best, chaos at worst. Perhaps even worse is the case where a child class field varies from the name of a parent class only by case.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">Noncompliant Code Example</span><br><span class="line">public class Fruit &#123;</span><br><span class="line">  protected Season ripe;</span><br><span class="line">  protected Color flesh;</span><br><span class="line"></span><br><span class="line">  // ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Raspberry extends Fruit &#123;</span><br><span class="line">  private boolean ripe;  // Noncompliant</span><br><span class="line">  private static Color FLESH; // Noncompliant</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Compliant Solution</span><br><span class="line">public class Fruit &#123;</span><br><span class="line">  protected Season ripe;</span><br><span class="line">  protected Color flesh;</span><br><span class="line"></span><br><span class="line">  // ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Raspberry extends Fruit &#123;</span><br><span class="line">  private boolean ripened;</span><br><span class="line">  private static Color FLESH_COLOR;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Exceptions</span><br><span class="line">This rule ignores private parent class fields, but in all other such cases, the child class field should be renamed.</span><br><span class="line">public class Fruit &#123;</span><br><span class="line">  private Season ripe;</span><br><span class="line">  // ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Raspberry extends Fruit &#123;</span><br><span class="line">  private Season ripe;  // Compliant as parent field &apos;ripe&apos; is anyway not visible from Raspberry</span><br><span class="line">  // ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h4 id="Anonymous-inner-classes-containing-only-one-method-should-become-lambdas"><a href="#Anonymous-inner-classes-containing-only-one-method-should-become-lambdas" class="headerlink" title="Anonymous inner classes containing only one method should become lambdas"></a>Anonymous inner classes containing only one method should become lambdas</h4><p>Major</p>
-<p>Before Java 8, the only way to partially support closures in Java was by using anonymous inner classes. But the syntax of anonymous classes may seem unwieldy and unclear.<br>With Java 8, most uses of anonymous inner classes should be replaced by lambdas to highly increase the readability of the source code.<br>Note that this rule is automatically disabled when the project’s sonar.java.source is lower than 8.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Noncompliant Code Example</span><br><span class="line">myCollection.stream().map(new Mapper&lt;String,String&gt;() &#123;</span><br><span class="line">  public String map(String input) &#123;</span><br><span class="line">    return new StringBuilder(input).reverse().toString();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">Predicate&lt;String&gt; isEmpty = new Predicate&lt;String&gt; &#123;</span><br><span class="line">    boolean test(String myString) &#123;</span><br><span class="line">        return myString.isEmpty();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Compliant Solution</span><br><span class="line">myCollection.stream().map(input -&gt; new StringBuilder(input).reverse().toString());</span><br><span class="line"></span><br><span class="line">Predicate&lt;String&gt; isEmpty = myString -&gt; myString.isEmpty();</span><br></pre></td></tr></table></figure></p>
-<h4 id="FunctionalInterface-annotation-should-be-used-to-flag-Single-Abstract-Method-interfaces"><a href="#FunctionalInterface-annotation-should-be-used-to-flag-Single-Abstract-Method-interfaces" class="headerlink" title="@FunctionalInterface annotation should be used to flag Single Abstract Method interfaces"></a>@FunctionalInterface annotation should be used to flag Single Abstract Method interfaces</h4><p>Critical</p>
-<p>A Single Abstract Method (SAM) interface is a Java interface containing only one method. The Java API is full of SAM interfaces, such as java.lang.Runnable, java.awt.event.ActionListener, java.util.Comparator and java.util.concurrent.Callable. SAM interfaces have a special place in Java 8 because they can be implemented using Lambda expressions or Method references.<br>Using @FunctionalInterface forces a compile break when an additional, non-overriding abstract method is added to a SAM, which would break the use of Lambda implementations.<br>Note that this rule is automatically disabled when the project’s sonar.java.source is lower than 8.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Noncompliant Code Example</span><br><span class="line">public interface Changeable&lt;T&gt; &#123;</span><br><span class="line">  public void change(T o);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Compliant Solution</span><br><span class="line">@FunctionalInterface</span><br><span class="line">public interface Changeable&lt;T&gt; &#123;</span><br><span class="line">  public void change(T o);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h4 id="“URL-hashCode”-and-“URL-equals”-should-be-avoided"><a href="#“URL-hashCode”-and-“URL-equals”-should-be-avoided" class="headerlink" title="“URL.hashCode” and “URL.equals” should be avoided"></a>“URL.hashCode” and “URL.equals” should be avoided</h4><p>Bug<br> Major</p>
-<p>The equals and hashCode methods of java.net.URL both make calls out to the Internet and are blocking operations. URI on the other hand makes no such calls and should be used instead unless the specific URL functionality is required.<br>This rule checks for uses of URL ‘s in Map and Set , and for explicit calls to the equals and hashCode methods.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">Noncompliant Code Example</span><br><span class="line">public void checkUrl(URL url) &#123;</span><br><span class="line">  Set&lt;URL&gt; sites = new HashSet&lt;URL&gt;();  // Noncompliant</span><br><span class="line"></span><br><span class="line">  URL homepage = new URL(&quot;http://sonarsource.com&quot;);  // Compliant</span><br><span class="line">  if (homepage.equals(url)) &#123; // Noncompliant</span><br><span class="line">    // ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Compliant Solution</span><br><span class="line">public void checkUrl(URL url) &#123;</span><br><span class="line">  Set&lt;URI&gt; sites = new HashSet&lt;URI&gt;();  // Compliant</span><br><span class="line"></span><br><span class="line">  URI homepage = new URI(&quot;http://sonarsource.com&quot;);  // Compliant</span><br><span class="line">  URI uri = url.toURI();</span><br><span class="line">  if (homepage.equals(uri)) &#123;  // Compliant</span><br><span class="line">    // ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
   
 
     </div>
@@ -793,6 +763,90 @@
 
 
   
+    <article id="post-Class-forName和ClassLoader-loadClass加载类的区别" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/15/Class-forName和ClassLoader-loadClass加载类的区别/">Class.forName和ClassLoader.loadClass加载类的区别</a>
+    </h1>
+  
+
+        
+        <a href="/2018/09/15/Class-forName和ClassLoader-loadClass加载类的区别/" class="archive-article-date">
+  	<time datetime="2018-09-15T14:31:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+     <p>在java中Class.forName()和ClassLoader都可以对类进行加载。ClassLoader就是遵循 双亲委派模型 最终调用启动类加载器的类加载器，实现的功能是“通过一个类的全限定名来获取描述此类的二进制字节流”，获取到二进制流后放到JVM中。Class.forName()方法实际上也是调用的CLassLoader来实现的。<br></p>
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Java基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Java基础//" class="article-tag-list-link color2">Java基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/09/15/Class-forName和ClassLoader-loadClass加载类的区别/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-关于操作系统的一些事" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -995,91 +1049,6 @@
 
 
   
-    <article id="post-AQS学习笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/26/AQS学习笔记/">AQS学习笔记</a>
-    </h1>
-  
-
-        
-        <a href="/2018/08/26/AQS学习笔记/" class="archive-article-date">
-  	<time datetime="2018-08-26T08:51:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-     <p>java的内置锁一直都是备受争议的，在JDK 1.6之前，synchronized这个重量级锁其性能一直都是较为低下，虽然在1.6后，进行大量的锁优化策略(偏向锁、轻量级锁、重量级锁、锁消除、锁粗化),但是与Lock相比synchronized还是存在一些缺陷的：虽然synchronized提供了便捷性的隐式获取锁释放锁机制（基于JVM机制），但是它却缺少了获取锁与释放锁的可操作性(获取锁和释放锁只能在同一个方法中)，可中断、超时获取锁，且它为独占式在高并发场景下性能大打折扣。JUC包中的各种Lock如此优秀主要还得归功于AQS，那什么是AQS呢？</p>
-<p>AQS，AbstractQueuedSynchronizer，是实现代码块的并发访问控制的核心(CAS算法是AbstractQueuedSynchronizer的核心)。在java.util.concurrent.locks包中有很多Lock的实现类(常用的有ReentrantLock、ReentrantReadWriteLock)、CountDownLatch、Semphore内部实现都依赖AQS，然而这些锁都没有直接来继承AQS,而是定义了一个Sync类去继承AQS。这样设计的原因是锁面向的是使用用户,而同步器面向的则是线程控制,那么在锁的实现中聚合同步器而不是直接继承AQS就可以很好的隔离二者所关注的事情。<br></p>
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JUC</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/并发-多线程//" class="article-tag-list-link color2">并发/多线程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/26/AQS学习笔记/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
@@ -1246,11 +1215,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
+                <a href="javascript:void(0)" class="js-tag color4">ARP</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Integer</a>
+                <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1362,6 +1331,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Socket</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">限流</a>
               </li>
              
@@ -1379,6 +1352,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">加密解密</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Integer</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1426,11 +1403,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Netty</a>
+                <a href="javascript:void(0)" class="js-tag color4">iptables</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iptables</a>
+                <a href="javascript:void(0)" class="js-tag color1">Netty</a>
               </li>
              
               <li class="article-tag-list-item">
