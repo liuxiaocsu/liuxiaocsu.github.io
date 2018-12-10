@@ -16,13 +16,13 @@
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
 <meta property="og:description" content="套接字socket是大多数程序员都非常熟悉的概念，它是计算机网络编程的基础，TCP/UDP收发消息都靠它。我们熟悉的web服务器底层依赖它，我们用到的MySQL关系数据库、Redis内存数据库底层依赖它。我们用微信和别人聊天也依赖它，我们玩网络游戏时依赖它，读者们能够阅读这篇文章也是因为有它在背后默默地支持着网络通信。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://www.byteliu.com/2018/06/01/当我们在读写Socket时-我们究竟在读写什么-转载/markdown-img-paste-20181210211614299.png">
-<meta property="og:image" content="http://www.byteliu.com/2018/06/01/当我们在读写Socket时-我们究竟在读写什么-转载/markdown-img-paste-20181210211639218.png">
-<meta property="og:updated_time" content="2018-12-10T13:22:37.308Z">
+<meta property="og:image" content="http://www.byteliu.com/2018/06/01/当我们在读写Socket时-我们究竟在读写什么-转载/markdown-img-paste-20181210211614299.gif">
+<meta property="og:image" content="http://www.byteliu.com/2018/06/01/当我们在读写Socket时-我们究竟在读写什么-转载/markdown-img-paste-20181210211639218.gif">
+<meta property="og:updated_time" content="2018-12-10T13:26:45.938Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="当我们在读写Socket时,我们究竟在读写什么?(转载)">
 <meta name="twitter:description" content="套接字socket是大多数程序员都非常熟悉的概念，它是计算机网络编程的基础，TCP/UDP收发消息都靠它。我们熟悉的web服务器底层依赖它，我们用到的MySQL关系数据库、Redis内存数据库底层依赖它。我们用微信和别人聊天也依赖它，我们玩网络游戏时依赖它，读者们能够阅读这篇文章也是因为有它在背后默默地支持着网络通信。">
-<meta name="twitter:image" content="http://www.byteliu.com/2018/06/01/当我们在读写Socket时-我们究竟在读写什么-转载/markdown-img-paste-20181210211614299.png">
+<meta name="twitter:image" content="http://www.byteliu.com/2018/06/01/当我们在读写Socket时-我们究竟在读写什么-转载/markdown-img-paste-20181210211614299.gif">
   
     <link rel="alternative" href="/atom.xml" title="Byte_Liu&#39;s Blog" type="application/atom+xml">
   
@@ -209,11 +209,11 @@
   
     <p>套接字socket是大多数程序员都非常熟悉的概念，它是计算机网络编程的基础，TCP/UDP收发消息都靠它。我们熟悉的web服务器底层依赖它，我们用到的MySQL关系数据库、Redis内存数据库底层依赖它。我们用微信和别人聊天也依赖它，我们玩网络游戏时依赖它，读者们能够阅读这篇文章也是因为有它在背后默默地支持着网络通信。<br><a id="more"></a></p>
 <h3 id="一、简单过程"><a href="#一、简单过程" class="headerlink" title="一、简单过程"></a>一、简单过程</h3><p>当客户端和服务器使用TCP协议进行通信时，客户端封装一个请求对象req，将请求对象req序列化成字节数组，然后通过套接字socket将字节数组发送到服务器，服务器通过套接字socket读取到字节数组，再反序列化成请求对象req，进行处理，处理完毕后，生成一个响应对应res，将响应对象res序列化成字节数组，然后通过套接字将自己数组发送给客户端，客户端通过套接字socket读取到自己数组，再反序列化成响应对象。</p>
-<p><img src="/2018/06/01/当我们在读写Socket时-我们究竟在读写什么-转载/markdown-img-paste-20181210211614299.png" alt="http://p9.pstatp.com/large/pgc-image/1531286608417d499ec65b0"><br>通信框架往往可以将序列化的过程隐藏起来，我们所看到的现象就是上图所示，请求对象req和响应对象res在客户端和服务器之间跑来跑去。</p>
+<p><img src="/2018/06/01/当我们在读写Socket时-我们究竟在读写什么-转载/markdown-img-paste-20181210211614299.gif" alt=""><br>通信框架往往可以将序列化的过程隐藏起来，我们所看到的现象就是上图所示，请求对象req和响应对象res在客户端和服务器之间跑来跑去。</p>
 <p>也许你觉得这个过程还是挺简单的，很好理解，但是实际上背后发生的一系列事件超出了你们中大多数人的想象。通信的真实过程要比上面的这张图复杂太多。你也许会问，我们需要了解的那么深入么，直接拿来用不就可以了么？</p>
 <p>在互联网技术服务行业工作多年的经验告诉我，如果你对底层机制不了解，你就会不明白为什么对套接字socket的读写会出现各种奇奇乖乖的问题，为什么有时会阻塞，有时又不阻塞，有时候还报错，为什么会有粘包半包问题，NIO具体又是什么，它是什么特别新鲜的技术么？对于这些问题的理解都需要你了解底层机制。</p>
 <h3 id="二、细节过程"><a href="#二、细节过程" class="headerlink" title="二、细节过程"></a>二、细节过程</h3><p>为了方便大家对通信底层的理解，我花了些时间做了下面这个动画，它并不能完全覆盖底层细节的全貌，但是对于理解套接字的工作机制已经足够了。请读者仔细观察这个动画，后面的讲解将围绕着这个动画展开。</p>
-<p><img src="/2018/06/01/当我们在读写Socket时-我们究竟在读写什么-转载/markdown-img-paste-20181210211639218.png" alt="http://p99.pstatp.com/large/pgc-image/15312866085016f2726a288"></p>
+<p><img src="/2018/06/01/当我们在读写Socket时-我们究竟在读写什么-转载/markdown-img-paste-20181210211639218.gif" alt=""></p>
 <p>我们平时用到的套接字其实只是一个引用(一个对象ID)，这个套接字对象实际上是放在操作系统内核中。这个套接字对象内部有两个重要的缓冲结构，一个是读缓冲(read buffer)，一个是写缓冲(write buffer)，它们都是有限大小的数组结构。</p>
 <p>当我们对客户端的socket写入字节数组时(序列化后的请求消息对象req)，是将字节数组拷贝到内核区套接字对象的write buffer中，内核网络模块会有单独的线程负责不停地将write buffer的数据拷贝到网卡硬件，网卡硬件再将数据送到网线，经过一些列路由器交换机，最终送达服务器的网卡硬件中。</p>
 <p>同样，服务器内核的网络模块也会有单独的线程不停地将收到的数据拷贝到套接字的read buffer中等待用户层来读取。最终服务器的用户进程通过socket引用的read方法将read buffer中的数据拷贝到用户程序内存中进行反序列化成请求对象进行处理。然后服务器将处理后的响应对象走一个相反的流程发送给客户端，这里就不再具体描述。</p>
@@ -517,11 +517,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机基础</a>
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color1">计算机基础</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -685,11 +685,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
+                <a href="javascript:void(0)" class="js-tag color1">CGLIB</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">CGLIB</a>
+                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
               </li>
              
               <li class="article-tag-list-item">
