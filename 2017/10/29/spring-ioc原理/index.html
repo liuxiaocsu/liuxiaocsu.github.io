@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
 <meta property="og:description" content="IoC(Inversion of Control)：IoC就是应用本身不依赖对象的创建和维护而是交给外部容器(这里为spring),这要就把应用和对象之间解耦,控制权交给了外部容器。即Don’t call me,I’ll call you！所以IoC也称DI(依赖注入)对象的创建和维护依赖于外部容器. 我们可能会经常听到另一个词：DI,因为IOC确实不够开门见山，因此业界曾进行了广泛的讨论，最终软">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:updated_time" content="2018-12-09T08:06:18.355Z">
+<meta property="og:updated_time" content="2018-12-10T04:08:53.468Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="spring ioc原理">
 <meta name="twitter:description" content="IoC(Inversion of Control)：IoC就是应用本身不依赖对象的创建和维护而是交给外部容器(这里为spring),这要就把应用和对象之间解耦,控制权交给了外部容器。即Don’t call me,I’ll call you！所以IoC也称DI(依赖注入)对象的创建和维护依赖于外部容器. 我们可能会经常听到另一个词：DI,因为IOC确实不够开门见山，因此业界曾进行了广泛的讨论，最终软">
@@ -238,7 +238,7 @@
 <p>典型应用：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public interface HelloService &#123;</span><br><span class="line">    public void say();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public class HelloServiceImpl implements HelloService &#123;</span><br><span class="line">    private String name;</span><br><span class="line">    public void say() &#123;</span><br><span class="line">        System.out.println(&quot;Hello &quot;+name);</span><br><span class="line">    &#125;</span><br><span class="line">    public void setName(String name) &#123;</span><br><span class="line">        this.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">   ApplicationContext context = new FileSystemXmlApplicationContext(&quot;applicationContext.xml&quot;);</span><br><span class="line">   HelloService helloService = (HelloService) context.getBean(&quot;hello&quot;);</span><br><span class="line">   animal.say();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">   ApplicationContext context = new FileSystemXmlApplicationContext(&quot;applicationContext.xml&quot;);</span><br><span class="line">   HelloService helloService = (HelloService) context.getBean(&quot;hello&quot;);</span><br><span class="line">   helloService.say();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>applicationContext.xml<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;hello&quot; class=&quot;com.byteliu.service.HelloServiceImpl&quot;&gt;</span><br><span class="line">   &lt;property name=&quot;name&quot; value=&quot;Byte_Liu&quot; /&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure></p>
 <p>接下来就让我们来看看Spring 到底是怎么运行的吧！</p>
 <p>Spring加载我们的配置文件，将我们配置的信息保存在一个HashMap中，HashMap的key就是Bean 的 Id ，HasMap 的value是这个Bean，只有这样我们才能通过context.getBean(“hello”)这个方法获得HelloService这个类。我们都知道Spirng可以注入基本类型，而且可以注入像List，Map这样的类型，接下来就让我们以Map为例看看Spring是怎么保存的吧。</p>
@@ -584,6 +584,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">tag1</a>
               </li>
              
@@ -621,10 +625,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">IO</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -672,6 +672,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">代码规范</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">LVS</a>
               </li>
              
@@ -700,6 +704,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">CGLIB</a>
               </li>
              
@@ -708,15 +716,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
+                <a href="javascript:void(0)" class="js-tag color1">Netty</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">iptables</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Netty</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -729,10 +733,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">数据库锁</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">代码规范</a>
               </li>
              
               <li class="article-tag-list-item">
