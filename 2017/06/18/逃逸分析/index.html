@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://www.byteliu.com">
   <title>逃逸分析 | Byte_Liu&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="逃逸分析（Escape Analysis)是Java虚拟机中比较先进的编译优化技术，它与类型继承关系分析一样，并不是直接优化代码的手段，而是为其他优化手段提供依据的分析技术。逃逸分析的基本行为就是分析对象动态作用域：当一个对象在方法里面被定义后，它可能被外部方法所引用，例如作为调用参数传递到其他方法中，这种行为称为方法逃逸。甚至还有可能被外部线程访问到，譬如赋值给类变量或可以在其他线程中访问的实例">
+  <meta name="description" content="在Java的编译体系中，一个Java的源代码文件变成计算机可执行的机器指令的过程中，需要经过两段编译，第一段是把.java文件转换成.class文件。第二段编译是把.class转换成机器指令的过程。 第一段编译就是javac命令。在第二编译阶段，JVM 通过解释字节码将其翻译成对应的机器指令，逐条读入，逐条解释翻译。很显然，经过解释执行，其执行速度必然会比可执行的二进制字节码程序慢很多。这就是传统">
 <meta name="keywords" content="Java基础">
 <meta property="og:type" content="article">
 <meta property="og:title" content="逃逸分析">
 <meta property="og:url" content="http://www.byteliu.com/2017/06/18/逃逸分析/index.html">
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
-<meta property="og:description" content="逃逸分析（Escape Analysis)是Java虚拟机中比较先进的编译优化技术，它与类型继承关系分析一样，并不是直接优化代码的手段，而是为其他优化手段提供依据的分析技术。逃逸分析的基本行为就是分析对象动态作用域：当一个对象在方法里面被定义后，它可能被外部方法所引用，例如作为调用参数传递到其他方法中，这种行为称为方法逃逸。甚至还有可能被外部线程访问到，譬如赋值给类变量或可以在其他线程中访问的实例">
+<meta property="og:description" content="在Java的编译体系中，一个Java的源代码文件变成计算机可执行的机器指令的过程中，需要经过两段编译，第一段是把.java文件转换成.class文件。第二段编译是把.class转换成机器指令的过程。 第一段编译就是javac命令。在第二编译阶段，JVM 通过解释字节码将其翻译成对应的机器指令，逐条读入，逐条解释翻译。很显然，经过解释执行，其执行速度必然会比可执行的二进制字节码程序慢很多。这就是传统">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:updated_time" content="2018-12-09T08:08:30.193Z">
+<meta property="og:updated_time" content="2018-12-11T06:12:02.753Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="逃逸分析">
-<meta name="twitter:description" content="逃逸分析（Escape Analysis)是Java虚拟机中比较先进的编译优化技术，它与类型继承关系分析一样，并不是直接优化代码的手段，而是为其他优化手段提供依据的分析技术。逃逸分析的基本行为就是分析对象动态作用域：当一个对象在方法里面被定义后，它可能被外部方法所引用，例如作为调用参数传递到其他方法中，这种行为称为方法逃逸。甚至还有可能被外部线程访问到，譬如赋值给类变量或可以在其他线程中访问的实例">
+<meta name="twitter:description" content="在Java的编译体系中，一个Java的源代码文件变成计算机可执行的机器指令的过程中，需要经过两段编译，第一段是把.java文件转换成.class文件。第二段编译是把.class转换成机器指令的过程。 第一段编译就是javac命令。在第二编译阶段，JVM 通过解释字节码将其翻译成对应的机器指令，逐条读入，逐条解释翻译。很显然，经过解释执行，其执行速度必然会比可执行的二进制字节码程序慢很多。这就是传统">
   
     <link rel="alternative" href="/atom.xml" title="Byte_Liu&#39;s Blog" type="application/atom+xml">
   
@@ -204,17 +204,24 @@
       
 
   
-    <p>逃逸分析（Escape Analysis)是Java虚拟机中比较先进的编译优化技术，它与类型继承关系分析一样，并不是直接优化代码的手段，而是为其他优化手段提供依据的分析技术。逃逸分析的基本行为就是分析对象动态作用域：当一个对象在方法里面被定义后，它可能被外部方法所引用，例如作为调用参数传递到其他方法中，这种行为称为方法逃逸。甚至还有可能被外部线程访问到，譬如赋值给类变量或可以在其他线程中访问的实例变量，这种行为称为线程逃逸。<br><a id="more"></a></p>
+    <p>在Java的编译体系中，一个Java的源代码文件变成计算机可执行的机器指令的过程中，需要经过两段编译，第一段是把.java文件转换成.class文件。第二段编译是把.class转换成机器指令的过程。</p>
+<p>第一段编译就是javac命令。在第二编译阶段，JVM 通过解释字节码将其翻译成对应的机器指令，逐条读入，逐条解释翻译。很显然，经过解释执行，其执行速度必然会比可执行的二进制字节码程序慢很多。这就是传统的JVM的解释器（Interpreter）的功能。为了解决这种效率问题，引入了 JIT（即时编译） 技术。</p>
+<p>引入了 JIT 技术后，Java程序还是通过解释器进行解释执行，当JVM发现某个方法或代码块运行特别频繁的时候，就会认为这是“热点代码”（Hot Spot Code)。然后JIT会把部分“热点代码”翻译成本地机器相关的机器码，并进行优化，然后再把翻译后的机器码缓存起来，以备下次使用。</p>
+<p>本文主要介绍JIT优化中最重要的一个技术—逃逸分析。<br>逃逸分析（Escape Analysis)是Java虚拟机中比较先进的编译优化技术，它与类型继承关系分析一样，并不是直接优化代码的手段，而是为其他优化手段提供依据的分析技术。逃逸分析的基本行为就是分析对象动态作用域：当一个对象在方法里面被定义后，它可能被外部方法所引用，例如作为调用参数传递到其他方法中，这种行为称为方法逃逸。甚至还有可能被外部线程访问到，譬如赋值给类变量或可以在其他线程中访问的实例变量，这种行为称为线程逃逸。<br><a id="more"></a></p>
+<p>下面第一段代码中的sb就方法逃逸了，而第二段代码中的sb就没有逃逸:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public static StringBuffer craeteStringBuffer(String s1, String s2) &#123;</span><br><span class="line">    StringBuffer sb = new StringBuffer();</span><br><span class="line">    sb.append(s1);</span><br><span class="line">    sb.append(s2);</span><br><span class="line">    return sb;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static String createStringBuffer(String s1, String s2) &#123;</span><br><span class="line">    StringBuffer sb = new StringBuffer();</span><br><span class="line">    sb.append(s1);</span><br><span class="line">    sb.append(s2);</span><br><span class="line">    return sb.toString();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>如果能证明一个对象不会逃逸到方法或线程之外，也就是别的方法或线程无法通过任何途径访问到这个对象，则可能为这个变量进行一些高效的优化，如：</p>
-<ol>
-<li><p>栈上分配（Stack Allocations):<br>Java虚拟机中，在Java堆上分配创建对象的内存空间几乎是Java程序员都清楚的常识了，Java堆中的对象对于各个线程都是共享和可见的，只要持有这个对象的引用，就可以访问堆中存储的对象数据。虚拟机的垃圾收集系统可以回收掉堆中不再使用的对象，但回收动作无论是筛选可回收对象，还是回收和整理内存都需要耗费时间。如果确定一个对象不会逃逸出方法之外，那让这个对象在栈上分配内存将会是一个很不错的主意，对象所占用的内存空间就可以随栈帧出栈而销毁。在一般应用中，不会逃逸的局部对象所占的比率很大，如果能使用栈上分配，那大量的对象就会随着方法的结束而自动销毁了，垃圾收集系统的压力将会小很多。</p>
-</li>
-<li><p>同步消除（Synchronization Elimination):<br>线程同步本身就是一个相对耗时的过程，如果逃逸分析能够确定一个变量不会逃逸出线程，无法被其他线程访问，那这个变量的读写肯定就不会有竞争，对这个变量实施的同步措施也就可以消除掉。</p>
-</li>
-<li><p>标量替换（Scalar Replacement):<br>标量（Scalar)是指一个数据已经无法再分解成更小的数据来表示了，Java虚拟机中的原始数据类型（int、long等数值类型 及reference类型等）都不能再进一步分解，它们就可以被称为标量。相对的，如果一个数据可以继续分解，那它就被称做聚合量（Aggregate), Java中的对象就是最典型的聚合量。如果把一个Java对象拆散，根据程序访问的情况，将其使用到的成员变量恢复原始类型来访问就叫做标量替换。如果逃逸分析证明一个对象不会被外部访问，并且这个对象可以被拆散的话，那程序真正执行的时候将可能不创建这个对象，而改为直接创建它的若干个被这个方法使用到的成员变景来代替。将对象拆分后，除了可以让对象的成员变量在栈上（栈上存储的数据，很大机会会被虚拟机分配至物理机器的高速寄存器中存储）分配和读写之外，还可以为后续进一步的优化手段创建条件。</p>
-</li>
-</ol>
-<p>逃逸分析在Sim JDK 1.6中实现，这项优化尚未成熟，仍有巨大的改进余地。不成熟的原因主要是不能保证逃逸分析的性能收益必定高于它的消耗。如果要百分之百准确地判断一个对象是否会逃逸，需要进行数据流敏感的复杂分析，来确定程序各个分支执行时对此对象的影响。这是一个相对髙耗时的过程，如果分析完后发现没有几个不逃逸的对象，那时间就白白浪费了，所以目前虚拟机只能采用不那么准确，但时间压力相对较小的算法来完成逃逸分析。如果有需要，并且确认对程序运行有益，用户可以使用参数<code>-XX:+DoEscapeAnalysis</code>来手动开启逃逸分析，开启之后可以通过参数<code>-XX:+PrintEscapeAnalysis</code>来査看分析结果。另外，用户可以使用参数-XX:+EliminateAllocations来开启标量替换，使用参数 <code>+XX:+EliminateLocks</code>来开启同步消除，使用参数<code>-XX:+PrintEliminateAllocations</code>来査看标量的替换情况。</p>
+<h4 id="1-同步消除（Synchronization-Elimination"><a href="#1-同步消除（Synchronization-Elimination" class="headerlink" title="1. 同步消除（Synchronization Elimination):"></a>1. 同步消除（Synchronization Elimination):</h4><p>线程同步本身就是一个相对耗时的过程，如果逃逸分析能够确定一个变量不会逃逸出线程，无法被其他线程访问，那这个变量的读写肯定就不会有竞争，对这个变量实施的同步措施也就可以消除掉。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public void f() &#123;</span><br><span class="line">    Object hollis = new Object();</span><br><span class="line">    synchronized(hollis) &#123;</span><br><span class="line">        System.out.println(hollis);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>代码中对hollis这个对象进行加锁，但是hollis对象的生命周期只在f()方法中，并不会被其他线程所访问到，所以在JIT编译阶段就会被优化掉。<br>优化成：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public void f() &#123;</span><br><span class="line">    Object hollis = new Object();</span><br><span class="line">    System.out.println(hollis);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>所以，在使用synchronized的时候，如果JIT经过逃逸分析之后发现并无线程安全问题的话，就会做锁消除。</p>
+<h4 id="2-标量替换（Scalar-Replacement"><a href="#2-标量替换（Scalar-Replacement" class="headerlink" title="2. 标量替换（Scalar Replacement):"></a>2. 标量替换（Scalar Replacement):</h4><p>标量（Scalar)是指一个数据已经无法再分解成更小的数据来表示了，Java虚拟机中的原始数据类型（int、long等数值类型 及reference类型等）都不能再进一步分解，它们就可以被称为标量。相对的，如果一个数据可以继续分解，那它就被称做聚合量（Aggregate), Java中的对象就是最典型的聚合量。如果把一个Java对象拆散，根据程序访问的情况，将其使用到的成员变量恢复原始类型来访问就叫做标量替换。如果逃逸分析证明一个对象不会被外部访问，并且这个对象可以被拆散的话，那程序真正执行的时候将可能不创建这个对象，而改为直接创建它的若干个被这个方法使用到的成员变景来代替。将对象拆分后，除了可以让对象的成员变量在栈上（栈上存储的数据，很大机会会被虚拟机分配至物理机器的高速寄存器中存储）分配和读写之外，还可以为后续进一步的优化手段创建条件。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">    alloc();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private static void alloc() &#123;</span><br><span class="line">    Point point = new Point（1,2）;</span><br><span class="line">    System.out.println(&quot;point.x=&quot;+point.x+&quot;; point.y=&quot;+point.y);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Point&#123;</span><br><span class="line">    private int x;</span><br><span class="line">    private int y;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>以上代码中，point对象并没有逃逸出alloc方法，并且point对象是可以拆解成标量的。那么，JIT就会不会直接创建Point对象，而是直接使用两个标量int x ，int y来替代Point对象。<br>经过标量替换后，就会变成：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">private static void alloc() &#123;</span><br><span class="line">int x = 1;</span><br><span class="line">int y = 2;</span><br><span class="line">System.out.println(&quot;point.x=&quot;+x+&quot;; point.y=&quot;+y);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以看到，Point这个聚合量经过逃逸分析后，发现他并没有逃逸，就被替换成两个聚合量了。那么标量替换有什么好处呢？就是可以大大减少堆内存的占用。因为一旦不需要创建对象了，那么就不再需要分配堆内存了。</p>
+<p>标量替换为栈上分配提供了很好的基础。</p>
+<h4 id="3-栈上分配（Stack-Allocations"><a href="#3-栈上分配（Stack-Allocations" class="headerlink" title="3. 栈上分配（Stack Allocations):"></a>3. 栈上分配（Stack Allocations):</h4><p>Java虚拟机中，在Java堆上分配创建对象的内存空间几乎是Java程序员都清楚的常识了，Java堆中的对象对于各个线程都是共享和可见的，只要持有这个对象的引用，就可以访问堆中存储的对象数据。虚拟机的垃圾收集系统可以回收掉堆中不再使用的对象，但回收动作无论是筛选可回收对象，还是回收和整理内存都需要耗费时间。但是，有一种特殊情况，那就是如果经过逃逸分析后发现，一个对象并没有逃逸出方法的话，那么就可能被优化成栈上分配,这样就无需在堆上分配内存，也无须进行垃圾回收了。确定一个对象不会逃逸出方法之外，那让这个对象在栈上分配内存是一个很不错的主意，对象所占用的内存空间就可以随栈帧出栈而销毁。在一般应用中，不会逃逸的局部对象所占的比率很大，如果能使用栈上分配，那大量的对象就会随着方法的结束而自动销毁了，垃圾收集系统的压力将会小很多。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>关于逃逸分析的论文在1999年就已经发表了，但直到JDK 1.6才有实现，而且这项技术到如今也并不是十分成熟的，仍有巨大的改进余地。不成熟的原因主要是不能保证逃逸分析的性能收益必定高于它的消耗。如果要百分之百准确地判断一个对象是否会逃逸，需要进行数据流敏感的复杂分析，来确定程序各个分支执行时对此对象的影响。这是一个相对髙耗时的过程，如果分析完后发现没有几个不逃逸的对象，那时间就白白浪费了，所以目前虚拟机只能采用不那么准确，但时间压力相对较小的算法来完成逃逸分析。如果有需要，并且确认对程序运行有益，用户可以使用参数<code>-XX:+DoEscapeAnalysis</code>来手动开启逃逸分析，开启之后可以通过参数<code>-XX:+PrintEscapeAnalysis</code>来査看分析结果。另外，用户可以使用参数<code>-XX:+EliminateAllocations</code>来开启标量替换，使用参数 <code>+XX:+EliminateLocks</code>来开启同步消除，使用参数<code>-XX:+PrintEliminateAllocations</code>来査看标量的替换情况。</p>
+<p>现在我们知道对象和数组并不是都在堆上分配内存的。如果开启了逃逸分析，进行了标量替换后，就是在栈上分配内存。</p>
+<p><strong>开启了逃逸分析 + 进行了标量替换 = 栈上分配内存</strong></p>
 
   
 
@@ -346,7 +353,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    目录，不存在的…
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-同步消除（Synchronization-Elimination"><span class="toc-number">1.</span> <span class="toc-text">1. 同步消除（Synchronization Elimination):</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-标量替换（Scalar-Replacement"><span class="toc-number">2.</span> <span class="toc-text">2. 标量替换（Scalar Replacement):</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-栈上分配（Stack-Allocations"><span class="toc-number">3.</span> <span class="toc-text">3. 栈上分配（Stack Allocations):</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -510,11 +517,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机基础</a>
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color1">计算机基础</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -547,10 +554,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -594,11 +597,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Java虚拟机</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Java虚拟机</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -638,11 +645,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Integer</a>
+                <a href="javascript:void(0)" class="js-tag color5">加密解密</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">加密解密</a>
+                <a href="javascript:void(0)" class="js-tag color3">Integer</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -682,11 +689,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
+                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
+                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
 <meta property="og:description" content="Java位运算表示方法　在Java语言中，二进制数使用补码表示，最高位为符号位，正数的符号位为0，负数为1。补码的表示需要满足如下要求。 　(1)正数的最高位为0，其余各位代表数值本身(二进制数)。 　(2)对于负数，通过对该数绝对值的补码按位取反，再对整个数加1。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:updated_time" content="2018-12-10T14:47:19.888Z">
+<meta property="og:updated_time" content="2018-12-10T14:49:37.312Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="位运算">
 <meta name="twitter:description" content="Java位运算表示方法　在Java语言中，二进制数使用补码表示，最高位为符号位，正数的符号位为0，负数为1。补码的表示需要满足如下要求。 　(1)正数的最高位为0，其余各位代表数值本身(二进制数)。 　(2)对于负数，通过对该数绝对值的补码按位取反，再对整个数加1。">
@@ -303,7 +303,7 @@
 </ol>
 <p>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">输入：s = &quot;abcd&quot;  t = &quot;abcde&quot;  输出：e</span><br></pre></td></tr></table></figure></p>
 <p>解释：’e’ 是那个被添加的字母。</p>
-<p>这个题目如果想不到用异或运算的话，写起来可能真的会有点麻烦。我们想到异或运算的特点，a ^ a = 0，如果插入了一个字母的话，那么这个两个字符串中，出现的次数肯定是奇数次，而其他的都是偶数次，所以直接把所有的字符都异或一遍，答案自然就出来了！<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public char findTheDifference(String s,String t) &#123;</span><br><span class="line">    char res = t.charAt(0);</span><br><span class="line">    for (int i = 0; i &lt; s.length(); i++) &#123;</span><br><span class="line">        res ^= s.charAt(i);</span><br><span class="line">    &#125;</span><br><span class="line">    for (int i = 1; i &lt; t.length(); i++) &#123;</span><br><span class="line">        res ^= t.charAt(i);</span><br><span class="line">    &#125;</span><br><span class="line">    return res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">public char findTheDifference2(String s, String t) &#123;</span><br><span class="line">    char c = 0;</span><br><span class="line">    for (int i = 0; i &lt; s.length(); i++) &#123;</span><br><span class="line">        c ^= s.charAt(i);</span><br><span class="line">    &#125;</span><br><span class="line">    for (int i = 0; i &lt; t.length(); i++) &#123;</span><br><span class="line">        c ^= t.charAt(i);</span><br><span class="line">    &#125;</span><br><span class="line">    return c;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>这个题目如果想不到用异或运算的话，写起来可能真的会有点麻烦。我们想到异或运算的特点，a ^ a = 0，如果插入了一个字母的话，那么这个两个字符串中，出现的次数肯定是奇数次，而其他的都是偶数次，所以直接把所有的字符都异或一遍，答案自然就出来了！<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public char findTheDifference(String s,String t) &#123;</span><br><span class="line">    char res = t.charAt(0);</span><br><span class="line">    for (int i = 0; i &lt; s.length(); i++) &#123;</span><br><span class="line">        res ^= s.charAt(i);</span><br><span class="line">    &#125;</span><br><span class="line">    for (int i = 1; i &lt; t.length(); i++) &#123;</span><br><span class="line">        res ^= t.charAt(i);</span><br><span class="line">    &#125;</span><br><span class="line">    return res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">public char findTheDifference2(String s, String t) &#123;</span><br><span class="line">    char c = 0;</span><br><span class="line">    for (int i = 0; i &lt; s.length(); i++) &#123;</span><br><span class="line">        c ^= s.charAt(i);</span><br><span class="line">    &#125;</span><br><span class="line">    for (int i = 0; i &lt; t.length(); i++) &#123;</span><br><span class="line">        c ^= t.charAt(i);</span><br><span class="line">    &#125;</span><br><span class="line">    return c;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>注意上面两种写法，方法一第二次循环从1开始，方法二第二次循环从0开始，why?</p>
 <p>之前还有一个面试题目，就是有 N + 1 块相同容量的硬盘，其中 N 块用来存储数据，如果利用多余的 1 块硬盘来存储 N 块硬盘的数据备份，假设硬盘最多同时只会损坏 1 块。我想通过上面几个题，大家应该很快想到存储办法了吧，答案就是多余的 1 块硬盘存储 N 块硬盘异或的结果，那么当其中 1 块硬盘损坏的时候，只需要把其他好的硬盘数据再异或一遍，即可得到损坏的硬盘的数据了。</p>
 <p>通过上面的例子，我们发现在查找“奇数个”的数据的时候，异或运算用起来还是非常方便的。异或运算还有很多其他的应用，比如简单的加密数据，加密：result = a ^ password，解密：a = result ^ password。<br>异或运算很简单，难点在于遇到问题能不能想到利用异或运算来解决问题，这就需要我们在编程过程中一点点积累经验。</p>
@@ -718,11 +718,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机基础</a>
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color1">计算机基础</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -755,10 +755,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -802,11 +798,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Java虚拟机</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Java虚拟机</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -846,11 +846,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Integer</a>
+                <a href="javascript:void(0)" class="js-tag color5">加密解密</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">加密解密</a>
+                <a href="javascript:void(0)" class="js-tag color3">Integer</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -890,11 +890,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
+                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
+                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
               </li>
              
               <li class="article-tag-list-item">

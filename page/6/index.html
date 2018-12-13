@@ -179,6 +179,92 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-TCP协议的KeepAlive机制与HeartBeat心跳包" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/25/TCP协议的KeepAlive机制与HeartBeat心跳包/">TCP协议的KeepAlive机制与HeartBeat心跳包</a>
+    </h1>
+  
+
+        
+        <a href="/2017/07/25/TCP协议的KeepAlive机制与HeartBeat心跳包/" class="archive-article-date">
+  	<time datetime="2017-07-25T06:23:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-25</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+     <p>很多应用层协议都有HeartBeat机制，通常是客户端每隔一小段时间向服务器发送一个数据包，通知服务器自己仍然在线，并传输一些可能必要的数据。使用心跳包的典型协议是IM，比如QQ/MSN/飞信等协议。</p>
+<p>心跳包之所以叫心跳包是因为：它像心跳一样每隔固定时间发一次，以此来告诉服务器，这个客户端还活着。事实上这是为了保持长连接，至于这个包的内容，是没有什么特别规定的，不过一般都是很小的包，或者只包含包头的一个空包。</p>
+<p>在TCP的机制里面，本身是存在有心跳包的机制的，也就是TCP的选项：SO_KEEPALIVE。系统默认是设置的2小时的心跳频率。但是它检查不到机器断电、网线拔出、防火墙这些断线。而且逻辑层处理断线可能也不是那么好处理。一般，如果只是用于保活还是可以的。<br></p>
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">TCP</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/网络协议//" class="article-tag-list-link color5">网络协议</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/07/25/TCP协议的KeepAlive机制与HeartBeat心跳包/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-TCP保活" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -873,7 +959,10 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p>逃逸分析（Escape Analysis)是Java虚拟机中比较先进的编译优化技术，它与类型继承关系分析一样，并不是直接优化代码的手段，而是为其他优化手段提供依据的分析技术。逃逸分析的基本行为就是分析对象动态作用域：当一个对象在方法里面被定义后，它可能被外部方法所引用，例如作为调用参数传递到其他方法中，这种行为称为方法逃逸。甚至还有可能被外部线程访问到，譬如赋值给类变量或可以在其他线程中访问的实例变量，这种行为称为线程逃逸。<br></p>
+     <p>在Java的编译体系中，一个Java的源代码文件变成计算机可执行的机器指令的过程中，需要经过两段编译，第一段是把.java文件转换成.class文件。第二段编译是把.class转换成机器指令的过程。</p>
+<p>第一段编译就是javac命令。在第二编译阶段，JVM 通过解释字节码将其翻译成对应的机器指令，逐条读入，逐条解释翻译。很显然，经过解释执行，其执行速度必然会比可执行的二进制字节码程序慢很多。这就是传统的JVM的解释器（Interpreter）的功能。为了解决这种效率问题，引入了 JIT（即时编译） 技术。</p>
+<p>引入了 JIT 技术后，Java程序还是通过解释器进行解释执行，当JVM发现某个方法或代码块运行特别频繁的时候，就会认为这是“热点代码”（Hot Spot Code)。然后JIT会把部分“热点代码”翻译成本地机器相关的机器码，并进行优化，然后再把翻译后的机器码缓存起来，以备下次使用。</p>
+<p>本文主要介绍JIT优化中最重要的一个技术—逃逸分析。<br>逃逸分析（Escape Analysis)是Java虚拟机中比较先进的编译优化技术，它与类型继承关系分析一样，并不是直接优化代码的手段，而是为其他优化手段提供依据的分析技术。逃逸分析的基本行为就是分析对象动态作用域：当一个对象在方法里面被定义后，它可能被外部方法所引用，例如作为调用参数传递到其他方法中，这种行为称为方法逃逸。甚至还有可能被外部线程访问到，譬如赋值给类变量或可以在其他线程中访问的实例变量，这种行为称为线程逃逸。<br></p>
   
 
     </div>
@@ -907,102 +996,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/06/18/逃逸分析/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Class-getResource和ClassLoader-getResource的区别" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/12/Class-getResource和ClassLoader-getResource的区别/">Class.getResource和ClassLoader.getResource的区别</a>
-    </h1>
-  
-
-        
-        <a href="/2017/06/12/Class-getResource和ClassLoader-getResource的区别/" class="archive-article-date">
-  	<time datetime="2017-06-12T04:11:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-  
-    <p>在Java中获取资源的时候，经常用到Class.getResource和ClassLoader.getResource，本文给大家说一下这两者方法在获取资源文件的路径差异。</p>
-<p>Class.getResource(String path)</p>
-<p>path不以’/‘开头时，默认是从此类所在的包下取资源；path以’/‘开头时，则是从项目的ClassPath根下获取资源。在这里’/‘表示ClassPath</p>
-<p>JDK设置这样的规则，是很好理解的，path不以’/‘开头时，我们就能获取与当前类所在的路径相同的资源文件，而以’/‘开头时可以获取ClassPath根下任意路径的资源。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public class ByteLiu &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        System.out.println(ByteLiu.class.getResource(&quot;&quot;));</span><br><span class="line">        System.out.println(ByteLiu.class.getResource(&quot;/&quot;));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">file:/Users/liuxiao/IdeaProjects/dictionary_import_tool/target/classes/com/alibaba/algorithm/</span><br><span class="line">file:/Users/liuxiao/IdeaProjects/dictionary_import_tool/target/classes/</span><br></pre></td></tr></table></figure>
-<p>Class.getClassLoader().getResource(String path)</p>
-<p>path不能以’/‘开头时，path是指类加载器的加载范围，在资源加载的过程中，使用的逐级向上委托的形式加载的，’/‘表示Boot ClassLoader中的加载范围，因为这个类加载器是C++实现的，所以加载范围为null。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public class ByteLiu &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        System.out.println(ByteLiu.class.getClassLoader().getResource(&quot;&quot;));</span><br><span class="line">        System.out.println(ByteLiu.class.getClassLoader().getResource(&quot;/&quot;));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">file:/Users/liuxiao/IdeaProjects/dictionary_import_tool/target/classes/</span><br><span class="line">null</span><br></pre></td></tr></table></figure></p>
-<p>从上面可以看出：</p>
-<p>class.getResource(“/“) == class.getClassLoader().getResource(“”)</p>
-<p>其实，Class.getResource和ClassLoader.getResource本质上是一样的，都是使用ClassLoader.getResource加载资源的。下面请看一下jdk的Class源码:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public java.net.URL getResource(String name) &#123;</span><br><span class="line">    name = resolveName(name);</span><br><span class="line">    ClassLoader cl = getClassLoader0();</span><br><span class="line">    if (cl == null) &#123;</span><br><span class="line">        // A system class.</span><br><span class="line">        return ClassLoader.getSystemResource(name);</span><br><span class="line">    &#125;</span><br><span class="line">    return cl.getResource(name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>从上面就可以看才出来：Class.getResource和ClassLoader.getResource本质上是一样的。<br>至于为什么Class.getResource(String path)中path可以’/‘开头，是因为在name = resolveName(name)进行了处理:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">private String resolveName(String name) &#123;</span><br><span class="line">    if (name == null) &#123;</span><br><span class="line">        return name;</span><br><span class="line">    &#125;</span><br><span class="line">    if (!name.startsWith(&quot;/&quot;)) &#123;</span><br><span class="line">        Class c = this;</span><br><span class="line">        while (c.isArray()) &#123;</span><br><span class="line">            c = c.getComponentType();</span><br><span class="line">        &#125;</span><br><span class="line">        String baseName = c.getName();</span><br><span class="line">        int index = baseName.lastIndexOf(&apos;.&apos;);</span><br><span class="line">        if (index != -1) &#123;</span><br><span class="line">            name = baseName.substring(0, index).replace(&apos;.&apos;, &apos;/&apos;)</span><br><span class="line">                    + &quot;/&quot; + name;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; else &#123;//如果是以&quot;/&quot;开头，则去掉</span><br><span class="line">        name = name.substring(1);</span><br><span class="line">    &#125;</span><br><span class="line">    return name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Java基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Java基础//" class="article-tag-list-link color2">Java基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/06/12/Class-getResource和ClassLoader-getResource的区别/">展开全文 >></a>
         </p>
       
 
@@ -1206,11 +1199,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机基础</a>
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color1">计算机基础</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1243,10 +1236,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1290,11 +1279,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Java虚拟机</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Java虚拟机</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1334,11 +1327,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Integer</a>
+                <a href="javascript:void(0)" class="js-tag color5">加密解密</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">加密解密</a>
+                <a href="javascript:void(0)" class="js-tag color3">Integer</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1378,11 +1371,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
+                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
+                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
               </li>
              
               <li class="article-tag-list-item">
