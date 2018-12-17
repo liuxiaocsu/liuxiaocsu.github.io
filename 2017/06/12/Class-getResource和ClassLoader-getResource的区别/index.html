@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
 <meta property="og:description" content="在Java中获取资源的时候，经常用到Class.getResource和ClassLoader.getResource，本文给大家说一下这两者方法在获取资源文件的路径差异。 Class.getResource(String path) path不以’/‘开头时，默认是从此类所在的包下取资源；path以’/‘开头时，则是从项目的ClassPath根下获取资源。在这里’/‘表示ClassPath JD">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:updated_time" content="2018-12-06T05:18:15.499Z">
+<meta property="og:updated_time" content="2018-12-17T04:57:40.675Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Class.getResource和ClassLoader.getResource的区别">
 <meta name="twitter:description" content="在Java中获取资源的时候，经常用到Class.getResource和ClassLoader.getResource，本文给大家说一下这两者方法在获取资源文件的路径差异。 Class.getResource(String path) path不以’/‘开头时，默认是从此类所在的包下取资源；path以’/‘开头时，则是从项目的ClassPath根下获取资源。在这里’/‘表示ClassPath JD">
@@ -207,7 +207,7 @@
     <p>在Java中获取资源的时候，经常用到Class.getResource和ClassLoader.getResource，本文给大家说一下这两者方法在获取资源文件的路径差异。</p>
 <p>Class.getResource(String path)</p>
 <p>path不以’/‘开头时，默认是从此类所在的包下取资源；path以’/‘开头时，则是从项目的ClassPath根下获取资源。在这里’/‘表示ClassPath</p>
-<p>JDK设置这样的规则，是很好理解的，path不以’/‘开头时，我们就能获取与当前类所在的路径相同的资源文件，而以’/‘开头时可以获取ClassPath根下任意路径的资源。</p>
+<p>JDK设置这样的规则，是很好理解的，path不以’/‘开头时，我们就能获取与当前类所在的路径相同的资源文件，而以’/‘开头时可以获取ClassPath根下任意路径的资源。<br><a id="more"></a></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public class ByteLiu &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        System.out.println(ByteLiu.class.getResource(&quot;&quot;));</span><br><span class="line">        System.out.println(ByteLiu.class.getResource(&quot;/&quot;));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">file:/Users/liuxiao/IdeaProjects/dictionary_import_tool/target/classes/com/alibaba/algorithm/</span><br><span class="line">file:/Users/liuxiao/IdeaProjects/dictionary_import_tool/target/classes/</span><br></pre></td></tr></table></figure>
 <p>Class.getClassLoader().getResource(String path)</p>
 <p>path不能以’/‘开头时，path是指类加载器的加载范围，在资源加载的过程中，使用的逐级向上委托的形式加载的，’/‘表示Boot ClassLoader中的加载范围，因为这个类加载器是C++实现的，所以加载范围为null。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public class ByteLiu &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        System.out.println(ByteLiu.class.getClassLoader().getResource(&quot;&quot;));</span><br><span class="line">        System.out.println(ByteLiu.class.getClassLoader().getResource(&quot;/&quot;));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">file:/Users/liuxiao/IdeaProjects/dictionary_import_tool/target/classes/</span><br><span class="line">null</span><br></pre></td></tr></table></figure></p>
@@ -514,11 +514,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机基础</a>
+                <a href="javascript:void(0)" class="js-tag color1">Mysql</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Mysql</a>
+                <a href="javascript:void(0)" class="js-tag color1">计算机基础</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -538,11 +538,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">UDP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">me</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">UDP</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -590,15 +594,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
+                <a href="javascript:void(0)" class="js-tag color3">Java虚拟机</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Java虚拟机</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -626,11 +626,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Btrace</a>
+                <a href="javascript:void(0)" class="js-tag color5">C10K</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">C10K</a>
+                <a href="javascript:void(0)" class="js-tag color2">Btrace</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -638,11 +638,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">加密解密</a>
+                <a href="javascript:void(0)" class="js-tag color3">Integer</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Integer</a>
+                <a href="javascript:void(0)" class="js-tag color5">加密解密</a>
               </li>
              
               <li class="article-tag-list-item">

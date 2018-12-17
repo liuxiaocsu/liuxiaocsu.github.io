@@ -17,7 +17,7 @@
 <meta property="og:description" content="AQS如何实现条件队列 AQS提供一个内部类ConditionObject，由这个ConditionObject实现条件队列。 例如，经典代码：123456789101112Lock lock = new ReentrantLock();Condition condition = lock.newCondition();...lock.lock();try &amp;#123;  while ( 某条件A">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://www.byteliu.com/2018/09/01/AQS条件队列Condition实现详解/markdown-img-paste-20181206195618820.png">
-<meta property="og:updated_time" content="2018-12-07T09:59:45.830Z">
+<meta property="og:updated_time" content="2018-12-17T04:54:39.013Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AQS条件队列Condition实现详解">
 <meta name="twitter:description" content="AQS如何实现条件队列 AQS提供一个内部类ConditionObject，由这个ConditionObject实现条件队列。 例如，经典代码：123456789101112Lock lock = new ReentrantLock();Condition condition = lock.newCondition();...lock.lock();try &amp;#123;  while ( 某条件A">
@@ -209,7 +209,7 @@
     <p>AQS如何实现条件队列</p>
 <p>AQS提供一个内部类ConditionObject，由这个ConditionObject实现条件队列。</p>
 <p>例如，经典代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Lock lock = new ReentrantLock();</span><br><span class="line">Condition condition = lock.newCondition();</span><br><span class="line">...</span><br><span class="line">lock.lock();</span><br><span class="line">try &#123;</span><br><span class="line">  while ( 某条件A ) &#123;</span><br><span class="line">    condition.await();</span><br><span class="line">  &#125;</span><br><span class="line">  // 条件A满足时应执行的代码</span><br><span class="line">&#125; finally &#123;</span><br><span class="line">   lock.unlock();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>以上代码中的condition实际就是ConditionObject类。</p>
+<p>以上代码中的condition实际就是ConditionObject类。<br><a id="more"></a></p>
 <p>首先，分析其声明：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public class ConditionObject implements Condition, java.io.Serializable &#123;</span><br></pre></td></tr></table></figure></p>
 <ol>
 <li><p>首先，它实现了java.util.concurrent.locks.Condition接口，表示自己是一个条件队列。作为内部类，它没有被static关键字修饰，表示它不能脱离外部的AQS类独立存在，必须与外部类AQS实例建立关联。</p>
@@ -536,11 +536,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机基础</a>
+                <a href="javascript:void(0)" class="js-tag color1">Mysql</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Mysql</a>
+                <a href="javascript:void(0)" class="js-tag color1">计算机基础</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -560,11 +560,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">UDP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">me</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">UDP</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -612,15 +616,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
+                <a href="javascript:void(0)" class="js-tag color3">Java虚拟机</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Java虚拟机</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -648,11 +648,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Btrace</a>
+                <a href="javascript:void(0)" class="js-tag color5">C10K</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">C10K</a>
+                <a href="javascript:void(0)" class="js-tag color2">Btrace</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -660,11 +660,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">加密解密</a>
+                <a href="javascript:void(0)" class="js-tag color3">Integer</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Integer</a>
+                <a href="javascript:void(0)" class="js-tag color5">加密解密</a>
               </li>
              
               <li class="article-tag-list-item">

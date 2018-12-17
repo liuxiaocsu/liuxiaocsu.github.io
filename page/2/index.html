@@ -954,39 +954,10 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-  
-    <p>AQS如何实现条件队列</p>
+     <p>AQS如何实现条件队列</p>
 <p>AQS提供一个内部类ConditionObject，由这个ConditionObject实现条件队列。</p>
 <p>例如，经典代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Lock lock = new ReentrantLock();</span><br><span class="line">Condition condition = lock.newCondition();</span><br><span class="line">...</span><br><span class="line">lock.lock();</span><br><span class="line">try &#123;</span><br><span class="line">  while ( 某条件A ) &#123;</span><br><span class="line">    condition.await();</span><br><span class="line">  &#125;</span><br><span class="line">  // 条件A满足时应执行的代码</span><br><span class="line">&#125; finally &#123;</span><br><span class="line">   lock.unlock();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>以上代码中的condition实际就是ConditionObject类。</p>
-<p>首先，分析其声明：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public class ConditionObject implements Condition, java.io.Serializable &#123;</span><br></pre></td></tr></table></figure></p>
-<ol>
-<li><p>首先，它实现了java.util.concurrent.locks.Condition接口，表示自己是一个条件队列。作为内部类，它没有被static关键字修饰，表示它不能脱离外部的AQS类独立存在，必须与外部类AQS实例建立关联。</p>
-</li>
-<li><p>然后，它设置了一个单链表，firstWaiter字段指向链表的头结点，lastWaiter指向尾结点。最先开始等待的线程位于头结点，最后等待的线程位于尾结点。</p>
-</li>
-</ol>
-<p><img src="/2018/09/01/AQS条件队列Condition实现详解/markdown-img-paste-20181206195618820.png" alt="http://p3.pstatp.com/large/pgc-image/ec24c7fe1ebd4028b351803868614c85"></p>
-<ol start="3">
-<li>接下来我们分析条件队列中的两个最核心的两个方法 signal 和 await()。至于signalAll，它与signalAll()几乎一致，区别只在于signal()只处理一个线程，而signalAll()处理条件队列中的所有线程。而awaitUninterruptibly(), awaitNanos(), awaitUntil()等awaitX()方法都与await()类似。</li>
-</ol>
-<p>假设有以下代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Lock lock1 = new ReentrantLock();</span><br><span class="line">Condition condtion1 = lock1.newCondition();</span><br><span class="line">// 线程1调用下面这段代码：</span><br><span class="line">lock1.lock();</span><br><span class="line">while(某个条件) &#123;</span><br><span class="line">  condition1.await();</span><br><span class="line">&#125;</span><br><span class="line">lock1.unlock();</span><br></pre></td></tr></table></figure></p>
-<p>参照await的代码进行分析。首先，await()可以响应线程中断，所以一开始先判断这个时候有没有被中断（即await还没开始任何操作就遇到了中断，也许是不耐烦的用户操作引起的）。然后，把当前线程放入条件队列，释放之前已持有的锁（锁中的状态保存到线程的本地变量）。再然后，不断的查询代表当前线程的结点是否已经在锁队列上，如果不在锁队列上则阻塞。因为，把当前线程结点移到锁队列上的一定是另外一个线程（通过调用signal()）。当阻塞唤醒（即从LockSupport.park()放回）之后，且查询到当前线程结点已在锁队列上时，说明此时已有其他线程成功调用了signal()或signalAll()，然后执行争夺锁的操作并把之前的锁状态还原回去，即通过acquireQueued()完成。acquireQueued()只有在成功获得锁以后才会返回，最后检查一下在前面的时间里有没有中断，如果有中断则抛出异常。Javadoc中说中断与方法的成功返回之前，中断必须优先响应，这就是因为前面的中断信息只是被记录了下来，没有及时处理，很可能是在很早之前就收到了，直到最后才有机会处理。所以，中断比上述的阻塞循环结果优先。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public final void await() throws InterruptedException &#123;</span><br><span class="line">    if (Thread.interrupted())</span><br><span class="line">        throw new InterruptedException();</span><br><span class="line">    Node node = addConditionWaiter();</span><br><span class="line">    int savedState = fullyRelease(node);</span><br><span class="line">    int interruptMode = 0;</span><br><span class="line">    while (!isOnSyncQueue(node)) &#123;</span><br><span class="line">        LockSupport.park(this);</span><br><span class="line">        if ((interruptMode = checkInterruptWhileWaiting(node)) != 0)</span><br><span class="line">            break;</span><br><span class="line">    &#125;</span><br><span class="line">    if (acquireQueued(node, savedState) &amp;&amp; interruptMode != THROW_IE)</span><br><span class="line">    interruptMode = REINTERRUPT;</span><br><span class="line">    if (node.nextWaiter != null) // clean up if cancelled</span><br><span class="line">    unlinkCancelledWaiters();</span><br><span class="line">    if (interruptMode != 0)</span><br><span class="line">    reportInterruptAfterWait(interruptMode);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>其他的awaitX()系列操作，只是在阻塞循环体中增加了等待时间判断、检查有没有中断以尽早跳出循环的逻辑而已。</p>
-<p>在await()进行等待的操作中，第一个操作是把线程放入等待队列，这是addConditionWaiter()完成的。addConditionWaiter()负责把线程放入条件队列。它先检查是否持有锁（未持有锁则抛出IllegalMonitorStateException）。然后，在进入条件队列之前，检查最后一个结点是否已经取消等待（cancelled），如果是，则触发一次对从条件队列开头直到末尾的遍历，把队列中所有已经取消等待的线程摘除。其实，这个遍历操作是一个优化措施，可以避免在遇到大量线程取消等待后（取消风暴 cancel storm）的无效锁竞争。最后，把当前线程放入条件队列末尾。</p>
-<p>最后，我们分析signal()，如代码所示。signal() 通常是另外一个线程调用的，内部主要工作是调用doSignal()。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public final void signal() &#123;</span><br><span class="line">    if (!isHeldExclusively())</span><br><span class="line">        throw new IllegalMonitorStateException();</span><br><span class="line">    Node first = firstWaiter;</span><br><span class="line">    if (first != null)</span><br><span class="line">        doSignal(first);</span><br><span class="line">&#125;</span><br><span class="line">private void doSignal(Node first) &#123;</span><br><span class="line">    do &#123;</span><br><span class="line">        if ( (firstWaiter = first.nextWaiter) == null)</span><br><span class="line">            lastWaiter = null;</span><br><span class="line">        first.nextWaiter = null;</span><br><span class="line">    &#125; while (!transferForSignal(first) &amp;&amp; (first = firstWaiter) != null);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>在doSignal()的实现代码中，从条件队列头部开始，找到第一个未取消等待的线程，并把线程由条件等待状态改为就绪状态（waitStatus=0），并且从条件队列取下来放入锁队列。进入锁队列以后，把这个线程用CAS操作设为等待锁状态(waitStatus=-1)，如果设置失败（此期间有取消等待操作发生），则将这个线程唤醒（通过LockSupport.unpark()）。把结点放入锁队列，并设置等待状态的相关操作在transferForSignal()方法中完成。</p>
-<p>顺便说一下，doSignalAll()把条件队列中的所有线程取出，然后对于这些线程，逐个设为就绪状态。然后也按照doSignal的做法，放入锁队列，设置为等待锁的状态，CAS设置失败则唤醒这个线程。</p>
-<ol start="4">
-<li>Lock与Condition的不同点</li>
-</ol>
-<p>Lock有自旋而Condition没有自旋。因为lock的加锁操作是无条件的，自旋可以减少线程上下文切换；而Condition是在检测到一个条件不满足时，主动进入阻塞。自旋对于Condition来说意义不大，因为条件不满足时，很大概率在接下来的一小段时间内依然不满足，所以它如果自旋只会浪费cpu计算资源。</p>
-<p>Lock中的队列操作需要大量谨慎的CAS操作，因为没有锁的保护；而Condition因为有锁的保护，所以在把结点在条件队列和锁队列之间移动时，无需太多谨慎的CAS操作，只是在修改等待状态时，需要用到CAS操作，以应对突然发生的取消等待操作。</p>
-<ol start="5">
-<li>总结</li>
-</ol>
-<p>看完Condition的实现之后你是不是对Condition的运行和使用又有了更深入的体会呢。假如你需要面试，可以重点看这里。总结一下，你要知道Condtion与一个AQS对象建立了关联，并且内部有一个单链表，所有等待线程（调用await）都在这个单链表里面等待。条件的等待和唤醒是通过把代表线程的结点在条件队列和锁队列之间移动来实现的。当有线程在这个Condition上调用await时，它就会把自身放入条件队列并且阻塞，而阻塞是通过一个循环来完成的，在这个循环中交替执行阻塞（LockSupport.park）、判断是否在锁队列上。当有线程在这个Condition上调用了signal时，就会把线程从条件队列转移到它锁关联的那个AQS的锁队列上，并且将它唤醒（此时，阻塞循环中的判断是否在锁队列的条件就会满足，导致跳出循环）。</p>
-
+<p>以上代码中的condition实际就是ConditionObject类。<br></p>
   
 
     </div>
@@ -1227,11 +1198,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机基础</a>
+                <a href="javascript:void(0)" class="js-tag color1">Mysql</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Mysql</a>
+                <a href="javascript:void(0)" class="js-tag color1">计算机基础</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1251,11 +1222,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">UDP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">me</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">UDP</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1303,15 +1278,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
+                <a href="javascript:void(0)" class="js-tag color3">Java虚拟机</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Java虚拟机</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1339,11 +1310,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Btrace</a>
+                <a href="javascript:void(0)" class="js-tag color5">C10K</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">C10K</a>
+                <a href="javascript:void(0)" class="js-tag color2">Btrace</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1351,11 +1322,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">加密解密</a>
+                <a href="javascript:void(0)" class="js-tag color3">Integer</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Integer</a>
+                <a href="javascript:void(0)" class="js-tag color5">加密解密</a>
               </li>
              
               <li class="article-tag-list-item">

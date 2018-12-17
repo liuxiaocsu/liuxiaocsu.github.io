@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
 <meta property="og:description" content="1.网络协议设计ISO提出了OSI分层网络模型，这种分层模型是理论上的，TCP/IP最终实现了一个分层的协议模型，每一个层次对应一组网络协议完成一组特定的功能，该组网络协议被其下的层次复用和解复用。这就是分层模型的本质，最终所有的逻辑被编码到线缆或者电磁波。 分层模型是很好理解的，然而对于每一层的协议设计却不是那么容易。TCP/IP的漂亮之处在于：协议越往上层越复杂。我们把网络定义为互相连接在一起">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:updated_time" content="2018-12-09T08:20:12.314Z">
+<meta property="og:updated_time" content="2018-12-17T04:55:39.478Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TCP协议疑难杂症全景解析（转载）">
 <meta name="twitter:description" content="1.网络协议设计ISO提出了OSI分层网络模型，这种分层模型是理论上的，TCP/IP最终实现了一个分层的协议模型，每一个层次对应一组网络协议完成一组特定的功能，该组网络协议被其下的层次复用和解复用。这就是分层模型的本质，最终所有的逻辑被编码到线缆或者电磁波。 分层模型是很好理解的，然而对于每一层的协议设计却不是那么容易。TCP/IP的漂亮之处在于：协议越往上层越复杂。我们把网络定义为互相连接在一起">
@@ -205,7 +205,7 @@
 
   
     <p>1.网络协议设计<br>ISO提出了OSI分层网络模型，这种分层模型是理论上的，TCP/IP最终实现了一个分层的协议模型，每一个层次对应一组网络协议完成一组特定的功能，该组网络协议被其下的层次复用和解复用。这就是分层模型的本质，最终所有的逻辑被编码到线缆或者电磁波。</p>
-<p>分层模型是很好理解的，然而对于每一层的协议设计却不是那么容易。TCP/IP的漂亮之处在于：协议越往上层越复杂。我们把网络定义为互相连接在一起的设备，网络的本质作用还是“端到端”的通信，然而希望互相通信的设备并不一定要“直接”连接在一起，因此必然需要一些中间的设备负责转发数据，因此就把连接这些中间设备的线缆上跑的协议定义为链路层协议，实际上所谓链路其实就是始发与一个设备，通过一根线，终止于另一个设备。我们把一条链路称为“一跳”。因此一个端到端的网络包含了“很多跳”。</p>
+<p>分层模型是很好理解的，然而对于每一层的协议设计却不是那么容易。TCP/IP的漂亮之处在于：协议越往上层越复杂。我们把网络定义为互相连接在一起的设备，网络的本质作用还是“端到端”的通信，然而希望互相通信的设备并不一定要“直接”连接在一起，因此必然需要一些中间的设备负责转发数据，因此就把连接这些中间设备的线缆上跑的协议定义为链路层协议，实际上所谓链路其实就是始发与一个设备，通过一根线，终止于另一个设备。我们把一条链路称为“一跳”。因此一个端到端的网络包含了“很多跳”。<br><a id="more"></a></p>
 <p>2.TCP和IP协议<br>终止于IP协议，我们已经可以完成一个端到端的通信，为何还需要TCP协议？这是一个问题，理解了这个问题，我们就能理解TCP协议为何成了现在这个样子，为何如此“复杂”，为何又如此简单。</p>
 <p>正如其名字所展示的那样，TCP的作用是传输控制，也就是控制端到端的传输，那为何这种控制不在IP协议中实现的。答案很简单，那就是这会增加IP协议的复杂性，而IP协议需要的就是简单。这是什么原因造成的呢？</p>
 <p>首先我们认识一下为何IP协议是沙漏的细腰部分。它的下层是繁多的链路层协议，这些链路提供了相互截然不同且相差很远的语义，为了互联这些异构的网络，我们需要一个网络层协议起码要提供一些适配的功能，另外它必然不能提供太多的“保证性服务”，因为上层的保证性依赖下层的约束性更强的保证性，你永远无法在一个100M吞吐量的链路之上实现的IP协议保证1000M的吞吐量…</p>
@@ -667,11 +667,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机基础</a>
+                <a href="javascript:void(0)" class="js-tag color1">Mysql</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Mysql</a>
+                <a href="javascript:void(0)" class="js-tag color1">计算机基础</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -691,11 +691,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">UDP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">me</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">UDP</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -743,15 +747,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
+                <a href="javascript:void(0)" class="js-tag color3">Java虚拟机</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Java虚拟机</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -779,11 +779,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Btrace</a>
+                <a href="javascript:void(0)" class="js-tag color5">C10K</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">C10K</a>
+                <a href="javascript:void(0)" class="js-tag color2">Btrace</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -791,11 +791,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">加密解密</a>
+                <a href="javascript:void(0)" class="js-tag color3">Integer</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Integer</a>
+                <a href="javascript:void(0)" class="js-tag color5">加密解密</a>
               </li>
              
               <li class="article-tag-list-item">
