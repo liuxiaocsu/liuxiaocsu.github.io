@@ -1,3 +1,4 @@
+http://www.byteliu.com/2018/12/28/《高效能人士的七个习惯》读书笔记/
 http://www.byteliu.com/2018/12/15/《金字塔原理》读书笔记/
 http://www.byteliu.com/2018/12/07/Redis开发规范/
 http://www.byteliu.com/2018/12/04/文件IO操作的一些最佳实践/
