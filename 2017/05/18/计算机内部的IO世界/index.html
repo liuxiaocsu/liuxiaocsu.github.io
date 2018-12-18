@@ -8,20 +8,20 @@
   <link rel="dns-prefetch" href="http://www.byteliu.com">
   <title>计算机内部的IO世界 | Byte_Liu&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1.、总线：IO是通过共享一条总线的方式来实现的，总线也就是一条或者多条物理上的导线，每个部件都接到这些导线上，导线上的电位每个时刻都是相等的（这个地方需要注意下，之前没有考虑这个问题），这样总线上的所有部件都会受到相同的信号。也就是说，这条总线是共享的，同一个时刻只能有一个部件在接收或者发送，是全单工的工作模式。">
-<meta name="keywords" content="计算机基础">
+  <meta name="description" content="1、总线：IO是通过共享一条总线的方式来实现的，总线也就是一条或者多条物理上的导线，每个部件都接到这些导线上，导线上的电位每个时刻都是相等的（这个地方需要注意下，之前没有考虑这个问题），这样总线上的所有部件都会受到相同的信号。也就是说，这条总线是共享的，同一个时刻只能有一个部件在接收或者发送，是全单工的工作模式。">
+<meta name="keywords" content="计算机基础,IO">
 <meta property="og:type" content="article">
 <meta property="og:title" content="计算机内部的IO世界">
 <meta property="og:url" content="http://www.byteliu.com/2017/05/18/计算机内部的IO世界/index.html">
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
-<meta property="og:description" content="1.、总线：IO是通过共享一条总线的方式来实现的，总线也就是一条或者多条物理上的导线，每个部件都接到这些导线上，导线上的电位每个时刻都是相等的（这个地方需要注意下，之前没有考虑这个问题），这样总线上的所有部件都会受到相同的信号。也就是说，这条总线是共享的，同一个时刻只能有一个部件在接收或者发送，是全单工的工作模式。">
+<meta property="og:description" content="1、总线：IO是通过共享一条总线的方式来实现的，总线也就是一条或者多条物理上的导线，每个部件都接到这些导线上，导线上的电位每个时刻都是相等的（这个地方需要注意下，之前没有考虑这个问题），这样总线上的所有部件都会受到相同的信号。也就是说，这条总线是共享的，同一个时刻只能有一个部件在接收或者发送，是全单工的工作模式。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://www.byteliu.com/2017/05/18/计算机内部的IO世界/markdown-img-paste-20181208172823945.png">
 <meta property="og:image" content="http://www.byteliu.com/2017/05/18/计算机内部的IO世界/markdown-img-paste-2018120817391711.png">
-<meta property="og:updated_time" content="2018-12-09T08:06:18.358Z">
+<meta property="og:updated_time" content="2018-12-17T07:33:01.999Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="计算机内部的IO世界">
-<meta name="twitter:description" content="1.、总线：IO是通过共享一条总线的方式来实现的，总线也就是一条或者多条物理上的导线，每个部件都接到这些导线上，导线上的电位每个时刻都是相等的（这个地方需要注意下，之前没有考虑这个问题），这样总线上的所有部件都会受到相同的信号。也就是说，这条总线是共享的，同一个时刻只能有一个部件在接收或者发送，是全单工的工作模式。">
+<meta name="twitter:description" content="1、总线：IO是通过共享一条总线的方式来实现的，总线也就是一条或者多条物理上的导线，每个部件都接到这些导线上，导线上的电位每个时刻都是相等的（这个地方需要注意下，之前没有考虑这个问题），这样总线上的所有部件都会受到相同的信号。也就是说，这条总线是共享的，同一个时刻只能有一个部件在接收或者发送，是全单工的工作模式。">
 <meta name="twitter:image" content="http://www.byteliu.com/2017/05/18/计算机内部的IO世界/markdown-img-paste-20181208172823945.png">
   
     <link rel="alternative" href="/atom.xml" title="Byte_Liu&#39;s Blog" type="application/atom+xml">
@@ -208,7 +208,7 @@
 
   
     <p><img src="/2017/05/18/计算机内部的IO世界/markdown-img-paste-20181208172823945.png" alt=""></p>
-<h4 id="1-、总线："><a href="#1-、总线：" class="headerlink" title="1.、总线："></a>1.、总线：</h4><p>IO是通过共享一条总线的方式来实现的，总线也就是一条或者多条物理上的导线，每个部件都接到这些导线上，导线上的电位每个时刻都是相等的（这个地方需要注意下，之前没有考虑这个问题），这样总线上的所有部件都会受到相同的信号。也就是说，这条总线是共享的，同一个时刻只能有一个部件在接收或者发送，是全单工的工作模式。<br><a id="more"></a><br>所有的部件按照另一条总线，也就是仲裁总线或者中断总线上给出的信号来判断这个时刻总线可以由哪个部件来使用。产生仲裁总线或者中断电位的可以是CPU，也可以是总线上的其他设备。</p>
+<h4 id="1、总线："><a href="#1、总线：" class="headerlink" title="1、总线："></a>1、总线：</h4><p>IO是通过共享一条总线的方式来实现的，总线也就是一条或者多条物理上的导线，每个部件都接到这些导线上，导线上的电位每个时刻都是相等的（这个地方需要注意下，之前没有考虑这个问题），这样总线上的所有部件都会受到相同的信号。也就是说，这条总线是共享的，同一个时刻只能有一个部件在接收或者发送，是全单工的工作模式。<br><a id="more"></a><br>所有的部件按照另一条总线，也就是仲裁总线或者中断总线上给出的信号来判断这个时刻总线可以由哪个部件来使用。产生仲裁总线或者中断电位的可以是CPU，也可以是总线上的其他设备。</p>
 <p><img src="/2017/05/18/计算机内部的IO世界/markdown-img-paste-2018120817391711.png" alt=""></p>
 <h4 id="2、北桥芯片："><a href="#2、北桥芯片：" class="headerlink" title="2、北桥芯片："></a>2、北桥芯片：</h4><p>一块电脑主板，以CPU插座为北的方法拿着，靠近CPU插槽的一个起连接作用的芯片称为“北桥芯片”，英文名：North Bridge Chipset。北桥芯片（NorthBridge）是主板芯片组中起主导作用的组成部分，也称为主桥（HostBridge）。北桥是个人电脑主板芯片组两枚大规模芯片中的一枚。北桥被用来处理高速信号，通常处理CPU（处理器），RAM（内存），AGP端口或PCI Express,和南桥芯片之间的通信。</p>
 <p>一般来说，芯片组的名称就是以北桥芯片的名称来命名的，例如英特尔 845E芯片组的北桥芯片是82845E，875P芯片组的北桥芯片是82875P等等。北桥芯片负责与CPU的联系并控制内存、AGP数据在北桥内部传输，提供对CPU的类型和主频、系统的前端总线频率、内存的类型（SDRAM，DDR SDRAM以及RDRAM等等）和最大容量、AGP插槽、ECC纠错等支持，整合型芯片组的北桥芯片还集成了显示核心。北桥芯片就是主板上离CPU最近的芯片，这主要是考虑到北桥芯片与处理器之间的通信最密切，为了提高通信性能而缩短传输距离。因为北桥芯片的数据处理量非常大，发热量也越来越大，所以现在的北桥芯片都覆盖着散热片用来加强北桥芯片的散热，有些主板的北桥芯片还会配合风扇进行散热。因为北桥芯片的主要功能是控制内存，而内存标准与处理器一样变化比较频繁，所以不同芯片组中北桥芯片是肯定不同的，当然这并不是说所采用的内存技术就完全不一样，而是不同的芯片组北桥芯片间肯定在一些地方有差别。</p>
@@ -248,6 +248,10 @@
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机基础</a>
         		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IO</a>
+        		</li>
       		
 		</ul>
 	</div>
@@ -259,6 +263,10 @@
 			 
         		<li class="article-tag-list-item">
         			<a href="/categories/计算机基础//" class="article-tag-list-link color1">计算机基础</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/计算机基础/IO//" class="article-tag-list-link color3">IO</a>
         		</li>
       		
 		</ul>
@@ -365,7 +373,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-、总线："><span class="toc-number">1.</span> <span class="toc-text">1.、总线：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2、北桥芯片："><span class="toc-number">2.</span> <span class="toc-text">2、北桥芯片：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3、南桥芯片："><span class="toc-number">3.</span> <span class="toc-text">3、南桥芯片：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4、IO案例分析："><span class="toc-number">4.</span> <span class="toc-text">4、IO案例分析：</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1、总线："><span class="toc-number">1.</span> <span class="toc-text">1、总线：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2、北桥芯片："><span class="toc-number">2.</span> <span class="toc-text">2、北桥芯片：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3、南桥芯片："><span class="toc-number">3.</span> <span class="toc-text">3、南桥芯片：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4、IO案例分析："><span class="toc-number">4.</span> <span class="toc-text">4、IO案例分析：</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -533,11 +541,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Mysql</a>
+                <a href="javascript:void(0)" class="js-tag color1">计算机基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">计算机基础</a>
+                <a href="javascript:void(0)" class="js-tag color1">Mysql</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -557,19 +565,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">UDP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">me</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
+                <a href="javascript:void(0)" class="js-tag color4">UDP</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -629,11 +637,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -701,11 +709,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
+                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
+                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -714,6 +722,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Netty</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">读书笔记</a>
               </li>
              
               <li class="article-tag-list-item">
