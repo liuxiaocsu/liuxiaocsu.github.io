@@ -8,15 +8,19 @@
   <link rel="dns-prefetch" href="http://www.byteliu.com">
   <title>Non-breaking space---String.trim()方法免疫的空格 | Byte_Liu&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="现象：String.trim()方法去除字符串前后空格时失败  查询资料发现Unicode为160的字符被称作“Non-breaking space”。">
+  <meta name="description" content="问题背景：发现数据库中存储的数据后面有空格  但是我们程序是对前后空格做了处理的">
 <meta name="keywords" content="Java基础">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Non-breaking space---String.trim()方法免疫的空格">
 <meta property="og:url" content="http://www.byteliu.com/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/index.html">
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
-<meta property="og:description" content="现象：String.trim()方法去除字符串前后空格时失败  查询资料发现Unicode为160的字符被称作“Non-breaking space”。">
+<meta property="og:description" content="问题背景：发现数据库中存储的数据后面有空格  但是我们程序是对前后空格做了处理的">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://www.byteliu.com/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/markdown-img-paste-20181220101613253.png">
+<meta property="og:image" content="http://www.byteliu.com/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/markdown-img-paste-20181220101627833.png">
 <meta property="og:image" content="http://www.byteliu.com/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/markdown-img-paste-20181219155543788.png">
+<meta property="og:image" content="http://www.byteliu.com/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/markdown-img-paste-20181219180537234.png">
+<meta property="og:image" content="http://www.byteliu.com/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/markdown-img-paste-20181220101058604.png">
 <meta property="og:image" content="http://www.byteliu.com/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/markdown-img-paste-20181219155927785.png">
 <meta property="og:image" content="http://www.byteliu.com/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/markdown-img-paste-20181219160021164.png">
 <meta property="og:image" content="http://www.byteliu.com/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/markdown-img-paste-2018121916203373.png">
@@ -24,11 +28,11 @@
 <meta property="og:image" content="http://www.byteliu.com/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/markdown-img-paste-20181219172109912.png">
 <meta property="og:image" content="http://www.byteliu.com/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/markdown-img-paste-20181219172151947.png">
 <meta property="og:image" content="http://www.byteliu.com/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/markdown-img-paste-2018121916260549.png">
-<meta property="og:updated_time" content="2018-12-19T09:55:59.022Z">
+<meta property="og:updated_time" content="2018-12-20T02:32:23.697Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Non-breaking space---String.trim()方法免疫的空格">
-<meta name="twitter:description" content="现象：String.trim()方法去除字符串前后空格时失败  查询资料发现Unicode为160的字符被称作“Non-breaking space”。">
-<meta name="twitter:image" content="http://www.byteliu.com/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/markdown-img-paste-20181219155543788.png">
+<meta name="twitter:description" content="问题背景：发现数据库中存储的数据后面有空格  但是我们程序是对前后空格做了处理的">
+<meta name="twitter:image" content="http://www.byteliu.com/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/markdown-img-paste-20181220101613253.png">
   
     <link rel="alternative" href="/atom.xml" title="Byte_Liu&#39;s Blog" type="application/atom+xml">
   
@@ -213,10 +217,22 @@
       
 
   
-    <p>现象：String.trim()方法去除字符串前后空格时失败</p>
+    <p>问题背景：发现数据库中存储的数据后面有空格</p>
+<p><img src="/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/markdown-img-paste-20181220101613253.png" alt=""></p>
+<p>但是我们程序是对前后空格做了处理的</p>
+<p><img src="/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/markdown-img-paste-20181220101627833.png" alt=""></p>
+<a id="more"></a>
+<p>问题复现：自己输入空格测试一下是没有问题的，可以去除前后空格。然后把数据库中有空格这个数据copy出来测试，问题复现了，trim方法并没有去除这个空格。</p>
+<p>现象：String.trim()方法去除字符串前后空格时失败。</p>
 <p><img src="/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/markdown-img-paste-20181219155543788.png" alt=""></p>
-<p>查询资料发现Unicode为160的字符被称作“Non-breaking space”。<br><a id="more"></a></p>
-<h4 id="什么是No-breaking-Space"><a href="#什么是No-breaking-Space" class="headerlink" title="什么是No-breaking Space"></a>什么是No-breaking Space</h4><p>No-breaking Space,也被成为Fixed Space即固定空格（或者叫不间断空格、不换行空格), 经常出现在HTML与office软件中。前端同学会比较熟悉,这货就是<code>&amp;nbsp;</code>。</p>
+<p>看一下jdk trim()源码的方法注释：<br><img src="/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/markdown-img-paste-20181219180537234.png" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">     * Returns a string whose value is this string, with any leading and trailing</span><br><span class="line">     * whitespace removed.</span><br><span class="line">     * &lt;p&gt;</span><br><span class="line">     * If this &#123;@code String&#125; object represents an empty character</span><br><span class="line">     * sequence, or the first and last characters of character sequence</span><br><span class="line">     * represented by this &#123;@code String&#125; object both have codes</span><br><span class="line">     * greater than &#123;@code &apos;\u005Cu0020&apos;&#125; (the space character), then a</span><br><span class="line">     * reference to this &#123;@code String&#125; object is returned.</span><br><span class="line">     * &lt;p&gt;</span><br><span class="line">     * Otherwise, if there is no character with a code greater than</span><br><span class="line">     * &#123;@code &apos;\u005Cu0020&apos;&#125; in the string, then a</span><br><span class="line">     * &#123;@code String&#125; object representing an empty string is</span><br><span class="line">     * returned.</span><br><span class="line">     * &lt;p&gt;</span><br><span class="line">     * Otherwise, let &lt;i&gt;k&lt;/i&gt; be the index of the first character in the</span><br><span class="line">     * string whose code is greater than &#123;@code &apos;\u005Cu0020&apos;&#125;, and let</span><br><span class="line">     * &lt;i&gt;m&lt;/i&gt; be the index of the last character in the string whose code</span><br><span class="line">     * is greater than &#123;@code &apos;\u005Cu0020&apos;&#125;. A &#123;@code String&#125;</span><br><span class="line">     * object is returned, representing the substring of this string that</span><br><span class="line">     * begins with the character at index &lt;i&gt;k&lt;/i&gt; and ends with the</span><br><span class="line">     * character at index &lt;i&gt;m&lt;/i&gt;-that is, the result of</span><br><span class="line">     * &#123;@code this.substring(k, m + 1)&#125;.</span><br><span class="line">     * &lt;p&gt;</span><br><span class="line">     * This method may be used to trim whitespace (as defined above) from</span><br><span class="line">     * the beginning and end of a string.</span><br><span class="line">     *</span><br><span class="line">     * @return  A string whose value is this string, with any leading and trailing white</span><br><span class="line">     *          space removed, or this string if it has no leading or</span><br><span class="line">     *          trailing white space.</span><br><span class="line">     */</span><br></pre></td></tr></table></figure>
+<p>其中<code>\u005C</code>是<code>\</code>符号对应的Unicode码，<code>\u005Cu0020</code>转义过来就是<code>\u0020</code>。<br>方法中表明，如果字符小于空格(<code>\u0020</code>，对应的十进制是32)，就过滤掉，很明显，上面没有去除那个特殊空格符号对应的十进制是160，当然就不会过滤咯。</p>
+<p>到这里我们知道，trim这个方法不仅仅是去除前后空格符，而是去除前后小于空格的字符,那么，究竟什么样的字符会被删除过滤掉呢，搜索出ASCII码表：</p>
+<p><img src="/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/markdown-img-paste-20181220101058604.png" alt=""></p>
+<p>其中可以看出，空格对应32，按照trim的逻辑，32之前的字符都是可以被过滤掉的，其中包含我们比较熟悉的水平制表符（<code>^I</code>），回车（<code>^M</code>）,以及Hive中默认使用的字段分隔符<code>^A</code>等等。<br>正常应用情况下，我们不需要考虑trim()函数造成的这个影响，但是当不希望去掉这些特殊字符的时候，就必须要认真详细地研究一下这个可能会出现的问题了。</p>
+<p>那上面十进制为160对应的那个特殊空格又是啥呢？<br>查询资料可知Unicode十进制为160的字符被称作“Non-breaking space”。</p>
+<h4 id="什么是No-breaking-Space"><a href="#什么是No-breaking-Space" class="headerlink" title="什么是No-breaking Space"></a>什么是No-breaking Space</h4><p><code>No-breaking Space</code>,也被称为<code>Fixed Space</code>即固定空格（或者叫不间断空格、不换行空格), 经常出现在HTML与office软件中。前端同学会比较熟悉,这货就是<code>&amp;nbsp;</code>。</p>
 <h5 id="amp-nbsp和普通空格的区别"><a href="#amp-nbsp和普通空格的区别" class="headerlink" title="&amp;nbsp和普通空格的区别:"></a>&amp;nbsp和普通空格的区别:</h5><table>
 <thead>
 <tr>
@@ -729,15 +745,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">加密解密</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">HTTP</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Integer</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">加密解密</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -777,11 +793,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
+                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
+                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
               </li>
              
               <li class="article-tag-list-item">
