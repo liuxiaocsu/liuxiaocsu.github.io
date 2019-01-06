@@ -24,11 +24,11 @@
 <meta property="og:image" content="http://www.byteliu.com/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/markdown-img-paste-20181219155927785.png">
 <meta property="og:image" content="http://www.byteliu.com/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/markdown-img-paste-20181219160021164.png">
 <meta property="og:image" content="http://www.byteliu.com/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/markdown-img-paste-2018121916203373.png">
+<meta property="og:image" content="http://www.byteliu.com/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/markdown-img-paste-2018121916260549.png">
 <meta property="og:image" content="http://www.byteliu.com/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/markdown-img-paste-2018121917203312.png">
 <meta property="og:image" content="http://www.byteliu.com/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/markdown-img-paste-20181219172109912.png">
 <meta property="og:image" content="http://www.byteliu.com/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/markdown-img-paste-20181219172151947.png">
-<meta property="og:image" content="http://www.byteliu.com/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/markdown-img-paste-2018121916260549.png">
-<meta property="og:updated_time" content="2018-12-20T02:32:23.697Z">
+<meta property="og:updated_time" content="2018-12-26T11:12:26.885Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Non-breaking space---String.trim()方法免疫的空格">
 <meta name="twitter:description" content="问题背景：发现数据库中存储的数据后面有空格  但是我们程序是对前后空格做了处理的">
@@ -59,7 +59,7 @@
     <div class="left-col" q-class="show:isShow">
       
 <div class="overlay" style="background: #4d4d4d">
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="300" height="86" src="//music.163.com/outchain/player?type=2&id=34324396&auto=0&height=66"></iframe>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="300" height="86" src="//music.163.com/outchain/player?type=2&id=28678042&auto=0&height=66"></iframe>
 </div>
 <div class="intrude-less">
 	<header id="header" class="inner">
@@ -297,7 +297,9 @@
 </table>
 <h5 id="解决方式"><a href="#解决方式" class="headerlink" title="解决方式"></a>解决方式</h5><p>知道该字符编码, 在trim()之前, 用普通空格进行replace()就可以了.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String s = s.replace(&apos;\u00A0&apos;,&apos; &apos;).trim();</span><br></pre></td></tr></table></figure></p>
 <p>处理字符串时, 转换成 char[] 遍历一遍也可以解决。</p>
-<h5 id="JDK文档说明"><a href="#JDK文档说明" class="headerlink" title="JDK文档说明"></a>JDK文档说明</h5><p><img src="/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/markdown-img-paste-2018121916203373.png" alt=""><br> 通过<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Character.html#isWhitespace-char-" target="_blank" rel="noopener">isWhitespace(char c)</a>方法可知Unicode space character中总共有三个是whilte space:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">It is a Unicode space character (SPACE_SEPARATOR, LINE_SEPARATOR, or PARAGRAPH_SEPARATOR) but is not also a non-breaking space (‘\u00A0’, ‘\u2007’, ‘\u202F’).</span><br></pre></td></tr></table></figure></p>
+<h5 id="JDK文档说明"><a href="#JDK文档说明" class="headerlink" title="JDK文档说明"></a>JDK文档说明</h5><p><img src="/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/markdown-img-paste-2018121916203373.png" alt=""><br> 通过<a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Character.html#isWhitespace-char-" target="_blank" rel="noopener">isWhitespace(char c)</a>方法可知Unicode space character中总共有三个是whilte space:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">It is a Unicode space character (SPACE_SEPARATOR, LINE_SEPARATOR, or PARAGRAPH_SEPARATOR)</span><br></pre></td></tr></table></figure></p>
+<p>对应java.lang.Character类中：</p>
+<p><img src="/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/markdown-img-paste-2018121916260549.png" alt=""><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">but is not also a non-breaking space (‘\u00A0’, ‘\u2007’, ‘\u202F’).</span><br></pre></td></tr></table></figure></p>
 <table>
 <thead>
 <tr>
@@ -325,8 +327,6 @@
 </tbody>
 </table>
 <p><img src="/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/markdown-img-paste-2018121917203312.png" alt=""><br><img src="/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/markdown-img-paste-20181219172109912.png" alt=""><br><img src="/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/markdown-img-paste-20181219172151947.png" alt=""></p>
-<p>java.lang.Character类中：</p>
-<p><img src="/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/markdown-img-paste-2018121916260549.png" alt=""></p>
 <h4 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h4><p><a href="https://www.compart.com/en/unicode/U+00a0" target="_blank" rel="noopener">Unicode Character “ ” (U+00A0)</a><br><a href="https://en.wikipedia.org/wiki/Non-breaking_space" target="_blank" rel="noopener">wikipedia:Non-breaking space</a><br><a href="http://htmlhelp.com/reference/charset/iso160-191.html" target="_blank" rel="noopener">ISO 8859-1 character set:160-191</a><br><a href="https://www.fileformat.info/info/unicode/char/00a0/index.htm" target="_blank" rel="noopener">Unicode Character ‘NO-BREAK SPACE’ (U+00A0)</a><br><a href="https://objcer.com/2017/05/22/Unicode-spaces/" target="_blank" rel="noopener">Unicode之神奇的空格</a><br><a href="http://love67.net/2017/04/07/trim-nbsp" target="_blank" rel="noopener">无法trim的空格Non-breaking space</a><br><a href="https://www.utf8-chartable.de/unicode-utf8-table.pl?utf8=dec" target="_blank" rel="noopener">UTF-8 encoding table and Unicode characters</a></p>
 
   
@@ -504,7 +504,7 @@ gitment.render('gitment-ctn')
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 Byte_Liu
+    		&copy; 2019 Byte_Liu
     	</div>
       	<div class="footer-right">
         <!--
@@ -655,15 +655,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">UDP</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -767,11 +767,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">synchronize</a>
+                <a href="javascript:void(0)" class="js-tag color5">zookeeper</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">zookeeper</a>
+                <a href="javascript:void(0)" class="js-tag color2">synchronize</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -795,11 +795,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
+                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
+                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -808,6 +808,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Netty</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">项目管理</a>
               </li>
              
               <li class="article-tag-list-item">

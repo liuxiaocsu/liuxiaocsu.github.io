@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
 <meta property="og:description" content="1、原子性在同一个事务内部的一组操作必须全部执行成功（或者全部失败）。 为了保证事务操作的原子性，必须实现基于日志的REDO/UNDO机制：将所有对数据的更新操作都写入日志，如果一个事务中的一部分操作已经成功，但以后的操作，由于断电/系统崩溃/其它的软硬件错误而无法继续，则通过回溯日志，将已经执行成功的操作撤销，从而达到“全部操作失败”的目的。 最常见的场景是，数据库系统崩溃后重启，此时数据库处于">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:updated_time" content="2018-12-06T12:19:45.860Z">
+<meta property="og:updated_time" content="2018-12-27T04:55:09.867Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据库事务的四个特性及mysql的四种隔离级别">
 <meta name="twitter:description" content="1、原子性在同一个事务内部的一组操作必须全部执行成功（或者全部失败）。 为了保证事务操作的原子性，必须实现基于日志的REDO/UNDO机制：将所有对数据的更新操作都写入日志，如果一个事务中的一部分操作已经成功，但以后的操作，由于断电/系统崩溃/其它的软硬件错误而无法继续，则通过回溯日志，将已经执行成功的操作撤销，从而达到“全部操作失败”的目的。 最常见的场景是，数据库系统崩溃后重启，此时数据库处于">
@@ -46,7 +46,7 @@
     <div class="left-col" q-class="show:isShow">
       
 <div class="overlay" style="background: #4d4d4d">
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="300" height="86" src="//music.163.com/outchain/player?type=2&id=34324396&auto=0&height=66"></iframe>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="300" height="86" src="//music.163.com/outchain/player?type=2&id=28678042&auto=0&height=66"></iframe>
 </div>
 <div class="intrude-less">
 	<header id="header" class="inner">
@@ -220,8 +220,8 @@
 <p>#####（1）MVCC(多版本并发控制)</p>
 <p>多版本并发控制，顾名思义，在并发访问的时候，数据存在版本的概念，可以有效地提升数据库并发能力，常见的数据库如MySQL、MS SQL Server、IBM DB2、Hbase、MongoDB等等都在使用。InnoDB采用的MVCC实现方式是：在需要时，通过undo日志构造出历史版本。</p>
 <p>简单讲，如果没有MVCC，当想要读取的数据被其他事务用排它锁锁住时，只能互斥等待(锁机制可以控制并发操作，但是其系统开销较大)；而这时MVCC可以通过提供历史版本从而实现读取被锁的数据的历史版本，从而避免了互斥等待。</p>
-<p>MVCC是通过保存数据在某个时间点的快照来实现的。 不同存储引擎的MVCC、不同存储引擎的MVCC实现是不同的，典型的有乐观并发控制和悲观并发控制。</p>
-<p>InnoDB的MVCC,是通过在每行记录后面保存两个隐藏的列来实现的，这两个列，分别保存了这个行的创建时间，一个保存的是行的删除时间。这里存储的并不是实际的时间值,而是系统版本号(可以理解为事务的ID)，没开始一个新的事务，系统版本号就会自动递增，事务开始时刻的系统版本号会作为事务的ID。</p>
+<p>MVCC是通过保存数据在某个时间点的快照来实现的。 不同存储引擎的MVCC实现是不同的，典型的有乐观并发控制和悲观并发控制。</p>
+<p>InnoDB的MVCC,是通过在每行记录后面保存两个隐藏的列来实现的，这两个列，分别保存了这个行的创建时间，一个保存的是行的删除时间。这里存储的并不是实际的时间值,而是系统版本号(可以理解为事务的ID)，每开始一个新的事务，系统版本号就会自动递增，事务开始时刻的系统版本号会作为事务的ID。</p>
 <h5 id="（2）锁"><a href="#（2）锁" class="headerlink" title="（2）锁"></a>（2）锁</h5><h6 id="锁的分类"><a href="#锁的分类" class="headerlink" title="锁的分类"></a>锁的分类</h6><ul>
 <li><p>Shared Locks(共享锁/S锁)<br>若事务T对数据对象A加上S锁，则事务T只能读A；其他事务只能再对A加S锁，而不能加X锁，直到T释放A上的S锁。这就保证了其他事务可以读A，但在T释放A上的S锁之前不能对A做任何修改。</p>
 </li>
@@ -269,6 +269,48 @@
 <h6 id="总结：几类读异常"><a href="#总结：几类读异常" class="headerlink" title="总结：几类读异常"></a>总结：几类读异常</h6><p>读-写-读，引起的异常<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">脏读：读取了脏数据(不存在的数据)。</span><br><span class="line">事务一读</span><br><span class="line">事务二写(未提交)</span><br><span class="line">事务二读(脏数据)</span><br><span class="line">事务二回滚</span><br></pre></td></tr></table></figure></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">不可重复读：既可以读取修改的数据，也可以读取新增的数据(幻读)。</span><br><span class="line">事务一读</span><br><span class="line">事务二写(更新已提交)</span><br><span class="line">事务二读(数据不一致，不可重复读)</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">幻读：仅可以读取新增的数据，但是无法读取修改的数据；</span><br><span class="line">事务一读</span><br><span class="line">事务二写(新增已提交)</span><br><span class="line">事务二读(数据不一致，幻读)</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>隔离级别</th>
+<th style="text-align:center">脏读(Dirty Read)</th>
+<th style="text-align:center">不可重复读(NonRepeatable Read)</th>
+<th style="text-align:center">幻读(Phantom Read)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>未提交读（Read uncommitted）</td>
+<td style="text-align:center">可能</td>
+<td style="text-align:center">可能</td>
+<td style="text-align:center">可能</td>
+</tr>
+<tr>
+<td>已提交读（Read committed）</td>
+<td style="text-align:center">不可能</td>
+<td style="text-align:center">可能</td>
+<td style="text-align:center">可能</td>
+</tr>
+<tr>
+<td>可重复读（Repeatable read）</td>
+<td style="text-align:center">不可能</td>
+<td style="text-align:center">不可能</td>
+<td style="text-align:center">可能</td>
+</tr>
+<tr>
+<td>可串行化（Serializable ）</td>
+<td style="text-align:center">不可能</td>
+<td style="text-align:center">不可能</td>
+<td style="text-align:center">不可能</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>未提交读(Read Uncommitted)：允许脏读，也就是可能读取到其他会话中未提交事务修改的数据</li>
+<li>提交读(Read Committed)：只能读取到已经提交的数据。Oracle等多数数据库默认都是该级别 (不重复读)</li>
+<li>可重复读(Repeated Read)：可重复读。在同一个事务内的查询都是事务开始时刻一致的，InnoDB默认级别。在SQL标准中，该隔离级别消除了不可重复读，但是还存在幻象读</li>
+<li>串行读(Serializable)：完全串行化的读，每次读都需要获得表级共享锁，读写相互都会阻塞</li>
+</ul>
 <p>附命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">查看表的加锁情况: select * from information_schema.INNODB_LOCKS;</span><br><span class="line">查看事务状态: select * from information_schema.INNODB_TRX;</span><br></pre></td></tr></table></figure></p>
 <h4 id="4、持久性"><a href="#4、持久性" class="headerlink" title="4、持久性"></a>4、持久性</h4><p>这是最好理解的一个特性：持久性，意味着在事务完成以后，该事务所对数据库所作的更改便持久的保存在数据库之中，并不会被回滚。（完成的事务是系统永久的部分，对系统的影响是永久性的，该修改即使出现致命的系统故障也将一直保持）</p>
 
@@ -447,7 +489,7 @@ gitment.render('gitment-ctn')
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 Byte_Liu
+    		&copy; 2019 Byte_Liu
     	</div>
       	<div class="footer-right">
         <!--
@@ -598,15 +640,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">UDP</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -710,11 +752,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">synchronize</a>
+                <a href="javascript:void(0)" class="js-tag color5">zookeeper</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">zookeeper</a>
+                <a href="javascript:void(0)" class="js-tag color2">synchronize</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -738,11 +780,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
+                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
+                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -751,6 +793,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Netty</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">项目管理</a>
               </li>
              
               <li class="article-tag-list-item">

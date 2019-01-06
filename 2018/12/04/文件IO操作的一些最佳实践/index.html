@@ -19,7 +19,7 @@
 <meta property="og:image" content="http://www.byteliu.com/2018/12/04/文件IO操作的一些最佳实践/markdown-img-paste-2018120419284657.png">
 <meta property="og:image" content="http://www.byteliu.com/2018/12/04/文件IO操作的一些最佳实践/markdown-img-paste-20181204193418993.png">
 <meta property="og:image" content="http://www.byteliu.com/2018/12/04/文件IO操作的一些最佳实践/markdown-img-paste-20181204194600295.png">
-<meta property="og:updated_time" content="2018-12-04T12:46:23.155Z">
+<meta property="og:updated_time" content="2018-12-21T05:40:59.991Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="文件IO操作的一些最佳实践">
 <meta name="twitter:description" content="原文链接：https://www.cnkirito.moe 已经过去的中间件性能挑战赛，和正在进行中的 第一届 PolarDB 数据性能大赛 都涉及到了文件操作，合理地设计架构以及正确地压榨机器的读写性能成了比赛中获取较好成绩的关键。正在参赛的我收到了几位公众号读者朋友的反馈，他们大多表达出了这样的烦恼：“对比赛很感兴趣，但不知道怎么入门”，“能跑出成绩，但相比前排的选手，成绩相差10倍有余”…为">
@@ -50,7 +50,7 @@
     <div class="left-col" q-class="show:isShow">
       
 <div class="overlay" style="background: #4d4d4d">
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="300" height="86" src="//music.163.com/outchain/player?type=2&id=34324396&auto=0&height=66"></iframe>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="300" height="86" src="//music.163.com/outchain/player?type=2&id=28678042&auto=0&height=66"></iframe>
 </div>
 <div class="intrude-less">
 	<header id="header" class="inner">
@@ -216,7 +216,7 @@
 <h3 id="初识-FileChannel-和-MMAP"><a href="#初识-FileChannel-和-MMAP" class="headerlink" title="初识 FileChannel 和 MMAP"></a>初识 FileChannel 和 MMAP</h3><p>首先，文件IO类型的比赛最重要的一点，就是选择好读写文件的方式，那 JAVA 中文件IO有多少种呢？原生的读写方式大概可以被分为三种：普通IO，FileChannel(文件通道)，MMAP(内存映射)。区分他们也很简单，例如 FileWriter,FileReader 存在于 java.io 包中，他们属于普通IO；FileChannel 存在于 java.nio 包中，属于 NIO 的一种，但是注意 NIO 并不一定意味着非阻塞，这里的 FileChannel 就是阻塞的；较为特殊的是后者 MMAP，它是由 FileChannel 调用 map 方法衍生出来的一种特殊读写文件的方式，被称之为内存映射。</p>
 <p>使用 FIleChannel 的方式：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FileChannel fileChannel = new RandomAccessFile(new File(&quot;db.data&quot;), &quot;rw&quot;).getChannel();</span><br></pre></td></tr></table></figure>
-<p>获取 MMAP 的方式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MappedByteBuffer mappedByteBuffer = fileChannel.map(FileChannel.MapMode.READ_WRITE, 0, filechannel.size();</span><br></pre></td></tr></table></figure></p>
+<p>获取 MMAP 的方式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MappedByteBuffer mappedByteBuffer = fileChannel.map(FileChannel.MapMode.READ_WRITE, 0, filechannel.size());</span><br></pre></td></tr></table></figure></p>
 <p>MappedByteBuffer 便是 JAVA 中 MMAP 的操作类。<br>面向于字节传输的传统 IO 方式不做讨论，我们重点探讨 FileChannel 和 MMAP 这两种读写方式的区别。</p>
 <p>FileChannel 读写<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// 写</span><br><span class="line">byte[] data = new byte[4096];</span><br><span class="line">long position = 1024L;</span><br><span class="line">//指定 position 写入 4kb 的数据</span><br><span class="line">fileChannel.write(ByteBuffer.wrap(data), position);</span><br><span class="line">//从当前文件指针的位置写入 4kb 的数据</span><br><span class="line">fileChannel.write(ByteBuffer.wrap(data));</span><br><span class="line"></span><br><span class="line">// 读</span><br><span class="line">ByteBuffer buffer = ByteBuffer.allocate(4096);</span><br><span class="line">long position = 1024L;</span><br><span class="line">//指定 position 读取 4kb 的数据</span><br><span class="line">fileChannel.read(buffer,position)；</span><br><span class="line">//从当前文件指针的位置读取 4kb 的数据</span><br><span class="line">fileChannel.read(buffer);</span><br></pre></td></tr></table></figure></p>
 <p>FileChannel 大多数时候是和 ByteBuffer 这个类打交道，你可以将它理解为一个 byte[] 的封装类，提供了丰富的 API 去操作字节，不了解的同学可以去熟悉下它的 API。值得一提的是，write 和 read 方法均是线程安全的，FileChannel 内部通过一把 private final Object positionLock = new Object(); 锁来控制并发。</p>
@@ -495,7 +495,7 @@ gitment.render('gitment-ctn')
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 Byte_Liu
+    		&copy; 2019 Byte_Liu
     	</div>
       	<div class="footer-right">
         <!--
@@ -646,15 +646,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">UDP</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -758,11 +758,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">synchronize</a>
+                <a href="javascript:void(0)" class="js-tag color5">zookeeper</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">zookeeper</a>
+                <a href="javascript:void(0)" class="js-tag color2">synchronize</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -786,11 +786,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
+                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
+                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -799,6 +799,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Netty</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">项目管理</a>
               </li>
              
               <li class="article-tag-list-item">

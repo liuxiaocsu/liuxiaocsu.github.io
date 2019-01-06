@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
 <meta property="og:description" content="Java序列化是指把Java对象保存为二进制字节码的过程，Java反序列化是指把二进制字节码重新转换成Java对象的过程。那么为什么需要序列化呢？第一种情况是：一般情况下Java对象的声明周期都比Java虚拟机的要短，实际应用中我们希望在JVM停止运行之后能够持久化指定的对象，这时候就需要把对象进行序列化之后保存。第二种情况是：需要把Java对象通过网络进行传输的时候。因为数据只能够以二进制的形式">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:updated_time" content="2018-12-04T10:02:49.426Z">
+<meta property="og:updated_time" content="2018-12-27T03:22:11.368Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="序列化">
 <meta name="twitter:description" content="Java序列化是指把Java对象保存为二进制字节码的过程，Java反序列化是指把二进制字节码重新转换成Java对象的过程。那么为什么需要序列化呢？第一种情况是：一般情况下Java对象的声明周期都比Java虚拟机的要短，实际应用中我们希望在JVM停止运行之后能够持久化指定的对象，这时候就需要把对象进行序列化之后保存。第二种情况是：需要把Java对象通过网络进行传输的时候。因为数据只能够以二进制的形式">
@@ -46,7 +46,7 @@
     <div class="left-col" q-class="show:isShow">
       
 <div class="overlay" style="background: #4d4d4d">
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="300" height="86" src="//music.163.com/outchain/player?type=2&id=34324396&auto=0&height=66"></iframe>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="300" height="86" src="//music.163.com/outchain/player?type=2&id=28678042&auto=0&height=66"></iframe>
 </div>
 <div class="intrude-less">
 	<header id="header" class="inner">
@@ -215,8 +215,8 @@
 <p>对象序列化包括如下步骤：<br>　　1. 创建一个对象输出流，它可以包装一个其他类型的目标输出流，如文件输出流；<br>　　2. 通过对象输出流的writeObject()方法写对象。</p>
 <p>对象反序列化的步骤如下：<br>　　1. 创建一个对象输入流，它可以包装一个其他类型的源输入流，如文件输入流；<br>　　2. 通过对象输入流的readObject()方法读取对象。</p>
 <p><strong>注意：序列化保存的是对象的状态，静态变量属于类的状态，因此 序列化并不保存静态变量。</strong></p>
-<h3 id="serialVersionUID的作用"><a href="#serialVersionUID的作用" class="headerlink" title="serialVersionUID的作用"></a>serialVersionUID的作用</h3><p>　　s​e​r​i​a​l​V​e​r​s​i​o​n​U​I​D​:​ ​字​面​意​思​上​是​序​列​化​的版本​号​，凡是实现Serializable接口的类都有一个表示序列化版本标识符的静态变量。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID;</span><br></pre></td></tr></table></figure></p>
-<p>JDK完档关于 serialVersionUID 的描述<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">序列化运行时使用一个称为 serialVersionUID 的版本号与每个可序列化类相关联，该序列号在反序列化过程中用于验证序列化对象的发送者和接收者是否为该对象加载了与序列化兼容的类。如果接收者加载的该对象的类的 serialVersionUID 与对应的发送者的类的版本号不同，则反序列化将会导致 InvalidClassException。可序列化类可以通过声明名为 &quot;serialVersionUID&quot; 的字段（该字段必须是静态 (static)、最终 (final) 的 long 型字段）显式声明其自己的 serialVersionUID:</span><br><span class="line">如果可序列化类未显式声明 serialVersionUID，则序列化运行时将基于该类的各个方面计算该类的默认 serialVersionUID 值，如“Java(TM) 对象序列化规范”中所述。不过，强烈建议 所有可序列化类都显式声明 serialVersionUID 值，原因是计算默认的 serialVersionUID 对类的详细信息具有较高的敏感性，根据编译器实现的不同可能千差万别，这样在反序列化过程中可能会导致意外的 InvalidClassException。因此，为保证 serialVersionUID 值跨不同 java 编译器实现的一致性，序列化类必须声明一个明确的 serialVersionUID 值。还强烈建议使用 private 修饰符显示声明 serialVersionUID（如果可能），原因是这种声明仅应用于直接声明类 -- serialVersionUID 字段作为继承成员没有用处。数组类不能声明一个明确的 serialVersionUID，因此它们总是具有默认的计算值，但是数组类没有匹配 serialVersionUID 值的要求。</span><br></pre></td></tr></table></figure></p>
+<h3 id="serialVersionUID的作用"><a href="#serialVersionUID的作用" class="headerlink" title="serialVersionUID的作用"></a>serialVersionUID的作用</h3><p>s​e​r​i​a​l​V​e​r​s​i​o​n​U​I​D​:​ ​字​面​意​思​上​是​序​列​化​的版本​号​，凡是实现Serializable接口的类都有一个表示序列化版本标识符的静态变量。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID;</span><br></pre></td></tr></table></figure></p>
+<p>JDK文档关于 serialVersionUID 的描述<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">序列化运行时使用一个称为 serialVersionUID 的版本号与每个可序列化类相关联，该序列号在反序列化过程中用于验证序列化对象的发送者和接收者是否为该对象加载了与序列化兼容的类。如果接收者加载的该对象的类的 serialVersionUID 与对应的发送者的类的版本号不同，则反序列化将会导致 InvalidClassException。可序列化类可以通过声明名为 &quot;serialVersionUID&quot; 的字段（该字段必须是静态 (static)、最终 (final) 的 long 型字段）显式声明其自己的 serialVersionUID.</span><br><span class="line">如果可序列化类未显式声明 serialVersionUID，则序列化运行时将基于该类的各个方面计算该类的默认 serialVersionUID 值，如“Java(TM) 对象序列化规范”中所述。不过，强烈建议 所有可序列化类都显式声明 serialVersionUID 值，原因是计算默认的 serialVersionUID 对类的详细信息具有较高的敏感性，根据编译器实现的不同可能千差万别，这样在反序列化过程中可能会导致意外的 InvalidClassException。因此，为保证 serialVersionUID 值跨不同 java 编译器实现的一致性，序列化类必须声明一个明确的 serialVersionUID 值。还强烈建议使用 private 修饰符显示声明 serialVersionUID（如果可能），原因是这种声明仅应用于直接声明类 -- serialVersionUID 字段作为继承成员没有用处。数组类不能声明一个明确的 serialVersionUID，因此它们总是具有默认的计算值，但是数组类没有匹配 serialVersionUID 值的要求。</span><br></pre></td></tr></table></figure></p>
 <p>如果我们实现了Serializable接口的类没有指定具体的serialVersionUID值，Java运行时环境根据类的内部细节自动生成serialVersionUID值的。如果对类的源代码作了修改，再重新编译，新生成的类文件的serialVersionUID的取值有可能也会发生变化。类的serialVersionUID的默认值完全依赖于Java编译器的实现，对于同一个类，用不同的Java编译器编译，有可能会导致不同的 serialVersionUID，也有可能相同。为了提高serialVersionUID的独立性和确定性，强烈建议在一个可序列化类中显示的定义serialVersionUID，为它赋予明确的值。</p>
 <p>显式地定义serialVersionUID有两种用途：<br>　1.  在某些场合，希望类的不同版本对序列化兼容，因此需要确保类的不同版本具有相同的serialVersionUID；<br>　2. 在某些场合，不希望类的不同版本对序列化兼容，因此需要确保类的不同版本具有不同的serialVersionUID。</p>
 <h3 id="Transient-关键字"><a href="#Transient-关键字" class="headerlink" title="Transient 关键字"></a>Transient 关键字</h3><p>Transient 关键字的作用是控制变量的序列化，在变量声明前加上该关键字，可以阻止该变量被序列化到文件中，在被反序列化后，transient 变量的值被设为初始值，如 int 型的是 0，对象型的是 null。</p>
@@ -244,6 +244,11 @@
 <p>为什么只要在Singleton类中定义readResolve就可防止反序列化破坏单例呢？<br>继续看readOrdinaryObject方法的代码片段，其中有个desc.hasReadResolveMethod()方法和desc.invokeReadResolve(obj)方法。<br>hasReadResolveMethod:如果实现了serializable 或者 externalizable接口的类中包含readResolve则返回true</p>
 <p>invokeReadResolve:通过反射的方式调用要被反序列化的类的readResolve方法。</p>
 <p>所以，原理也就清楚了，主要在Singleton中定义readResolve方法，并在该方法中指定要返回的对象的生成策略，就可以防止单例被破坏。</p>
+<h3 id="实现InputStream的序列化"><a href="#实现InputStream的序列化" class="headerlink" title="实现InputStream的序列化"></a>实现InputStream的序列化</h3><p>InputStream本身是不支持序列化的，但是在实际开发的过程中有时会需要将输入流通过socket传输，比如RMI的远程调用。</p>
+<p>在Serializable的Java文档文档中有下面的描述：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Classes that require special handling during the serialization and deserialization process must implement special methods with these exact signatures:</span><br><span class="line"></span><br><span class="line">private void writeObject(java.io.ObjectOutputStream out) throws IOException</span><br><span class="line">private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException;</span><br><span class="line">private void readObjectNoData() throws ObjectStreamException;</span><br></pre></td></tr></table></figure></p>
+<p>对于这个场景，序列化的类只需实现writeObject与readObject这两个方法就足够了。readObjectNoData这个方法只是在特定的情况下才需要用，对于简单的应用场景来说，可以不用实现。</p>
+<p>为了实现输入流的序列化，需要新建一个继承于Serializable接口的实体类，序列化的时候将输入流转成字节数组（writeObject方法），反序列化则将字节流转成输入流（readObject方法）。值得注意的是，这里要用到transient关键字来修饰不可序列化的InputStream私有字段。</p>
+<p>示例代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">public class SerializableStream implements Serializable &#123;</span><br><span class="line">    private final static int LENGTH = 1024;</span><br><span class="line">    private transient InputStream inputStream;</span><br><span class="line"></span><br><span class="line">    public SerializableStream(InputStream is) &#123;</span><br><span class="line">        this.inputStream = is;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public InputStream getInputStream() &#123;</span><br><span class="line">        return inputStream;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void writeObject(ObjectOutputStream oos) throws Exception &#123;</span><br><span class="line">        oos.defaultWriteObject();</span><br><span class="line"></span><br><span class="line">        byte[] buff = new byte[LENGTH];</span><br><span class="line">        int tmp;</span><br><span class="line">        while ((tmp = inputStream.read(buff, 0, LENGTH)) != -1) &#123;</span><br><span class="line">            oos.write(buff, 0, tmp);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void readObject(ObjectInputStream ois) throws Exception &#123;</span><br><span class="line">        ois.defaultReadObject();</span><br><span class="line"></span><br><span class="line">        byte[] buf = new byte[LENGTH];</span><br><span class="line">        ByteArrayOutputStream bos = new ByteArrayOutputStream();</span><br><span class="line">        int tmp;</span><br><span class="line">        while ((tmp = ois.read(buf, 0, LENGTH)) != -1) &#123;</span><br><span class="line">            bos.write(buf, 0, tmp);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        inputStream = new ByteArrayInputStream(bos.toByteArray());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 
   
 
@@ -375,7 +380,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#JDK类库中的序列化API"><span class="toc-number">1.</span> <span class="toc-text">JDK类库中的序列化API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#serialVersionUID的作用"><span class="toc-number">2.</span> <span class="toc-text">serialVersionUID的作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Transient-关键字"><span class="toc-number">3.</span> <span class="toc-text">Transient 关键字</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现自定义序列化策略"><span class="toc-number">4.</span> <span class="toc-text">实现自定义序列化策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#防止序列化破坏单例模式"><span class="toc-number">5.</span> <span class="toc-text">防止序列化破坏单例模式</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#JDK类库中的序列化API"><span class="toc-number">1.</span> <span class="toc-text">JDK类库中的序列化API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#serialVersionUID的作用"><span class="toc-number">2.</span> <span class="toc-text">serialVersionUID的作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Transient-关键字"><span class="toc-number">3.</span> <span class="toc-text">Transient 关键字</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现自定义序列化策略"><span class="toc-number">4.</span> <span class="toc-text">实现自定义序列化策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#防止序列化破坏单例模式"><span class="toc-number">5.</span> <span class="toc-text">防止序列化破坏单例模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现InputStream的序列化"><span class="toc-number">6.</span> <span class="toc-text">实现InputStream的序列化</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -420,7 +425,7 @@ gitment.render('gitment-ctn')
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 Byte_Liu
+    		&copy; 2019 Byte_Liu
     	</div>
       	<div class="footer-right">
         <!--
@@ -571,15 +576,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">UDP</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -683,11 +688,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">synchronize</a>
+                <a href="javascript:void(0)" class="js-tag color5">zookeeper</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">zookeeper</a>
+                <a href="javascript:void(0)" class="js-tag color2">synchronize</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -711,11 +716,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
+                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
+                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -724,6 +729,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Netty</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">项目管理</a>
               </li>
              
               <li class="article-tag-list-item">
