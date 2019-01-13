@@ -18,7 +18,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://www.byteliu.com/2019/01/05/幂等性/markdown-img-paste-20181225175534841.png">
 <meta property="og:image" content="http://www.byteliu.com/2019/01/05/幂等性/markdown-img-paste-20181225175454818.png">
-<meta property="og:updated_time" content="2019-01-06T13:48:42.510Z">
+<meta property="og:updated_time" content="2019-01-08T12:22:14.418Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="幂等性">
 <meta name="twitter:description" content="现在稍具规模的网站和大型应用都不再是单机模式，而是分布式应用，基于多机的集群构建的应用，这样服务能力就可以基本实现横向扩容（scale out），不会像单机模式下的纵向扩容（scale up）会受到单机服务能力上限的限制。另外，随着“微服务”概念的火爆，很多应用在构建之初就已经走在了分布式的路线上了，所以就目前行业的发展来看，基于分布式的应用会越来越普遍，甚至变成常态。加上docker这些容器技术">
@@ -272,7 +272,7 @@
 </ul>
 <h3 id="实现幂等性的技术方案"><a href="#实现幂等性的技术方案" class="headerlink" title="实现幂等性的技术方案"></a>实现幂等性的技术方案</h3><h4 id="查询操作"><a href="#查询操作" class="headerlink" title="查询操作"></a>查询操作</h4><p>查询一次和查询多次，在数据不变的情况下，查询结果是一样的，select是天然的幂等操作。</p>
 <h4 id="删除操作"><a href="#删除操作" class="headerlink" title="删除操作"></a>删除操作</h4><p>删除操作也是幂等的，删除一次和多次删除都是把数据删除。(注意可能返回结果不一样，删除的数据不存在，返回0，删除的数据多条，返回结果多个)。</p>
-<h4 id="去重表-唯一索引，防止新增脏数据"><a href="#去重表-唯一索引，防止新增脏数据" class="headerlink" title="去重表(唯一索引，防止新增脏数据)"></a>去重表(唯一索引，防止新增脏数据)</h4><p>利用数据库表单的特性来实现幂等，常用的一个思路是在表上构建唯一性索引，保证某一类数据一旦执行完毕，后续同样的请求再也无法成功写入。<br>例子还是上述的博客点赞问题，要想防止一个人重复点赞，可以设计一张表，将博客id与用户id绑定建立唯一索引，每当用户点赞时就往表中写入一条数据，这样重复点赞的数据就无法写入。</p>
+<h4 id="去重表-唯一索引，防止新增脏数据"><a href="#去重表-唯一索引，防止新增脏数据" class="headerlink" title="去重表(唯一索引，防止新增脏数据)"></a>去重表(唯一索引，防止新增脏数据)</h4><p>利用数据库表单的特性来实现幂等，常用的一个思路是在表上构建唯一性索引，保证某一类数据一旦执行完毕，后续同样的请求再也无法成功写入。<br>博客点赞的例子，要想防止一个人重复点赞，可以设计一张表，将博客id与用户id绑定建立唯一索引，每当用户点赞时就往表中写入一条数据，这样重复点赞的数据就无法写入。</p>
 <p>拿资金账户和用户账户来说，每个用户只能有一个资金账户，怎么防止给用户创建资金账户多个，那么给资金账户表中的用户ID加唯一索引，在新增的时候只有一个能请求成功，剩下都会抛出唯一索引重复异常。比如<code>org.springframework.dao.DuplicateKeyException</code>，这时候再查询一次就可以了，数据存在，返回结果。</p>
 <h4 id="token机制，防止页面重复提交"><a href="#token机制，防止页面重复提交" class="headerlink" title="token机制，防止页面重复提交"></a>token机制，防止页面重复提交</h4><p>这种机制就比较重要了，适用范围较广，有多种不同的实现方式。其核心思想是为每一次操作生成一个唯一性的凭证，也就是token。一个token在操作的每一个阶段只有一次执行权，一旦执行成功则保存执行结果。对重复的请求，返回同一个结果。<br>以电商平台为例子，电商平台上的订单id就是最适合的token。当用户下单时，会经历多个环节，比如生成订单，减库存，减优惠券等等。<br>每一个环节执行时都先检测一下该订单id是否已经执行过这一步骤，对未执行的请求，执行操作并缓存结果，而对已经执行过的id，则直接返回之前的执行结果，不做任何操作。这样可以在最大程度上避免操作的重复执行问题，缓存起来的执行结果也能用于事务的控制等。</p>
 <p>要求：页面的数据只能被点击提交一次<br>发生原因：由于重复点击或者网络重发，或者nginx重发等情况会导致数据被重复提交<br>解决办法：</p>
@@ -649,11 +649,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
+                <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -713,11 +713,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -729,19 +729,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">C10K</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Btrace</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">加密解密</a>
+                <a href="javascript:void(0)" class="js-tag color5">C10K</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">HTTP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">加密解密</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -785,11 +785,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
+                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
+                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
 <meta property="og:description" content="Java位运算表示方法　在Java语言中，二进制数使用补码表示，最高位为符号位，正数的符号位为0，负数为1。补码的表示需要满足如下要求。 　(1)正数的最高位为0，其余各位代表数值本身(二进制数)。 　(2)对于负数，通过对该数绝对值的补码按位取反，再对整个数加1。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:updated_time" content="2018-12-10T14:49:37.312Z">
+<meta property="og:updated_time" content="2019-01-08T08:40:31.210Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="位运算">
 <meta name="twitter:description" content="Java位运算表示方法　在Java语言中，二进制数使用补码表示，最高位为符号位，正数的符号位为0，负数为1。补码的表示需要满足如下要求。 　(1)正数的最高位为0，其余各位代表数值本身(二进制数)。 　(2)对于负数，通过对该数绝对值的补码按位取反，再对整个数加1。">
@@ -212,7 +212,7 @@
 <h4 id="位运算符的优先级"><a href="#位运算符的优先级" class="headerlink" title="位运算符的优先级"></a>位运算符的优先级</h4><p>~的优先级最高，其次是&lt;&lt;、&gt;&gt;和&gt;&gt;&gt;，再次是＆，然后是^，优先级最低的是|。</p>
 <h3 id="位运算的应用"><a href="#位运算的应用" class="headerlink" title="位运算的应用"></a>位运算的应用</h3><ol>
 <li><p>判断int型变量a是奇数还是偶数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a&amp;1 = 0 偶数</span><br><span class="line">a&amp;1 = 1 奇数</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a&amp;1 == 0 偶数</span><br><span class="line">a&amp;1 == 1 奇数</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>求平均值，比如有两个int类型变量x、y,首先要求x+y的和，再除以2，但是有可能x+y的结果会超过int的最大表示范围，所以位运算就派上用场啦。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">      (x&amp;y)+((x^y)&gt;&gt;1);</span><br><span class="line"></span><br><span class="line">知识点：&gt;&gt;n 相当于除于2^n ，&lt;&lt;n 相当于乘于2^n 。</span><br><span class="line">x,y对应位均为1，相加后再除以2还是原来的数，如两个00001000相加后除以2仍得00001000,那么我们把x与y分别分成两个部分来看,两者相同的位分别拿出来 则 :</span><br><span class="line">x = (111111111111000)2 =  (111111111111000)2 +  (000000000000000)2</span><br><span class="line">y =  (111111111111010)2 =  (111111111111000)2 +  (000000000000010)2</span><br><span class="line">相同部分我们叫做x1,y1,不同部分我们叫做x2,y2.那么现在(x+y)/2 =(x1+y1)/2 +(x2 + y2)/2 ,因为x1 == y1 ,所以(x1+y1)/2 ==x1 ==y1,相同部分我们用与运算求出来 x1 = x&amp;y ,不同部分的和我们用^求出来,然后除于2就是我们想要的结果了。</span><br></pre></td></tr></table></figure>
@@ -756,11 +756,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
+                <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -820,11 +820,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -836,19 +836,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">C10K</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Btrace</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">加密解密</a>
+                <a href="javascript:void(0)" class="js-tag color5">C10K</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">HTTP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">加密解密</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -892,11 +892,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
+                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
+                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
               </li>
              
               <li class="article-tag-list-item">
