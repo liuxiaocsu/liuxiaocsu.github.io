@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://www.byteliu.com/2019/01/25/UndeclaredThrowableException%E6%8E%A2%E7%A7%98/</loc>
+    <lastmod>2019-01-25T18:32:05.449Z</lastmod>
+  </url>  <url>
     <loc>http://www.byteliu.com/2019/01/13/%E7%A3%81%E7%9B%98I-O%E9%82%A3%E4%BA%9B%E4%BA%8B/</loc>
-    <lastmod>2019-01-13T08:31:10.381Z</lastmod>
+    <lastmod>2019-01-13T08:32:03.370Z</lastmod>
   </url>  <url>
     <loc>http://www.byteliu.com/2017/05/18/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%86%85%E9%83%A8%E7%9A%84IO%E4%B8%96%E7%95%8C/</loc>
     <lastmod>2019-01-09T11:23:48.096Z</lastmod>
@@ -283,10 +286,10 @@
     <loc>http://www.byteliu.com/2016/05/03/TEST/</loc>
     <lastmod>2018-12-04T10:02:49.397Z</lastmod>
   </url>  <url>
-    <loc>http://www.byteliu.com/2017/08/07/UDP%E5%8D%8F%E8%AE%AE%E7%AE%80%E4%BB%8B/</loc>
+    <loc>http://www.byteliu.com/2017/08/15/WebSocket%E6%98%AF%E4%BB%80%E4%B9%88%E5%8E%9F%E7%90%86%EF%BC%9F%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%AF%E4%BB%A5%E5%AE%9E%E7%8E%B0%E6%8C%81%E4%B9%85%E8%BF%9E%E6%8E%A5/</loc>
     <lastmod>2018-12-04T10:02:49.396Z</lastmod>
   </url>  <url>
-    <loc>http://www.byteliu.com/2017/08/15/WebSocket%E6%98%AF%E4%BB%80%E4%B9%88%E5%8E%9F%E7%90%86%EF%BC%9F%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%AF%E4%BB%A5%E5%AE%9E%E7%8E%B0%E6%8C%81%E4%B9%85%E8%BF%9E%E6%8E%A5/</loc>
+    <loc>http://www.byteliu.com/2017/08/07/UDP%E5%8D%8F%E8%AE%AE%E7%AE%80%E4%BB%8B/</loc>
     <lastmod>2018-12-04T10:02:49.396Z</lastmod>
   </url>  <url>
     <loc>http://www.byteliu.com/2017/07/10/TCP%E7%9A%84%E5%9B%9B%E7%A7%8D%E5%AE%9A%E6%97%B6%E5%99%A8/</loc>
