@@ -181,6 +181,91 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Java代码规范-3" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/19/Java代码规范-3/">Java代码规范(3)</a>
+    </h1>
+  
+
+        
+        <a href="/2018/10/19/Java代码规范-3/" class="archive-article-date">
+  	<time datetime="2018-10-19T15:11:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-19</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+     <h4 id="ArrayList的subList结果不可强转成ArrayList，否则会抛出ClassCastException异常pmd-ClassCastExceptionWithSubListToArrayListRule"><a href="#ArrayList的subList结果不可强转成ArrayList，否则会抛出ClassCastException异常pmd-ClassCastExceptionWithSubListToArrayListRule" class="headerlink" title="ArrayList的subList结果不可强转成ArrayList，否则会抛出ClassCastException异常pmd:ClassCastExceptionWithSubListToArrayListRule"></a>ArrayList的subList结果不可强转成ArrayList，否则会抛出ClassCastException异常pmd:ClassCastExceptionWithSubListToArrayListRule</h4><p>Critical</p>
+<p>ArrayList的subList结果不可强转成ArrayList，否则会抛出ClassCastException异常。<br>说明：禁止强转，如果需要用到集合特性方法，请新建一个集合，然后置入sublist,new 集合(sublist结果)。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">反例:</span><br><span class="line">List list = new ArrayList();</span><br><span class="line">list.add(&quot;22&quot;);</span><br><span class="line">//warn</span><br><span class="line">List test = (ArrayList) list.subList(0, 1);</span><br><span class="line"></span><br><span class="line">正例:</span><br><span class="line">List list2 = new ArrayList(list.subList(0, 1));</span><br></pre></td></tr></table></figure></p>
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">代码规范</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/代码规范//" class="article-tag-list-link color5">代码规范</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/10/19/Java代码规范-3/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Java代码规范-2" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -947,93 +1032,6 @@
 
 
   
-    <article id="post-RPC消息协议设计" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/11/RPC消息协议设计/">RPC消息协议设计</a>
-    </h1>
-  
-
-        
-        <a href="/2018/06/11/RPC消息协议设计/" class="archive-article-date">
-  	<time datetime="2018-06-11T14:58:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-     <p>RPC(Remote Procedure Call)，远程过程调用，是一种分布式系统中常用跨机器的通信方法，更多的是指跨机器交互中的长连接交互。</p>
-<p>RPC传统意义上讲是指长连接数据交互，区别于http即用即走的短连接，严格来说http也算是一种特殊的RPC服务，随着http1.1中对长连接的支持，区别已经越来越小。</p>
-<p>RPC的应用非常广泛，主要应用在大中型分布式系统中的组件交互，可以这样理解：各种夸网络协议的「长连接」系统交互中都使用了RPC或者类RPC。</p>
-<p>其他分布式通信解决方案还有：分布式消息队列、HTTP请求调用、数据库和分布式缓存等。<br></p>
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/计算机基础//" class="article-tag-list-link color1">计算机基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/11/RPC消息协议设计/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
@@ -1248,14 +1246,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Java虚拟机</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">tag1</a>
               </li>
              
@@ -1296,6 +1286,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Java虚拟机</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">kafaka</a>
               </li>
              
@@ -1324,15 +1322,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">C10K</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Btrace</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">加密解密</a>
+                <a href="javascript:void(0)" class="js-tag color5">C10K</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1340,7 +1334,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Integer</a>
+                <a href="javascript:void(0)" class="js-tag color5">加密解密</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1348,15 +1342,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Integer</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">LVS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">synchronize</a>
+                <a href="javascript:void(0)" class="js-tag color5">zookeeper</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">zookeeper</a>
+                <a href="javascript:void(0)" class="js-tag color2">synchronize</a>
               </li>
              
               <li class="article-tag-list-item">
