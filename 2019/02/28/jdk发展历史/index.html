@@ -6,15 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://www.byteliu.com">
-  <title>Category: 限流 | Byte_Liu&#39;s Blog</title>
+  <title>jdk发展历史 | Byte_Liu&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Byte_Liu&#39;s Blog">
-<meta property="og:url" content="http://www.byteliu.com/categories/限流/index.html">
+  <meta name="description" content="1234Java语言的相关组织和规范（其他语言也有类似的组织）：JCP：（Java Community Process）由世界上各个为 Java 发展操心的人士组成的社区，参与定义 Java 新特性和新版本制定标准的组织（作为唯一的中国代表阿里巴巴就是 JCP 的执行委员之一，阿里的 Java，腾讯的 C++ 都不是吹的）。JSR：（Java Specification Requests）Java">
+<meta name="keywords" content="Java基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jdk发展历史">
+<meta property="og:url" content="http://www.byteliu.com/2019/02/28/jdk发展历史/index.html">
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
+<meta property="og:description" content="1234Java语言的相关组织和规范（其他语言也有类似的组织）：JCP：（Java Community Process）由世界上各个为 Java 发展操心的人士组成的社区，参与定义 Java 新特性和新版本制定标准的组织（作为唯一的中国代表阿里巴巴就是 JCP 的执行委员之一，阿里的 Java，腾讯的 C++ 都不是吹的）。JSR：（Java Specification Requests）Java">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:updated_time" content="2019-02-28T12:13:33.327Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Byte_Liu&#39;s Blog">
+<meta name="twitter:title" content="jdk发展历史">
+<meta name="twitter:description" content="1234Java语言的相关组织和规范（其他语言也有类似的组织）：JCP：（Java Community Process）由世界上各个为 Java 发展操心的人士组成的社区，参与定义 Java 新特性和新版本制定标准的组织（作为唯一的中国代表阿里巴巴就是 JCP 的执行委员之一，阿里的 Java，腾讯的 C++ 都不是吹的）。JSR：（Java Specification Requests）Java">
   
     <link rel="alternative" href="/atom.xml" title="Byte_Liu&#39;s Blog" type="application/atom+xml">
   
@@ -179,165 +184,310 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-jdk发展历史" class="article article-type-post " itemscope="" itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-
-
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/08/30/Java高并发大流量限流/" class="archive-article-date">
-  	<time datetime="2016-08-30T04:25:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-30</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/08/30/Java高并发大流量限流/">Java高并发大流量限流</a>
+    <h1 class="article-title" itemprop="name">
+      jdk发展历史
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2019/02/28/jdk发展历史/" class="archive-article-date">
+  	<time datetime="2019-02-28T11:44:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+  
+    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Java语言的相关组织和规范（其他语言也有类似的组织）：</span><br><span class="line">JCP：（Java Community Process）由世界上各个为 Java 发展操心的人士组成的社区，参与定义 Java 新特性和新版本制定标准的组织（作为唯一的中国代表阿里巴巴就是 JCP 的执行委员之一，阿里的 Java，腾讯的 C++ 都不是吹的）。</span><br><span class="line">JSR：（Java Specification Requests）Java 语言规范请求文档，你可以对 Java 提出新的要求，然后 Java 相关的组织投票决定是否通过，通过后就将这个要求写入 JSR 中，并且最终给出一个开源的实现。</span><br><span class="line">JEP：（Java Enhancement Proposal），Java 增强建议，收集大家对于 JDK 的建议，起草增强 Java 哪些功能的方案，为 JDK 新版本发布及相关工作指定路线。</span><br></pre></td></tr></table></figure>
+<h3 id="JAVA-1-0-代号Oak（橡树）"><a href="#JAVA-1-0-代号Oak（橡树）" class="headerlink" title="JAVA 1.0 ,代号Oak（橡树）"></a>JAVA 1.0 ,代号Oak（橡树）</h3><p>于1996-01-23发行</p>
+<h3 id="JAVA-1-1"><a href="#JAVA-1-1" class="headerlink" title="JAVA 1.1"></a>JAVA 1.1</h3><p>1997-02-19发行,主要更新内容:</p>
+<ol>
+<li>引入JDBC</li>
+<li>添加内部类支持</li>
+<li>引入JAVA BEAN</li>
+<li>引入RMI</li>
+<li><strong>引入反射</strong></li>
+</ol>
+<h3 id="JAVA-1-2-代号Playground（操场）"><a href="#JAVA-1-2-代号Playground（操场）" class="headerlink" title="JAVA 1.2, 代号Playground（操场）"></a>JAVA 1.2, 代号Playground（操场）</h3><p>1998-12-8发行，主要更新内容：</p>
+<ol>
+<li><strong>引入集合框架</strong></li>
+<li>对字符串常量做内存映射</li>
+<li><strong>引入JIT（Just In Time）编译器</strong></li>
+<li>引入打包文件数字签名</li>
+<li>引入控制授权访问系统资源策略工具</li>
+<li>引入JFC（Java Foundation Classes），包括Swing1.0，拖放和Java2D类库</li>
+<li>引入Java插件</li>
+<li>JDBC中引入可滚动结果集，BLOB,CLOB,批量更新和用户自定义类型</li>
+<li>Applet中添加声音支持</li>
+</ol>
+<h3 id="JAVA1-3，代号Kestrel（红隼）"><a href="#JAVA1-3，代号Kestrel（红隼）" class="headerlink" title="JAVA1.3，代号Kestrel（红隼）"></a>JAVA1.3，代号Kestrel（红隼）</h3><p>2000-5-8发布，主要更新内容：</p>
+<ol>
+<li>引入Java Sound API</li>
+<li>引入jar文件索引</li>
+<li>对Java各方面多了大量优化和增强</li>
+<li><strong>Java Platform Debugger Architecture</strong>用于 Java 调式的平台。</li>
+</ol>
+<h3 id="JAVA-1-4，代号Merlin（隼）"><a href="#JAVA-1-4，代号Merlin（隼）" class="headerlink" title="JAVA 1.4，代号Merlin（隼）"></a>JAVA 1.4，代号Merlin（隼）</h3><p>2004-2-6发布（首次在JCP下发行），主要更新内容：</p>
+<ol>
+<li>添加XML处理</li>
+<li>添加Java打印服务（Java Print Service API）</li>
+<li><strong>引入Logging API</strong></li>
+<li>引入Java Web Start</li>
+<li>引入JDBC 3.0 API</li>
+<li>引入断言</li>
+<li>引入Preferences API</li>
+<li>引入链式异常处理</li>
+<li>支持IPV6</li>
+<li>支持正则表达式</li>
+<li>引入Image I/O API</li>
+<li><strong>NIO，非阻塞的 IO，优化 Java 的 IO 读取。</strong></li>
+</ol>
+<h3 id="JAVA-5-0，代号Tiger（老虎），有重大改动"><a href="#JAVA-5-0，代号Tiger（老虎），有重大改动" class="headerlink" title="JAVA 5.0，代号Tiger（老虎），有重大改动"></a>JAVA 5.0，代号Tiger（老虎），有重大改动</h3><p>2004-9-30发布，主要更新内容：</p>
+<ol>
+<li><strong>引入泛型</strong></li>
+<li><strong>For-Each循环</strong> 增强循环，可使用迭代方式</li>
+<li><strong>自动装箱与自动拆箱</strong></li>
+<li>引入类型安全的枚举</li>
+<li><strong>引入可变参数</strong></li>
+<li><strong>添加静态引入</strong></li>
+<li><strong>引入注解</strong></li>
+<li><strong>引入Instrumentation</strong></li>
+<li><strong>提供了 java.util.concurrent 并发包。</strong></li>
+</ol>
+<h3 id="JAVA6，代号Mustang（野马）"><a href="#JAVA6，代号Mustang（野马）" class="headerlink" title="JAVA6，代号Mustang（野马）"></a>JAVA6，代号Mustang（野马）</h3><p>2006-12-11发布，主要更新内容：</p>
+<ol>
+<li>引入了一个支持脚本引擎的新框架（基于 Mozilla Rhino 的 JavaScript 脚本引擎）</li>
+<li>UI的增强</li>
+<li>对WebService支持的增强（JAX-WS2.0 和 JAXB2.0）</li>
+<li>引入JDBC4.0API</li>
+<li>引入Java Compiler API</li>
+<li>通用的Annotations支持</li>
+</ol>
+<h3 id="JAVA7，代号Dolphin（海豚）"><a href="#JAVA7，代号Dolphin（海豚）" class="headerlink" title="JAVA7，代号Dolphin（海豚）"></a>JAVA7，代号Dolphin（海豚）</h3><p>2011-07-28发布，这是sun被oracle收购（2009年4月）后的第一个版本，主要更新内容：</p>
+<ol>
+<li><strong>switch语句块中允许以字符串作为分支条件</strong></li>
+<li><strong>在创建泛型对象时应用类型推断</strong>,比如你之前版本使用泛型类型时这样写 <code>ArrayList&lt;User&gt; userList= new ArrayList&lt;User&gt;();</code>，这个版本只需要这样写 <code>ArrayList&lt;User&gt; userList= new ArrayList&lt;&gt;();</code>，也即是后面一个尖括号内的类型，JVM 帮我们自动类型判断补全了。</li>
+<li><strong>在一个语句块中捕获多种异常</strong></li>
+<li><strong>添加try-with-resources语法支持，使用文件操作后不用再显示执行close了。</strong></li>
+<li>支持动态语言</li>
+<li>JSR203, <strong>NIO.2,AIO,新I/O文件系统，增加多重文件的支持、文件原始数据和符号链接,支持ZIP文件操作</strong></li>
+<li>JDBC规范版本升级为JDBC4.1</li>
+<li><strong>引入Fork/Join框架，用于并行执行任务</strong></li>
+<li>支持带下划线的数值，如 int a = 100000000;，0 太多不便于人阅读，这个版本支持这样写 int a = 100_000_000，这样就对数值一目了然了。</li>
+<li>Swing组件增强（JLayer,Nimbus Look Feel…）<a href="https://docs.oracle.com/javase/7/docs/technotes/guides/swing/enhancements-7.html" target="_blank" rel="noopener">参考</a></li>
+</ol>
+<h3 id="JAVA8"><a href="#JAVA8" class="headerlink" title="JAVA8"></a>JAVA8</h3><p>2014-3-19发布，oracle原计划2013年发布，由于安全性问题两次跳票，是自JAVA5以来最具革命性的版本，主要更新内容：</p>
+<ol>
+<li><strong>接口改进，接口居然可以定义默认方法实现和静态方法了。</strong></li>
+<li><strong>引入函数式接口</strong></li>
+<li><strong>引入Lambda表达式</strong></li>
+<li><strong>引入全新的Stream API，提供了对值流进行函数式操作。</strong></li>
+<li>引入新的Date-Time API</li>
+<li>引入新的JavaScrpit引擎Nashorn</li>
+<li>引入Base64类库</li>
+<li>引入并发数组（parallel）</li>
+<li>添加新的Java工具：jjs、jdeps</li>
+<li>JavaFX，一种用在桌面开发领域的技术</li>
+<li>静态链接 JNI 程序库</li>
+</ol>
+<h3 id="JAVA9"><a href="#JAVA9" class="headerlink" title="JAVA9"></a>JAVA9</h3><p>2017-9-21发布</p>
+<ol>
+<li><strong>模块化（jiqsaw）</strong></li>
+<li>交互式命令行（JShell）</li>
+<li><strong>默认垃圾回收期切换为G1</strong></li>
+<li>进程操作改进</li>
+<li>竞争锁性能优化</li>
+<li>分段代码缓存</li>
+<li>优化字符串占用空间</li>
+</ol>
+<h3 id="JAVA10"><a href="#JAVA10" class="headerlink" title="JAVA10"></a>JAVA10</h3><p>2018-3-21发布<br>1.JEP286，<strong>var 局部变量类型推断。</strong><br>2.JEP296，将原来用 Mercurial 管理的众多 JDK 仓库代码，合并到一个仓库中，简化开发和管理过程。<br>3.JEP304，统一的垃圾回收接口。<br>4.JEP307，G1 垃圾回收器的并行完整垃圾回收，实现并行性来改善最坏情况下的延迟。<br>5.JEP310，应用程序类数据 (AppCDS) 共享，通过跨进程共享通用类元数据来减少内存占用空间，和减少启动时间。<br>6.JEP312，ThreadLocal 握手交互。在不进入到全局 JVM 安全点 (Safepoint) 的情况下，对线程执行回调。优化可以只停止单个线程，而不是停全部线程或一个都不停。<br>7.JEP313，移除 JDK 中附带的 javah 工具。可以使用 javac -h 代替。<br>8.JEP314，使用附加的 Unicode 语言标记扩展。<br>9.JEP317，能将堆内存占用分配给用户指定的备用内存设备。<br>10.JEP317，使用 Graal 基于 Java 的编译器，可以预先把 Java 代码编译成本地代码来提升效能。<br>11.JEP318，在 OpenJDK 中提供一组默认的根证书颁发机构证书。开源目前 Oracle 提供的的 Java SE 的根证书，这样 OpenJDK 对开发人员使用起来更方便。<br>12.JEP322，基于时间定义的发布版本，即上述提到的发布周期。版本号为\$FEATURE.\$INTERIM.\$UPDATE.\$PATCH，分别是大版本，中间版本，升级包和补丁版本。</p>
+<h3 id="Java-11"><a href="#Java-11" class="headerlink" title="Java 11"></a>Java 11</h3><p>2018-9-25发布<br>官网公开的 17 个 JEP（JDK Enhancement Proposal 特性增强提议）：</p>
+<ol>
+<li>JEP181: Nest-Based Access Control（基于嵌套的访问控制）</li>
+<li>JEP309: Dynamic Class-File Constants（动态的类文件常量）</li>
+<li>JEP315: Improve Aarch64 Intrinsics（改进 Aarch64 Intrinsics）</li>
+<li>JEP318: Epsilon: A No-Op Garbage Collector（Epsilon 垃圾回收器，又被称为”No-Op（无操作）”回收器）</li>
+<li>JEP320: Remove the Java EE and CORBA Modules（移除 Java EE 和 CORBA 模块，JavaFX 也已被移除）</li>
+<li>JEP321: HTTP Client (Standard)<br>7.JEP323: Local-Variable Syntax for Lambda Parameters（用于 Lambda 参数的局部变量语法）</li>
+<li>JEP324: Key Agreement with Curve25519 and Curve448（采用 Curve25519 和 Curve448 算法实现的密钥协议）</li>
+<li>JEP327: Unicode 10</li>
+<li>JEP328: Flight Recorder（飞行记录仪）</li>
+<li>JEP329: ChaCha20 and Poly1305 Cryptographic Algorithms（实现 ChaCha20 和 Poly1305 加密算法）</li>
+<li>JEP330: Launch Single-File Source-Code Programs（启动单个 Java 源代码文件的程序）</li>
+<li>JEP331: Low-Overhead Heap Profiling（低开销的堆分配采样方法）</li>
+<li>JEP332: Transport Layer Security (TLS) 1.3（对 TLS 1.3 的支持）</li>
+<li>JEP333: ZGC: A Scalable Low-Latency Garbage Collector (Experimental)（ZGC：可伸缩的低延迟垃圾回收器，处于实验性阶段）</li>
+<li>JEP335: Deprecate the Nashorn JavaScript Engine（弃用 Nashorn JavaScript 引擎）</li>
+<li>JEP336: Deprecate the Pack200 Tools and API（弃用 Pack200 工具及其 API）</li>
+</ol>
+
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">限流</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Java基础</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/限流//" class="article-tag-list-link color3">限流</a>
+        			<a href="/categories/Java基础//" class="article-tag-list-link color2">Java基础</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://www.byteliu.com/2019/02/28/jdk发展历史/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/08/27/漏桶算法和令牌桶算法/" class="archive-article-date">
-  	<time datetime="2016-08-27T12:37:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-27</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2019/02/14/Zero-Copy-I-User-Mode-Perspective/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Zero Copy I: User-Mode Perspective</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/08/27/漏桶算法和令牌桶算法/">漏桶算法和令牌桶算法</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">限流</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/限流//" class="article-tag-list-link color3">限流</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#JAVA-1-0-代号Oak（橡树）"><span class="toc-number">1.</span> <span class="toc-text">JAVA 1.0 ,代号Oak（橡树）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JAVA-1-1"><span class="toc-number">2.</span> <span class="toc-text">JAVA 1.1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JAVA-1-2-代号Playground（操场）"><span class="toc-number">3.</span> <span class="toc-text">JAVA 1.2, 代号Playground（操场）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JAVA1-3，代号Kestrel（红隼）"><span class="toc-number">4.</span> <span class="toc-text">JAVA1.3，代号Kestrel（红隼）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JAVA-1-4，代号Merlin（隼）"><span class="toc-number">5.</span> <span class="toc-text">JAVA 1.4，代号Merlin（隼）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JAVA-5-0，代号Tiger（老虎），有重大改动"><span class="toc-number">6.</span> <span class="toc-text">JAVA 5.0，代号Tiger（老虎），有重大改动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JAVA6，代号Mustang（野马）"><span class="toc-number">7.</span> <span class="toc-text">JAVA6，代号Mustang（野马）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JAVA7，代号Dolphin（海豚）"><span class="toc-number">8.</span> <span class="toc-text">JAVA7，代号Dolphin（海豚）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JAVA8"><span class="toc-number">9.</span> <span class="toc-text">JAVA8</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JAVA9"><span class="toc-number">10.</span> <span class="toc-text">JAVA9</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JAVA10"><span class="toc-number">11.</span> <span class="toc-text">JAVA10</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java-11"><span class="toc-number">12.</span> <span class="toc-text">Java 11</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
   
-    </div></section>
   
 
-    
+  
+
+  
+
+  
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "http://www.byteliu.com/2019/02/28/jdk发展历史/",
+  owner: 'liuxiaocsu',
+  repo: 'liuxiaocsu.github.io',
+  oauth: {
+    client_id: '11fad8dd8af945506b52',
+    client_secret: '460e5265f4cd98a87c8abebbdac4940b891cf693',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
+  
 
 
-
-<style type="text/css">
-.content-ll {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background: url(../img/poster-about.jpg) no-repeat center;
-  background-size: cover;
-}
-
-.archives-wrap {
-  filter:alpha(opacity=20); /*ie透明度20%*/ 
-  -moz-opacity:0.8;        /*Moz + FF 透明度20%*/ 
-  opacity:0.8; /*支持CSS3的浏览器(FF1.5也支持)透明度20%*/ 
-  background: url(../img/poster-drop-animate2.png) repeat-x 0px 0px;
-  background-size: cover;
-  animation: posterDrop1 6000s linear infinite;
-}
-
-@keyframes posterDrop1 {
-  from { background-position: 0 0; }
-  to { background-position: 4000% 0; }
-}
-
-.dynamic-area2   {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background: url(../img/poster-drop-animate1.png) repeat-x 0px 0px;
-  background-size: cover;
-  animation: posterDrop2 8000s linear infinite;
-}
-
-@keyframes posterDrop2 {
-  from { background-position: 0 0; }
-  to { background-position: 30000% 0; }
-}
-
-</style>
           </div>
         </div>
       </div>
@@ -361,10 +511,10 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
-		isCategory: true,
+		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
 		root: "/",
