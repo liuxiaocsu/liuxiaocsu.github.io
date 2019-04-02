@@ -8,19 +8,19 @@
   <link rel="dns-prefetch" href="http://www.byteliu.com">
   <title>java方法中如何获取当前方法的相关信息 | Byte_Liu&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一、获得当前类名：1this.getClass().getName(); 二、获得当前方法名称：JDK1.4 12new Exception().getStackTrace()[i].getMethodName();//其中i＝=0就是当前的类的方法名字 ;i== 1就是调用者的方法 JDK1.5之后可用 12Thread.currentThread().getStackTrace()[1].ge">
+  <meta name="description" content="一、获得当前类名：1this.getClass().getName(); 二、获得当前方法名称：JDK1.4 12new Exception().getStackTrace()[i].getMethodName();//其中i＝=0就是当前的类的方法名字 ;i== 1就是调用者的方法">
 <meta name="keywords" content="Java基础">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java方法中如何获取当前方法的相关信息">
 <meta property="og:url" content="http://www.byteliu.com/2019/04/02/java方法中如何获取当前方法的相关信息/index.html">
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
-<meta property="og:description" content="一、获得当前类名：1this.getClass().getName(); 二、获得当前方法名称：JDK1.4 12new Exception().getStackTrace()[i].getMethodName();//其中i＝=0就是当前的类的方法名字 ;i== 1就是调用者的方法 JDK1.5之后可用 12Thread.currentThread().getStackTrace()[1].ge">
+<meta property="og:description" content="一、获得当前类名：1this.getClass().getName(); 二、获得当前方法名称：JDK1.4 12new Exception().getStackTrace()[i].getMethodName();//其中i＝=0就是当前的类的方法名字 ;i== 1就是调用者的方法">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://www.byteliu.com/2019/04/02/java方法中如何获取当前方法的相关信息/markdown-img-paste-20190402200842867.png">
-<meta property="og:updated_time" content="2019-04-02T13:39:24.930Z">
+<meta property="og:updated_time" content="2019-04-02T13:41:04.869Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java方法中如何获取当前方法的相关信息">
-<meta name="twitter:description" content="一、获得当前类名：1this.getClass().getName(); 二、获得当前方法名称：JDK1.4 12new Exception().getStackTrace()[i].getMethodName();//其中i＝=0就是当前的类的方法名字 ;i== 1就是调用者的方法 JDK1.5之后可用 12Thread.currentThread().getStackTrace()[1].ge">
+<meta name="twitter:description" content="一、获得当前类名：1this.getClass().getName(); 二、获得当前方法名称：JDK1.4 12new Exception().getStackTrace()[i].getMethodName();//其中i＝=0就是当前的类的方法名字 ;i== 1就是调用者的方法">
 <meta name="twitter:image" content="http://www.byteliu.com/2019/04/02/java方法中如何获取当前方法的相关信息/markdown-img-paste-20190402200842867.png">
   
     <link rel="alternative" href="/atom.xml" title="Byte_Liu&#39;s Blog" type="application/atom+xml">
@@ -210,6 +210,7 @@
   
     <h3 id="一、获得当前类名："><a href="#一、获得当前类名：" class="headerlink" title="一、获得当前类名："></a>一、获得当前类名：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">this.getClass().getName();</span><br></pre></td></tr></table></figure>
 <h3 id="二、获得当前方法名称："><a href="#二、获得当前方法名称：" class="headerlink" title="二、获得当前方法名称："></a>二、获得当前方法名称：</h3><h4 id="JDK1-4"><a href="#JDK1-4" class="headerlink" title="JDK1.4"></a>JDK1.4</h4> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">new Exception().getStackTrace()[i].getMethodName();</span><br><span class="line">//其中i＝=0就是当前的类的方法名字 ;i== 1就是调用者的方法</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 <h4 id="JDK1-5之后可用"><a href="#JDK1-5之后可用" class="headerlink" title="JDK1.5之后可用"></a>JDK1.5之后可用</h4> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Thread.currentThread().getStackTrace()[1].getMethodName();</span><br><span class="line">//具体使用数组的哪个元素和JVM的实现有关，在JDK6下面测试的是第二个元素，具体说明可以查看Thread.getStackTrace方法的javadoc</span><br></pre></td></tr></table></figure>
 <h3 id="三、动态获取方法的调用者"><a href="#三、动态获取方法的调用者" class="headerlink" title="三、动态获取方法的调用者"></a>三、动态获取方法的调用者</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">public class Test &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String args[])&#123;</span><br><span class="line">        new Test().liuxiao();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void liuxiao()&#123;</span><br><span class="line">        System.out.println( this.getClass().getName()+&quot;#&quot;+Thread.currentThread().getStackTrace()[1].getMethodName());</span><br><span class="line">        System.out.println(&quot;------------------&quot;);</span><br><span class="line">        getCaller();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void getCaller()&#123;</span><br><span class="line">        StackTraceElement stack[] = new Throwable().getStackTrace();</span><br><span class="line">        for (int i=0; i &lt; stack.length; i++) &#123;</span><br><span class="line">            StackTraceElement ste=stack[i];</span><br><span class="line">            //System.out.println(ste.getClassName()+&quot;.&quot;+ste.getMethodName()+&quot;(&quot;+ste.getFileName()+&quot;:&quot;+ste.getLineNumber()+&quot;);&quot;);</span><br><span class="line">            System.out.println(ste.toString());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><img src="/2019/04/02/java方法中如何获取当前方法的相关信息/markdown-img-paste-20190402200842867.png" alt=""></p>
