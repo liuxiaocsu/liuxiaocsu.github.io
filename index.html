@@ -181,6 +181,176 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Linux-The-block-I-O-layer" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/05/10/Linux-The-block-I-O-layer/">Linux: The block I/O layer</a>
+    </h1>
+  
+
+        
+        <a href="/2019/05/10/Linux-The-block-I-O-layer/" class="archive-article-date">
+  	<time datetime="2019-05-10T06:00:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+     <p>原文链接：<a href="http://ari-ava.blogspot.com/2014/06/opw-linux-block-io-layer-part-1-base.html?m=0" target="_blank" rel="noopener">http://ari-ava.blogspot.com/2014/06/opw-linux-block-io-layer-part-1-base.html?m=0</a></p>
+<p>So, during the last few weeks I have been studying and tracing the block I/O layer of the Linux kernel, with the aim of getting a clearer view of how it works. A fellow student from the University of Modena and Reggio Emilia thought I might write a blog post on that. My very patient OPW mentor approved the topic and suggested that I split the blog post in different parts, so that it can be read more comfortably and without getting bored all at once. Here is part one, which attempts to explain the basic concepts and ideas behind the mechanisms implemented in the block I/O layer: it’s very high-level and concise. The following parts (which will go into much more detail about implementation details) will outline how the different APIs that the block layer exposes make use of those mechanisms, and hopefully why they are useful (or they aren’t) to each of the APIs. Sounds like a pretty difficult goal (at least for a beginner as I am), so if you have any criticism, please, go ahead and leave a comment.<br></p>
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">操作系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/操作系统//" class="article-tag-list-link color5">操作系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/05/10/Linux-The-block-I-O-layer/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-LINUX-–-IO-MULTIPLEXING-–-SELECT-VS-POLL-VS-EPOLL" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/05/08/LINUX-–-IO-MULTIPLEXING-–-SELECT-VS-POLL-VS-EPOLL/">LINUX – IO MULTIPLEXING – SELECT VS POLL VS EPOLL</a>
+    </h1>
+  
+
+        
+        <a href="/2019/05/08/LINUX-–-IO-MULTIPLEXING-–-SELECT-VS-POLL-VS-EPOLL/" class="archive-article-date">
+  	<time datetime="2019-05-08T03:16:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-08</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+     <p>One basic concept of Linux (actually Unix) is the rule that everything in Unix/Linux is a file. Each process has a table of file descriptors that point to files, sockets, devices and other operating system objects.</p>
+<p>Typical system that works with many IO sources has an initializaion phase and then enter some kind of standby mode – wait for any client to send request and response it<br></p>
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">multiplexed IO</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/操作系统//" class="article-tag-list-link color5">操作系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/05/08/LINUX-–-IO-MULTIPLEXING-–-SELECT-VS-POLL-VS-EPOLL/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Mac快速安装gcc方法" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -860,185 +1030,6 @@
 
 
   
-    <article id="post-Inodes-an-Introduction" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/01/Inodes-an-Introduction/">Inodes - an Introduction</a>
-    </h1>
-  
-
-        
-        <a href="/2019/03/01/Inodes-an-Introduction/" class="archive-article-date">
-  	<time datetime="2019-03-01T07:56:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-     <p>原文链接：<a href="http://www.grymoire.com/Unix/Inodes.html" target="_blank" rel="noopener">http://www.grymoire.com/Unix/Inodes.html</a></p>
-<p>We are used to thinking about a directory containing files. This is really an illusion. Directories do not contain files. The data of the files is not stored in the directory.</p>
-<p>A directory is really just a file. It’s a special file with special rules (you can’t just type “cp /dev/null directory” to erase it. It’s got special bits to make sure a mere mortal can’t mess it up. Because if a file system gets corrupted, then you can say goodbye to your data. On older UNIX systems, you actually could “read” the contents, using ‘cat .’, of a directory. But let me get back to that in a second…<br></p>
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">inode</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/操作系统//" class="article-tag-list-link color5">操作系统</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/03/01/Inodes-an-Introduction/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-jdk发展历史" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/28/jdk发展历史/">jdk发展历史</a>
-    </h1>
-  
-
-        
-        <a href="/2019/02/28/jdk发展历史/" class="archive-article-date">
-  	<time datetime="2019-02-28T11:44:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-     <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Java语言的相关组织和规范（其他语言也有类似的组织）：</span><br><span class="line">JCP：（Java Community Process）由世界上各个为 Java 发展操心的人士组成的社区，参与定义 Java 新特性和新版本制定标准的组织。</span><br><span class="line">JSR：（Java Specification Requests）Java 语言规范请求文档，你可以对 Java 提出新的要求，然后 Java 相关的组织投票决定是否通过，通过后就将这个要求写入 JSR 中，并且最终给出一个开源的实现。</span><br><span class="line">JEP：（Java Enhancement Proposal），Java 增强建议，收集大家对于 JDK 的建议，起草增强 Java 哪些功能的方案，为 JDK 新版本发布及相关工作指定路线。</span><br></pre></td></tr></table></figure>
-<h3 id="JAVA-1-0-代号Oak（橡树）"><a href="#JAVA-1-0-代号Oak（橡树）" class="headerlink" title="JAVA 1.0 ,代号Oak（橡树）"></a>JAVA 1.0 ,代号Oak（橡树）</h3><p>于1996-01-23发行</p>
-<h3 id="JAVA-1-1"><a href="#JAVA-1-1" class="headerlink" title="JAVA 1.1"></a>JAVA 1.1</h3><p>1997-02-19发行,主要更新内容:</p>
-<ol>
-<li>引入JDBC</li>
-<li>添加内部类支持</li>
-<li>引入JAVA BEAN</li>
-<li>引入RMI</li>
-<li><strong>引入反射</strong></li>
-</ol>
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Java基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Java基础//" class="article-tag-list-link color2">Java基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/02/28/jdk发展历史/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1389,11 +1380,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">前端</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">分布式</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">前端</a>
+                <a href="javascript:void(0)" class="js-tag color1">CGLIB</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1405,7 +1400,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">CGLIB</a>
+                <a href="javascript:void(0)" class="js-tag color5">multiplexed IO</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1425,11 +1420,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">tcpdump</a>
+                <a href="javascript:void(0)" class="js-tag color5">文件系统</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">文件系统</a>
+                <a href="javascript:void(0)" class="js-tag color3">tcpdump</a>
               </li>
              
               <li class="article-tag-list-item">

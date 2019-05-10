@@ -1,3 +1,5 @@
+http://www.byteliu.com/2019/05/10/Linux-The-block-I-O-layer/
+http://www.byteliu.com/2019/05/08/LINUX-–-IO-MULTIPLEXING-–-SELECT-VS-POLL-VS-EPOLL/
 http://www.byteliu.com/2019/05/06/Mac快速安装gcc方法/
 http://www.byteliu.com/2019/04/11/跨域资源共享-CORS-相关问题/
 http://www.byteliu.com/2019/04/05/linuxjourney-The-Filesystem/
