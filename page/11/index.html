@@ -181,6 +181,158 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-序列化" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/22/序列化/">序列化</a>
+    </h1>
+  
+
+        
+        <a href="/2017/03/22/序列化/" class="archive-article-date">
+  	<time datetime="2017-03-22T08:47:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+     <p>Java序列化是指把Java对象保存为二进制字节码的过程，Java反序列化是指把二进制字节码重新转换成Java对象的过程。<br>那么为什么需要序列化呢？<br>第一种情况是：一般情况下Java对象的声明周期都比Java虚拟机的要短，实际应用中我们希望在JVM停止运行之后能够持久化指定的对象，这时候就需要把对象进行序列化之后保存。<br>第二种情况是：需要把Java对象通过网络进行传输的时候。因为数据只能够以二进制的形式在网络中进行传输，因此当把对象通过网络发送出去之前需要先序列化成二进制数据，在接收端读到二进制数据之后反序列化成Java对象。<br>总结起来就是两个主要原因：持久化和网络传输。<br></p>
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Java基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Java基础//" class="article-tag-list-link color2">Java基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/03/22/序列化/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Mybatis获取自增主键值" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/20/Mybatis获取自增主键值/">Mybatis获取自增主键值</a>
+    </h1>
+  
+
+        
+        <a href="/2017/03/20/Mybatis获取自增主键值/" class="archive-article-date">
+  	<time datetime="2017-03-20T04:54:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+     <p>在某些场景下，我们需要使用mybatis返回生成的主键值。Mybatis在insert和update标签中就提供了这种功能。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;insert id=”indetifyId” useGeneratedKeys=”true” keyProperty=”id” keyColumn=&quot;id&quot;&gt;</span><br><span class="line">    ...</span><br><span class="line">&lt;/insert&gt;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>useGeneratedKeys： 是否自动生成主键，默认false</li>
+<li>keyProperty :返回的主键值赋给那个属性</li>
+<li>keyColumn： 数据库中的自增主键的列名，默认是数据库表的第一列。当主键列不是表中的第一列的时候需要设置，PostgreSQL必须设置。</li>
+</ul>
+<p>主键自动生成，取决于数据库是否支持自增主键。实际上当设置了useGeneratedKeys=“true”，Mybatis会调用JDBC的getGeneratedKeys方法，并将获取的主键值赋值给keyProperty 指定的属性。</p>
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/03/20/Mybatis获取自增主键值/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Mybatis学习笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -810,155 +962,9 @@
 
 
   
-    <article id="post-李昱最美的20首诗词" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/19/李昱最美的20首诗词/">李昱最美的20首诗词</a>
-    </h1>
-  
-
-        
-        <a href="/2016/10/19/李昱最美的20首诗词/" class="archive-article-date">
-  	<time datetime="2016-10-19T02:21:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-10-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-     <p>李煜，五代十国时南唐国君，字重光，初名从嘉，号钟隐、莲峰居士。南唐 元宗李璟第六子，史称李后主。李煜虽不通政治，但其艺术才华却非凡。精书法，善绘画，通音律，诗和文均有一定造诣，尤以词的成就最高。在政治上失败的李 煜，却在词坛上留下了不朽的篇章，被称为“千古词帝”。<br></p>
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/诗词//" class="article-tag-list-link color3">诗词</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/10/19/李昱最美的20首诗词/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-十大词牌" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/10/十大词牌/">十大词牌</a>
-    </h1>
-  
-
-        
-        <a href="/2016/10/10/十大词牌/" class="archive-article-date">
-  	<time datetime="2016-10-10T02:22:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-10-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-     <h3 id="NO-1-念奴娇"><a href="#NO-1-念奴娇" class="headerlink" title="NO.1 念奴娇"></a>NO.1 念奴娇</h3><p>“念奴”是个人名，她是唐朝天宝年间的著名歌妓，据记载：念奴“善歌唱，声出于朝霞之上，虽钟鼓笙竽，嘈杂而莫能遏”。传说唐玄宗曾亲自作曲填词，命念奴歌唱，其声“娇滴滴如夜莺啼鸣，婉转转似百灵放歌，活泼泼如鸳鸯戏水”。玄宗龙颜大悦，遂将此曲定名为“念奴娇”。<br>以“念奴娇”为词牌名最著名的当属苏轼。<br>故垒西边，人道是，三国周郎赤壁。<br>乱石穿空，惊涛拍岸，卷起千堆雪。<br>江山如画，一时多少豪杰。<br>人生如梦，一尊还酹江月。<br></p>
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/诗词//" class="article-tag-list-link color3">诗词</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/10/10/十大词牌/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/10/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/12/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/10/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/12/">Next &raquo;</a>
     </nav>
   
 
@@ -1114,11 +1120,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JUC</a>
+                <a href="javascript:void(0)" class="js-tag color4">ARP</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ARP</a>
+                <a href="javascript:void(0)" class="js-tag color4">JUC</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1270,11 +1276,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">加密解密</a>
+                <a href="javascript:void(0)" class="js-tag color3">Integer</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Integer</a>
+                <a href="javascript:void(0)" class="js-tag color5">加密解密</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1318,11 +1324,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
+                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
+                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1362,15 +1368,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">velocity</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">中间件</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">大型网站</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">velocity</a>
               </li>
             
             <div class="clearfix"></div>
