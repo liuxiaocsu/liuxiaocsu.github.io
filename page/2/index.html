@@ -181,20 +181,20 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-linuxjourney-The-Filesystem" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-Difference-Between-Segments-Packets-and-Frames" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/05/linuxjourney-The-Filesystem/">linuxjourney-The Filesystem</a>
+      <a class="article-title" href="/2019/05/16/Difference-Between-Segments-Packets-and-Frames/">Difference Between Segments, Packets and Frames</a>
     </h1>
   
 
         
-        <a href="/2019/04/05/linuxjourney-The-Filesystem/" class="archive-article-date">
-  	<time datetime="2019-04-05T10:03:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-05</time>
+        <a href="/2019/05/16/Difference-Between-Segments-Packets-and-Frames/" class="archive-article-date">
+  	<time datetime="2019-05-16T03:04:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-16</time>
 </a>
         
       </header>
@@ -202,8 +202,10 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p>原文链接：<a href="https://linuxjourney.com/lesson/filesystem-hierarchy" target="_blank" rel="noopener">https://linuxjourney.com/lesson/filesystem-hierarchy</a></p>
-<h2 id="1-Filesystem-Hierarchy"><a href="#1-Filesystem-Hierarchy" class="headerlink" title="1. Filesystem Hierarchy"></a>1. Filesystem Hierarchy</h2><p>At this point, you’re probably well familiar with the directory structure of your system, if not you will be soon. Filesystems can vary with how they are structured, but for the most part they should conform to the Filesystem Hierarchy Standard.<br></p>
+     <p>原文链接:<a href="https://www.slashroot.in/difference-between-segments-packets-and-frames" target="_blank" rel="noopener">https://www.slashroot.in/difference-between-segments-packets-and-frames</a></p>
+<p><img src="/2019/05/16/Difference-Between-Segments-Packets-and-Frames/markdown-img-paste-20190514110709132.png" alt=""></p>
+<p>The terms “Segment”, “Packet”, “Datagram”, “Frames” etc are so much used and reused in different books and articles to convey different meanings, that it has now become totally confusing. Especially after the introduction of different layered architecture of network communication.</p>
+<p>A good way to look at this is and clear the confusion, is to call them as “PDU (Protocol Data Unit)”. Irrespective of whether you are talking about network layer, transport layer or physical layer, the term PDU is generic and applies to all.<br></p>
   
 
     </div>
@@ -215,7 +217,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">文件系统</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">网络协议</a>
         		</li>
       		
 		</ul>
@@ -227,7 +229,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/操作系统//" class="article-tag-list-link color5">操作系统</a>
+        			<a href="/categories/网络协议//" class="article-tag-list-link color5">网络协议</a>
         		</li>
       		
 		</ul>
@@ -236,7 +238,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/04/05/linuxjourney-The-Filesystem/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/05/16/Difference-Between-Segments-Packets-and-Frames/">展开全文 >></a>
         </p>
       
 
@@ -266,20 +268,20 @@
 
 
   
-    <article id="post-java方法中如何获取当前方法的相关信息" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-Difference-Between-bashrc-and-bash-profile" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/02/java方法中如何获取当前方法的相关信息/">java方法中如何获取当前方法的相关信息</a>
+      <a class="article-title" href="/2019/05/14/Difference-Between-bashrc-and-bash-profile/">Difference Between .bashrc and .bash_profile</a>
     </h1>
   
 
         
-        <a href="/2019/04/02/java方法中如何获取当前方法的相关信息/" class="archive-article-date">
-  	<time datetime="2019-04-02T02:37:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-02</time>
+        <a href="/2019/05/14/Difference-Between-bashrc-and-bash-profile/" class="archive-article-date">
+  	<time datetime="2019-05-14T12:59:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-14</time>
 </a>
         
       </header>
@@ -287,179 +289,9 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <h3 id="一、获得当前类名："><a href="#一、获得当前类名：" class="headerlink" title="一、获得当前类名："></a>一、获得当前类名：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">this.getClass().getName();</span><br></pre></td></tr></table></figure>
-<h3 id="二、获得当前方法名称："><a href="#二、获得当前方法名称：" class="headerlink" title="二、获得当前方法名称："></a>二、获得当前方法名称：</h3><h4 id="JDK1-4"><a href="#JDK1-4" class="headerlink" title="JDK1.4"></a>JDK1.4</h4> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">new Exception().getStackTrace()[i].getMethodName();</span><br><span class="line">//其中i＝=0就是当前的类的方法名字 ;i== 1就是调用者的方法</span><br></pre></td></tr></table></figure>
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Java基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Java基础//" class="article-tag-list-link color2">Java基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/04/02/java方法中如何获取当前方法的相关信息/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-HTTP-POST请求中RequestPayload和FormData的区别？" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/20/HTTP-POST请求中RequestPayload和FormData的区别？/">HTTP POST请求中RequestPayload和FormData的区别？</a>
-    </h1>
-  
-
-        
-        <a href="/2019/03/20/HTTP-POST请求中RequestPayload和FormData的区别？/" class="archive-article-date">
-  	<time datetime="2019-03-20T12:17:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-20</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-     <p>Form Data</p>
-<p><img src="/2019/03/20/HTTP-POST请求中RequestPayload和FormData的区别？/markdown-img-paste-20190314202723339.png" alt=""><br></p>
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">servlet</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/servlet//" class="article-tag-list-link color3">servlet</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/03/20/HTTP-POST请求中RequestPayload和FormData的区别？/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-What-is-Linux-System-Calls-and-Library-Functions" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/10/What-is-Linux-System-Calls-and-Library-Functions/">What is Linux System Calls and Library Functions?</a>
-    </h1>
-  
-
-        
-        <a href="/2019/03/10/What-is-Linux-System-Calls-and-Library-Functions/" class="archive-article-date">
-  	<time datetime="2019-03-10T13:59:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-     <p>原文链接：<a href="https://www.thegeekstuff.com/2012/07/system-calls-library-functions/" target="_blank" rel="noopener">https://www.thegeekstuff.com/2012/07/system-calls-library-functions/</a></p>
-<p>What is Linux System Calls and Library Functions?</p>
-<p>Computer software are developed to either automate some tasks or solve some problems. Either way, a software achieves the goal with the help of the logic that the developer of that software writes. Every logic requires some services like computing the length of a string, opening a file etc. Standard services are catered by some functions or calls that are provided for this purpose only.<br></p>
+     <p>原文链接:<a href="https://www.slashroot.in/difference-between-bashrc-and-bashprofile" target="_blank" rel="noopener">https://www.slashroot.in/difference-between-bashrc-and-bashprofile</a></p>
+<p>Bash is the default shell on most Linux distributions, and is pretty powerful because it supports many programming features as well. For example, bash supports conditional statements like if and else, variables, case statements, loops and much more. In this article, we will try to explore two main configuration files used by bash shell when it is launched.</p>
+<p>The reason why I decided to write about this is due to the confusion and doubts floating around regarding these two configuration files. Mainly because both can be used for similar purposes, so why two files instead of having one.<br></p>
   
 
     </div>
@@ -492,7 +324,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/03/10/What-is-Linux-System-Calls-and-Library-Functions/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/05/14/Difference-Between-bashrc-and-bash-profile/">展开全文 >></a>
         </p>
       
 
@@ -522,20 +354,20 @@
 
 
   
-    <article id="post-Linux-IO同步函数-sync、fsync、fdatasync" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-nice-and-renice-command-usage-examples-for-process-priority-in-linux" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/09/Linux-IO同步函数-sync、fsync、fdatasync/">Linux IO同步函数:sync、fsync、fdatasync</a>
+      <a class="article-title" href="/2019/05/14/nice-and-renice-command-usage-examples-for-process-priority-in-linux/">nice and renice command usage examples for process priority in linux</a>
     </h1>
   
 
         
-        <a href="/2019/03/09/Linux-IO同步函数-sync、fsync、fdatasync/" class="archive-article-date">
-  	<time datetime="2019-03-09T08:38:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-09</time>
+        <a href="/2019/05/14/nice-and-renice-command-usage-examples-for-process-priority-in-linux/" class="archive-article-date">
+  	<time datetime="2019-05-14T12:43:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-14</time>
 </a>
         
       </header>
@@ -543,7 +375,12 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p>传统的UNIX或LINUX系统实现在内核中设有缓冲区高速缓存或页面高速缓存，大多数磁盘I/O都通过缓冲进行。当将数据写入文件时，内核通常先将该数据复制到其中一个缓冲区中，如果该缓冲区尚未写满，则并不将其排入输出队列，而是等待其写满或者当空闲内存不足内核需要重用该缓冲区以便存放其他磁盘块数据时，再将该缓冲排入输出队列，然后待其到达队首时，才进行实际的I/O操作。这种输出方式被称为延迟写（delayed write）。<br></p>
+     <p>原文链接:<a href="https://www.slashroot.in/nice-and-renice-command-usage-examples-process-priority-linux" target="_blank" rel="noopener">https://www.slashroot.in/nice-and-renice-command-usage-examples-process-priority-linux</a></p>
+<p>On a Linux machine, there are hundred’s of processes, that are continuously  running for some or the other tasks. Linux Kernel does a fantastic job in mediating between these processes and allotting CPU to these processes.</p>
+<p>An interesting question arises when you read that line “kernel allocates CPU to all the process”.</p>
+<p>Computer is made to do whatever task is given, So how will kernel come to know about a particular process, which i want to be on top of the list on priority?</p>
+<p>The answer to that question is , “You can infact ask the kernel to put a particular process of yours, on higher priority than others”.</p>
+<p>This can be easily achieved with the help of a command called “Nice” in Linux.<br></p>
   
 
     </div>
@@ -555,93 +392,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IO</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/IO//" class="article-tag-list-link color3">IO</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/03/09/Linux-IO同步函数-sync、fsync、fdatasync/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Inode-Definition" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/09/Inode-Definition/">Inode Definition</a>
-    </h1>
-  
-
-        
-        <a href="/2019/03/09/Inode-Definition/" class="archive-article-date">
-  	<time datetime="2019-03-09T08:25:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-     <p>原文链接：<a href="http://www.linfo.org/inode.html" target="_blank" rel="noopener">http://www.linfo.org/inode.html</a></p>
-<p>An inode is a data structure on a filesystem on Linux and other Unix-like operating systems that stores all the information about a file except its name and its actual data.</p>
-<p>A data structure is a way of storing data so that it can be used efficiently. Different types of data structures are suited to different types of applications, and some are highly specialized for specific types of tasks.<br></p>
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">inode</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">操作系统</a>
         		</li>
       		
 		</ul>
@@ -662,7 +413,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/03/09/Inode-Definition/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/05/14/nice-and-renice-command-usage-examples-for-process-priority-in-linux/">展开全文 >></a>
         </p>
       
 
@@ -692,20 +443,20 @@
 
 
   
-    <article id="post-Inodes-an-Introduction" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-Secure-Shell-How-Does-SSH-Work" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/01/Inodes-an-Introduction/">Inodes - an Introduction</a>
+      <a class="article-title" href="/2019/05/14/Secure-Shell-How-Does-SSH-Work/">Secure Shell: How Does SSH Work</a>
     </h1>
   
 
         
-        <a href="/2019/03/01/Inodes-an-Introduction/" class="archive-article-date">
-  	<time datetime="2019-03-01T07:56:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-01</time>
+        <a href="/2019/05/14/Secure-Shell-How-Does-SSH-Work/" class="archive-article-date">
+  	<time datetime="2019-05-14T02:44:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-14</time>
 </a>
         
       </header>
@@ -713,9 +464,9 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p>原文链接：<a href="http://www.grymoire.com/Unix/Inodes.html" target="_blank" rel="noopener">http://www.grymoire.com/Unix/Inodes.html</a></p>
-<p>We are used to thinking about a directory containing files. This is really an illusion. Directories do not contain files. The data of the files is not stored in the directory.</p>
-<p>A directory is really just a file. It’s a special file with special rules (you can’t just type “cp /dev/null directory” to erase it. It’s got special bits to make sure a mere mortal can’t mess it up. Because if a file system gets corrupted, then you can say goodbye to your data. On older UNIX systems, you actually could “read” the contents, using ‘cat .’, of a directory. But let me get back to that in a second…<br></p>
+     <p>原文链接:<a href="https://www.slashroot.in/secure-shell-how-does-ssh-work" target="_blank" rel="noopener">https://www.slashroot.in/secure-shell-how-does-ssh-work</a></p>
+<p>Taking remote shell, for carrying out different tasks is a norm, if you have multiple server machine’s in your infrastructure. Different protocols and tools were made to accomplish this task of taking a remote shell. Although the tools made during the initial days were capable enough to carry out necessary shell related tasks, there were different design concerns, that resulted in advancements and new tools to accomplish this task.</p>
+<p>In this tutorial guide, we will be discussing one such tool, that was designed to eliminate the flaws in previous remote shell programs. Our topic of interest for this tutorial is none other than the Secure Sell, better known as SSH.<br></p>
   
 
     </div>
@@ -727,7 +478,93 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">inode</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">SSH</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/SSH//" class="article-tag-list-link color4">SSH</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/05/14/Secure-Shell-How-Does-SSH-Work/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-What-is-a-System-Call-in-Unix-Linux" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/05/13/What-is-a-System-Call-in-Unix-Linux/">What is a System Call in Unix/Linux</a>
+    </h1>
+  
+
+        
+        <a href="/2019/05/13/What-is-a-System-Call-in-Unix-Linux/" class="archive-article-date">
+  	<time datetime="2019-05-13T11:45:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+     <p>原文链接:<a href="https://www.slashroot.in/what-is-system-call-in-unix-and-linux" target="_blank" rel="noopener">https://www.slashroot.in/what-is-system-call-in-unix-and-linux</a></p>
+<p><img src="/2019/05/13/What-is-a-System-Call-in-Unix-Linux/markdown-img-paste-20190513194957558.png" alt=""></p>
+<p>Let me start this article by stating the fact that “Linux is a multi user and multiprocessing operating system.”  That sentence is quite simple and straightforward to understand. Because we all know the fact that multiple users can be logged into the same Linux machine, and can do their individual tasks, all at the same time.<br></p>
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">操作系统</a>
         		</li>
       		
 		</ul>
@@ -748,7 +585,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/03/01/Inodes-an-Introduction/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/05/13/What-is-a-System-Call-in-Unix-Linux/">展开全文 >></a>
         </p>
       
 
@@ -778,20 +615,20 @@
 
 
   
-    <article id="post-jdk发展历史" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-Difference-Between-Process-And-Thread-in-Linux" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/28/jdk发展历史/">jdk发展历史</a>
+      <a class="article-title" href="/2019/05/13/Difference-Between-Process-And-Thread-in-Linux/">Difference Between Process And Thread in Linux</a>
     </h1>
   
 
         
-        <a href="/2019/02/28/jdk发展历史/" class="archive-article-date">
-  	<time datetime="2019-02-28T11:44:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-28</time>
+        <a href="/2019/05/13/Difference-Between-Process-And-Thread-in-Linux/" class="archive-article-date">
+  	<time datetime="2019-05-13T06:09:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-13</time>
 </a>
         
       </header>
@@ -799,16 +636,10 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Java语言的相关组织和规范（其他语言也有类似的组织）：</span><br><span class="line">JCP：（Java Community Process）由世界上各个为 Java 发展操心的人士组成的社区，参与定义 Java 新特性和新版本制定标准的组织。</span><br><span class="line">JSR：（Java Specification Requests）Java 语言规范请求文档，你可以对 Java 提出新的要求，然后 Java 相关的组织投票决定是否通过，通过后就将这个要求写入 JSR 中，并且最终给出一个开源的实现。</span><br><span class="line">JEP：（Java Enhancement Proposal），Java 增强建议，收集大家对于 JDK 的建议，起草增强 Java 哪些功能的方案，为 JDK 新版本发布及相关工作指定路线。</span><br></pre></td></tr></table></figure>
-<h3 id="JAVA-1-0-代号Oak（橡树）"><a href="#JAVA-1-0-代号Oak（橡树）" class="headerlink" title="JAVA 1.0 ,代号Oak（橡树）"></a>JAVA 1.0 ,代号Oak（橡树）</h3><p>于1996-01-23发行</p>
-<h3 id="JAVA-1-1"><a href="#JAVA-1-1" class="headerlink" title="JAVA 1.1"></a>JAVA 1.1</h3><p>1997-02-19发行,主要更新内容:</p>
-<ol>
-<li>引入JDBC</li>
-<li>添加内部类支持</li>
-<li>引入JAVA BEAN</li>
-<li>引入RMI</li>
-<li><strong>引入反射</strong></li>
-</ol>
+     <p>原文链接:<a href="https://www.slashroot.in/difference-between-process-and-thread-linux" target="_blank" rel="noopener">https://www.slashroot.in/difference-between-process-and-thread-linux</a></p>
+<p><img src="/2019/05/13/Difference-Between-Process-And-Thread-in-Linux/markdown-img-paste-20190513141101963.png" alt=""></p>
+<p>We always hear people using two terms very often. One is “Process” and the other is “thread”.  Which one is process and which one is thread, and what differentiates the two is often confusing to many folks.</p>
+<p>In this article, we will try to uncover each of these in the context of Linux operating system, and understand their primary differences.<br></p>
   
 
     </div>
@@ -820,7 +651,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Java基础</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">操作系统</a>
         		</li>
       		
 		</ul>
@@ -832,7 +663,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/Java基础//" class="article-tag-list-link color2">Java基础</a>
+        			<a href="/categories/操作系统//" class="article-tag-list-link color5">操作系统</a>
         		</li>
       		
 		</ul>
@@ -841,7 +672,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/02/28/jdk发展历史/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/05/13/Difference-Between-Process-And-Thread-in-Linux/">展开全文 >></a>
         </p>
       
 
@@ -871,20 +702,20 @@
 
 
   
-    <article id="post-Zero-Copy-I-User-Mode-Perspective" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-Linux-Processes-Administration-and-Monitoring-tutorial" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/14/Zero-Copy-I-User-Mode-Perspective/">Zero Copy I: User-Mode Perspective</a>
+      <a class="article-title" href="/2019/05/12/Linux-Processes-Administration-and-Monitoring-tutorial/">Linux Processes:Administration and Monitoring tutorial</a>
     </h1>
   
 
         
-        <a href="/2019/02/14/Zero-Copy-I-User-Mode-Perspective/" class="archive-article-date">
-  	<time datetime="2019-02-14T08:29:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-14</time>
+        <a href="/2019/05/12/Linux-Processes-Administration-and-Monitoring-tutorial/" class="archive-article-date">
+  	<time datetime="2019-05-12T10:15:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-12</time>
 </a>
         
       </header>
@@ -892,8 +723,9 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p>原文链接：<a href="https://www.linuxjournal.com/article/6345" target="_blank" rel="noopener">https://www.linuxjournal.com/article/6345</a><br>中文翻译版：<a href="https://leokongwq.github.io/2017/01/12/linux-zero-copy.html" target="_blank" rel="noopener">https://leokongwq.github.io/2017/01/12/linux-zero-copy.html</a></p>
-<p>By now almost everyone has heard of so-called zero-copy functionality under Linux, but I often run into people who don’t have a full understanding of the subject. Because of this, I decided to write a few articles that dig into the matter a bit deeper, in the hope of unraveling this useful feature. In this article, we take a look at zero copy from a user-mode application point of view, so gory kernel-level details are omitted intentionally.<br></p>
+     <p>原文链接:<a href="https://www.slashroot.in/linux-processes-administration-and-monitoring-tutorial" target="_blank" rel="noopener">https://www.slashroot.in/linux-processes-administration-and-monitoring-tutorial</a></p>
+<p>The brain of any operating system is its kernel. But a computer with only an operating system(kernel) is of no use, because nobody really uses an operating system. The end user of a computer is always concerned about programs, and not the operating system.</p>
+<p>What an operating system really does is to provide an environment, where these programs can run. So the only job of an operating system is to provide resources to program’s, so that the program can complete its task. People forget the difference between programs and operating systems, simply because, modern day operating system installs a good number of programs along with the operating system itself.<br></p>
   
 
     </div>
@@ -905,7 +737,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IO</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">操作系统</a>
         		</li>
       		
 		</ul>
@@ -917,7 +749,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/IO//" class="article-tag-list-link color3">IO</a>
+        			<a href="/categories/操作系统//" class="article-tag-list-link color5">操作系统</a>
         		</li>
       		
 		</ul>
@@ -926,7 +758,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/02/14/Zero-Copy-I-User-Mode-Perspective/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/05/12/Linux-Processes-Administration-and-Monitoring-tutorial/">展开全文 >></a>
         </p>
       
 
@@ -956,20 +788,20 @@
 
 
   
-    <article id="post-从B树、B-树、B-树谈到R树" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-Linux-File-System-Read-Write-Performance-Test" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/12/从B树、B-树、B-树谈到R树/">从B树、B+树、B*树谈到R树</a>
+      <a class="article-title" href="/2019/05/12/Linux-File-System-Read-Write-Performance-Test/">Linux File System Read Write Performance Test</a>
     </h1>
   
 
         
-        <a href="/2019/02/12/从B树、B-树、B-树谈到R树/" class="archive-article-date">
-  	<time datetime="2019-02-12T14:47:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-12</time>
+        <a href="/2019/05/12/Linux-File-System-Read-Write-Performance-Test/" class="archive-article-date">
+  	<time datetime="2019-05-12T04:40:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-12</time>
 </a>
         
       </header>
@@ -977,9 +809,14 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p>原文链接：<a href="https://blog.csdn.net/v_JULY_v/article/details/6530142" target="_blank" rel="noopener">https://blog.csdn.net/v_JULY_v/article/details/6530142</a></p>
-<h3 id="第一节、B树、B-树、B-树"><a href="#第一节、B树、B-树、B-树" class="headerlink" title="第一节、B树、B+树、B*树"></a>第一节、B树、B+树、B*树</h3><h4 id="1-前言："><a href="#1-前言：" class="headerlink" title="1.前言："></a>1.前言：</h4><p>动态查找树主要有：二叉查找树（Binary Search Tree），平衡二叉查找树（Balanced Binary Search Tree），红黑树(Red-Black Tree)，B-tree/B+-tree/ B*-tree (B~Tree)。前三者是典型的二叉查找树结构，其查找的时间复杂度O(log2N)与树的深度相关，那么降低树的深度自然会提高查找效率。</p>
-<p>但是咱们有面对这样一个实际问题：就是大规模数据存储中，实现索引查询这样一个实际背景下，树节点存储的元素数量是有限的（如果元素数量非常多的话，查找就退化成节点内部的线性查找了），<strong>这样导致二叉查找树结构由于树的深度过大而造成磁盘I/O读写过于频繁，进而导致查询效率低下</strong>（为什么会出现这种情况，待会在外部存储器-磁盘中有所解释），那么如何减少树的深度（当然是不能减少查询的数据量），一个基本的想法就是：采用多叉树结构（由于树节点元素数量是有限的，自然该节点的子树数量也就是有限的）。<br></p>
+     <p>原文链接：<a href="https://www.slashroot.in/linux-file-system-read-write-performance-test" target="_blank" rel="noopener">https://www.slashroot.in/linux-file-system-read-write-performance-test</a></p>
+<p>System administrators responsible for handling Linux servers get confused at times when they are told to benchmark a file system’s performance. But the main reason that this confusion happens is because, it does not matter whatever tool you use to test the file system’s performance, what matter’s is the exact requirement.File system’s performance depends upon certain factors as follows.</p>
+<ul>
+<li>The maximum rotational speed of your hard disk</li>
+<li>The Allocated block size of a file system</li>
+<li>Seek Time</li>
+<li>The performance rate of the file system’s metadata</li>
+<li>The type of read/Write</li></ul>
   
 
     </div>
@@ -991,7 +828,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">文件系统</a>
         		</li>
       		
 		</ul>
@@ -1003,7 +840,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
+        			<a href="/categories/操作系统//" class="article-tag-list-link color5">操作系统</a>
         		</li>
       		
 		</ul>
@@ -1012,7 +849,185 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/02/12/从B树、B-树、B-树谈到R树/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/05/12/Linux-File-System-Read-Write-Performance-Test/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Linux-System-IO-monitoring" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/05/11/Linux-System-IO-monitoring/">Linux System IO monitoring</a>
+    </h1>
+  
+
+        
+        <a href="/2019/05/11/Linux-System-IO-monitoring/" class="archive-article-date">
+  	<time datetime="2019-05-11T02:34:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+     <p>原文链接：<a href="https://www.slashroot.in/linux-system-io-monitoring" target="_blank" rel="noopener">https://www.slashroot.in/linux-system-io-monitoring</a></p>
+<p>“Every thing is a file”, is a very famous Linux philosophy. There is a reason for this philosophy to get famous. The main reason behind this is the fact that, Linux operating system in itself works on the same philosophy.</p>
+<p>You might think that how can an operating system work on a philosophy like “Everything is a file”.</p>
+<p>Its because, Linux operating system consider’s and work’s with the below devices, by the same way we open and close a file.</p>
+<ul>
+<li>Block devices(Hard-disks,Compact Disk’s,Floppy,Flash Memory)</li>
+<li>Character devices or serial devices (Mouse, keyboard)</li>
+<li>Network Devices</li>
+</ul>
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">操作系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/操作系统//" class="article-tag-list-link color5">操作系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/05/11/Linux-System-IO-monitoring/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Understanding-File-System-Superblock-in-Linux" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/05/10/Understanding-File-System-Superblock-in-Linux/">Understanding File System Superblock in Linux</a>
+    </h1>
+  
+
+        
+        <a href="/2019/05/10/Understanding-File-System-Superblock-in-Linux/" class="archive-article-date">
+  	<time datetime="2019-05-10T15:09:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+     <p>原文链接：<a href="https://www.slashroot.in/understanding-file-system-superblock-linux" target="_blank" rel="noopener">https://www.slashroot.in/understanding-file-system-superblock-linux</a></p>
+<p>Extended Filesystem being the default file system in Linux, we will be focusing ext file system in this article to understand superblocks.<br>Before we get to understanding Superblocks in a file system, let’s understand some common terminologies and building blocks of a file system.</p>
+<h3 id="Blocks-in-File-System"><a href="#Blocks-in-File-System" class="headerlink" title="Blocks in File System"></a>Blocks in File System</h3><p>When a partition or disk is formatted, the sectors in the hardisk is first divided into small groups. This groups of sectors is called as blocks. The block size is something that can be specified when a user formats a partition using the command line parameters available.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkfs -t ext3 -b 4096 /dev/sda1</span><br></pre></td></tr></table></figure></p>
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">操作系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/操作系统//" class="article-tag-list-link color5">操作系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/05/10/Understanding-File-System-Superblock-in-Linux/">展开全文 >></a>
         </p>
       
 
@@ -1044,7 +1059,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
     </nav>
   
 
@@ -1216,6 +1231,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">servlet</a>
               </li>
              
@@ -1232,11 +1251,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Mysql</a>
+                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
+                <a href="javascript:void(0)" class="js-tag color1">Mysql</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1261,10 +1280,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1328,11 +1343,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1349,6 +1364,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">C10K</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">网络协议</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1380,11 +1399,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">synchronize</a>
+                <a href="javascript:void(0)" class="js-tag color3">tcpdump</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">zookeeper</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">synchronize</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1420,6 +1443,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">SSH</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">iptables</a>
               </li>
              
@@ -1433,10 +1460,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">读书笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">tcpdump</a>
               </li>
              
               <li class="article-tag-list-item">

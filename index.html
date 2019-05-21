@@ -181,20 +181,20 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-What-is-a-System-Call-in-Unix-Linux" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-UBC-An-Efficient-Unified-I-O-and-Memory-Caching-Subsystem-for-NetBSD" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/13/What-is-a-System-Call-in-Unix-Linux/">What is a System Call in Unix/Linux</a>
+      <a class="article-title" href="/2019/05/21/UBC-An-Efficient-Unified-I-O-and-Memory-Caching-Subsystem-for-NetBSD/">UBC: An Efficient Unified I/O and Memory Caching Subsystem for NetBSD</a>
     </h1>
   
 
         
-        <a href="/2019/05/13/What-is-a-System-Call-in-Unix-Linux/" class="archive-article-date">
-  	<time datetime="2019-05-13T11:45:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-13</time>
+        <a href="/2019/05/21/UBC-An-Efficient-Unified-I-O-and-Memory-Caching-Subsystem-for-NetBSD/" class="archive-article-date">
+  	<time datetime="2019-05-21T06:51:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-21</time>
 </a>
         
       </header>
@@ -202,9 +202,7 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p>原文链接:<a href="https://www.slashroot.in/what-is-system-call-in-unix-and-linux" target="_blank" rel="noopener">https://www.slashroot.in/what-is-system-call-in-unix-and-linux</a></p>
-<p><img src="/2019/05/13/What-is-a-System-Call-in-Unix-Linux/markdown-img-paste-20190513194957558.png" alt=""></p>
-<p>Let me start this article by stating the fact that “Linux is a multi user and multiprocessing operating system.”  That sentence is quite simple and straightforward to understand. Because we all know the fact that multiple users can be logged into the same Linux machine, and can do their individual tasks, all at the same time.<br></p>
+     <h3 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h3><p>This paper introduces UBC (“Unified Buffer Cache”), a design for unifying the filesystem and virtual memory caches of file data, thereby providing increased system performance. In this paper we discuss both the traditional BSD caching interfaces and new UBC interfaces, concentrating on the design decisions that were made as the design progressed. We also discuss the designs used by other operating systems to solve the same problems that UBC solves, with emphasis on the practical implications of the differences between these designs. This project is still in progress, and once completed will be part of a future release of NetBSD.<br></p>
   
 
     </div>
@@ -237,7 +235,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/13/What-is-a-System-Call-in-Unix-Linux/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/05/21/UBC-An-Efficient-Unified-I-O-and-Memory-Caching-Subsystem-for-NetBSD/">展开全文 >></a>
         </p>
       
 
@@ -267,20 +265,20 @@
 
 
   
-    <article id="post-Difference-Between-Process-And-Thread-in-Linux" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-What-is-the-major-difference-between-the-buffer-cache-and-the-page-cache-Why-were-they-separate-entities-in-older-kernels-Why-were-they-merged-later-on" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/13/Difference-Between-Process-And-Thread-in-Linux/">Difference Between Process And Thread in Linux</a>
+      <a class="article-title" href="/2019/05/21/What-is-the-major-difference-between-the-buffer-cache-and-the-page-cache-Why-were-they-separate-entities-in-older-kernels-Why-were-they-merged-later-on/">What is the major difference between the buffer cache and the page cache? Why were they separate entities in older kernels? Why were they merged later on?</a>
     </h1>
   
 
         
-        <a href="/2019/05/13/Difference-Between-Process-And-Thread-in-Linux/" class="archive-article-date">
-  	<time datetime="2019-05-13T06:09:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-13</time>
+        <a href="/2019/05/21/What-is-the-major-difference-between-the-buffer-cache-and-the-page-cache-Why-were-they-separate-entities-in-older-kernels-Why-were-they-merged-later-on/" class="archive-article-date">
+  	<time datetime="2019-05-21T06:30:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-21</time>
 </a>
         
       </header>
@@ -288,279 +286,32 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p>原文链接:<a href="https://www.slashroot.in/difference-between-process-and-thread-linux" target="_blank" rel="noopener">https://www.slashroot.in/difference-between-process-and-thread-linux</a></p>
-<p><img src="/2019/05/13/Difference-Between-Process-And-Thread-in-Linux/markdown-img-paste-20190513141101963.png" alt=""></p>
-<p>We always hear people using two terms very often. One is “Process” and the other is “thread”.  Which one is process and which one is thread, and what differentiates the two is often confusing to many folks.</p>
-<p>In this article, we will try to uncover each of these in the context of Linux operating system, and understand their primary differences.<br></p>
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">操作系统</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/操作系统//" class="article-tag-list-link color5">操作系统</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/13/Difference-Between-Process-And-Thread-in-Linux/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Linux-Processes-Administration-and-Monitoring-tutorial" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/12/Linux-Processes-Administration-and-Monitoring-tutorial/">Linux Processes:Administration and Monitoring tutorial</a>
-    </h1>
-  
-
-        
-        <a href="/2019/05/12/Linux-Processes-Administration-and-Monitoring-tutorial/" class="archive-article-date">
-  	<time datetime="2019-05-12T10:15:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-     <p>原文链接:<a href="https://www.slashroot.in/linux-processes-administration-and-monitoring-tutorial" target="_blank" rel="noopener">https://www.slashroot.in/linux-processes-administration-and-monitoring-tutorial</a></p>
-<p>The brain of any operating system is its kernel. But a computer with only an operating system(kernel) is of no use, because nobody really uses an operating system. The end user of a computer is always concerned about programs, and not the operating system.</p>
-<p>What an operating system really does is to provide an environment, where these programs can run. So the only job of an operating system is to provide resources to program’s, so that the program can complete its task. People forget the difference between programs and operating systems, simply because, modern day operating system installs a good number of programs along with the operating system itself.<br></p>
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">操作系统</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/操作系统//" class="article-tag-list-link color5">操作系统</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/12/Linux-Processes-Administration-and-Monitoring-tutorial/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Linux-File-System-Read-Write-Performance-Test" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/12/Linux-File-System-Read-Write-Performance-Test/">Linux File System Read Write Performance Test</a>
-    </h1>
-  
-
-        
-        <a href="/2019/05/12/Linux-File-System-Read-Write-Performance-Test/" class="archive-article-date">
-  	<time datetime="2019-05-12T04:40:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-     <p>原文链接：<a href="https://www.slashroot.in/linux-file-system-read-write-performance-test" target="_blank" rel="noopener">https://www.slashroot.in/linux-file-system-read-write-performance-test</a></p>
-<p>System administrators responsible for handling Linux servers get confused at times when they are told to benchmark a file system’s performance. But the main reason that this confusion happens is because, it does not matter whatever tool you use to test the file system’s performance, what matter’s is the exact requirement.File system’s performance depends upon certain factors as follows.</p>
+     <p>The page cache caches pages of files to optimize file I/O. The buffer cache caches disk blocks to optimize block I/O.</p>
+<h3 id="What-is-the-difference-between-block-I-O-and-file-I-O-and-what-are-the-advantages-of-both"><a href="#What-is-the-difference-between-block-I-O-and-file-I-O-and-what-are-the-advantages-of-both" class="headerlink" title="What is the difference between block I/O and file I/O and what are the advantages of both?"></a>What is the difference between block I/O and file I/O and what are the advantages of both?</h3><p>This is really an “all sqauares are rectangles question” in that all “cooked” file i/o is built on top of block i/o. Block i/o means that transfers to and from disk are done in chunks rather than individual bytes AND that the UNIX buffer cache is used to minimize physical i/o.</p>
+<p>Block I/O is the basic mechanism for DISK access using the SCSI protocol as the command set. Block I/O is fast and data can be transmitted in various block sizes like 2K, 4K, 8K, 16K, 64K, 128K, etc. Block I/O can be done over various transports. Parallel SCSI cables, copper fiber, optical fiber and even encapsulated and transmitted over IP networks.</p>
 <ul>
-<li>The maximum rotational speed of your hard disk</li>
-<li>The Allocated block size of a file system</li>
-<li>Seek Time</li>
-<li>The performance rate of the file system’s metadata</li>
-<li>The type of read/Write</li></ul>
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">文件系统</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/操作系统//" class="article-tag-list-link color5">操作系统</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/12/Linux-File-System-Read-Write-Performance-Test/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Linux-System-IO-monitoring" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/11/Linux-System-IO-monitoring/">Linux System IO monitoring</a>
-    </h1>
-  
-
-        
-        <a href="/2019/05/11/Linux-System-IO-monitoring/" class="archive-article-date">
-  	<time datetime="2019-05-11T02:34:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-     <p>原文链接：<a href="https://www.slashroot.in/linux-system-io-monitoring" target="_blank" rel="noopener">https://www.slashroot.in/linux-system-io-monitoring</a></p>
-<p>“Every thing is a file”, is a very famous Linux philosophy. There is a reason for this philosophy to get famous. The main reason behind this is the fact that, Linux operating system in itself works on the same philosophy.</p>
-<p>You might think that how can an operating system work on a philosophy like “Everything is a file”.</p>
-<p>Its because, Linux operating system consider’s and work’s with the below devices, by the same way we open and close a file.</p>
-<ul>
-<li>Block devices(Hard-disks,Compact Disk’s,Floppy,Flash Memory)</li>
-<li>Character devices or serial devices (Mouse, keyboard)</li>
-<li>Network Devices</li>
+<li>Block I/O is what is used to talk to DISKS.</li>
+<li>File I/O is what is used to talk to FILES.</li>
 </ul>
+<p>File I/O usually uses either NFS or CIFS/SMB access protocols over TCP/IP Ethernet. File I/O has locking mechanics so that data may be shared between different OS types. (Like Unix and NT) File I/O usually uses TCP/IP as the transport mechanism and thus must conform to the seven-layer “stack.” This means each piece of data needing transport must traverse the entire IP stack before going “over the wire.” This causes overhead and slows things down a bit. IP stack latency can be minimized by using a TOE- (TCP/IP offload engine) based network adapter card. The “TOE” offloads the CPU cycles needed to transmit the data through the IP stack from the server CPU to the NIC itself.</p>
+<p>Advantages of file I/O are ease of implementation, cost and the ability to “share” files. The disadvantages are speed and latency and the fact that many applications cannot be “installed” on a network share.</p>
+<p>Advantages of block I/O are speed, minimal latency and high availability. The disadvantages of block I/O are no inherent file sharing capability, complexity and cost.</p>
+<p>The primary difference between these two is that under block i/o there is no concept of files, filesystems, or directories. The entire disk or LUN is simply a big bunch of disk blocks. Under file (cooked) i/o, this big bunch of disk blocks is divided into small chunks that are logically connected to form files and directories.</p>
+<p>Block I/O: data is accessed on the block-level. This is the way hard disks, DVD’s, SSD’s and iSCSI-targets are used. File I/O: data is accessed on the file-level. This is how SMB, NFS, FTP and HTTP operate.</p>
+<p>In block-I/O, data is accessed by requesting a number of “blocks” from a device. In file-I/O, data is accessed by requesting a file from the file-system, using an index or table.</p>
+<hr>
+<p>data block io</p>
+<p>The File I/O routines that have been previously discussed do all I/O to CMS files (minidisk and SFS) at the record level. That is, all reading and writing to CMS files are done with record lengths and number of records in mind. A file record is the lowest unit of file I/O that can be performed to a CMS file. While this is adequate in most cases, it can be inefficient to use this interface to transfer large files. For example, DMSREAD allows an application to read 1 or more records from a file. If the file has a fixed record format, the number of records that can be read is determined by the size of the application’s storage buffer. In the case of a variable record format file, only one record can be read at a time. This can cause significant overhead for the system to read or write a large file.</p>
+<p>The data block interface can be used to provide a high performance general interface for data transfer to and from CMS files (both minidisk and SFS). This is not intended for applications that wish to modify existing CMS files. Applications wishing to modify CMS files should use the DMSOPEN/DMSREAD/DMSWRITE/DMSCLOSE routines.</p>
+<p>Using this interface, an application can read and write data blocks to CMS files. For fixed format files, a data block contains only the file data. In variable format files, a data block contains records made up of a two byte length prefix which contains the length of the record, then the data itself. The CMS file system uses these record lengths in variable format files to know where and how long the next record is. If an application modifies these record lengths incorrectly, it may cause unpredictable results when the file is read later by the file system.</p>
+<p>There are four CSL routines that are used for data block I/O:<br>DMSOPDBK - Open Data Block<br>DMSRDDBK - Read Data Block<br>DMSWRDBK - Write Data Block<br>DMSCLDBK - Close Data Block<br>The data block I/O routines work in much the same manner as the corresponding record I/O routines. When a file has been opened using the data block I/O interface, you must use the corresponding data block I/O routines to read, write and close the file. You could not, for example, use DMSREAD to read a block when the file was opened using DMSOPDBK.</p>
+<p>One primary use of the data block I/O interface is to transfer CMS files. This can be done between:<br>Minidisks<br>Minidisks and SFS file pools<br>SFS file pools<br>When the file is opened using DMSOPDBK, the block size of the file is returned. For SFS files, this is always 4096 (4KB). For minidisk files, this can be 512, 1KB, 2KB or 4KB. The application can use the Read Data Block (DMSRDDBK) routine to read a source file into a buffer. The application can open a target file for output (New or Replace) and use the Write Data Block (DMSWRDBK) routine to write the data from the buffer used by DMSRDDBK. The buffer being written must be as least as large as the block size of the output file. If it is larger, the file system will correctly adjust the blocks for the target file. As you can see, if you use data buffers in multiples of 4KB, all blocking will be handled by the file system and does not have to be handled by the application.</p>
+<p>One significant difference between the record interface and data block interface is what happens when the file is closed. Using the record interface the file system knows how many records have been written. When the file is closed, the number of records written and the appropriate record size is saved as attributes of the file. When using the data block interface, the file system only knows the number of blocks that have been written. It isn’t until the file is closed (using DMSCLDBK), that the application has to provide the number of records and record length of the file. The file system uses this to compute where the application wants the end of the file to be. This may not agree with the number of data blocks that have been written to the file.</p>
+<p>In the case of a variable format file, the file system determines where the last record of the file ends. This is indicated when a record length prefix of zero is found. If this does not agree with the number of records that was given by the application to DMSCLDBK, a warning return code and the correct number of records and record length is returned.</p>
+<p>In the case of a fixed format file, the file system uses the input to DMSCLDBK to determine where the actual end of the file is. If the number of records and record length from the application is less than the number of blocks written, the file will be truncated to that size. If the applications indicates the end of the file is past where the last data block has been written, the file will be extended with sparse blocks (data blocks containing binary zeroes). Another difference between the data block and record interfaces is when SFS data is committed. Using the record interface, you can commit changes to the file while the file is open. For the data block interface, the file system knows less about the file so the file must be closed before the changes can be committed. In fact, there can not be any file open using DMSOPDBK on the work unit in order to commit the changes to the work unit.</p>
+<p>You can operate on files simultaneously using both FS macros and data block I/O routines. The following describes how each method can be used for both minidisk and SFS files.<br>When using DMSOPDBK:<br>For an SFS file, you can open the file more than once for input (read) AND only once for output (new or replace).<br>For a minidisk file, you can open the file more than once for input (read) OR once for output (new or replace).<br>When using FSOPEN:<br>For both a minidisk and SFS file, the file may only be opened once for either input or output.<br>Notice that CSL and non-CSL statements use the same default work unit ID.</p>
+<hr>
+<p>Prior to Linux kernel version 2.4, the two caches were distinct: Files were in the page cache, disk blocks were in the buffer cache. Given that most files are represented by a filesystem on a disk, data was represented twice, once in each of the caches. Many Unix systems follow a similar pattern.<br></p>
   
 
     </div>
@@ -593,7 +344,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/11/Linux-System-IO-monitoring/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/05/21/What-is-the-major-difference-between-the-buffer-cache-and-the-page-cache-Why-were-they-separate-entities-in-older-kernels-Why-were-they-merged-later-on/">展开全文 >></a>
         </p>
       
 
@@ -623,20 +374,20 @@
 
 
   
-    <article id="post-Understanding-File-System-Superblock-in-Linux" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-Network-Traffic-Analysis-With-Linux-Tools" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/10/Understanding-File-System-Superblock-in-Linux/">Understanding File System Superblock in Linux</a>
+      <a class="article-title" href="/2019/05/21/Network-Traffic-Analysis-With-Linux-Tools/">Network Traffic Analysis With Linux Tools</a>
     </h1>
   
 
         
-        <a href="/2019/05/10/Understanding-File-System-Superblock-in-Linux/" class="archive-article-date">
-  	<time datetime="2019-05-10T15:09:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-10</time>
+        <a href="/2019/05/21/Network-Traffic-Analysis-With-Linux-Tools/" class="archive-article-date">
+  	<time datetime="2019-05-21T06:30:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-21</time>
 </a>
         
       </header>
@@ -644,9 +395,424 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p>原文链接：<a href="https://www.slashroot.in/understanding-file-system-superblock-linux" target="_blank" rel="noopener">https://www.slashroot.in/understanding-file-system-superblock-linux</a></p>
-<p>Extended Filesystem being the default file system in Linux, we will be focusing ext file system in this article to understand superblocks.<br>Before we get to understanding Superblocks in a file system, let’s understand some common terminologies and building blocks of a file system.</p>
-<h3 id="Blocks-in-File-System"><a href="#Blocks-in-File-System" class="headerlink" title="Blocks in File System"></a>Blocks in File System</h3><p>When a partition or disk is formatted, the sectors in the hardisk is first divided into small groups. This groups of sectors is called as blocks. The block size is something that can be specified when a user formats a partition using the command line parameters available.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkfs -t ext3 -b 4096 /dev/sda1</span><br></pre></td></tr></table></figure></p>
+  
+    <p>原文链接:<a href="https://www.slashroot.in/network-traffic-analysis-linux-tools" target="_blank" rel="noopener">https://www.slashroot.in/network-traffic-analysis-linux-tools</a></p>
+<p>Network Packet analyzing tools available in the market are very much expensive to deploy and most of the times they needs to be implemented by making some changes in the current network infrastructure.</p>
+<p>In this article we will try look at how we can achieve a considerable amount of network packet analysis with the help of some of the normally available tools in Linux. Sometimes on high traffic servers it is very much necessary for an administrator to quickly analyze the traffic patters so that he can make some decisions based on that.</p>
+<h3 id="PCAP-Basics"><a href="#PCAP-Basics" class="headerlink" title="PCAP Basics"></a>PCAP Basics</h3><p>PCAP is an API for capturing network packets for analysis. Windows implementation of PCAP is called WinPCAP. Almost all available network packet capturing tools uses pcap to capture the data. In linux or Unix like operating system’s if you have tcpdump installed on the machine, you will have the PCAP library in the location /usr/lib/libpcap.so for use.</p>
+<p>PCAP api is written in C programming Language.</p>
+<p>Normally application programmer’s use’s this PCAP library inside their application for network packet capturing. The most noticeable feature of PCAP library is that you can save the captured traffic data to a file with .pcap extension which can be read later, by a pcap implemented tool.</p>
+<h3 id="Network-Traffic-Analysis-in-Linux"><a href="#Network-Traffic-Analysis-in-Linux" class="headerlink" title="Network Traffic Analysis in Linux"></a>Network Traffic Analysis in Linux</h3><p>For this tutorial we will be using some of the tools that are freely available for install in linux.</p>
+<ul>
+<li>TCPDUMP command</li>
+<li>BASH (the default shell in most of the distribution)</li>
+<li>Some shell scripting commands.</li>
+</ul>
+<p>As i told before, you can capture the network traffic data using tcpdump(because it implements pcap library with libpcap) and write it to a file, which i have also shown practically on my post about the tcpdump command<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@myvm1 ~]# tcpdump -s0 -i any -w traffic.pcap</span><br><span class="line">tcpdump: WARNING: Promiscuous mode not supported on the &quot;any&quot; device</span><br><span class="line">tcpdump: listening on any, link-type LINUX_SLL (Linux cooked), capture size 65535 bytes</span><br><span class="line">8 packets captured</span><br><span class="line">17 packets received by filter</span><br><span class="line">0 packets dropped by kernel</span><br><span class="line">[root@myvm1 ~]#</span><br></pre></td></tr></table></figure></p>
+<p>Using the above tcpdump command i have used -s0 option to capture the full packet size, -i is used for capture from all interfaces, and with -w i have asked tcpdump command to write the output to a file called traffic.pcap, which can be later read by pcap tools.</p>
+<p>You can also use wireshark tool to do the same job.</p>
+<p>Now we will start using some of the excellent Linux tools available, to represent the output from the captured tcpdump output in the file traffic.pcap.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@myvm1 ~]# tcpdump -nn -r traffic.pcap | head</span><br><span class="line">reading from file traffic.pcap, link-type LINUX_SLL (Linux cooked)</span><br><span class="line">00:55:45.421932 IP 192.168.159.128.22 &gt; 192.168.159.1.49587: P 1822700485:1822700537(52) ack 3115204597 win 202</span><br><span class="line">00:55:45.421939 IP 192.168.159.128.22 &gt; 192.168.159.1.49587: P 52:184(132) ack 1 win 202</span><br><span class="line">00:55:45.421944 IP 192.168.159.1.49587 &gt; 192.168.159.128.22: . ack 184 win 16199</span><br><span class="line">00:55:46.241056 IP 192.168.159.128 &gt; 192.168.159.128: ICMP echo request, id 6454, seq 14082, length 8</span><br></pre></td></tr></table></figure></p>
+<p>Using the above command i have read the content of the traffic.pcap file which we have captured, and redirected the output of that command to “head” command.</p>
+<p>Note:   In the above shown command i have used piping feature in the shell to redirect the output to “head” command. Head command will list the first 10 lines, rather than outputting the whole output on the screen. This command is very handy to use when you have got a very large file in Linux, and you only want to have a look at the top 10 lines.</p>
+<p>Now lets understand the output of the tcpdump command. The tcpdump command output consists of four fields to note.</p>
+<ul>
+<li>The first filed shows the timestamp.</li>
+<li>Second field in tcpdump shows the protocol</li>
+<li>The third field shows the source IP and also the source port. Its in the form source ip.source port</li>
+<li>the fourth field shows the destination ip and destination port. This is also shown the same way as destination ip.destination port</li>
+</ul>
+<p>The main reason i explained the output fields of tcpdump is the fact that, it contains most of the traffic details you require to analyze.(we will analyze some more later).</p>
+<p>So the main thing to do here is that, capture all the network traffic to all the interfaces for a brief period of time, and then analyze it from that file, to find the anomalies.</p>
+<p>We will cut and sort the output of the required filed from the traffic.pcap file(which needs to be captured for a brief period of time to get good results).</p>
+<p>Lets have a look at source Ip addresses’ which are taking too many requests. We will use “cut” command in linux to achieve the results. Lets do the sorting as shown below.</p>
+<p>We will cut out the source ip, from rest of the output using “cut” command in Linux.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@myvm1 ~]# tcpdump -nn -r traffic.pcap | cut -f 3 -d &quot; &quot; | head</span><br><span class="line">reading from file traffic.pcap, link-type LINUX_SLL (Linux cooked)</span><br><span class="line">192.168.159.128.22</span><br><span class="line">192.168.159.128.22</span><br><span class="line">192.168.159.1.49587</span><br><span class="line">192.168.159.128</span><br><span class="line">192.168.159.128</span><br><span class="line">192.168.159.128.22</span><br><span class="line">192.168.159.1.49587</span><br><span class="line">192.168.159.128</span><br></pre></td></tr></table></figure></p>
+<p>In the above shown example i needed only the third field in the output, which is the source ip field, so field three 3rd field is sorted out with -f option in cut command. Now we need that third field till there is an adjacent space in the third field. So for that we have used -d “ “ option.</p>
+<p>But the above command result consists of the source port also, which need to remove from the output and find the source ip’s sending traffic. And then we need to sort those source ip’s in count.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@myvm1 ~]# tcpdump -nn -r traffic.pcap | cut -f 3 -d &quot; &quot; | cut -f 1-4 -d &quot;.&quot; | sort | uniq -c | sort -n</span><br><span class="line">reading from file traffic.pcap, link-type LINUX_SLL (Linux cooked)</span><br><span class="line">      7 192.168.159.1</span><br><span class="line">     17 192.168.159.128</span><br></pre></td></tr></table></figure></p>
+<p>In the above shown command we removed the “port” portion by again redirecting the output to cut command, which will intern only display fields 1 to 4 (which is ip address), and each and every field is separated by a “.” Now again this output is passed to sort command which will sort the output based on unique values. Now this output is passed to “uniq” command which will count the unique values, and then sort will rearrange them in numerical order…</p>
+<p>From the result of the above command, its clear that i have got 17 requests from “192.168.159.128”. and 7 requests from the ip “192.168.159.1”(note the fact that this list is only for that period when you captured the tcpdump output to that traffic.pcap file).</p>
+<p>Now if you want to organize only the output of “TCP &amp; UDP” then you can do that with the following command.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@myvm1 ~]# tcpdump -nn -r traffic.pcap -p &apos;tcp or udp&apos;| cut -f 3 -d &quot; &quot; | cut -f 1-4 -d &quot;.&quot; | sort | uniq -c | sort -n</span><br><span class="line">reading from file traffic.pcap, link-type LINUX_SLL (Linux cooked)</span><br><span class="line">      7 192.168.159.1</span><br><span class="line">      7 192.168.159.128</span><br></pre></td></tr></table></figure></p>
+<p>You can also sort the destination ports with the same set of commands as shown below.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@myvm1 ~]# tcpdump -nn -r traffic.pcap -p &apos;tcp or udp&apos;| cut -f 5 -d &quot; &quot; | cut -f 5 -d &quot;.&quot; | sort | uniq -c | sort -n</span><br><span class="line">reading from file traffic.pcap, link-type LINUX_SLL (Linux cooked)</span><br><span class="line">      7 22:</span><br><span class="line">      7 49587:</span><br></pre></td></tr></table></figure></p>
+<p>Sort the source port as shown below.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@myvm1 ~]# tcpdump -nn -r traffic.pcap -p &apos;tcp or udp&apos;| cut -f 3 -d &quot; &quot; | cut -f 5 -d &quot;.&quot; | sort | uniq -c | sort -n</span><br><span class="line">reading from file traffic.pcap, link-type LINUX_SLL (Linux cooked)</span><br><span class="line">      7 22</span><br><span class="line">      7 49587</span><br></pre></td></tr></table></figure></p>
+<h3 id="How-to-check-data-inside-the-packet-captured"><a href="#How-to-check-data-inside-the-packet-captured" class="headerlink" title="How to check data inside the packet captured"></a>How to check data inside the packet captured</h3><p>Now lets ask tcpdump to read the payload and report us the content. I will be listing the unencrypted ftp port 21 and we will see whats going on inside.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@myvm1 ~]# tcpdump -Ann -r traffic.pcap &apos;dst port 25 or dst port 21&apos; | head -20</span><br><span class="line">reading from file traffic.pcap, link-type LINUX_SLL (Linux cooked)</span><br><span class="line">02:19:57.916852 IP 192.168.159.1.50730 &gt; 192.168.159.128.21: P 2484026965:2484026972(7) ack 2999050325 win 16325</span><br><span class="line">E../..@...,Z.........*....&gt;U...UP.?.....CWD /</span><br><span class="line"></span><br><span class="line">02:19:57.917801 IP 192.168.159.1.50730 &gt; 192.168.159.128.21: P 7:12(5) ack 38 win 16316</span><br><span class="line">E..-..@...,[.........*....&gt;\...zP.?.....PWD</span><br><span class="line">.</span><br><span class="line">02:19:57.918515 IP 192.168.159.1.50730 &gt; 192.168.159.128.21: P 12:20(8) ack 47 win 16313</span><br><span class="line">E..0..@...,W.........*....&gt;a....P.?..X..TYPE A</span><br><span class="line"></span><br><span class="line">02:19:57.919694 IP 192.168.159.1.50730 &gt; 192.168.159.128.21: P 20:26(6) ack 77 win 16306</span><br><span class="line">E.....@...,X.........*....&gt;i....P.?.....PASV</span><br></pre></td></tr></table></figure></p>
+<p>As you can see, for the above output i have asked tcpdump to only show me the output for those packets whose destination ports are 25 or 21, so that i can see ftp and mail traffic data.</p>
+<p>Now for example if you want to look inside a lot of mail traffic that is being passed through the network you can do that the above shown way.</p>
+<p>Also, if you want to search for some particular string from the above output, you can do that easily by passing the output again to grep command containing the string required.(note that you will only be able to see the unencrypted traffic in this manner.)</p>
+<p>The above shown method of capturing the packets using tcpdump and looking for the contents inside is very much useful when you have a DNS server running in you infra. Because you can identify which domain is highly queried in your DNS server, which are the top TLD’s under request, source ip requesting a particular domain etc etc. An example of looking inside DNS traffic is shown below.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -Ann -r traffic.pcap &apos;dst port 53&apos; | grep  &apos;(com|in|org)&apos;</span><br></pre></td></tr></table></figure></p>
+<p>Now lets check the output of all http traffic using tcpdump from our captured file traffic.pcap.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@myvm1 ~]# tcpdump -Ann -r traffic.pcap &apos;dst port 80&apos; | head</span><br><span class="line">reading from file traffic.pcap, link-type LINUX_SLL (Linux cooked)</span><br><span class="line">02:35:12.079040 IP 192.168.159.1.51358 &gt; 192.168.159.128.80: S 3067739367:3067739367(0) win 8192 &lt;mss 1460,nop,wscale 2,nop,nop,sackOK&gt;</span><br><span class="line">E..4/.@................P.......... .................</span><br><span class="line">02:35:12.079513 IP 192.168.159.1.51358 &gt; 192.168.159.128.80: . ack 4028188194 win 16425</span><br><span class="line">E..(/.@................P......F&quot;P.@)..........</span><br><span class="line">02:35:12.080541 IP 192.168.159.1.51358 &gt; 192.168.159.128.80: P 0:282(282) ack 1 win 16425</span><br><span class="line">E..B/.@...</span><br><span class="line">............P......F&quot;P.@)....GET / HTTP/1.1</span><br><span class="line">Host: 192.168.159.128</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:17.0) Gecko/20100101 Firefox/17.0</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</span><br><span class="line">[root@myvm1 ~]#</span><br></pre></td></tr></table></figure></p>
+<p>You can modify the output you see above of http traffic, as per your needs with grep,cut,sort,uniq,etc .</p>
+<p>Like for example you can get all the user agents using the same above command from http traffic. And also sort it to find the no of requests from various browsers as shown below.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@myvm1 ~]# tcpdump -Ann -r traffic.pcap &apos;port 80&apos; | grep -Ei &apos;user-agent&apos; | head -10</span><br><span class="line">reading from file traffic.pcap, link-type LINUX_SLL (Linux cooked)</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:17.0) Gecko/20100101 Firefox/17.0</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:17.0) Gecko/20100101 Firefox/17.0</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:17.0) Gecko/20100101 Firefox/17.0</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:17.0) Gecko/20100101 Firefox/17.0</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:17.0) Gecko/20100101 Firefox/17.0</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:17.0) Gecko/20100101 Firefox/17.0</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:17.0) Gecko/20100101 Firefox/17.0</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:17.0) Gecko/20100101 Firefox/17.0</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:17.0) Gecko/20100101 Firefox/17.0</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:17.0) Gecko/20100101 Firefox/17.0</span><br></pre></td></tr></table></figure></p>
+<p>Now lets sort that user agent output so that we can find which browser is taking the highest request.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@myvm1 ~]# tcpdump -Ann -r traffic.pcap &apos;port 80&apos; | grep -Ei &apos;user-agent&apos; | sort | uniq -c | sort -n</span><br><span class="line">reading from file traffic.pcap, link-type LINUX_SLL (Linux cooked)</span><br><span class="line">      2 User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:17.0) Gecko/20100101 Firefox/17.0</span><br><span class="line">     12 User-Agent: Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.97 Safari/537.11</span><br><span class="line">     23 User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)</span><br></pre></td></tr></table></figure>
+<p>You can analyze a lot of stuff in the traffic, which are unencrypted…The sorting of the result according to the requirement is the main part here.Also remember that you can sort anything, as per requirement from the traffic, all depends on your bash skills.</p>
+<p>The added advantage of using the above method for analyzing the packets is the fact that you can capture the packets for a long duration and then store for later analysis and get an awesome overview of the traffic.</p>
+<p>Hope this post was useful in understanding packet analysis with the help of simple tcpdump command in Linux.</p>
+
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">网络协议</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/网络协议//" class="article-tag-list-link color5">网络协议</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/05/21/Network-Traffic-Analysis-With-Linux-Tools/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Packet-Capturing-with-TCPDUMP-command-in-linux" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/05/20/Packet-Capturing-with-TCPDUMP-command-in-linux/">Packet Capturing with TCPDUMP command in linux</a>
+    </h1>
+  
+
+        
+        <a href="/2019/05/20/Packet-Capturing-with-TCPDUMP-command-in-linux/" class="archive-article-date">
+  	<time datetime="2019-05-20T06:16:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+     <p>原文链接:<a href="https://www.slashroot.in/packet-capturing-tcpdump-command-linux" target="_blank" rel="noopener">https://www.slashroot.in/packet-capturing-tcpdump-command-linux</a></p>
+<p>In this tutorial we will be looking into a very well known tool in Linux system administrators tool box. Some times during troubleshooting this tool proves to be very helpful. With the help of this tool you can analyze the packet before it reaches the application stack. And some times detect why the server is not responding to a ping request, why an application is not responding to a certain machine etc etc.</p>
+<p>Its no tool other than TCPDUMP. Tcpdump is a very powerful tool because of its strength in capturing packets based on different parameters given. It operates on network layer, so will be able to capture all the packets in and out of the machine. You can use tcpdump to capture and save the packets to a file to analyse it later.<br></p>
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">tcpdump</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/网络协议//" class="article-tag-list-link color5">网络协议</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/05/20/Packet-Capturing-with-TCPDUMP-command-in-linux/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-How-Does-DNS-Server-Work" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/05/20/How-Does-DNS-Server-Work/">How Does DNS Server Work?</a>
+    </h1>
+  
+
+        
+        <a href="/2019/05/20/How-Does-DNS-Server-Work/" class="archive-article-date">
+  	<time datetime="2019-05-20T06:07:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+     <p>原文链接:<a href="https://www.slashroot.in/how-dns-works" target="_blank" rel="noopener">https://www.slashroot.in/how-dns-works</a></p>
+<p>Hi all…in this post we will be discussing the most important and inevitable resource in the world of internet, which each and everyone of us uses knowingly or unknowingly.</p>
+<p>Each and every machine in a network is identified by a numerical address. This address can be used by other machines in the network to communicate with each other. But without a relevant name associated with that numerical address, it will be very difficult to memorize  the numerical address of all the machines in the network. Even for a handful of hosts in a local network, it will be very difficult to memorize all the numerical address of each of them, so forget about memorizing numerical addresses of more than 400 million hosts in the internet.<br></p>
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">DNS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/DNS//" class="article-tag-list-link color4">DNS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/05/20/How-Does-DNS-Server-Work/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-How-Does-ARP-Address-Resolution-Protocol-Work" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/05/20/How-Does-ARP-Address-Resolution-Protocol-Work/">How Does ARP(Address Resolution Protocol) Work?</a>
+    </h1>
+  
+
+        
+        <a href="/2019/05/20/How-Does-ARP-Address-Resolution-Protocol-Work/" class="archive-article-date">
+  	<time datetime="2019-05-20T04:44:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+     <p>原文链接:<a href="https://www.slashroot.in/how-does-arp-address-resolution-protocol-work" target="_blank" rel="noopener">https://www.slashroot.in/how-does-arp-address-resolution-protocol-work</a></p>
+<p><img src="/2019/05/20/How-Does-ARP-Address-Resolution-Protocol-Work/markdown-img-paste-20190514124552739.png" alt=""></p>
+<p>Two machines in a network can only communicate with each other, if they know each other’s physical address. Although computer programs use IP addresses to send and receive messages, the actual underlying communication always happens over the physical address.</p>
+<p>Let’s first understand how communication happens over the wire. Let’s try pinging google’s publicly available dns server from a machine, and try capturing network packets and see what are the source and destination addresses.<br></p>
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ARP</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/网络协议//" class="article-tag-list-link color5">网络协议</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/05/20/How-Does-ARP-Address-Resolution-Protocol-Work/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-The-differences-between-a-chunk-page-block-sector-and-bytes-bits-within-storage-systems" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/05/17/The-differences-between-a-chunk-page-block-sector-and-bytes-bits-within-storage-systems/">The differences between a chunk, page, block, sector and bytes/bits within storage systems?</a>
+    </h1>
+  
+
+        
+        <a href="/2019/05/17/The-differences-between-a-chunk-page-block-sector-and-bytes-bits-within-storage-systems/" class="archive-article-date">
+  	<time datetime="2019-05-17T08:45:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+  
+    <p>The differences between a chunk, page, block, sector and bytes/bits within<br>storage systems?<br>They all build on eachother.</p>
+<h3 id="Bit"><a href="#Bit" class="headerlink" title="Bit"></a>Bit</h3><p>Bit is the smallest unit of data, literally 0/1 (AKA on/off, AKA yes/no, AKA true/false). Currently all digital data exists as bits in one physical format or another (magnets, electric impulses, light, etc). Denoted as “b” (small b).</p>
+<h3 id="Byte"><a href="#Byte" class="headerlink" title="Byte"></a>Byte</h3><p>Byte is the most used combination of bits. One byte is 8 bits. Denoted as “B” (big B). One byte can represent $2^8$ (256) different values. The most common example is the ASCII character set, which assigns most numbers/letters/symbols some number from 0 and 127. For example, upper-case letter A (“A”) is ASCII code 65. Numbers 128 and higher differ by character set and usually contain different special symbols like latin letters.</p>
+<h3 id="Sector"><a href="#Sector" class="headerlink" title="Sector"></a>Sector</h3><p>Sector is a physical spot on a formatted disk that holds information. When a disk is formatted, tracks are defined (concentric rings from inside to the outside of the disk platter. Each track is divided into a slice, which is a sector. On hard drives and floppies, each sector can hold 512 bytes of data.<br>A block, on the other hand, is a group of sectors that the operating system can address (point to). A block might be one sector, or it might be several sectors (2,4,8, or even 16). The bigger the drive, the more sectors that a block will hold.</p>
+<p><img src="/2019/05/17/The-differences-between-a-chunk-page-block-sector-and-bytes-bits-within-storage-systems/markdown-img-paste-20190517165000815.png" alt=""></p>
+<h3 id="Block"><a href="#Block" class="headerlink" title="Block"></a>Block</h3><p>Block, on the other hand, is a group of sectors that the operating system can address (point to). A block might be one sector, or it might be several sectors (2,4,8, or even 16). The bigger the drive, the more sectors that a block will hold.The block is an abstraction representing the smallest unit of storage on a filesystem. Inside the kernel, all filesystem operations occur in terms of blocks.Block in the context of storage is the smallest size you’re able to interface with the hardware at. Whenever you read from a disk or write to a disk, you read this amount times however many blocks you need to read. The default NTFS Block Size (AKA Cluster Size, AKA Allocation Unit) is 4096 bytes (4KB). If you have a file that is exactly 4096 bytes long, then you read one block from the disk. If it is 4097 bytes then you read two blocks. You cannot read a partial block, so even if a file doesn’t actually consume a whole block, the storage file system blanks out the rest of the block. A simple way to see this in action is to create a blank text file on your hard drive, look at the properties and the difference between “Size” (0 bytes) and “Size on Disk” (4096 bytes).</p>
+<p>So why are there blocks. Why doesn’t the operating system just point straight to the sectors? Because there are limits to the number of blocks, or drive addresses, that an operating system can address. By defining a block as several sectors, an OS can work with bigger hard drives without increasing the number of block addresses. For example, PC DOS (earlier versions at least) could only address 65,536 blocks (64K), and each block could could only be a single sector. Thus, the largest size a disk volume could be was 32mb (64K <em> 512bytes). (Earlier versions of the Mac OS had a 16mb volume limit for similar reasons). If you increase the size of a block to, say, 4K, that same version of DOS can now work with volumes as large as 256MB (64K addresses </em> 4K blocks).<br>With current versions of the OS’s, the formatting software will look at the size of the drive, and figure out the smallest number of sectors that need to be in a block in order to be able to use the entire drive. So, when you format a floppy disk, the block size will be one sector. When you format a 230MB drive, for example, the block size is 8 sectors (4K).  Why does this matter?</p>
+<p>True or False: When a file is copied from a hard drive to a floppy, it will usually take up less space than it takes up on a hard drive?</p>
+<p>TRUE. Although the size of the file will be the same, fewer sectors will be used to store the file. Conversely, when a file is copied from a floppy to a hard drive, it will usually take up more disk space. When files are stored on a disk, they always use up a whole number of blocks. Any unneeded space at the end of a block is unused and wasted. For example, say your hard drive has a block size of 4K, and you have a file that is 4.5K. This requires 8K to store on your hard drive (2 whole blocks), but only 4.5K on a floppy (9 floppy-size blocks).<br>Miscellaneous info…If you tend to store lots of small files on your hard drive (like running Windows and Windows apps), the blocks used to store all those little files can have a<br>lot of wasted space in them. Likewise, compressing lots of little files may not save as much space on a big hard drive with a big block size. If the block size is 4K, and you compress a 3K file, the file will be compressed, but it will still use 4K of disk space. If you do a Get Info on a file on a Mac, the Size info will say something like ‘12K on disk, 8320 bytes used’. The 12K is the amount of disk space used, based on the block size. Thus, if the block size of your drive is 4K, this number will always be in increments of 4K. 8320 bytes is the actual size of the file. Note that you have to go to Get Info to see the actual size of the file. This number does not show up in View by Name.</p>
+<p>Look at it this way. Every block that’s used in your operating system’s file system to store data requires a certain amount of metadata to be stored along with the actual file data you’re writing. e.g: timestamps (created, modified), filename, ownership/permission bits. For files that span multiple blocks, you also have to store the IDs of each of those blocks and the order they’re chained together, etc.</p>
+<p>Determining block size in an OS is a case of tradeoffs. Every file must occupy at least one block, even if the file is 0 bytes long, so there’s something for the file’s metadata to be attached to. Unless you can guarantee that your files will ALWAYS be some multiple of the block size in size (e.g. in a 4k block OS, all files are 4k), there will be a certain amount of wastage for the files that don’t exactly fit within that block.</p>
+<p>Small block sizes are good when you need to store many small files. On the other hand, more blocks = more metadata, so you end up wasting a chunk of your storage system on overhead, tracking the location of all the files.</p>
+<p>On the flip side, large blocks mean less metadata, but also mean greater wastage when you’re storing small files. e.g. a 1 byte file stored in a 4k block wastes 3.99k of that block.</p>
+<p>Each of those blocks must be given an ID number by the OS, so it can be uniquely identified. An OS which uses an 8 bit ID field can track only 256 blocks, and therefore, by extension, only 256 files. But if each of those blocks is actually 1 megabyte in size, then you can store up to 256 megabytes of data.</p>
+<p>However, as discussed earlier, small blocks mean more metadata. With drive sizes now in the 3+ terabyte range, with 512 byte blocks, you had to have metadata storage for 3TB/512 bytes = 6.44 billion blocks. That’s one major waste of space. So now they ship drives with 4k blocks, 8 times larger, so you only need metadata storage for 805 million blocks. The total number of possible files has been cut by a factor of 8, but the reduced amount of metadata means you can actually store a larger amount of useable data.</p>
+<p>Incidentally, 6.4 billion blocks is larger than what can be addressed directly by a 32bit system. 2^32 has an upper limit of ~4.2 billion, so older 32bit machines could not use the entirety of a 3TB drive. Hence switching to larger block sizes. 32bit boxes can easily handle 805 million blocks.</p>
+<h3 id="Page"><a href="#Page" class="headerlink" title="Page"></a>Page</h3><p>Page is similar to a block, but is the RAM equivalent. Blocks are usually the smallest unit of “cold” storage, while Pages are usually the smallest unit of in-memory storage. I could be wrong, but I believe the typical page size is also 4KB of memory.</p>
+<p>Page use will vary depending on how the SAN stores things on the back-end. In working with a SAN that uses virtualization (Compellent), paging is how the SAN moves data between drive types. (15k RPM to 7K RPM)</p>
+<p>Paging is the SAN OS’s method to optimize and keep track of stored data. So when you write data to your array, the write is usually broken up into manageable segments. My current array can track in 512K, 2MB and 4MB pages. Those segments consume memory space, the smaller the page you use, the more memory you typically consume.</p>
+<p>Other Note that most arrays present native 4K sectors to servers(in a form of a LUN), regardless of the disks behind the array. This as some applications like SQL server, were built and optimized for native 4k sectors.</p>
+<h3 id="Chunk"><a href="#Chunk" class="headerlink" title="Chunk"></a>Chunk</h3><p>Chunk doesn’t really have a strict definition, it’s usually more use-specific. For example, a “chunk” of data might be the amount of data that an application processes from the disk at a time. For example, a log file is 100MB, and the parsing application reads the file in and processes it in 5MB chunks. Read 5MB -&gt; Process 5MB -&gt; Read 5MB -&gt; Process 5MB, etc. In some storage systems this could be an abstraction layer above a block, for example, when talking about read/write caching, it may write data to disk in chunks that are not the same size as a single block. A lot of time reading and writing in chunks can improve performance.</p>
+<p>Chapter 9 addresses alignment in greater depth.</p>
+
   
 
     </div>
@@ -679,7 +845,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/10/Understanding-File-System-Superblock-in-Linux/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/05/17/The-differences-between-a-chunk-page-block-sector-and-bytes-bits-within-storage-systems/">展开全文 >></a>
         </p>
       
 
@@ -709,20 +875,20 @@
 
 
   
-    <article id="post-Linux-The-block-I-O-layer" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-How-Does-UDP-Work" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/10/Linux-The-block-I-O-layer/">Linux: The block I/O layer</a>
+      <a class="article-title" href="/2019/05/17/How-Does-UDP-Work/">How Does UDP Work?</a>
     </h1>
   
 
         
-        <a href="/2019/05/10/Linux-The-block-I-O-layer/" class="archive-article-date">
-  	<time datetime="2019-05-10T06:00:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-10</time>
+        <a href="/2019/05/17/How-Does-UDP-Work/" class="archive-article-date">
+  	<time datetime="2019-05-17T03:41:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-17</time>
 </a>
         
       </header>
@@ -730,8 +896,10 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p>原文链接：<a href="http://ari-ava.blogspot.com/2014/06/opw-linux-block-io-layer-part-1-base.html?m=0" target="_blank" rel="noopener">http://ari-ava.blogspot.com/2014/06/opw-linux-block-io-layer-part-1-base.html?m=0</a></p>
-<p>So, during the last few weeks I have been studying and tracing the block I/O layer of the Linux kernel, with the aim of getting a clearer view of how it works. A fellow student from the University of Modena and Reggio Emilia thought I might write a blog post on that. My very patient OPW mentor approved the topic and suggested that I split the blog post in different parts, so that it can be read more comfortably and without getting bored all at once. Here is part one, which attempts to explain the basic concepts and ideas behind the mechanisms implemented in the block I/O layer: it’s very high-level and concise. The following parts (which will go into much more detail about implementation details) will outline how the different APIs that the block layer exposes make use of those mechanisms, and hopefully why they are useful (or they aren’t) to each of the APIs. Sounds like a pretty difficult goal (at least for a beginner as I am), so if you have any criticism, please, go ahead and leave a comment.<br></p>
+     <p>原文链接:<a href="https://www.slashroot.in/how-does-udp-work" target="_blank" rel="noopener">https://www.slashroot.in/how-does-udp-work</a></p>
+<p><img src="/2019/05/17/How-Does-UDP-Work/markdown-img-paste-20190514114259279.png" alt=""></p>
+<p>IETF(Internet Engineering Task Force) is a community of engineers and computer scientists, who work towards bringing different new internet technologies, standards and specifications. A RFC is a document that is published by IETF.</p>
+<p>It is generally written formally for peer review. Mostly it discusses different protocol methods and its complete details and features. It mostly works as a standard document for engineers to implement, give feedback, submit a new protocol related information and its concepts(sort of proposal as well - Hence the name “Request for Comments”).  Why am I discussing about IETF and RFCs here?.<br></p>
   
 
     </div>
@@ -743,7 +911,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">操作系统</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">UDP</a>
         		</li>
       		
 		</ul>
@@ -755,7 +923,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/操作系统//" class="article-tag-list-link color5">操作系统</a>
+        			<a href="/categories/网络协议//" class="article-tag-list-link color5">网络协议</a>
         		</li>
       		
 		</ul>
@@ -764,7 +932,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/10/Linux-The-block-I-O-layer/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/05/17/How-Does-UDP-Work/">展开全文 >></a>
         </p>
       
 
@@ -794,20 +962,20 @@
 
 
   
-    <article id="post-LINUX-–-IO-MULTIPLEXING-–-SELECT-VS-POLL-VS-EPOLL" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-Understanding-TCP-three-way-handshake" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/08/LINUX-–-IO-MULTIPLEXING-–-SELECT-VS-POLL-VS-EPOLL/">LINUX – IO MULTIPLEXING – SELECT VS POLL VS EPOLL</a>
+      <a class="article-title" href="/2019/05/17/Understanding-TCP-three-way-handshake/">Understanding TCP three way handshake</a>
     </h1>
   
 
         
-        <a href="/2019/05/08/LINUX-–-IO-MULTIPLEXING-–-SELECT-VS-POLL-VS-EPOLL/" class="archive-article-date">
-  	<time datetime="2019-05-08T03:16:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-08</time>
+        <a href="/2019/05/17/Understanding-TCP-three-way-handshake/" class="archive-article-date">
+  	<time datetime="2019-05-17T03:36:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-17</time>
 </a>
         
       </header>
@@ -815,8 +983,8 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p>One basic concept of Linux (actually Unix) is the rule that everything in Unix/Linux is a file. Each process has a table of file descriptors that point to files, sockets, devices and other operating system objects.</p>
-<p>Typical system that works with many IO sources has an initializaion phase and then enter some kind of standby mode – wait for any client to send request and response it<br></p>
+     <p>原文链接:<a href="https://www.slashroot.in/understanding-tcp-three-way-handshake" target="_blank" rel="noopener">https://www.slashroot.in/understanding-tcp-three-way-handshake</a></p>
+<p>Before understanding what is three way handshake we will go through a set of terminologies and understand them. We will be moving step by step towards<br>tcp three way handshake. If you feel that you did not understand something in this tutorial, you can mail me your quries at <a href="mailto:slashmaster@slashroot.in" target="_blank" rel="noopener">slashmaster@slashroot.in</a><br></p>
   
 
     </div>
@@ -828,7 +996,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">multiplexed IO</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">TCP</a>
         		</li>
       		
 		</ul>
@@ -840,7 +1008,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/操作系统//" class="article-tag-list-link color5">操作系统</a>
+        			<a href="/categories/网络协议//" class="article-tag-list-link color5">网络协议</a>
         		</li>
       		
 		</ul>
@@ -849,7 +1017,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/08/LINUX-–-IO-MULTIPLEXING-–-SELECT-VS-POLL-VS-EPOLL/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/05/17/Understanding-TCP-three-way-handshake/">展开全文 >></a>
         </p>
       
 
@@ -879,20 +1047,20 @@
 
 
   
-    <article id="post-Mac快速安装gcc方法" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-How-is-TCP-UDP-Checksum-Calculated" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/06/Mac快速安装gcc方法/">Mac快速安装gcc方法</a>
+      <a class="article-title" href="/2019/05/16/How-is-TCP-UDP-Checksum-Calculated/">How is TCP &amp; UDP Checksum Calculated?</a>
     </h1>
   
 
         
-        <a href="/2019/05/06/Mac快速安装gcc方法/" class="archive-article-date">
-  	<time datetime="2019-05-06T03:20:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-06</time>
+        <a href="/2019/05/16/How-is-TCP-UDP-Checksum-Calculated/" class="archive-article-date">
+  	<time datetime="2019-05-16T03:16:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-16</time>
 </a>
         
       </header>
@@ -900,7 +1068,10 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <h3 id="一、安装Homebrew"><a href="#一、安装Homebrew" class="headerlink" title="一、安装Homebrew"></a>一、安装Homebrew</h3><p><a href="https://brew.sh/index_zh-cn.html" target="_blank" rel="noopener">Homebrew官方地址</a><br>安装Homebrew,一条命令即可:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;</span><br></pre></td></tr></table></figure></p>
+     <p>原文链接:<a href="https://www.slashroot.in/how-is-tcp-and-udp-checksum-calculated" target="_blank" rel="noopener">https://www.slashroot.in/how-is-tcp-and-udp-checksum-calculated</a></p>
+<p><img src="/2019/05/16/How-is-TCP-UDP-Checksum-Calculated/markdown-img-paste-2019051411182510.png" alt=""></p>
+<p>When you send and receive data over the wire, there are possibilities where the data can get corrupted, altered, or modified(it can be accidental, purposely done with evil intention). Whatever may be the case, there needs to be a method where the receiver can verify and figure out easily if the data is altered or corrupted.</p>
+<p>Generally what happens is this..The sender calculates a short checksum value(very small in size) which represents the message/data that is being sent. The value calculated is either sent along with the message, or through other methods. Once the data is received, the receiver also calculates the checksum. If both the values(of the sender and the receiver) tallies, then the data is uncorrupted/unaltered.<br></p>
   
 
     </div>
@@ -912,7 +1083,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">gcc</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">网络协议</a>
         		</li>
       		
 		</ul>
@@ -924,7 +1095,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/C-C//" class="article-tag-list-link color1">C/C++</a>
+        			<a href="/categories/网络协议//" class="article-tag-list-link color5">网络协议</a>
         		</li>
       		
 		</ul>
@@ -933,91 +1104,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/06/Mac快速安装gcc方法/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-跨域资源共享-CORS-相关问题" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/11/跨域资源共享-CORS-相关问题/">跨域资源共享(CORS)相关问题</a>
-    </h1>
-  
-
-        
-        <a href="/2019/04/11/跨域资源共享-CORS-相关问题/" class="archive-article-date">
-  	<time datetime="2019-04-11T09:25:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-     <h3 id="什么是跨域？"><a href="#什么是跨域？" class="headerlink" title="什么是跨域？"></a>什么是跨域？</h3><p>跨域（CORS）是一个W3C标准，全称是”跨域资源共享”（Cross-Origin Resource Sharing）。它允许浏览器向跨源服务器，发出XMLHttpRequest请求，从而克服了AJAX只能同源使用的限制。当一个资源从与改资源本身所在服务器的不同的域或不同的端口请求一个资源时，资源会发起一个跨域HTTP请求。<br></p>
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/前端//" class="article-tag-list-link color3">前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/04/11/跨域资源共享-CORS-相关问题/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/05/16/How-is-TCP-UDP-Checksum-Calculated/">展开全文 >></a>
         </p>
       
 
@@ -1049,7 +1136,7 @@
   
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 
@@ -1221,6 +1308,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">servlet</a>
               </li>
              
@@ -1237,11 +1328,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Mysql</a>
+                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
+                <a href="javascript:void(0)" class="js-tag color1">Mysql</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1266,10 +1357,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1333,11 +1420,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1354,6 +1441,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">C10K</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">网络协议</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1385,11 +1476,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">synchronize</a>
+                <a href="javascript:void(0)" class="js-tag color3">tcpdump</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">zookeeper</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">synchronize</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1425,6 +1520,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">SSH</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">iptables</a>
               </li>
              
@@ -1438,10 +1537,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">读书笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">tcpdump</a>
               </li>
              
               <li class="article-tag-list-item">

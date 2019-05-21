@@ -2,30 +2,128 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://www.byteliu.com/2019/05/13/What-is-a-System-Call-in-Unix-Linux/</loc>
+    <loc>http://www.byteliu.com/2019/05/20/How-Does-DNS-Server-Work/</loc>
     
-    <lastmod>2019-05-13T12:39:13.461Z</lastmod>
+    <lastmod>2019-05-21T08:21:55.455Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.byteliu.com/2019/05/13/Difference-Between-Process-And-Thread-in-Linux/</loc>
+    <loc>http://www.byteliu.com/2019/05/21/UBC-An-Efficient-Unified-I-O-and-Memory-Caching-Subsystem-for-NetBSD/</loc>
     
-    <lastmod>2019-05-13T11:44:18.889Z</lastmod>
+    <lastmod>2019-05-21T08:20:24.748Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.byteliu.com/2019/05/14/Secure-Shell-How-Does-SSH-Work/</loc>
+    
+    <lastmod>2019-05-21T08:20:24.745Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.byteliu.com/2019/05/21/What-is-the-major-difference-between-the-buffer-cache-and-the-page-cache-Why-were-they-separate-entities-in-older-kernels-Why-were-they-merged-later-on/</loc>
+    
+    <lastmod>2019-05-21T08:20:24.739Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.byteliu.com/2019/05/17/The-differences-between-a-chunk-page-block-sector-and-bytes-bits-within-storage-systems/</loc>
+    
+    <lastmod>2019-05-21T08:20:24.733Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.byteliu.com/2019/05/21/Network-Traffic-Analysis-With-Linux-Tools/</loc>
+    
+    <lastmod>2019-05-21T08:20:24.730Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.byteliu.com/2019/05/20/Packet-Capturing-with-TCPDUMP-command-in-linux/</loc>
+    
+    <lastmod>2019-05-21T08:20:24.728Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.byteliu.com/2019/05/17/How-Does-UDP-Work/</loc>
+    
+    <lastmod>2019-05-21T08:20:24.727Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.byteliu.com/2019/05/16/How-is-TCP-UDP-Checksum-Calculated/</loc>
+    
+    <lastmod>2019-05-21T08:20:24.724Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.byteliu.com/2019/05/20/How-Does-ARP-Address-Resolution-Protocol-Work/</loc>
+    
+    <lastmod>2019-05-21T08:20:24.722Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.byteliu.com/2019/05/16/Difference-Between-Segments-Packets-and-Frames/</loc>
+    
+    <lastmod>2019-05-21T08:20:24.719Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.byteliu.com/2019/05/14/nice-and-renice-command-usage-examples-for-process-priority-in-linux/</loc>
+    
+    <lastmod>2019-05-21T08:20:24.715Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.byteliu.com/2019/05/17/Understanding-TCP-three-way-handshake/</loc>
+    
+    <lastmod>2019-05-21T08:20:24.710Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.byteliu.com/2019/05/14/Difference-Between-bashrc-and-bash-profile/</loc>
+    
+    <lastmod>2019-05-21T08:20:24.682Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://www.byteliu.com/2019/05/12/Linux-Processes-Administration-and-Monitoring-tutorial/</loc>
     
-    <lastmod>2019-05-13T04:54:16.411Z</lastmod>
+    <lastmod>2019-05-13T12:39:50.126Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.byteliu.com/2019/05/13/What-is-a-System-Call-in-Unix-Linux/</loc>
+    
+    <lastmod>2019-05-13T12:39:50.123Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.byteliu.com/2019/05/13/Difference-Between-Process-And-Thread-in-Linux/</loc>
+    
+    <lastmod>2019-05-13T12:39:50.122Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://www.byteliu.com/2019/05/12/Linux-File-System-Read-Write-Performance-Test/</loc>
     
-    <lastmod>2019-05-12T10:05:50.157Z</lastmod>
+    <lastmod>2019-05-13T12:39:50.120Z</lastmod>
     
   </url>
   
@@ -527,14 +625,14 @@
   </url>
   
   <url>
-    <loc>http://www.byteliu.com/2017/05/10/Java%E7%BA%BF%E7%A8%8B%E6%B1%A0/</loc>
+    <loc>http://www.byteliu.com/2018/04/05/%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3Java-jar%E5%8C%85%E5%86%B2%E7%AA%81/</loc>
     
     <lastmod>2018-12-04T10:02:49.432Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.byteliu.com/2018/04/05/%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3Java-jar%E5%8C%85%E5%86%B2%E7%AA%81/</loc>
+    <loc>http://www.byteliu.com/2017/05/10/Java%E7%BA%BF%E7%A8%8B%E6%B1%A0/</loc>
     
     <lastmod>2018-12-04T10:02:49.432Z</lastmod>
     
@@ -611,14 +709,14 @@
   </url>
   
   <url>
-    <loc>http://www.byteliu.com/2018/10/08/zookeeper%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
+    <loc>http://www.byteliu.com/2017/07/15/TCP%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6/</loc>
     
     <lastmod>2018-12-04T10:02:49.421Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.byteliu.com/2017/07/15/TCP%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6/</loc>
+    <loc>http://www.byteliu.com/2018/10/08/zookeeper%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
     
     <lastmod>2018-12-04T10:02:49.421Z</lastmod>
     
@@ -653,14 +751,14 @@
   </url>
   
   <url>
-    <loc>http://www.byteliu.com/2017/08/08/HTTP%E7%9A%84%E9%95%BF%E8%BF%9E%E6%8E%A5%E5%92%8C%E7%9F%AD%E8%BF%9E%E6%8E%A5/</loc>
+    <loc>http://www.byteliu.com/2017/06/27/ForkJoinPool%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
     
     <lastmod>2018-12-04T10:02:49.416Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.byteliu.com/2017/06/27/ForkJoinPool%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
+    <loc>http://www.byteliu.com/2017/08/08/HTTP%E7%9A%84%E9%95%BF%E8%BF%9E%E6%8E%A5%E5%92%8C%E7%9F%AD%E8%BF%9E%E6%8E%A5/</loc>
     
     <lastmod>2018-12-04T10:02:49.416Z</lastmod>
     
@@ -877,14 +975,14 @@
   </url>
   
   <url>
-    <loc>http://www.byteliu.com/2017/03/25/String%E5%A0%86%E5%86%85%E5%AD%98%E5%92%8C%E6%A0%88%E5%86%85%E5%AD%98/</loc>
+    <loc>http://www.byteliu.com/2018/11/24/Redis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
     
     <lastmod>2018-12-04T10:02:49.391Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.byteliu.com/2018/11/24/Redis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
+    <loc>http://www.byteliu.com/2017/03/25/String%E5%A0%86%E5%86%85%E5%AD%98%E5%92%8C%E6%A0%88%E5%86%85%E5%AD%98/</loc>
     
     <lastmod>2018-12-04T10:02:49.391Z</lastmod>
     
@@ -905,14 +1003,14 @@
   </url>
   
   <url>
-    <loc>http://www.byteliu.com/2017/03/19/Mybatis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
+    <loc>http://www.byteliu.com/2017/03/20/Mybatis%E8%8E%B7%E5%8F%96%E8%87%AA%E5%A2%9E%E4%B8%BB%E9%94%AE%E5%80%BC/</loc>
     
     <lastmod>2018-12-04T10:02:49.388Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.byteliu.com/2017/03/20/Mybatis%E8%8E%B7%E5%8F%96%E8%87%AA%E5%A2%9E%E4%B8%BB%E9%94%AE%E5%80%BC/</loc>
+    <loc>http://www.byteliu.com/2017/03/19/Mybatis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
     
     <lastmod>2018-12-04T10:02:49.388Z</lastmod>
     

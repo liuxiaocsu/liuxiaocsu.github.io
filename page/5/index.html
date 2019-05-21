@@ -181,20 +181,20 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-Java代码规范-3" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-Non-breaking-space-String-trim-方法免疫的空格" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/10/19/Java代码规范-3/">Java代码规范(3)</a>
+      <a class="article-title" href="/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/">Non-breaking space---String.trim()方法免疫的空格</a>
     </h1>
   
 
         
-        <a href="/2018/10/19/Java代码规范-3/" class="archive-article-date">
-  	<time datetime="2018-10-19T15:11:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-19</time>
+        <a href="/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/" class="archive-article-date">
+  	<time datetime="2018-12-19T06:36:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-19</time>
 </a>
         
       </header>
@@ -202,431 +202,10 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <h4 id="ArrayList的subList结果不可强转成ArrayList，否则会抛出ClassCastException异常pmd-ClassCastExceptionWithSubListToArrayListRule"><a href="#ArrayList的subList结果不可强转成ArrayList，否则会抛出ClassCastException异常pmd-ClassCastExceptionWithSubListToArrayListRule" class="headerlink" title="ArrayList的subList结果不可强转成ArrayList，否则会抛出ClassCastException异常pmd:ClassCastExceptionWithSubListToArrayListRule"></a>ArrayList的subList结果不可强转成ArrayList，否则会抛出ClassCastException异常pmd:ClassCastExceptionWithSubListToArrayListRule</h4><p>Critical</p>
-<p>ArrayList的subList结果不可强转成ArrayList，否则会抛出ClassCastException异常。<br>说明：禁止强转，如果需要用到集合特性方法，请新建一个集合，然后置入sublist,new 集合(sublist结果)。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">反例:</span><br><span class="line">List list = new ArrayList();</span><br><span class="line">list.add(&quot;22&quot;);</span><br><span class="line">//warn</span><br><span class="line">List test = (ArrayList) list.subList(0, 1);</span><br><span class="line"></span><br><span class="line">正例:</span><br><span class="line">List list2 = new ArrayList(list.subList(0, 1));</span><br></pre></td></tr></table></figure></p>
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">代码规范</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/代码规范//" class="article-tag-list-link color5">代码规范</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/10/19/Java代码规范-3/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Java代码规范-2" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/10/15/Java代码规范-2/">Java代码规范(2)</a>
-    </h1>
-  
-
-        
-        <a href="/2018/10/15/Java代码规范-2/" class="archive-article-date">
-  	<time datetime="2018-10-15T14:50:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-     <h4 id="POJO类中的任何布尔类型的变量，都不要加is，否则部分框架解析会引起序列化错误"><a href="#POJO类中的任何布尔类型的变量，都不要加is，否则部分框架解析会引起序列化错误" class="headerlink" title="POJO类中的任何布尔类型的变量，都不要加is，否则部分框架解析会引起序列化错误"></a>POJO类中的任何布尔类型的变量，都不要加is，否则部分框架解析会引起序列化错误</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public class DemoDO&#123;</span><br><span class="line">    Boolean success;</span><br><span class="line">    Boolean delete;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">代码规范</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/代码规范//" class="article-tag-list-link color5">代码规范</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/10/15/Java代码规范-2/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Java代码规范-1" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/10/11/Java代码规范-1/">Java代码规范(1)</a>
-    </h1>
-  
-
-        
-        <a href="/2018/10/11/Java代码规范-1/" class="archive-article-date">
-  	<time datetime="2018-10-11T02:10:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-     <h4 id="关于基本数据类型与包装数据类型的使用标准如下："><a href="#关于基本数据类型与包装数据类型的使用标准如下：" class="headerlink" title="关于基本数据类型与包装数据类型的使用标准如下："></a>关于基本数据类型与包装数据类型的使用标准如下：</h4><p>1） 所有的POJO类属性使用包装数据类型。<br>2） RPC方法的返回值和参数必须使用包装数据类型。<br>3） 所有的局部变量使用基本数据类型。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public class DemoDO &#123;</span><br><span class="line">    String str;</span><br><span class="line">    Integer a;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h4 id="类、类属性、类方法的注释必须使用javadoc规范，使用-内容-格式，不得使用-xxx方式和-xxx-方式。"><a href="#类、类属性、类方法的注释必须使用javadoc规范，使用-内容-格式，不得使用-xxx方式和-xxx-方式。" class="headerlink" title="类、类属性、类方法的注释必须使用javadoc规范，使用/*内容/格式，不得使用//xxx方式和/xxx/方式。"></a>类、类属性、类方法的注释必须使用javadoc规范，使用/*<em>内容</em>/格式，不得使用//xxx方式和/<em>xxx</em>/方式。</h4><p>说明：在IDE编辑窗口中，javadoc方式会提示相关注释，生成javadoc可以正确输出相应注释；在IDE中，工程调用方法时，不进入方法即可悬浮提示方法、参数、返回值的意义，提高阅读效率。<br></p>
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">代码规范</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/代码规范//" class="article-tag-list-link color5">代码规范</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/10/11/Java代码规范-1/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-zookeeper学习笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/10/08/zookeeper学习笔记/">zookeeper学习笔记</a>
-    </h1>
-  
-
-        
-        <a href="/2018/10/08/zookeeper学习笔记/" class="archive-article-date">
-  	<time datetime="2018-10-08T12:37:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-     <p>Zookeeper是Hadoop分布式调度服务，用来构建分布式应用系统。构建一个分布式应用是一个很复杂的事情，主要的原因是我们需要合理有效 的处理分布式集群中的部分失败的问题。例如，集群中的节点在相互通信时，A节点向B节点发送消息。A节点如果想知道消息是否发送成功，只能由B节点告诉A 节点。那么如果B节点关机或者由于其他的原因脱离集群网络，问题就出现了。A节点不断的向B发送消息，并且无法获得B的响应。B也没有办法通知A节点已经 离线或者关机。集群中其他的节点完全不知道B发生了什么情况，还在不断的向B发送消息。这时，你的整个集群就发生了部分失败的故障。<br>Zookeeper不能让部分失败的问题彻底消失，但是它提供了一些工具能够让你的分布式应用安全合理的处理部分失败的问题。</p>
-<p>Zookeeper 是分布式服务框架，主要是用来解决分布式应用中经常遇到的一些数据管理问题，如：统一命名服务、状态同步服务、集群管理、分布式应用配置项的管理等等。<br></p>
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">zookeeper</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/zookeeper//" class="article-tag-list-link color5">zookeeper</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/10/08/zookeeper学习笔记/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Velocity学习笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/28/Velocity学习笔记/">Velocity学习笔记</a>
-    </h1>
-  
-
-        
-        <a href="/2018/09/28/Velocity学习笔记/" class="archive-article-date">
-  	<time datetime="2018-09-28T11:32:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-     <p>什么是 Velocity?<br>Velocity是基于Java的模板引擎，它允许页面设计者引用Java中定义的方法。页面设计者和Java开发者能够同时使用MVC的模式开发网站，这样网页设计者能够把精力放在页面的设计上，程序员也可以把精力放在代码开发上。Velocity把Java代码从Web页面中分离， 使网站可维护性更强，同时也在Java服务器页面(JSPs)或者PHP中提供了可视化交互的选择。</p>
-<p>Velocity能够使用模板生成Web页面,  SQL，PostScript 和其他内容。并能够生成的源代码和报表中的一个独立的单元，或者作为一个其他系统的组件。配置完成后，Velocity将提供为Turbine 页面应用框架提供模板服务。 Velocity+Turbine将提供一个模板服务，它将允许网页应用按照MVC的模式进行开发。<br></p>
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">velocity</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/前端页面//" class="article-tag-list-link color5">前端页面</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/09/28/Velocity学习笔记/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Class-forName和ClassLoader-loadClass加载类的区别" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/15/Class-forName和ClassLoader-loadClass加载类的区别/">Class.forName和ClassLoader.loadClass加载类的区别</a>
-    </h1>
-  
-
-        
-        <a href="/2018/09/15/Class-forName和ClassLoader-loadClass加载类的区别/" class="archive-article-date">
-  	<time datetime="2018-09-15T14:31:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-     <p>在java中Class.forName()和ClassLoader都可以对类进行加载。ClassLoader就是遵循 双亲委派模型 最终调用启动类加载器的类加载器，实现的功能是“通过一个类的全限定名来获取描述此类的二进制字节流”，获取到二进制流后放到JVM中。Class.forName()方法实际上也是调用的CLassLoader来实现的。<br></p>
+     <p>问题背景：发现数据库中存储的数据后面有空格</p>
+<p><img src="/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/markdown-img-paste-20181220101613253.png" alt=""></p>
+<p>但是我们程序是对前后空格做了处理的</p>
+<p><img src="/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/markdown-img-paste-20181220101627833.png" alt=""></p>
   
 
     </div>
@@ -659,7 +238,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/09/15/Class-forName和ClassLoader-loadClass加载类的区别/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/">展开全文 >></a>
         </p>
       
 
@@ -689,20 +268,20 @@
 
 
   
-    <article id="post-关于操作系统的一些事" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-《金字塔原理》读书笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/08/关于操作系统的一些事/">关于操作系统的一些事</a>
+      <a class="article-title" href="/2018/12/15/《金字塔原理》读书笔记/">《金字塔原理》读书笔记</a>
     </h1>
   
 
         
-        <a href="/2018/09/08/关于操作系统的一些事/" class="archive-article-date">
-  	<time datetime="2018-09-08T11:47:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-08</time>
+        <a href="/2018/12/15/《金字塔原理》读书笔记/" class="archive-article-date">
+  	<time datetime="2018-12-15T15:46:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-15</time>
 </a>
         
       </header>
@@ -710,9 +289,10 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <h4 id="操作系统的运行机制"><a href="#操作系统的运行机制" class="headerlink" title="操作系统的运行机制"></a>操作系统的运行机制</h4><ul>
-<li>计算机系统中，通常CPU执行两种不同性质的程序：一种是操作系统内核程序；另一种是用户自编程序或系统外层的应用程序。对操作系统而言，这两种程序的作用不同，前者是后者的管理者，因此“管理程序”要执行一些特权指令，而“被管理程序”出于安全考虑不能执行这些指令。所谓特权指令，是指计算机中不允许用户直接使用的指令，如I/O指令、 置中断指令，存取用于内存保护的寄存器、送程序状态字到程序状态字寄存器等指令。操作系统在具体实现上划分了用户态（目态）和核心态（管态)，以严格区分两类程序。</li>
-<li>现代计算机几乎都是层次结构，操作系统的各项功能分别设置在不同层次上，一些与硬件关联较紧密的模块，诸如时钟管理、中断处理、设备驱动等处于最底层。其次是运行频率较髙的程序，诸如进程管理、存储器管理和设备管理等。这两部分内容构成了操作系统的内核。这部分内容的指令操作工作在核心态。</li></ul>
+     <p>附：<a href="http://byteliu.com/PDF/金字塔原理.pdf" target="_blank" rel="noopener">金字塔原理.pdf</a></p>
+<p>工作的时候，特别是搞技术的同学，我们通常会有一种感觉，“表达” 比 “做” 难。有时候明明做得挺好的一件事情，表达出来却不是那么回事情，特别是当转正、晋升述职的时候，都不知道怎么来组织自己的思路。平时在和同事、Partner沟通的时候，需要沟通好一会才能把事情说清楚。 如何整理自己的思维逻辑，表达自己想表达的内容；如何能让对方看懂、听明白、记住我们想表达的；如何让对方顺着我们的思路一起思考。这是门很深的学问。 但其实有一些普世方法，在我们初中、高中的语文课上就学习过。其中，有个鼎鼎有名的原理：“金字塔原理”。</p>
+<p>学习金字塔原理能够使你的思考、表达和思维都变得既有逻辑又有条理。有些人花一分钟可以找到事情的本质，有些人花上几天时间，可能也还没到入门的诀窍；有些人可能瞬间可以把一件事情说的很清楚，有些人就是结结巴巴，说不出来。其实，有时候并不是能力的问题，而是你是否掌握了一套有效的工具。而金字塔原理，就是这样一套让你可以掌握思考、表达、写作的工具。</p>
+<p><img src="/2018/12/15/《金字塔原理》读书笔记/markdown-img-paste-20181218112358272.png" alt=""></p>
   
 
     </div>
@@ -724,7 +304,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">操作系统</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
         		</li>
       		
 		</ul>
@@ -736,7 +316,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/操作系统//" class="article-tag-list-link color5">操作系统</a>
+        			<a href="/categories/读书笔记//" class="article-tag-list-link color5">读书笔记</a>
         		</li>
       		
 		</ul>
@@ -745,7 +325,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/09/08/关于操作系统的一些事/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/12/15/《金字塔原理》读书笔记/">展开全文 >></a>
         </p>
       
 
@@ -775,20 +355,20 @@
 
 
   
-    <article id="post-AQS条件队列Condition实现详解" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-Redis开发规范" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/01/AQS条件队列Condition实现详解/">AQS条件队列Condition实现详解</a>
+      <a class="article-title" href="/2018/12/07/Redis开发规范/">Redis开发规范</a>
     </h1>
   
 
         
-        <a href="/2018/09/01/AQS条件队列Condition实现详解/" class="archive-article-date">
-  	<time datetime="2018-09-01T11:55:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-01</time>
+        <a href="/2018/12/07/Redis开发规范/" class="archive-article-date">
+  	<time datetime="2018-12-07T02:43:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-07</time>
 </a>
         
       </header>
@@ -796,10 +376,12 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p>AQS如何实现条件队列</p>
-<p>AQS提供一个内部类ConditionObject，由这个ConditionObject实现条件队列。</p>
-<p>例如，经典代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Lock lock = new ReentrantLock();</span><br><span class="line">Condition condition = lock.newCondition();</span><br><span class="line">...</span><br><span class="line">lock.lock();</span><br><span class="line">try &#123;</span><br><span class="line">  while ( 某条件A ) &#123;</span><br><span class="line">    condition.await();</span><br><span class="line">  &#125;</span><br><span class="line">  // 条件A满足时应执行的代码</span><br><span class="line">&#125; finally &#123;</span><br><span class="line">   lock.unlock();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>以上代码中的condition实际就是ConditionObject类。<br></p>
+     <h3 id="一、键值设计"><a href="#一、键值设计" class="headerlink" title="一、键值设计"></a>一、键值设计</h3><h4 id="1-key名设计"><a href="#1-key名设计" class="headerlink" title="1. key名设计"></a>1. key名设计</h4><p>(1)【建议】: 可读性和可管理性</p>
+<p>以业务名(或数据库名)为前缀(防止key冲突)，用冒号分隔，比如业务名:表名:id<br>ugc:video:1</p>
+<p>(2)【建议】：简洁性</p>
+<p>保证语义的前提下，控制key的长度，当key较多时，内存占用也不容忽视，例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">user:&#123;uid&#125;:friends:messages:&#123;mid&#125;简化为u:&#123;uid&#125;:fr:m:&#123;mid&#125;。</span><br></pre></td></tr></table></figure></p>
+<p>(3)【强制】：不要包含特殊字符</p>
+<p>反例：包含空格、换行、单双引号以及其他转义字符<br></p>
   
 
     </div>
@@ -811,7 +393,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JUC</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
         		</li>
       		
 		</ul>
@@ -823,7 +405,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/并发-多线程//" class="article-tag-list-link color2">并发/多线程</a>
+        			<a href="/categories/缓存//" class="article-tag-list-link color3">缓存</a>
         		</li>
       		
 		</ul>
@@ -832,7 +414,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/09/01/AQS条件队列Condition实现详解/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/12/07/Redis开发规范/">展开全文 >></a>
         </p>
       
 
@@ -862,20 +444,20 @@
 
 
   
-    <article id="post-AQS学习笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-文件IO操作的一些最佳实践" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/26/AQS学习笔记/">AQS学习笔记</a>
+      <a class="article-title" href="/2018/12/04/文件IO操作的一些最佳实践/">文件IO操作的一些最佳实践</a>
     </h1>
   
 
         
-        <a href="/2018/08/26/AQS学习笔记/" class="archive-article-date">
-  	<time datetime="2018-08-26T08:51:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-26</time>
+        <a href="/2018/12/04/文件IO操作的一些最佳实践/" class="archive-article-date">
+  	<time datetime="2018-12-04T11:26:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-04</time>
 </a>
         
       </header>
@@ -883,8 +465,8 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p>java的内置锁一直都是备受争议的，在JDK 1.6之前，synchronized这个重量级锁其性能一直都是较为低下，虽然在1.6后，进行大量的锁优化策略(偏向锁、轻量级锁、重量级锁、锁消除、锁粗化),但是与Lock相比synchronized还是存在一些缺陷的：虽然synchronized提供了便捷性的隐式获取锁释放锁机制（基于JVM机制），但是它却缺少了获取锁与释放锁的可操作性(获取锁和释放锁只能在同一个方法中)，可中断、超时获取锁，且它为独占式在高并发场景下性能大打折扣。JUC包中的各种Lock如此优秀主要还得归功于AQS，那什么是AQS呢？</p>
-<p>AQS，AbstractQueuedSynchronizer，是实现代码块的并发访问控制的核心(CAS算法是AbstractQueuedSynchronizer的核心)。在java.util.concurrent.locks包中有很多Lock的实现类(常用的有ReentrantLock、ReentrantReadWriteLock)、CountDownLatch、Semphore内部实现都依赖AQS，然而这些锁都没有直接来继承AQS,而是定义了一个Sync类去继承AQS。这样设计的原因是锁面向的是使用用户,而同步器面向的则是线程控制,那么在锁的实现中聚合同步器而不是直接继承AQS就可以很好的隔离二者所关注的事情。<br></p>
+     <p>原文链接：<a href="https://www.cnkirito.moe" target="_blank" rel="noopener">https://www.cnkirito.moe</a></p>
+<p>已经过去的中间件性能挑战赛，和正在进行中的 第一届 PolarDB 数据性能大赛 都涉及到了文件操作，合理地设计架构以及正确地压榨机器的读写性能成了比赛中获取较好成绩的关键。正在参赛的我收到了几位公众号读者朋友的反馈，他们大多表达出了这样的烦恼：“对比赛很感兴趣，但不知道怎么入门”，“能跑出成绩，但相比前排的选手，成绩相差10倍有余”…为了能让更多的读者参与到之后相类似的比赛中来，我简单整理一些文件IO操作的最佳实践，而不涉及整体系统的架构设计，希望通过这篇文章的介绍，让你能够欢快地参与到之后类似的性能挑战赛之中来。<br></p>
   
 
     </div>
@@ -896,7 +478,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JUC</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IO</a>
         		</li>
       		
 		</ul>
@@ -908,7 +490,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/并发-多线程//" class="article-tag-list-link color2">并发/多线程</a>
+        			<a href="/categories/IO//" class="article-tag-list-link color3">IO</a>
         		</li>
       		
 		</ul>
@@ -917,7 +499,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/08/26/AQS学习笔记/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/12/04/文件IO操作的一些最佳实践/">展开全文 >></a>
         </p>
       
 
@@ -947,20 +529,20 @@
 
 
   
-    <article id="post-Docker学习笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-Redis缓存设计原则" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/11/Docker学习笔记/">Docker学习笔记</a>
+      <a class="article-title" href="/2018/12/02/Redis缓存设计原则/">Redis缓存设计原则</a>
     </h1>
   
 
         
-        <a href="/2018/07/11/Docker学习笔记/" class="archive-article-date">
-  	<time datetime="2018-07-11T11:46:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-11</time>
+        <a href="/2018/12/02/Redis缓存设计原则/" class="archive-article-date">
+  	<time datetime="2018-12-02T14:43:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-02</time>
 </a>
         
       </header>
@@ -968,8 +550,15 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p><img src="/2018/07/11/Docker学习笔记/markdown-img-paste-2018112719483789.png" alt=""><br>Docker 是开源的应用容器引擎,是一种”容器即服务”(Docker Containers as a Service ,简称 CaaS),使得开发和IT运营团队可以对于应用的构建、发布、运行更加敏捷和可控,可以将所有应用软件以及它的以来打包成软件开发的标准化单元。是为开发人员和系统管理员用于构建、发布、并运行分布式应用程序的开放式平台。该平台由 Docker 引擎（一个便携、轻巧的运行时和打包工具） 和 Docker Hub （一个共享应用程序和自动化工作流的云服务）等组成。Docker 可以使应用程序从组件迅速组装并消除了开发、质量保证和生产环境之间的摩擦问题。这样一来，IT部门可以更快地发布，而这些应用程序不管是运行在笔记本电脑、数据中心的虚拟机，还是任何的云，其运行过程和结果都是一致的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Java 虚拟机,“一次编写，到处运行（Write once, run anywhere）”</span><br><span class="line">Docker ,“一次构建，到处运行（Build once，run anywhere）”</span><br></pre></td></tr></table></figure></p>
-<p>Docker 容器将软件以及它运行安装所需的一切文件（代码、运行时、系统工具、系统库）打包到一起，这就保证了不管是在什么样的运行环境，总是能以相同的方式运行。<br></p>
+     <p>基本原则</p>
+<ul>
+<li>只应将热数据放到缓存中</li>
+<li>所有缓存信息都应设置过期时间</li>
+<li>缓存过期时间应当分散以避免集中过期</li>
+<li>缓存key应具备可读性</li>
+<li>应避免不同业务出现同名缓存key</li>
+<li>可对key进行适当的缩写以节省内存空间</li>
+<li>选择合适的数据结构</li></ul>
   
 
     </div>
@@ -981,7 +570,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Docker</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
         		</li>
       		
 		</ul>
@@ -993,7 +582,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/容器//" class="article-tag-list-link color3">容器</a>
+        			<a href="/categories/缓存//" class="article-tag-list-link color3">缓存</a>
         		</li>
       		
 		</ul>
@@ -1002,7 +591,455 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/07/11/Docker学习笔记/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/12/02/Redis缓存设计原则/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-数据库两大神器【索引和锁】" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/28/数据库两大神器【索引和锁】/">数据库两大神器【索引和锁】</a>
+    </h1>
+  
+
+        
+        <a href="/2018/11/28/数据库两大神器【索引和锁】/" class="archive-article-date">
+  	<time datetime="2018-11-28T04:38:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+     <p>原文链接<a href="https://juejin.im/post/5b55b842f265da0f9e589e79" target="_blank" rel="noopener">https://juejin.im/post/5b55b842f265da0f9e589e79</a></p>
+<p>索引，其实就是一种数据结构，可以在上面应用一种高效的查询算法，最终提高数据的查询速度。<br>数据库在对资源进行高并发的读写操作时，为了保证数据的一致性，有效性，锁是很重要的机制。</p>
+<h2 id="一、索引"><a href="#一、索引" class="headerlink" title="一、索引"></a>一、索引</h2><p>在之前，我对索引有以下的认知：</p>
+<ul>
+<li>索引可以加快数据库的检索速度</li>
+<li>表经常进行INSERT/UPDATE/DELETE操作就不要建立索引了，换言之：索引会降低插入、删除、修改等维护任务的速度。</li>
+<li>索引需要占物理和数据空间。</li>
+<li>了解过索引的最左匹配原则</li>
+<li>知道索引的分类：聚集索引和非聚集索引</li>
+<li>Mysql支持Hash索引和B+树索引两种</li>
+</ul>
+<p>看起来好像啥都知道，但面试让你说的时候可能就GG了：</p>
+<ul>
+<li>使用索引为什么可以加快数据库的检索速度啊？</li>
+<li>为什么说索引会降低插入、删除、修改等维护任务的速度。</li>
+<li>索引的最左匹配原则指的是什么？</li>
+<li>Hash索引和B+树索引有什么区别？主流的使用哪一个比较多？InnoDB存储都支持吗？</li>
+<li>聚集索引和非聚集索引有什么区别？<br>……..</li></ul>
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">数据库索引</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据库锁</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据库//" class="article-tag-list-link color4">数据库</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/11/28/数据库两大神器【索引和锁】/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-一致性哈希算法" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/25/一致性哈希算法/">一致性哈希算法</a>
+    </h1>
+  
+
+        
+        <a href="/2018/11/25/一致性哈希算法/" class="archive-article-date">
+  	<time datetime="2018-11-25T12:34:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-25</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+     <p>一致性哈希算法在1997年由麻省理工学院的Karger等人在解决分布式Cache中提出的，设计目标是为了解决因特网中的热点(Hot spot)问题，初衷和CARP十分类似。一致性哈希修正了CARP使用的简单哈希算法带来的问题，使得DHT可以在P2P环境中真正得到应用。<br></p>
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">一致性哈希</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/缓存//" class="article-tag-list-link color3">缓存</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/11/25/一致性哈希算法/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Redis学习笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/24/Redis学习笔记/">Redis学习笔记</a>
+    </h1>
+  
+
+        
+        <a href="/2018/11/24/Redis学习笔记/" class="archive-article-date">
+  	<time datetime="2018-11-24T03:38:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+     <p>Redis 是一种快速、开源、内存键值数据结构存储库。Redis提供了一组通用的内存数据结构，可以通过这些结构轻松创建各种自定义的应用程序。关于Redis的主要使用案例包括缓存、会话管理、pub/sub以及排行榜。这是当今广受欢迎的键值存储数据库。它由BSD授权、采用优化的C语言代码编写，并支持多种开发语言。Redis是REmoteDIctionary Server 的首字母缩略词。<br>由于其速度和易用性，Redis 成为需要一流性能的 Web、移动、游戏、广告技术、物联网应用程序的理想之选。<br></p>
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/缓存//" class="article-tag-list-link color3">缓存</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/11/24/Redis学习笔记/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-MySQL常见的三种存储引擎" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/20/MySQL常见的三种存储引擎/">MySQL常见的三种存储引擎</a>
+    </h1>
+  
+
+        
+        <a href="/2018/11/20/MySQL常见的三种存储引擎/" class="archive-article-date">
+  	<time datetime="2018-11-20T04:30:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+     <p>引擎是一个程序的核心组件，简单来说，存储引擎就是指表的类型以及表在计算机上的存储方式。</p>
+<p>存储引擎的概念是MySQL的特点，Oracle中没有专门的存储引擎的概念，Oracle有OLTP和OLAP模式的区分。不同的存储引擎决定了MySQL数据库中的表可以用不同的方式来存储。我们可以根据数据的特点来选择不同的存储引擎。</p>
+<p>在MySQL中的存储引擎有很多种，可以通过“SHOW ENGINES”语句来查看。下面重点关注InnoDB、MyISAM、MEMORY这三种。</p>
+<p><img src="/2018/11/20/MySQL常见的三种存储引擎/markdown-img-paste-2018120612432106.png" alt=""><br></p>
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Mysql</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据库//" class="article-tag-list-link color4">数据库</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/11/20/MySQL常见的三种存储引擎/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-MySQL都有哪些-零件" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/18/MySQL都有哪些-零件/">MySQL都有哪些&#39;零件&#39;</a>
+    </h1>
+  
+
+        
+        <a href="/2018/11/18/MySQL都有哪些-零件/" class="archive-article-date">
+  	<time datetime="2018-11-18T04:55:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+     <p>大体来说，MySQL 可以分为 Server 层和存储引擎层两部分。MySQL 的逻辑架构图:</p>
+<p><img src="/2018/11/18/MySQL都有哪些-零件/markdown-img-paste-2018120612560635.png" alt="http://p3.pstatp.com/large/pgc-image/95e581c6f780408f901ad69852be9ec3"></p>
+<p>Server 层包括连接器、查询缓存、分析器、优化器、执行器等，涵盖 MySQL 的大多数核心服务功能，以及所有的内置函数（如日期、时间、数学和加密函数等），所有跨存储引擎的功能都在这一层实现，比如存储过程、触发器、视图等。</p>
+<p>而存储引擎层负责数据的存储和提取。其架构模式是插件式的，支持 InnoDB、MyISAM、Memory 等多个存储引擎。现在最常用的存储引擎是 InnoDB，它从 MySQL 5.5.5 版本开始成为了默认存储引擎。</p>
+<p>也就是说，执行 create table 建表的时候，如果不指定引擎类型，默认使用的就是 InnoDB。不过，也可以通过指定存储引擎的类型来选择别的引擎，比如在 create table 语句中使用 engine=memory, 来指定使用内存引擎创建表。不同存储引擎的表数据存取方式不同，支持的功能也不同。<br></p>
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Mysql</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据库//" class="article-tag-list-link color4">数据库</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/11/18/MySQL都有哪些-零件/">展开全文 >></a>
         </p>
       
 
@@ -1034,7 +1071,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
     </nav>
   
 
@@ -1206,6 +1243,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">servlet</a>
               </li>
              
@@ -1222,11 +1263,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Mysql</a>
+                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
+                <a href="javascript:void(0)" class="js-tag color1">Mysql</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1251,10 +1292,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1318,11 +1355,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1339,6 +1376,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">C10K</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">网络协议</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1370,11 +1411,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">synchronize</a>
+                <a href="javascript:void(0)" class="js-tag color3">tcpdump</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">zookeeper</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">synchronize</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1410,6 +1455,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">SSH</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">iptables</a>
               </li>
              
@@ -1423,10 +1472,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">读书笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">tcpdump</a>
               </li>
              
               <li class="article-tag-list-item">

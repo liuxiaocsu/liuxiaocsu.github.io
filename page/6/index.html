@@ -181,20 +181,20 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-RPC消息协议设计" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-MySQL优化原理" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/11/RPC消息协议设计/">RPC消息协议设计</a>
+      <a class="article-title" href="/2018/11/12/MySQL优化原理/">MySQL优化原理</a>
     </h1>
   
 
         
-        <a href="/2018/06/11/RPC消息协议设计/" class="archive-article-date">
-  	<time datetime="2018-06-11T14:58:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-11</time>
+        <a href="/2018/11/12/MySQL优化原理/" class="archive-article-date">
+  	<time datetime="2018-11-12T05:09:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-12</time>
 </a>
         
       </header>
@@ -202,10 +202,12 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p>RPC(Remote Procedure Call)，远程过程调用，是一种分布式系统中常用跨机器的通信方法，更多的是指跨机器交互中的长连接交互。</p>
-<p>RPC传统意义上讲是指长连接数据交互，区别于http即用即走的短连接，严格来说http也算是一种特殊的RPC服务，随着http1.1中对长连接的支持，区别已经越来越小。</p>
-<p>RPC的应用非常广泛，主要应用在大中型分布式系统中的组件交互，可以这样理解：各种夸网络协议的「长连接」系统交互中都使用了RPC或者类RPC。</p>
-<p>其他分布式通信解决方案还有：分布式消息队列、HTTP请求调用、数据库和分布式缓存等。<br></p>
+     <p>说起MySQL的查询优化，相信大家收藏了一堆奇技淫巧：不能使用SELECT *、不使用NULL字段、合理创建索引、为字段选择合适的数据类型….. 你是否真的理解这些优化技巧？是否理解其背后的工作原理？在实际场景下性能真有提升吗？理解这些优化建议背后的原理尤为重要，可以让你在实际业务场景下合理的运用。</p>
+<h3 id="MySQL逻辑架构"><a href="#MySQL逻辑架构" class="headerlink" title="MySQL逻辑架构"></a>MySQL逻辑架构</h3><p>如果能在头脑中构建一幅MySQL各组件之间如何协同工作的架构图，有助于深入理解MySQL服务器。下图展示了MySQL的逻辑架构图</p>
+<p><img src="/2018/11/12/MySQL优化原理/markdown-img-paste-20181206130931427.png" alt=""></p>
+<p>MySQL逻辑架构整体分为三层，最上层为客户端层，并非MySQL所独有，诸如：连接处理、授权认证、安全等功能均在这一层处理。</p>
+<p>MySQL大多数核心服务均在中间这一层，包括查询解析、分析、优化、缓存、内置函数(比如：时间、数学、加密等函数)。所有的跨存储引擎的功能也在这一层实现：存储过程、触发器、视图等。</p>
+<p>最下层为存储引擎，其负责MySQL中的数据存储和提取。和Linux下的文件系统类似，每种存储引擎都有其优势和劣势。中间的服务层通过API与存储引擎通信，这些API接口屏蔽了不同存储引擎间的差异。<br></p>
   
 
     </div>
@@ -217,7 +219,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机基础</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Mysql</a>
         		</li>
       		
 		</ul>
@@ -229,7 +231,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/计算机基础//" class="article-tag-list-link color1">计算机基础</a>
+        			<a href="/categories/数据库//" class="article-tag-list-link color4">数据库</a>
         		</li>
       		
 		</ul>
@@ -238,7 +240,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/11/RPC消息协议设计/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/11/12/MySQL优化原理/">展开全文 >></a>
         </p>
       
 
@@ -268,20 +270,20 @@
 
 
   
-    <article id="post-当我们在读写Socket时-我们究竟在读写什么-转载" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-数据库事务的四个特性及mysql的四种隔离级别" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/01/当我们在读写Socket时-我们究竟在读写什么-转载/">当我们在读写Socket时,我们究竟在读写什么?(转载)</a>
+      <a class="article-title" href="/2018/11/06/数据库事务的四个特性及mysql的四种隔离级别/">数据库事务的四个特性及mysql的四种隔离级别</a>
     </h1>
   
 
         
-        <a href="/2018/06/01/当我们在读写Socket时-我们究竟在读写什么-转载/" class="archive-article-date">
-  	<time datetime="2018-06-01T13:15:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-01</time>
+        <a href="/2018/11/06/数据库事务的四个特性及mysql的四种隔离级别/" class="archive-article-date">
+  	<time datetime="2018-11-06T11:18:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-06</time>
 </a>
         
       </header>
@@ -289,7 +291,11 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p>套接字socket是大多数程序员都非常熟悉的概念，它是计算机网络编程的基础，TCP/UDP收发消息都靠它。我们熟悉的web服务器底层依赖它，我们用到的MySQL关系数据库、Redis内存数据库底层依赖它。我们用微信和别人聊天也依赖它，我们玩网络游戏时依赖它，读者们能够阅读这篇文章也是因为有它在背后默默地支持着网络通信。<br></p>
+     <h4 id="1、原子性"><a href="#1、原子性" class="headerlink" title="1、原子性"></a>1、原子性</h4><p><strong>在同一个事务内部的一组操作必须全部执行成功（或者全部失败）。</strong></p>
+<p>为了保证事务操作的原子性，必须实现基于日志的REDO/UNDO机制：将所有对数据的更新操作都写入日志，如果一个事务中的一部分操作已经成功，但以后的操作，由于断电/系统崩溃/其它的软硬件错误而无法继续，则通过回溯日志，将已经执行成功的操作撤销，从而达到“全部操作失败”的目的。</p>
+<p>最常见的场景是，数据库系统崩溃后重启，此时数据库处于不一致的状态，必须先执行一个crash recovery的过程：读取日志进行REDO（重演将所有已经执行成功但尚未写入到磁盘的操作，保证持久性），再对所有到崩溃时尚未成功提交的事务进行UNDO（撤销所有执行了一部分但尚未提交的操作，保证原子性）。crash recovery结束后，数据库恢复到一致性状态，可以继续被使用。</p>
+<p>某个应用在执行转帐的数据库操作时，必须在同一个事务内部调用对帐户A和帐户B的操作，才能保证数据的一致性。</p>
+<p>但是，原子性并不能完全保证一致性。在多个事务并行进行的情况下，即使保证了每一个事务的原子性，仍然可能导致数据不一致的结果。<br></p>
   
 
     </div>
@@ -301,7 +307,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Socket</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">ACID</a>
         		</li>
       		
 		</ul>
@@ -313,7 +319,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/计算机基础//" class="article-tag-list-link color1">计算机基础</a>
+        			<a href="/categories/数据库//" class="article-tag-list-link color4">数据库</a>
         		</li>
       		
 		</ul>
@@ -322,7 +328,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/01/当我们在读写Socket时-我们究竟在读写什么-转载/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/11/06/数据库事务的四个特性及mysql的四种隔离级别/">展开全文 >></a>
         </p>
       
 
@@ -352,20 +358,20 @@
 
 
   
-    <article id="post-netty拆包器" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-数据存储的选型" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/01/netty拆包器/">Netty拆包器</a>
+      <a class="article-title" href="/2018/11/01/数据存储的选型/">数据存储的选型</a>
     </h1>
   
 
         
-        <a href="/2018/05/01/netty拆包器/" class="archive-article-date">
-  	<time datetime="2018-05-01T12:21:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-01</time>
+        <a href="/2018/11/01/数据存储的选型/" class="archive-article-date">
+  	<time datetime="2018-11-01T11:46:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-01</time>
 </a>
         
       </header>
@@ -373,34 +379,20 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <h3 id="为什么要粘包"><a href="#为什么要粘包" class="headerlink" title="为什么要粘包"></a>为什么要粘包</h3><p>首先得了解一下TCP/IP协议，在用户数据量非常小的情况下，极端情况下，一个字节，该TCP数据包的有效载荷非常低，传递100字节的数据，需要100次TCP传送，100次ACK，在应用及时性要求不高的情况下，将这100个有效数据拼接成一个数据包，那会缩短到一个TCP数据包，以及一个ack，有效载荷提高了，带宽也节省了。</p>
-<p>非极端情况，有可能两个数据包拼接成一个数据包，也有可能一个半的数据包拼接成一个数据包，也有可能两个半的数据包拼接成一个数据包。</p>
-<h3 id="为什么要拆包"><a href="#为什么要拆包" class="headerlink" title="为什么要拆包"></a>为什么要拆包</h3><p>拆包和粘包是相对的，一端粘了包，另外一端就需要将粘过的包拆开，举个栗子，发送端将三个数据包粘成两个TCP数据包发送到接收端，接收端就需要根据应用协议将两个数据包拆分成三个数据包。</p>
-<p>还有一种情况就是用户数据包超过了mss(最大报文长度)，那么这个数据包在发送的时候必须拆分成几个数据包，接收端收到之后需要将这些数据包粘合起来之后再解析。<br></p>
+     <p>在服务端会经常遇到数据存储的选型问题，是选择使用关系型数据库 MySQL，还是选择内存数据库 Redis，还是选择文档数据库 MongoDB，还是选择列族数据库 HBase， 还是选择全文搜索引擎 ElasticSearch 呢？下面主要介绍如何选择合适的数据存储方案。<br></p>
   
 
     </div>
     <div class="article-info article-info-index">
       
       
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Netty</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/Netty//" class="article-tag-list-link color1">Netty</a>
+        			<a href="/categories/数据库//" class="article-tag-list-link color4">数据库</a>
         		</li>
       		
 		</ul>
@@ -409,7 +401,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/05/01/netty拆包器/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/11/01/数据存储的选型/">展开全文 >></a>
         </p>
       
 
@@ -439,20 +431,20 @@
 
 
   
-    <article id="post-深入理解ThreadLocal" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-如何实现大整数相加" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/27/深入理解ThreadLocal/">深入理解ThreadLocal</a>
+      <a class="article-title" href="/2018/10/20/如何实现大整数相加/">如何实现大正整数相加</a>
     </h1>
   
 
         
-        <a href="/2018/04/27/深入理解ThreadLocal/" class="archive-article-date">
-  	<time datetime="2018-04-27T12:40:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-27</time>
+        <a href="/2018/10/20/如何实现大整数相加/" class="archive-article-date">
+  	<time datetime="2018-10-20T03:36:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-20</time>
 </a>
         
       </header>
@@ -460,8 +452,10 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p>ThreadLocal是一个关于创建线程局部变量的类。<br>通常情况下，我们创建的变量是可以被任何一个线程访问并修改的。而使用ThreadLocal创建的变量只能被当前线程访问，其他线程则无法访问和修改。<br>ThreadLocal提供了线程本地的实例，它与普通变量的区别在于，每个使用该变量的线程都会初始化一个完全独立的实例副本，所以每个线程可以访问自己内部的副本变量，不同线程之间不会互相干扰。。ThreadLocal 变量通常被private static修饰。当一个线程结束时，它所使用的所有 ThreadLocal 相对的实例副本都可被回收。</p>
-<p>总的来说，ThreadLocal 适用于每个线程需要自己独立的实例且该实例需要在多个方法中被使用，也即变量在线程间隔离而在方法或类间共享的场景。<br><strong>Synchronized用于线程间的数据共享，而ThreadLocal则用于线程间的数据隔离。</strong><br></p>
+     <p><strong>在不使用BigInteger类的情况下，如何计算两个大正整数的和？</strong></p>
+<p>程序不可能通过一条指令计算出两个大整数的和，但我们可以把一个大运算拆分成多个小运算, 像小学生一样列竖式进行按位运算。这里还有一个问题，我们都知道long类型的取值范围是:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">最小值：Long.MIN_VALUE=-9223372036854775808 （-2的63次方）</span><br><span class="line">最大值：Long.MAX_VALUE=9223372036854775807 （2的63次方-1）</span><br></pre></td></tr></table></figure></p>
+<p>如果大整数超出了long类型能表示的范围,我们如何存储这样的整数呢？<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">很容易想到，使用数组存储即可，数组的每一个元素对应大整数的每一个位数。</span><br></pre></td></tr></table></figure></p>
+<p>在程序中列出的 “竖式” 究竟是什么样子呢？我们以 426709752318 + 95481253129 为例，来看看大整数相加的详细步骤：<br></p>
   
 
     </div>
@@ -473,7 +467,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JUC</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
         		</li>
       		
 		</ul>
@@ -485,7 +479,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/并发-多线程//" class="article-tag-list-link color2">并发/多线程</a>
+        			<a href="/categories/算法//" class="article-tag-list-link color3">算法</a>
         		</li>
       		
 		</ul>
@@ -494,7 +488,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/27/深入理解ThreadLocal/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/10/20/如何实现大整数相加/">展开全文 >></a>
         </p>
       
 
@@ -524,20 +518,20 @@
 
 
   
-    <article id="post-如何解决Java-jar包冲突" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-Java代码规范-3" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/05/如何解决Java-jar包冲突/">如何解决Java jar包冲突</a>
+      <a class="article-title" href="/2018/10/19/Java代码规范-3/">Java代码规范(3)</a>
     </h1>
   
 
         
-        <a href="/2018/04/05/如何解决Java-jar包冲突/" class="archive-article-date">
-  	<time datetime="2018-04-05T12:22:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-05</time>
+        <a href="/2018/10/19/Java代码规范-3/" class="archive-article-date">
+  	<time datetime="2018-10-19T15:11:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-19</time>
 </a>
         
       </header>
@@ -545,7 +539,431 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p>Jar包冲突是老生常谈的问题，几乎每一个Java程序猿都不可避免地遇到过，并且也都能想到通常的原因一般是同一个Jar包由于maven传递依赖等原因被引进了多个不同的版本而导致，可采用依赖排除、依赖管理等方式来尝试解决该问题，本文将围绕Jar包冲突的问题本质和相关的解决方案这两个点进行阐述。<br></p>
+     <h4 id="ArrayList的subList结果不可强转成ArrayList，否则会抛出ClassCastException异常pmd-ClassCastExceptionWithSubListToArrayListRule"><a href="#ArrayList的subList结果不可强转成ArrayList，否则会抛出ClassCastException异常pmd-ClassCastExceptionWithSubListToArrayListRule" class="headerlink" title="ArrayList的subList结果不可强转成ArrayList，否则会抛出ClassCastException异常pmd:ClassCastExceptionWithSubListToArrayListRule"></a>ArrayList的subList结果不可强转成ArrayList，否则会抛出ClassCastException异常pmd:ClassCastExceptionWithSubListToArrayListRule</h4><p>Critical</p>
+<p>ArrayList的subList结果不可强转成ArrayList，否则会抛出ClassCastException异常。<br>说明：禁止强转，如果需要用到集合特性方法，请新建一个集合，然后置入sublist,new 集合(sublist结果)。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">反例:</span><br><span class="line">List list = new ArrayList();</span><br><span class="line">list.add(&quot;22&quot;);</span><br><span class="line">//warn</span><br><span class="line">List test = (ArrayList) list.subList(0, 1);</span><br><span class="line"></span><br><span class="line">正例:</span><br><span class="line">List list2 = new ArrayList(list.subList(0, 1));</span><br></pre></td></tr></table></figure></p>
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">代码规范</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/代码规范//" class="article-tag-list-link color5">代码规范</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/10/19/Java代码规范-3/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Java代码规范-2" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/15/Java代码规范-2/">Java代码规范(2)</a>
+    </h1>
+  
+
+        
+        <a href="/2018/10/15/Java代码规范-2/" class="archive-article-date">
+  	<time datetime="2018-10-15T14:50:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+     <h4 id="POJO类中的任何布尔类型的变量，都不要加is，否则部分框架解析会引起序列化错误"><a href="#POJO类中的任何布尔类型的变量，都不要加is，否则部分框架解析会引起序列化错误" class="headerlink" title="POJO类中的任何布尔类型的变量，都不要加is，否则部分框架解析会引起序列化错误"></a>POJO类中的任何布尔类型的变量，都不要加is，否则部分框架解析会引起序列化错误</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public class DemoDO&#123;</span><br><span class="line">    Boolean success;</span><br><span class="line">    Boolean delete;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">代码规范</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/代码规范//" class="article-tag-list-link color5">代码规范</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/10/15/Java代码规范-2/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Java代码规范-1" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/11/Java代码规范-1/">Java代码规范(1)</a>
+    </h1>
+  
+
+        
+        <a href="/2018/10/11/Java代码规范-1/" class="archive-article-date">
+  	<time datetime="2018-10-11T02:10:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+     <h4 id="关于基本数据类型与包装数据类型的使用标准如下："><a href="#关于基本数据类型与包装数据类型的使用标准如下：" class="headerlink" title="关于基本数据类型与包装数据类型的使用标准如下："></a>关于基本数据类型与包装数据类型的使用标准如下：</h4><p>1） 所有的POJO类属性使用包装数据类型。<br>2） RPC方法的返回值和参数必须使用包装数据类型。<br>3） 所有的局部变量使用基本数据类型。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public class DemoDO &#123;</span><br><span class="line">    String str;</span><br><span class="line">    Integer a;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="类、类属性、类方法的注释必须使用javadoc规范，使用-内容-格式，不得使用-xxx方式和-xxx-方式。"><a href="#类、类属性、类方法的注释必须使用javadoc规范，使用-内容-格式，不得使用-xxx方式和-xxx-方式。" class="headerlink" title="类、类属性、类方法的注释必须使用javadoc规范，使用/*内容/格式，不得使用//xxx方式和/xxx/方式。"></a>类、类属性、类方法的注释必须使用javadoc规范，使用/*<em>内容</em>/格式，不得使用//xxx方式和/<em>xxx</em>/方式。</h4><p>说明：在IDE编辑窗口中，javadoc方式会提示相关注释，生成javadoc可以正确输出相应注释；在IDE中，工程调用方法时，不进入方法即可悬浮提示方法、参数、返回值的意义，提高阅读效率。<br></p>
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">代码规范</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/代码规范//" class="article-tag-list-link color5">代码规范</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/10/11/Java代码规范-1/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-zookeeper学习笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/08/zookeeper学习笔记/">zookeeper学习笔记</a>
+    </h1>
+  
+
+        
+        <a href="/2018/10/08/zookeeper学习笔记/" class="archive-article-date">
+  	<time datetime="2018-10-08T12:37:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-08</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+     <p>Zookeeper是Hadoop分布式调度服务，用来构建分布式应用系统。构建一个分布式应用是一个很复杂的事情，主要的原因是我们需要合理有效 的处理分布式集群中的部分失败的问题。例如，集群中的节点在相互通信时，A节点向B节点发送消息。A节点如果想知道消息是否发送成功，只能由B节点告诉A 节点。那么如果B节点关机或者由于其他的原因脱离集群网络，问题就出现了。A节点不断的向B发送消息，并且无法获得B的响应。B也没有办法通知A节点已经 离线或者关机。集群中其他的节点完全不知道B发生了什么情况，还在不断的向B发送消息。这时，你的整个集群就发生了部分失败的故障。<br>Zookeeper不能让部分失败的问题彻底消失，但是它提供了一些工具能够让你的分布式应用安全合理的处理部分失败的问题。</p>
+<p>Zookeeper 是分布式服务框架，主要是用来解决分布式应用中经常遇到的一些数据管理问题，如：统一命名服务、状态同步服务、集群管理、分布式应用配置项的管理等等。<br></p>
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">zookeeper</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/zookeeper//" class="article-tag-list-link color5">zookeeper</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/10/08/zookeeper学习笔记/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Velocity学习笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/28/Velocity学习笔记/">Velocity学习笔记</a>
+    </h1>
+  
+
+        
+        <a href="/2018/09/28/Velocity学习笔记/" class="archive-article-date">
+  	<time datetime="2018-09-28T11:32:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+     <p>什么是 Velocity?<br>Velocity是基于Java的模板引擎，它允许页面设计者引用Java中定义的方法。页面设计者和Java开发者能够同时使用MVC的模式开发网站，这样网页设计者能够把精力放在页面的设计上，程序员也可以把精力放在代码开发上。Velocity把Java代码从Web页面中分离， 使网站可维护性更强，同时也在Java服务器页面(JSPs)或者PHP中提供了可视化交互的选择。</p>
+<p>Velocity能够使用模板生成Web页面,  SQL，PostScript 和其他内容。并能够生成的源代码和报表中的一个独立的单元，或者作为一个其他系统的组件。配置完成后，Velocity将提供为Turbine 页面应用框架提供模板服务。 Velocity+Turbine将提供一个模板服务，它将允许网页应用按照MVC的模式进行开发。<br></p>
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">velocity</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/前端页面//" class="article-tag-list-link color5">前端页面</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/09/28/Velocity学习笔记/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Class-forName和ClassLoader-loadClass加载类的区别" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/15/Class-forName和ClassLoader-loadClass加载类的区别/">Class.forName和ClassLoader.loadClass加载类的区别</a>
+    </h1>
+  
+
+        
+        <a href="/2018/09/15/Class-forName和ClassLoader-loadClass加载类的区别/" class="archive-article-date">
+  	<time datetime="2018-09-15T14:31:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+     <p>在java中Class.forName()和ClassLoader都可以对类进行加载。ClassLoader就是遵循 双亲委派模型 最终调用启动类加载器的类加载器，实现的功能是“通过一个类的全限定名来获取描述此类的二进制字节流”，获取到二进制流后放到JVM中。Class.forName()方法实际上也是调用的CLassLoader来实现的。<br></p>
   
 
     </div>
@@ -578,437 +996,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/05/如何解决Java-jar包冲突/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-new对象JVM底层实现" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/02/new对象JVM底层实现/">new对象JVM底层实现</a>
-    </h1>
-  
-
-        
-        <a href="/2018/04/02/new对象JVM底层实现/" class="archive-article-date">
-  	<time datetime="2018-04-02T14:29:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-     <p>JVM内存结构</p>
-<p><img src="/2018/04/02/new对象JVM底层实现/markdown-img-paste-20181202223059836.png" alt="http://p99.pstatp.com/large/pgc-image/720ac9fb1ca94c04b5a2cdb61ada4239"></p>
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Java基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Java基础//" class="article-tag-list-link color2">Java基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/02/new对象JVM底层实现/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Amazon-Dynamo的NWR模型" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/29/Amazon-Dynamo的NWR模型/">Amazon Dynamo的NWR模型</a>
-    </h1>
-  
-
-        
-        <a href="/2018/03/29/Amazon-Dynamo的NWR模型/" class="archive-article-date">
-  	<time datetime="2018-03-29T02:18:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-     <p>Amazon Dynamo的NWR模型，把CAP的选择权交给了用户，让用户自己选择CAP中的哪两个。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">N代表N个副本（replication），W代表写入数据时至少要写入W份副本才认为成功，R表示读取数据时至少要读取R份副本。对于R和W的选择，要求W+R &gt; N。</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>优化写性能(AP)<br>当我们需要优化写性能（写多读少）的时候，可以配置W = 1 （写完一个副本就成功，其他的副本就异步去慢慢复制都可以），如果N=3，那么根据公式W+R&gt;N，则R = 3（读取数据的时候需要读3个副本以判断数据是否有冲突）。 这种情况只要写任何节点成功就认为成功，但是读的时候必须从所有的节点都读出数据。</li>
-<li>优化读性能(CP)<br>当我们需要优化读性能（读多写少）的时候，可以配置 W=N（写完所有的副本才成功，只能同步复制），根据公式W+R&gt;N，则 R=1（只需读一个副本即可）。这种情况任何一个节点读成功就认为成功，但是写的时候必须写所有三个节点成功才认为成功。</li>
-<li>平衡读写性能(AC)<br>当我们数据不多，单台能搞定，且不需要容错和扩展性的时候，可以配置N=1（只有一份数据），根据公式W+R&gt;N，则W=1，R=1。这种情况就简化为单机问题了。</li></ul>
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">NWR</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/分布式//" class="article-tag-list-link color4">分布式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/29/Amazon-Dynamo的NWR模型/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Quorum-NWR" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/23/Quorum-NWR/">Quorum NWR</a>
-    </h1>
-  
-
-        
-        <a href="/2018/03/23/Quorum-NWR/" class="archive-article-date">
-  	<time datetime="2018-03-23T02:13:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-     <p>NWR是一种在分布式存储系统中用于控制一致性级别的一种策略。在Amazon的Dynamo云存储系统中，就应用NWR来控制一致性。<br>让我们先来看看这三个字母的含义：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">N：同一份数据的Replica的份数</span><br><span class="line">W：是更新一个数据对象的时候需要确保成功更新的份数</span><br><span class="line">R： 读取一个数据需要读取的Replica的份数</span><br></pre></td></tr></table></figure></p>
-<p>NWR值的不同组合会产生不同的一致性效果:</p>
-<ul>
-<li>当W+R&gt;N的时候，整个系统对于客户端来讲能保证强一致性。</li>
-<li>当W+R&lt;N的时候只能保证最终一致性。</li></ul>
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">NWR</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/分布式//" class="article-tag-list-link color4">分布式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/23/Quorum-NWR/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Kafka如何做到1秒发布百万条消息" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/22/Kafka如何做到1秒发布百万条消息/">Kafka如何做到1秒发布百万条消息</a>
-    </h1>
-  
-
-        
-        <a href="/2018/03/22/Kafka如何做到1秒发布百万条消息/" class="archive-article-date">
-  	<time datetime="2018-03-22T14:03:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-     <p>Kafka 是分布式发布-订阅消息系统，是一个分布式的，可划分的，冗余备份的持久性的日志服务。它主要用于处理活跃的流式数据。</p>
-<p>现在被广泛地应用于构建实时数据管道和流应用的场景中，具有横向扩展，容错，快等优点，并已经运行在众多大中型公司的生产环境中，成功应用于大数据领域。<br></p>
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">kafaka</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/MQ//" class="article-tag-list-link color3">MQ</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/22/Kafka如何做到1秒发布百万条消息/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-kafaka学习笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/21/kafaka学习笔记/">kafaka学习笔记</a>
-    </h1>
-  
-
-        
-        <a href="/2018/03/21/kafaka学习笔记/" class="archive-article-date">
-  	<time datetime="2018-03-21T12:39:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-     <p>现代的互联网分布式系统，只要稍微大一些，就一定逃不开3类中间件：远程调用（RPC）框架、消息队列、数据库访问中间件。Kafka 是消息队列中间件的代表产品，用 Scala 语言实现。<br></p>
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">kafaka</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/MQ//" class="article-tag-list-link color3">MQ</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/21/kafaka学习笔记/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/09/15/Class-forName和ClassLoader-loadClass加载类的区别/">展开全文 >></a>
         </p>
       
 
@@ -1040,7 +1028,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/5/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/7/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/5/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/7/">Next &raquo;</a>
     </nav>
   
 
@@ -1212,6 +1200,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">servlet</a>
               </li>
              
@@ -1228,11 +1220,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Mysql</a>
+                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
+                <a href="javascript:void(0)" class="js-tag color1">Mysql</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1257,10 +1249,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1324,11 +1312,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1345,6 +1333,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">C10K</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">网络协议</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1376,11 +1368,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">synchronize</a>
+                <a href="javascript:void(0)" class="js-tag color3">tcpdump</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">zookeeper</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">synchronize</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1416,6 +1412,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">SSH</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">iptables</a>
               </li>
              
@@ -1429,10 +1429,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">读书笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">tcpdump</a>
               </li>
              
               <li class="article-tag-list-item">

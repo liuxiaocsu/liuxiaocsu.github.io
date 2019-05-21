@@ -181,20 +181,20 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-线上问题排查工具" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-Linux-The-block-I-O-layer" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/27/线上问题排查工具/">java应用线上问题排查工具</a>
+      <a class="article-title" href="/2019/05/10/Linux-The-block-I-O-layer/">Linux: The block I/O layer</a>
     </h1>
   
 
         
-        <a href="/2019/01/27/线上问题排查工具/" class="archive-article-date">
-  	<time datetime="2019-01-27T11:37:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-27</time>
+        <a href="/2019/05/10/Linux-The-block-I-O-layer/" class="archive-article-date">
+  	<time datetime="2019-05-10T06:00:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-10</time>
 </a>
         
       </header>
@@ -202,7 +202,431 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <h3 id="jvm自带的工具"><a href="#jvm自带的工具" class="headerlink" title="jvm自带的工具"></a>jvm自带的工具</h3><p><img src="/2019/01/27/线上问题排查工具/markdown-img-paste-20190125171423282.png" alt=""><br>Java虚拟机自带了很多工具，其中就有我们比较熟悉的javac和java，除此之外，我们还得掌握一类用于线上问题排查的工具，比如jstack, jmap, jstat等，通过这些工具我们可以深入了解JVM当下正在干什么事。<br></p>
+     <p>原文链接：<a href="http://ari-ava.blogspot.com/2014/06/opw-linux-block-io-layer-part-1-base.html?m=0" target="_blank" rel="noopener">http://ari-ava.blogspot.com/2014/06/opw-linux-block-io-layer-part-1-base.html?m=0</a></p>
+<p>So, during the last few weeks I have been studying and tracing the block I/O layer of the Linux kernel, with the aim of getting a clearer view of how it works. A fellow student from the University of Modena and Reggio Emilia thought I might write a blog post on that. My very patient OPW mentor approved the topic and suggested that I split the blog post in different parts, so that it can be read more comfortably and without getting bored all at once. Here is part one, which attempts to explain the basic concepts and ideas behind the mechanisms implemented in the block I/O layer: it’s very high-level and concise. The following parts (which will go into much more detail about implementation details) will outline how the different APIs that the block layer exposes make use of those mechanisms, and hopefully why they are useful (or they aren’t) to each of the APIs. Sounds like a pretty difficult goal (at least for a beginner as I am), so if you have any criticism, please, go ahead and leave a comment.<br></p>
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">操作系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/操作系统//" class="article-tag-list-link color5">操作系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/05/10/Linux-The-block-I-O-layer/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-LINUX-–-IO-MULTIPLEXING-–-SELECT-VS-POLL-VS-EPOLL" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/05/08/LINUX-–-IO-MULTIPLEXING-–-SELECT-VS-POLL-VS-EPOLL/">LINUX – IO MULTIPLEXING – SELECT VS POLL VS EPOLL</a>
+    </h1>
+  
+
+        
+        <a href="/2019/05/08/LINUX-–-IO-MULTIPLEXING-–-SELECT-VS-POLL-VS-EPOLL/" class="archive-article-date">
+  	<time datetime="2019-05-08T03:16:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-08</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+     <p>One basic concept of Linux (actually Unix) is the rule that everything in Unix/Linux is a file. Each process has a table of file descriptors that point to files, sockets, devices and other operating system objects.</p>
+<p>Typical system that works with many IO sources has an initializaion phase and then enter some kind of standby mode – wait for any client to send request and response it<br></p>
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">multiplexed IO</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/操作系统//" class="article-tag-list-link color5">操作系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/05/08/LINUX-–-IO-MULTIPLEXING-–-SELECT-VS-POLL-VS-EPOLL/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Mac快速安装gcc方法" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/05/06/Mac快速安装gcc方法/">Mac快速安装gcc方法</a>
+    </h1>
+  
+
+        
+        <a href="/2019/05/06/Mac快速安装gcc方法/" class="archive-article-date">
+  	<time datetime="2019-05-06T03:20:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-06</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+     <h3 id="一、安装Homebrew"><a href="#一、安装Homebrew" class="headerlink" title="一、安装Homebrew"></a>一、安装Homebrew</h3><p><a href="https://brew.sh/index_zh-cn.html" target="_blank" rel="noopener">Homebrew官方地址</a><br>安装Homebrew,一条命令即可:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;</span><br></pre></td></tr></table></figure></p>
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">gcc</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/C-C//" class="article-tag-list-link color1">C/C++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/05/06/Mac快速安装gcc方法/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-跨域资源共享-CORS-相关问题" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/11/跨域资源共享-CORS-相关问题/">跨域资源共享(CORS)相关问题</a>
+    </h1>
+  
+
+        
+        <a href="/2019/04/11/跨域资源共享-CORS-相关问题/" class="archive-article-date">
+  	<time datetime="2019-04-11T09:25:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+     <h3 id="什么是跨域？"><a href="#什么是跨域？" class="headerlink" title="什么是跨域？"></a>什么是跨域？</h3><p>跨域（CORS）是一个W3C标准，全称是”跨域资源共享”（Cross-Origin Resource Sharing）。它允许浏览器向跨源服务器，发出XMLHttpRequest请求，从而克服了AJAX只能同源使用的限制。当一个资源从与改资源本身所在服务器的不同的域或不同的端口请求一个资源时，资源会发起一个跨域HTTP请求。<br></p>
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/前端//" class="article-tag-list-link color3">前端</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/04/11/跨域资源共享-CORS-相关问题/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-linuxjourney-The-Filesystem" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/05/linuxjourney-The-Filesystem/">linuxjourney-The Filesystem</a>
+    </h1>
+  
+
+        
+        <a href="/2019/04/05/linuxjourney-The-Filesystem/" class="archive-article-date">
+  	<time datetime="2019-04-05T10:03:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+     <p>原文链接：<a href="https://linuxjourney.com/lesson/filesystem-hierarchy" target="_blank" rel="noopener">https://linuxjourney.com/lesson/filesystem-hierarchy</a></p>
+<h2 id="1-Filesystem-Hierarchy"><a href="#1-Filesystem-Hierarchy" class="headerlink" title="1. Filesystem Hierarchy"></a>1. Filesystem Hierarchy</h2><p>At this point, you’re probably well familiar with the directory structure of your system, if not you will be soon. Filesystems can vary with how they are structured, but for the most part they should conform to the Filesystem Hierarchy Standard.<br></p>
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">文件系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/操作系统//" class="article-tag-list-link color5">操作系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/04/05/linuxjourney-The-Filesystem/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-java方法中如何获取当前方法的相关信息" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/02/java方法中如何获取当前方法的相关信息/">java方法中如何获取当前方法的相关信息</a>
+    </h1>
+  
+
+        
+        <a href="/2019/04/02/java方法中如何获取当前方法的相关信息/" class="archive-article-date">
+  	<time datetime="2019-04-02T02:37:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+     <h3 id="一、获得当前类名："><a href="#一、获得当前类名：" class="headerlink" title="一、获得当前类名："></a>一、获得当前类名：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">this.getClass().getName();</span><br></pre></td></tr></table></figure>
+<h3 id="二、获得当前方法名称："><a href="#二、获得当前方法名称：" class="headerlink" title="二、获得当前方法名称："></a>二、获得当前方法名称：</h3><h4 id="JDK1-4"><a href="#JDK1-4" class="headerlink" title="JDK1.4"></a>JDK1.4</h4> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">new Exception().getStackTrace()[i].getMethodName();</span><br><span class="line">//其中i＝=0就是当前的类的方法名字 ;i== 1就是调用者的方法</span><br></pre></td></tr></table></figure>
   
 
     </div>
@@ -235,7 +659,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/27/线上问题排查工具/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/04/02/java方法中如何获取当前方法的相关信息/">展开全文 >></a>
         </p>
       
 
@@ -265,20 +689,20 @@
 
 
   
-    <article id="post-UndeclaredThrowableException探秘" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-HTTP-POST请求中RequestPayload和FormData的区别？" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/25/UndeclaredThrowableException探秘/">UndeclaredThrowableException探秘</a>
+      <a class="article-title" href="/2019/03/20/HTTP-POST请求中RequestPayload和FormData的区别？/">HTTP POST请求中RequestPayload和FormData的区别？</a>
     </h1>
   
 
         
-        <a href="/2019/01/25/UndeclaredThrowableException探秘/" class="archive-article-date">
-  	<time datetime="2019-01-25T11:18:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-25</time>
+        <a href="/2019/03/20/HTTP-POST请求中RequestPayload和FormData的区别？/" class="archive-article-date">
+  	<time datetime="2019-03-20T12:17:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-20</time>
 </a>
         
       </header>
@@ -286,7 +710,8 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p><img src="/2019/01/25/UndeclaredThrowableException探秘/markdown-img-paste-20190125194050394.png" alt=""><br>RPC调用时会遇到一种特殊的异常–UndeclaredThrowableException，这个异常的getMessage方法永远是null。<br>具体原因是因为我们通过动态代理最终捕获到的异常是经过封装了的，捕获的已经不再是最开始抛出的异常，封装抛出的异常有两种：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">java.lang.reflect.UndeclaredThrowableException</span><br><span class="line">java.lang.reflect.InvocationTargetException</span><br></pre></td></tr></table></figure></p>
+     <p>Form Data</p>
+<p><img src="/2019/03/20/HTTP-POST请求中RequestPayload和FormData的区别？/markdown-img-paste-20190314202723339.png" alt=""><br></p>
   
 
     </div>
@@ -298,7 +723,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Java基础</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">servlet</a>
         		</li>
       		
 		</ul>
@@ -310,7 +735,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/Java基础//" class="article-tag-list-link color2">Java基础</a>
+        			<a href="/categories/servlet//" class="article-tag-list-link color3">servlet</a>
         		</li>
       		
 		</ul>
@@ -319,7 +744,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/25/UndeclaredThrowableException探秘/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/03/20/HTTP-POST请求中RequestPayload和FormData的区别？/">展开全文 >></a>
         </p>
       
 
@@ -349,20 +774,20 @@
 
 
   
-    <article id="post-磁盘I-O那些事" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-What-is-Linux-System-Calls-and-Library-Functions" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/13/磁盘I-O那些事/">磁盘I/O那些事</a>
+      <a class="article-title" href="/2019/03/10/What-is-Linux-System-Calls-and-Library-Functions/">What is Linux System Calls and Library Functions?</a>
     </h1>
   
 
         
-        <a href="/2019/01/13/磁盘I-O那些事/" class="archive-article-date">
-  	<time datetime="2019-01-13T11:13:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-13</time>
+        <a href="/2019/03/10/What-is-Linux-System-Calls-and-Library-Functions/" class="archive-article-date">
+  	<time datetime="2019-03-10T13:59:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-10</time>
 </a>
         
       </header>
@@ -370,9 +795,93 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p>原文链接：<a href="https://tech.meituan.com/about_desk_io.html" target="_blank" rel="noopener">https://tech.meituan.com/about_desk_io.html</a></p>
-<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>计算机硬件性能在过去十年间的发展普遍遵循摩尔定律，通用计算机的CPU主频早已超过3GHz，内存也进入了普及DDR4的时代。然而传统硬盘虽然在存储容量上增长迅速，但是在读写性能上并无明显提升，同时SSD硬盘价格高昂，不能在短时间内完全替代传统硬盘。传统磁盘的I/O读写速度成为了计算机系统性能提高的瓶颈，制约了计算机整体性能的发展。</p>
-<p>硬盘性能的制约因素是什么？如何根据磁盘I/O特性来进行系统设计？针对这些问题，本文将介绍硬盘的物理结构和性能指标，以及操作系统针对磁盘性能所做的优化，最后讨论下基于磁盘I/O特性设计的技巧。<br></p>
+     <p>原文链接：<a href="https://www.thegeekstuff.com/2012/07/system-calls-library-functions/" target="_blank" rel="noopener">https://www.thegeekstuff.com/2012/07/system-calls-library-functions/</a></p>
+<p>What is Linux System Calls and Library Functions?</p>
+<p>Computer software are developed to either automate some tasks or solve some problems. Either way, a software achieves the goal with the help of the logic that the developer of that software writes. Every logic requires some services like computing the length of a string, opening a file etc. Standard services are catered by some functions or calls that are provided for this purpose only.<br></p>
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">操作系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/操作系统//" class="article-tag-list-link color5">操作系统</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/03/10/What-is-Linux-System-Calls-and-Library-Functions/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Linux-IO同步函数-sync、fsync、fdatasync" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/09/Linux-IO同步函数-sync、fsync、fdatasync/">Linux IO同步函数:sync、fsync、fdatasync</a>
+    </h1>
+  
+
+        
+        <a href="/2019/03/09/Linux-IO同步函数-sync、fsync、fdatasync/" class="archive-article-date">
+  	<time datetime="2019-03-09T08:38:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+     <p>传统的UNIX或LINUX系统实现在内核中设有缓冲区高速缓存或页面高速缓存，大多数磁盘I/O都通过缓冲进行。当将数据写入文件时，内核通常先将该数据复制到其中一个缓冲区中，如果该缓冲区尚未写满，则并不将其排入输出队列，而是等待其写满或者当空闲内存不足内核需要重用该缓冲区以便存放其他磁盘块数据时，再将该缓冲排入输出队列，然后待其到达队首时，才进行实际的I/O操作。这种输出方式被称为延迟写（delayed write）。<br></p>
   
 
     </div>
@@ -405,7 +914,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/13/磁盘I-O那些事/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/03/09/Linux-IO同步函数-sync、fsync、fdatasync/">展开全文 >></a>
         </p>
       
 
@@ -435,20 +944,20 @@
 
 
   
-    <article id="post-《人月神话》读书笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-Inode-Definition" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/06/《人月神话》读书笔记/">《人月神话》读书笔记</a>
+      <a class="article-title" href="/2019/03/09/Inode-Definition/">Inode Definition</a>
     </h1>
   
 
         
-        <a href="/2019/01/06/《人月神话》读书笔记/" class="archive-article-date">
-  	<time datetime="2019-01-06T14:50:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-06</time>
+        <a href="/2019/03/09/Inode-Definition/" class="archive-article-date">
+  	<time datetime="2019-03-09T08:25:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-09</time>
 </a>
         
       </header>
@@ -456,7 +965,9 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p>人月的启示<br>作为软件工程的经典著作，《人月神话》的主要贡献是对软件开发过程的几个重要关键点，提出了独到的见解。 其中内容就是： （1）提倡外科手术式的团队组织： 在软件开发组织上的过份民主，往往带来的是没有效率和责任，参与其中的人想法太多，层面参差不齐。所以，软件开发的组织，应该借鉴外科手术式的团队方式，有一个主要的负责人，其他人都是分工协作的副手，这样效率最好，结果最好。（2）软件项目的核心概念要由很少的人来完成，以保证 概念的完整性： 少就是多，项目的定位需要和功能多少的权衡。太多的想法，使项目没有焦点，什么都要放进去，结果什么都做不象；（3）软件开发过程中必要的沟通手段； 软件开发中最大的风险往往不是技术的缺陷，而是缺少沟通； （4）如何保持适度的文档： 在开发中，保持适度的文档。喜欢过度多的文档的人，忘记了文档不是最终的产品，不是用户需要的，最后以为文档好，就是好的开发，其实完全不是。 （5）在软件开发的过程中，只有适度改进，没有包治百病的银弹。 在软件开发的过程中，重要的不是采用了什么工具，而是不论用何种工具，都要达到项目本身的客户需求。任何方法论之前，先要探求问题的来源，否则，对各种方法论的依赖或滥用，有害无益。<br></p>
+     <p>原文链接：<a href="http://www.linfo.org/inode.html" target="_blank" rel="noopener">http://www.linfo.org/inode.html</a></p>
+<p>An inode is a data structure on a filesystem on Linux and other Unix-like operating systems that stores all the information about a file except its name and its actual data.</p>
+<p>A data structure is a way of storing data so that it can be used efficiently. Different types of data structures are suited to different types of applications, and some are highly specialized for specific types of tasks.<br></p>
   
 
     </div>
@@ -468,7 +979,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">项目管理</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">inode</a>
         		</li>
       		
 		</ul>
@@ -480,7 +991,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/项目管理//" class="article-tag-list-link color5">项目管理</a>
+        			<a href="/categories/操作系统//" class="article-tag-list-link color5">操作系统</a>
         		</li>
       		
 		</ul>
@@ -489,528 +1000,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/06/《人月神话》读书笔记/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-幂等性" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/05/幂等性/">幂等性</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/05/幂等性/" class="archive-article-date">
-  	<time datetime="2019-01-05T03:32:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-     <p>现在稍具规模的网站和大型应用都不再是单机模式，而是分布式应用，基于多机的集群构建的应用，这样服务能力就可以基本实现横向扩容（scale out），不会像单机模式下的纵向扩容（scale up）会受到单机服务能力上限的限制。另外，随着“微服务”概念的火爆，很多应用在构建之初就已经走在了分布式的路线上了，所以就目前行业的发展来看，基于分布式的应用会越来越普遍，甚至变成常态。加上docker这些容器技术的出现，应用分布式化的工具也越来越成熟。</p>
-<h3 id="分布式的复杂性"><a href="#分布式的复杂性" class="headerlink" title="分布式的复杂性"></a>分布式的复杂性</h3><p>众所周知，构建分布式应用所面临的复杂度远远超出集中式的单一应用，导致复杂性的因素有很多，在此只提其中一点：网络的不可靠性。在单一进程内部，对一个函数的调用，结果只有两种——成功和失败，失败的情况下，调用者可以决定做一些事情弥补。但是在跨进程的调用中，对一个远程（也可以在同一个节点上）进程上运行的函数调用除了会得到成功和失败，还会有第三种的情况——超时，这个现象被称为分布式的三态。这也是困扰分布式应用构建的最核心因素之一，很多分布式应用的复杂度之所以上升这么多也是因为三态之中的超时引起的。</p>
-<p>简单看看超时给我们带来的困扰，进程A调用进程B上的函数f，对于成功和失败的结果，相信和单机下一样，进程A都可以进行很好地的处理，因为结果是很明确的。如果进程A调用f之后，在允许的等待最大时间内没有返回结果，就是调用超时了，此时进程A能做什么？其实进程A什么都做不了，因为超时是一个不明确的结果——成功和失败都有可能。详细解释下可能的情况：</p>
-<p>成功的情况：进程A把数据通过网络传输到进程B上，f执行成功，通 网络返回执行结果给进程A，可是网络不太好，传输失败了，进程A并 未在指定时间内收到结果，认为超时了。 失败的情况：情况和成功的情况差不多，只是f执行失败了，但是结 果依然传输失败，进程A也认为执行超时了。 未执行的情况：进程A的数据发送到进程B所在的节点过程中网络失败 了，或者发送到了进程B所在的机器上，但是进程B没有消费掉在TCP 网络层的数据等等 由此可见，进程A对于超时确实无能为力，有太多的可能存在的情况了。但是分布式协作过程中又必须解决这个问题，不然分布式应用是没意义的，这种情况下，一般会采用让进程A尝试重试——即重复发起之前的调用。但是这样也可能会带来问题，因为超时的那次调用可能已经成功了，再次以同样的参数调用f会不会带来额外的问题？这就引出本文的主角——幂等性。<br></p>
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/计算机基础//" class="article-tag-list-link color1">计算机基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/05/幂等性/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-《高效能人士的七个习惯》读书笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/28/《高效能人士的七个习惯》读书笔记/">《高效能人士的七个习惯》读书笔记</a>
-    </h1>
-  
-
-        
-        <a href="/2018/12/28/《高效能人士的七个习惯》读书笔记/" class="archive-article-date">
-  	<time datetime="2018-12-28T13:47:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-     <p>附: <a href="http://byteliu.com/PDF/高效能人士的七个习惯.美.史蒂芬·柯维.pdf" target="_blank" rel="noopener">高效能人士的七个习惯.(美国)史蒂芬·柯维.pdf</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">“人的行为总是一再重复。因此卓越不是单一的举动，而是习惯。”</span><br><span class="line">                                                  --亚里士多德</span><br></pre></td></tr></table></figure>
-<p>习惯对我们的生活有极大的影响，因为它是一贯的，在不知不觉中，经年累月影响着我们的品德，暴露出我们的本性，左右着我们的成败。习惯就仿佛一条缆绳，我们每天为它添上一股新索，很快他会变得牢不可破。<br></p>
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/读书笔记//" class="article-tag-list-link color5">读书笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/28/《高效能人士的七个习惯》读书笔记/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Non-breaking-space-String-trim-方法免疫的空格" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/">Non-breaking space---String.trim()方法免疫的空格</a>
-    </h1>
-  
-
-        
-        <a href="/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/" class="archive-article-date">
-  	<time datetime="2018-12-19T06:36:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-     <p>问题背景：发现数据库中存储的数据后面有空格</p>
-<p><img src="/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/markdown-img-paste-20181220101613253.png" alt=""></p>
-<p>但是我们程序是对前后空格做了处理的</p>
-<p><img src="/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/markdown-img-paste-20181220101627833.png" alt=""></p>
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Java基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Java基础//" class="article-tag-list-link color2">Java基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/19/Non-breaking-space-String-trim-方法免疫的空格/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-《金字塔原理》读书笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/15/《金字塔原理》读书笔记/">《金字塔原理》读书笔记</a>
-    </h1>
-  
-
-        
-        <a href="/2018/12/15/《金字塔原理》读书笔记/" class="archive-article-date">
-  	<time datetime="2018-12-15T15:46:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-     <p>附：<a href="http://byteliu.com/PDF/金字塔原理.pdf" target="_blank" rel="noopener">金字塔原理.pdf</a></p>
-<p>工作的时候，特别是搞技术的同学，我们通常会有一种感觉，“表达” 比 “做” 难。有时候明明做得挺好的一件事情，表达出来却不是那么回事情，特别是当转正、晋升述职的时候，都不知道怎么来组织自己的思路。平时在和同事、Partner沟通的时候，需要沟通好一会才能把事情说清楚。 如何整理自己的思维逻辑，表达自己想表达的内容；如何能让对方看懂、听明白、记住我们想表达的；如何让对方顺着我们的思路一起思考。这是门很深的学问。 但其实有一些普世方法，在我们初中、高中的语文课上就学习过。其中，有个鼎鼎有名的原理：“金字塔原理”。</p>
-<p>学习金字塔原理能够使你的思考、表达和思维都变得既有逻辑又有条理。有些人花一分钟可以找到事情的本质，有些人花上几天时间，可能也还没到入门的诀窍；有些人可能瞬间可以把一件事情说的很清楚，有些人就是结结巴巴，说不出来。其实，有时候并不是能力的问题，而是你是否掌握了一套有效的工具。而金字塔原理，就是这样一套让你可以掌握思考、表达、写作的工具。</p>
-<p><img src="/2018/12/15/《金字塔原理》读书笔记/markdown-img-paste-20181218112358272.png" alt=""></p>
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/读书笔记//" class="article-tag-list-link color5">读书笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/15/《金字塔原理》读书笔记/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Redis开发规范" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/07/Redis开发规范/">Redis开发规范</a>
-    </h1>
-  
-
-        
-        <a href="/2018/12/07/Redis开发规范/" class="archive-article-date">
-  	<time datetime="2018-12-07T02:43:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-07</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-     <h3 id="一、键值设计"><a href="#一、键值设计" class="headerlink" title="一、键值设计"></a>一、键值设计</h3><h4 id="1-key名设计"><a href="#1-key名设计" class="headerlink" title="1. key名设计"></a>1. key名设计</h4><p>(1)【建议】: 可读性和可管理性</p>
-<p>以业务名(或数据库名)为前缀(防止key冲突)，用冒号分隔，比如业务名:表名:id<br>ugc:video:1</p>
-<p>(2)【建议】：简洁性</p>
-<p>保证语义的前提下，控制key的长度，当key较多时，内存占用也不容忽视，例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">user:&#123;uid&#125;:friends:messages:&#123;mid&#125;简化为u:&#123;uid&#125;:fr:m:&#123;mid&#125;。</span><br></pre></td></tr></table></figure></p>
-<p>(3)【强制】：不要包含特殊字符</p>
-<p>反例：包含空格、换行、单双引号以及其他转义字符<br></p>
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/缓存//" class="article-tag-list-link color3">缓存</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/07/Redis开发规范/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-文件IO操作的一些最佳实践" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/04/文件IO操作的一些最佳实践/">文件IO操作的一些最佳实践</a>
-    </h1>
-  
-
-        
-        <a href="/2018/12/04/文件IO操作的一些最佳实践/" class="archive-article-date">
-  	<time datetime="2018-12-04T11:26:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-     <p>原文链接：<a href="https://www.cnkirito.moe" target="_blank" rel="noopener">https://www.cnkirito.moe</a></p>
-<p>已经过去的中间件性能挑战赛，和正在进行中的 第一届 PolarDB 数据性能大赛 都涉及到了文件操作，合理地设计架构以及正确地压榨机器的读写性能成了比赛中获取较好成绩的关键。正在参赛的我收到了几位公众号读者朋友的反馈，他们大多表达出了这样的烦恼：“对比赛很感兴趣，但不知道怎么入门”，“能跑出成绩，但相比前排的选手，成绩相差10倍有余”…为了能让更多的读者参与到之后相类似的比赛中来，我简单整理一些文件IO操作的最佳实践，而不涉及整体系统的架构设计，希望通过这篇文章的介绍，让你能够欢快地参与到之后类似的性能挑战赛之中来。<br></p>
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IO</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/IO//" class="article-tag-list-link color3">IO</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/04/文件IO操作的一些最佳实践/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/03/09/Inode-Definition/">展开全文 >></a>
         </p>
       
 
@@ -1042,7 +1032,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
     </nav>
   
 
@@ -1214,6 +1204,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">servlet</a>
               </li>
              
@@ -1230,11 +1224,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Mysql</a>
+                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
+                <a href="javascript:void(0)" class="js-tag color1">Mysql</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1259,10 +1253,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1326,11 +1316,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1347,6 +1337,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">C10K</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">网络协议</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1378,11 +1372,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">synchronize</a>
+                <a href="javascript:void(0)" class="js-tag color3">tcpdump</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">zookeeper</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">synchronize</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1418,6 +1416,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">SSH</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">iptables</a>
               </li>
              
@@ -1431,10 +1433,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">读书笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">tcpdump</a>
               </li>
              
               <li class="article-tag-list-item">

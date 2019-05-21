@@ -181,20 +181,20 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-Redis缓存设计原则" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-Inodes-an-Introduction" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/02/Redis缓存设计原则/">Redis缓存设计原则</a>
+      <a class="article-title" href="/2019/03/01/Inodes-an-Introduction/">Inodes - an Introduction</a>
     </h1>
   
 
         
-        <a href="/2018/12/02/Redis缓存设计原则/" class="archive-article-date">
-  	<time datetime="2018-12-02T14:43:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-02</time>
+        <a href="/2019/03/01/Inodes-an-Introduction/" class="archive-article-date">
+  	<time datetime="2019-03-01T07:56:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-01</time>
 </a>
         
       </header>
@@ -202,15 +202,9 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p>基本原则</p>
-<ul>
-<li>只应将热数据放到缓存中</li>
-<li>所有缓存信息都应设置过期时间</li>
-<li>缓存过期时间应当分散以避免集中过期</li>
-<li>缓存key应具备可读性</li>
-<li>应避免不同业务出现同名缓存key</li>
-<li>可对key进行适当的缩写以节省内存空间</li>
-<li>选择合适的数据结构</li></ul>
+     <p>原文链接：<a href="http://www.grymoire.com/Unix/Inodes.html" target="_blank" rel="noopener">http://www.grymoire.com/Unix/Inodes.html</a></p>
+<p>We are used to thinking about a directory containing files. This is really an illusion. Directories do not contain files. The data of the files is not stored in the directory.</p>
+<p>A directory is really just a file. It’s a special file with special rules (you can’t just type “cp /dev/null directory” to erase it. It’s got special bits to make sure a mere mortal can’t mess it up. Because if a file system gets corrupted, then you can say goodbye to your data. On older UNIX systems, you actually could “read” the contents, using ‘cat .’, of a directory. But let me get back to that in a second…<br></p>
   
 
     </div>
@@ -222,7 +216,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">inode</a>
         		</li>
       		
 		</ul>
@@ -234,7 +228,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/缓存//" class="article-tag-list-link color3">缓存</a>
+        			<a href="/categories/操作系统//" class="article-tag-list-link color5">操作系统</a>
         		</li>
       		
 		</ul>
@@ -243,7 +237,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/02/Redis缓存设计原则/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/03/01/Inodes-an-Introduction/">展开全文 >></a>
         </p>
       
 
@@ -273,20 +267,20 @@
 
 
   
-    <article id="post-数据库两大神器【索引和锁】" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-jdk发展历史" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/28/数据库两大神器【索引和锁】/">数据库两大神器【索引和锁】</a>
+      <a class="article-title" href="/2019/02/28/jdk发展历史/">jdk发展历史</a>
     </h1>
   
 
         
-        <a href="/2018/11/28/数据库两大神器【索引和锁】/" class="archive-article-date">
-  	<time datetime="2018-11-28T04:38:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-28</time>
+        <a href="/2019/02/28/jdk发展历史/" class="archive-article-date">
+  	<time datetime="2019-02-28T11:44:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-28</time>
 </a>
         
       </header>
@@ -294,24 +288,16 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p>原文链接<a href="https://juejin.im/post/5b55b842f265da0f9e589e79" target="_blank" rel="noopener">https://juejin.im/post/5b55b842f265da0f9e589e79</a></p>
-<p>索引，其实就是一种数据结构，可以在上面应用一种高效的查询算法，最终提高数据的查询速度。<br>数据库在对资源进行高并发的读写操作时，为了保证数据的一致性，有效性，锁是很重要的机制。</p>
-<h2 id="一、索引"><a href="#一、索引" class="headerlink" title="一、索引"></a>一、索引</h2><p>在之前，我对索引有以下的认知：</p>
-<ul>
-<li>索引可以加快数据库的检索速度</li>
-<li>表经常进行INSERT/UPDATE/DELETE操作就不要建立索引了，换言之：索引会降低插入、删除、修改等维护任务的速度。</li>
-<li>索引需要占物理和数据空间。</li>
-<li>了解过索引的最左匹配原则</li>
-<li>知道索引的分类：聚集索引和非聚集索引</li>
-<li>Mysql支持Hash索引和B+树索引两种</li>
-</ul>
-<p>看起来好像啥都知道，但面试让你说的时候可能就GG了：</p>
-<ul>
-<li>使用索引为什么可以加快数据库的检索速度啊？</li>
-<li>为什么说索引会降低插入、删除、修改等维护任务的速度。</li>
-<li>索引的最左匹配原则指的是什么？</li>
-<li>Hash索引和B+树索引有什么区别？主流的使用哪一个比较多？InnoDB存储都支持吗？</li>
-<li>聚集索引和非聚集索引有什么区别？<br>……..</li></ul>
+     <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Java语言的相关组织和规范（其他语言也有类似的组织）：</span><br><span class="line">JCP：（Java Community Process）由世界上各个为 Java 发展操心的人士组成的社区，参与定义 Java 新特性和新版本制定标准的组织。</span><br><span class="line">JSR：（Java Specification Requests）Java 语言规范请求文档，你可以对 Java 提出新的要求，然后 Java 相关的组织投票决定是否通过，通过后就将这个要求写入 JSR 中，并且最终给出一个开源的实现。</span><br><span class="line">JEP：（Java Enhancement Proposal），Java 增强建议，收集大家对于 JDK 的建议，起草增强 Java 哪些功能的方案，为 JDK 新版本发布及相关工作指定路线。</span><br></pre></td></tr></table></figure>
+<h3 id="JAVA-1-0-代号Oak（橡树）"><a href="#JAVA-1-0-代号Oak（橡树）" class="headerlink" title="JAVA 1.0 ,代号Oak（橡树）"></a>JAVA 1.0 ,代号Oak（橡树）</h3><p>于1996-01-23发行</p>
+<h3 id="JAVA-1-1"><a href="#JAVA-1-1" class="headerlink" title="JAVA 1.1"></a>JAVA 1.1</h3><p>1997-02-19发行,主要更新内容:</p>
+<ol>
+<li>引入JDBC</li>
+<li>添加内部类支持</li>
+<li>引入JAVA BEAN</li>
+<li>引入RMI</li>
+<li><strong>引入反射</strong></li>
+</ol>
   
 
     </div>
@@ -323,11 +309,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">数据库索引</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据库锁</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Java基础</a>
         		</li>
       		
 		</ul>
@@ -339,7 +321,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/数据库//" class="article-tag-list-link color4">数据库</a>
+        			<a href="/categories/Java基础//" class="article-tag-list-link color2">Java基础</a>
         		</li>
       		
 		</ul>
@@ -348,7 +330,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/11/28/数据库两大神器【索引和锁】/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/02/28/jdk发展历史/">展开全文 >></a>
         </p>
       
 
@@ -378,20 +360,20 @@
 
 
   
-    <article id="post-一致性哈希算法" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-Zero-Copy-I-User-Mode-Perspective" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/25/一致性哈希算法/">一致性哈希算法</a>
+      <a class="article-title" href="/2019/02/14/Zero-Copy-I-User-Mode-Perspective/">Zero Copy I: User-Mode Perspective</a>
     </h1>
   
 
         
-        <a href="/2018/11/25/一致性哈希算法/" class="archive-article-date">
-  	<time datetime="2018-11-25T12:34:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-25</time>
+        <a href="/2019/02/14/Zero-Copy-I-User-Mode-Perspective/" class="archive-article-date">
+  	<time datetime="2019-02-14T08:29:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-14</time>
 </a>
         
       </header>
@@ -399,7 +381,8 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p>一致性哈希算法在1997年由麻省理工学院的Karger等人在解决分布式Cache中提出的，设计目标是为了解决因特网中的热点(Hot spot)问题，初衷和CARP十分类似。一致性哈希修正了CARP使用的简单哈希算法带来的问题，使得DHT可以在P2P环境中真正得到应用。<br></p>
+     <p>原文链接：<a href="https://www.linuxjournal.com/article/6345" target="_blank" rel="noopener">https://www.linuxjournal.com/article/6345</a><br>中文翻译版：<a href="https://leokongwq.github.io/2017/01/12/linux-zero-copy.html" target="_blank" rel="noopener">https://leokongwq.github.io/2017/01/12/linux-zero-copy.html</a></p>
+<p>By now almost everyone has heard of so-called zero-copy functionality under Linux, but I often run into people who don’t have a full understanding of the subject. Because of this, I decided to write a few articles that dig into the matter a bit deeper, in the hope of unraveling this useful feature. In this article, we take a look at zero copy from a user-mode application point of view, so gory kernel-level details are omitted intentionally.<br></p>
   
 
     </div>
@@ -411,7 +394,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">一致性哈希</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IO</a>
         		</li>
       		
 		</ul>
@@ -423,7 +406,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/缓存//" class="article-tag-list-link color3">缓存</a>
+        			<a href="/categories/IO//" class="article-tag-list-link color3">IO</a>
         		</li>
       		
 		</ul>
@@ -432,7 +415,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/11/25/一致性哈希算法/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/02/14/Zero-Copy-I-User-Mode-Perspective/">展开全文 >></a>
         </p>
       
 
@@ -462,20 +445,20 @@
 
 
   
-    <article id="post-Redis学习笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-从B树、B-树、B-树谈到R树" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/24/Redis学习笔记/">Redis学习笔记</a>
+      <a class="article-title" href="/2019/02/12/从B树、B-树、B-树谈到R树/">从B树、B+树、B*树谈到R树</a>
     </h1>
   
 
         
-        <a href="/2018/11/24/Redis学习笔记/" class="archive-article-date">
-  	<time datetime="2018-11-24T03:38:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-24</time>
+        <a href="/2019/02/12/从B树、B-树、B-树谈到R树/" class="archive-article-date">
+  	<time datetime="2019-02-12T14:47:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-12</time>
 </a>
         
       </header>
@@ -483,7 +466,9 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p>Redis 是一种快速、开源、内存键值数据结构存储库。Redis提供了一组通用的内存数据结构，可以通过这些结构轻松创建各种自定义的应用程序。关于Redis的主要使用案例包括缓存、会话管理、pub/sub以及排行榜。这是当今广受欢迎的键值存储数据库。它由BSD授权、采用优化的C语言代码编写，并支持多种开发语言。Redis是REmoteDIctionary Server 的首字母缩略词。<br>由于其速度和易用性，Redis 成为需要一流性能的 Web、移动、游戏、广告技术、物联网应用程序的理想之选。<br></p>
+     <p>原文链接：<a href="https://blog.csdn.net/v_JULY_v/article/details/6530142" target="_blank" rel="noopener">https://blog.csdn.net/v_JULY_v/article/details/6530142</a></p>
+<h3 id="第一节、B树、B-树、B-树"><a href="#第一节、B树、B-树、B-树" class="headerlink" title="第一节、B树、B+树、B*树"></a>第一节、B树、B+树、B*树</h3><h4 id="1-前言："><a href="#1-前言：" class="headerlink" title="1.前言："></a>1.前言：</h4><p>动态查找树主要有：二叉查找树（Binary Search Tree），平衡二叉查找树（Balanced Binary Search Tree），红黑树(Red-Black Tree)，B-tree/B+-tree/ B*-tree (B~Tree)。前三者是典型的二叉查找树结构，其查找的时间复杂度O(log2N)与树的深度相关，那么降低树的深度自然会提高查找效率。</p>
+<p>但是咱们有面对这样一个实际问题：就是大规模数据存储中，实现索引查询这样一个实际背景下，树节点存储的元素数量是有限的（如果元素数量非常多的话，查找就退化成节点内部的线性查找了），<strong>这样导致二叉查找树结构由于树的深度过大而造成磁盘I/O读写过于频繁，进而导致查询效率低下</strong>（为什么会出现这种情况，待会在外部存储器-磁盘中有所解释），那么如何减少树的深度（当然是不能减少查询的数据量），一个基本的想法就是：采用多叉树结构（由于树节点元素数量是有限的，自然该节点的子树数量也就是有限的）。<br></p>
   
 
     </div>
@@ -495,7 +480,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
         		</li>
       		
 		</ul>
@@ -507,7 +492,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/缓存//" class="article-tag-list-link color3">缓存</a>
+        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
         		</li>
       		
 		</ul>
@@ -516,7 +501,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/11/24/Redis学习笔记/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/02/12/从B树、B-树、B-树谈到R树/">展开全文 >></a>
         </p>
       
 
@@ -546,20 +531,20 @@
 
 
   
-    <article id="post-MySQL常见的三种存储引擎" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-线上问题排查工具" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/20/MySQL常见的三种存储引擎/">MySQL常见的三种存储引擎</a>
+      <a class="article-title" href="/2019/01/27/线上问题排查工具/">java应用线上问题排查工具</a>
     </h1>
   
 
         
-        <a href="/2018/11/20/MySQL常见的三种存储引擎/" class="archive-article-date">
-  	<time datetime="2018-11-20T04:30:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-20</time>
+        <a href="/2019/01/27/线上问题排查工具/" class="archive-article-date">
+  	<time datetime="2019-01-27T11:37:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-27</time>
 </a>
         
       </header>
@@ -567,10 +552,7 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p>引擎是一个程序的核心组件，简单来说，存储引擎就是指表的类型以及表在计算机上的存储方式。</p>
-<p>存储引擎的概念是MySQL的特点，Oracle中没有专门的存储引擎的概念，Oracle有OLTP和OLAP模式的区分。不同的存储引擎决定了MySQL数据库中的表可以用不同的方式来存储。我们可以根据数据的特点来选择不同的存储引擎。</p>
-<p>在MySQL中的存储引擎有很多种，可以通过“SHOW ENGINES”语句来查看。下面重点关注InnoDB、MyISAM、MEMORY这三种。</p>
-<p><img src="/2018/11/20/MySQL常见的三种存储引擎/markdown-img-paste-2018120612432106.png" alt=""><br></p>
+     <h3 id="jvm自带的工具"><a href="#jvm自带的工具" class="headerlink" title="jvm自带的工具"></a>jvm自带的工具</h3><p><img src="/2019/01/27/线上问题排查工具/markdown-img-paste-20190125171423282.png" alt=""><br>Java虚拟机自带了很多工具，其中就有我们比较熟悉的javac和java，除此之外，我们还得掌握一类用于线上问题排查的工具，比如jstack, jmap, jstat等，通过这些工具我们可以深入了解JVM当下正在干什么事。<br></p>
   
 
     </div>
@@ -582,7 +564,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Mysql</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Java基础</a>
         		</li>
       		
 		</ul>
@@ -594,7 +576,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/数据库//" class="article-tag-list-link color4">数据库</a>
+        			<a href="/categories/Java基础//" class="article-tag-list-link color2">Java基础</a>
         		</li>
       		
 		</ul>
@@ -603,7 +585,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/11/20/MySQL常见的三种存储引擎/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/01/27/线上问题排查工具/">展开全文 >></a>
         </p>
       
 
@@ -633,20 +615,20 @@
 
 
   
-    <article id="post-MySQL都有哪些-零件" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-UndeclaredThrowableException探秘" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/18/MySQL都有哪些-零件/">MySQL都有哪些&#39;零件&#39;</a>
+      <a class="article-title" href="/2019/01/25/UndeclaredThrowableException探秘/">UndeclaredThrowableException探秘</a>
     </h1>
   
 
         
-        <a href="/2018/11/18/MySQL都有哪些-零件/" class="archive-article-date">
-  	<time datetime="2018-11-18T04:55:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-18</time>
+        <a href="/2019/01/25/UndeclaredThrowableException探秘/" class="archive-article-date">
+  	<time datetime="2019-01-25T11:18:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-25</time>
 </a>
         
       </header>
@@ -654,11 +636,7 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p>大体来说，MySQL 可以分为 Server 层和存储引擎层两部分。MySQL 的逻辑架构图:</p>
-<p><img src="/2018/11/18/MySQL都有哪些-零件/markdown-img-paste-2018120612560635.png" alt="http://p3.pstatp.com/large/pgc-image/95e581c6f780408f901ad69852be9ec3"></p>
-<p>Server 层包括连接器、查询缓存、分析器、优化器、执行器等，涵盖 MySQL 的大多数核心服务功能，以及所有的内置函数（如日期、时间、数学和加密函数等），所有跨存储引擎的功能都在这一层实现，比如存储过程、触发器、视图等。</p>
-<p>而存储引擎层负责数据的存储和提取。其架构模式是插件式的，支持 InnoDB、MyISAM、Memory 等多个存储引擎。现在最常用的存储引擎是 InnoDB，它从 MySQL 5.5.5 版本开始成为了默认存储引擎。</p>
-<p>也就是说，执行 create table 建表的时候，如果不指定引擎类型，默认使用的就是 InnoDB。不过，也可以通过指定存储引擎的类型来选择别的引擎，比如在 create table 语句中使用 engine=memory, 来指定使用内存引擎创建表。不同存储引擎的表数据存取方式不同，支持的功能也不同。<br></p>
+     <p><img src="/2019/01/25/UndeclaredThrowableException探秘/markdown-img-paste-20190125194050394.png" alt=""><br>RPC调用时会遇到一种特殊的异常–UndeclaredThrowableException，这个异常的getMessage方法永远是null。<br>具体原因是因为我们通过动态代理最终捕获到的异常是经过封装了的，捕获的已经不再是最开始抛出的异常，封装抛出的异常有两种：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">java.lang.reflect.UndeclaredThrowableException</span><br><span class="line">java.lang.reflect.InvocationTargetException</span><br></pre></td></tr></table></figure></p>
   
 
     </div>
@@ -670,7 +648,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Mysql</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Java基础</a>
         		</li>
       		
 		</ul>
@@ -682,7 +660,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/数据库//" class="article-tag-list-link color4">数据库</a>
+        			<a href="/categories/Java基础//" class="article-tag-list-link color2">Java基础</a>
         		</li>
       		
 		</ul>
@@ -691,7 +669,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/11/18/MySQL都有哪些-零件/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/01/25/UndeclaredThrowableException探秘/">展开全文 >></a>
         </p>
       
 
@@ -721,20 +699,20 @@
 
 
   
-    <article id="post-MySQL优化原理" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-磁盘I-O那些事" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/12/MySQL优化原理/">MySQL优化原理</a>
+      <a class="article-title" href="/2019/01/13/磁盘I-O那些事/">磁盘I/O那些事</a>
     </h1>
   
 
         
-        <a href="/2018/11/12/MySQL优化原理/" class="archive-article-date">
-  	<time datetime="2018-11-12T05:09:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-12</time>
+        <a href="/2019/01/13/磁盘I-O那些事/" class="archive-article-date">
+  	<time datetime="2019-01-13T11:13:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-13</time>
 </a>
         
       </header>
@@ -742,12 +720,9 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p>说起MySQL的查询优化，相信大家收藏了一堆奇技淫巧：不能使用SELECT *、不使用NULL字段、合理创建索引、为字段选择合适的数据类型….. 你是否真的理解这些优化技巧？是否理解其背后的工作原理？在实际场景下性能真有提升吗？理解这些优化建议背后的原理尤为重要，可以让你在实际业务场景下合理的运用。</p>
-<h3 id="MySQL逻辑架构"><a href="#MySQL逻辑架构" class="headerlink" title="MySQL逻辑架构"></a>MySQL逻辑架构</h3><p>如果能在头脑中构建一幅MySQL各组件之间如何协同工作的架构图，有助于深入理解MySQL服务器。下图展示了MySQL的逻辑架构图</p>
-<p><img src="/2018/11/12/MySQL优化原理/markdown-img-paste-20181206130931427.png" alt=""></p>
-<p>MySQL逻辑架构整体分为三层，最上层为客户端层，并非MySQL所独有，诸如：连接处理、授权认证、安全等功能均在这一层处理。</p>
-<p>MySQL大多数核心服务均在中间这一层，包括查询解析、分析、优化、缓存、内置函数(比如：时间、数学、加密等函数)。所有的跨存储引擎的功能也在这一层实现：存储过程、触发器、视图等。</p>
-<p>最下层为存储引擎，其负责MySQL中的数据存储和提取。和Linux下的文件系统类似，每种存储引擎都有其优势和劣势。中间的服务层通过API与存储引擎通信，这些API接口屏蔽了不同存储引擎间的差异。<br></p>
+     <p>原文链接：<a href="https://tech.meituan.com/about_desk_io.html" target="_blank" rel="noopener">https://tech.meituan.com/about_desk_io.html</a></p>
+<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>计算机硬件性能在过去十年间的发展普遍遵循摩尔定律，通用计算机的CPU主频早已超过3GHz，内存也进入了普及DDR4的时代。然而传统硬盘虽然在存储容量上增长迅速，但是在读写性能上并无明显提升，同时SSD硬盘价格高昂，不能在短时间内完全替代传统硬盘。传统磁盘的I/O读写速度成为了计算机系统性能提高的瓶颈，制约了计算机整体性能的发展。</p>
+<p>硬盘性能的制约因素是什么？如何根据磁盘I/O特性来进行系统设计？针对这些问题，本文将介绍硬盘的物理结构和性能指标，以及操作系统针对磁盘性能所做的优化，最后讨论下基于磁盘I/O特性设计的技巧。<br></p>
   
 
     </div>
@@ -759,7 +734,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Mysql</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">IO</a>
         		</li>
       		
 		</ul>
@@ -771,7 +746,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/数据库//" class="article-tag-list-link color4">数据库</a>
+        			<a href="/categories/IO//" class="article-tag-list-link color3">IO</a>
         		</li>
       		
 		</ul>
@@ -780,7 +755,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/11/12/MySQL优化原理/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/01/13/磁盘I-O那些事/">展开全文 >></a>
         </p>
       
 
@@ -810,20 +785,20 @@
 
 
   
-    <article id="post-数据库事务的四个特性及mysql的四种隔离级别" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-《人月神话》读书笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/06/数据库事务的四个特性及mysql的四种隔离级别/">数据库事务的四个特性及mysql的四种隔离级别</a>
+      <a class="article-title" href="/2019/01/06/《人月神话》读书笔记/">《人月神话》读书笔记</a>
     </h1>
   
 
         
-        <a href="/2018/11/06/数据库事务的四个特性及mysql的四种隔离级别/" class="archive-article-date">
-  	<time datetime="2018-11-06T11:18:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-06</time>
+        <a href="/2019/01/06/《人月神话》读书笔记/" class="archive-article-date">
+  	<time datetime="2019-01-06T14:50:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-06</time>
 </a>
         
       </header>
@@ -831,11 +806,7 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <h4 id="1、原子性"><a href="#1、原子性" class="headerlink" title="1、原子性"></a>1、原子性</h4><p><strong>在同一个事务内部的一组操作必须全部执行成功（或者全部失败）。</strong></p>
-<p>为了保证事务操作的原子性，必须实现基于日志的REDO/UNDO机制：将所有对数据的更新操作都写入日志，如果一个事务中的一部分操作已经成功，但以后的操作，由于断电/系统崩溃/其它的软硬件错误而无法继续，则通过回溯日志，将已经执行成功的操作撤销，从而达到“全部操作失败”的目的。</p>
-<p>最常见的场景是，数据库系统崩溃后重启，此时数据库处于不一致的状态，必须先执行一个crash recovery的过程：读取日志进行REDO（重演将所有已经执行成功但尚未写入到磁盘的操作，保证持久性），再对所有到崩溃时尚未成功提交的事务进行UNDO（撤销所有执行了一部分但尚未提交的操作，保证原子性）。crash recovery结束后，数据库恢复到一致性状态，可以继续被使用。</p>
-<p>某个应用在执行转帐的数据库操作时，必须在同一个事务内部调用对帐户A和帐户B的操作，才能保证数据的一致性。</p>
-<p>但是，原子性并不能完全保证一致性。在多个事务并行进行的情况下，即使保证了每一个事务的原子性，仍然可能导致数据不一致的结果。<br></p>
+     <p>人月的启示<br>作为软件工程的经典著作，《人月神话》的主要贡献是对软件开发过程的几个重要关键点，提出了独到的见解。 其中内容就是： （1）提倡外科手术式的团队组织： 在软件开发组织上的过份民主，往往带来的是没有效率和责任，参与其中的人想法太多，层面参差不齐。所以，软件开发的组织，应该借鉴外科手术式的团队方式，有一个主要的负责人，其他人都是分工协作的副手，这样效率最好，结果最好。（2）软件项目的核心概念要由很少的人来完成，以保证 概念的完整性： 少就是多，项目的定位需要和功能多少的权衡。太多的想法，使项目没有焦点，什么都要放进去，结果什么都做不象；（3）软件开发过程中必要的沟通手段； 软件开发中最大的风险往往不是技术的缺陷，而是缺少沟通； （4）如何保持适度的文档： 在开发中，保持适度的文档。喜欢过度多的文档的人，忘记了文档不是最终的产品，不是用户需要的，最后以为文档好，就是好的开发，其实完全不是。 （5）在软件开发的过程中，只有适度改进，没有包治百病的银弹。 在软件开发的过程中，重要的不是采用了什么工具，而是不论用何种工具，都要达到项目本身的客户需求。任何方法论之前，先要探求问题的来源，否则，对各种方法论的依赖或滥用，有害无益。<br></p>
   
 
     </div>
@@ -847,7 +818,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">ACID</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">项目管理</a>
         		</li>
       		
 		</ul>
@@ -859,7 +830,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/数据库//" class="article-tag-list-link color4">数据库</a>
+        			<a href="/categories/项目管理//" class="article-tag-list-link color5">项目管理</a>
         		</li>
       		
 		</ul>
@@ -868,7 +839,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/11/06/数据库事务的四个特性及mysql的四种隔离级别/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/01/06/《人月神话》读书笔记/">展开全文 >></a>
         </p>
       
 
@@ -898,20 +869,20 @@
 
 
   
-    <article id="post-数据存储的选型" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-幂等性" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/01/数据存储的选型/">数据存储的选型</a>
+      <a class="article-title" href="/2019/01/05/幂等性/">幂等性</a>
     </h1>
   
 
         
-        <a href="/2018/11/01/数据存储的选型/" class="archive-article-date">
-  	<time datetime="2018-11-01T11:46:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-01</time>
+        <a href="/2019/01/05/幂等性/" class="archive-article-date">
+  	<time datetime="2019-01-05T03:32:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-05</time>
 </a>
         
       </header>
@@ -919,20 +890,34 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p>在服务端会经常遇到数据存储的选型问题，是选择使用关系型数据库 MySQL，还是选择内存数据库 Redis，还是选择文档数据库 MongoDB，还是选择列族数据库 HBase， 还是选择全文搜索引擎 ElasticSearch 呢？下面主要介绍如何选择合适的数据存储方案。<br></p>
+     <p>现在稍具规模的网站和大型应用都不再是单机模式，而是分布式应用，基于多机的集群构建的应用，这样服务能力就可以基本实现横向扩容（scale out），不会像单机模式下的纵向扩容（scale up）会受到单机服务能力上限的限制。另外，随着“微服务”概念的火爆，很多应用在构建之初就已经走在了分布式的路线上了，所以就目前行业的发展来看，基于分布式的应用会越来越普遍，甚至变成常态。加上docker这些容器技术的出现，应用分布式化的工具也越来越成熟。</p>
+<h3 id="分布式的复杂性"><a href="#分布式的复杂性" class="headerlink" title="分布式的复杂性"></a>分布式的复杂性</h3><p>众所周知，构建分布式应用所面临的复杂度远远超出集中式的单一应用，导致复杂性的因素有很多，在此只提其中一点：网络的不可靠性。在单一进程内部，对一个函数的调用，结果只有两种——成功和失败，失败的情况下，调用者可以决定做一些事情弥补。但是在跨进程的调用中，对一个远程（也可以在同一个节点上）进程上运行的函数调用除了会得到成功和失败，还会有第三种的情况——超时，这个现象被称为分布式的三态。这也是困扰分布式应用构建的最核心因素之一，很多分布式应用的复杂度之所以上升这么多也是因为三态之中的超时引起的。</p>
+<p>简单看看超时给我们带来的困扰，进程A调用进程B上的函数f，对于成功和失败的结果，相信和单机下一样，进程A都可以进行很好地的处理，因为结果是很明确的。如果进程A调用f之后，在允许的等待最大时间内没有返回结果，就是调用超时了，此时进程A能做什么？其实进程A什么都做不了，因为超时是一个不明确的结果——成功和失败都有可能。详细解释下可能的情况：</p>
+<p>成功的情况：进程A把数据通过网络传输到进程B上，f执行成功，通 网络返回执行结果给进程A，可是网络不太好，传输失败了，进程A并 未在指定时间内收到结果，认为超时了。 失败的情况：情况和成功的情况差不多，只是f执行失败了，但是结 果依然传输失败，进程A也认为执行超时了。 未执行的情况：进程A的数据发送到进程B所在的节点过程中网络失败 了，或者发送到了进程B所在的机器上，但是进程B没有消费掉在TCP 网络层的数据等等 由此可见，进程A对于超时确实无能为力，有太多的可能存在的情况了。但是分布式协作过程中又必须解决这个问题，不然分布式应用是没意义的，这种情况下，一般会采用让进程A尝试重试——即重复发起之前的调用。但是这样也可能会带来问题，因为超时的那次调用可能已经成功了，再次以同样的参数调用f会不会带来额外的问题？这就引出本文的主角——幂等性。<br></p>
   
 
     </div>
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/数据库//" class="article-tag-list-link color4">数据库</a>
+        			<a href="/categories/计算机基础//" class="article-tag-list-link color1">计算机基础</a>
         		</li>
       		
 		</ul>
@@ -941,7 +926,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/11/01/数据存储的选型/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/01/05/幂等性/">展开全文 >></a>
         </p>
       
 
@@ -971,20 +956,20 @@
 
 
   
-    <article id="post-如何实现大整数相加" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-《高效能人士的七个习惯》读书笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/10/20/如何实现大整数相加/">如何实现大正整数相加</a>
+      <a class="article-title" href="/2018/12/28/《高效能人士的七个习惯》读书笔记/">《高效能人士的七个习惯》读书笔记</a>
     </h1>
   
 
         
-        <a href="/2018/10/20/如何实现大整数相加/" class="archive-article-date">
-  	<time datetime="2018-10-20T03:36:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-20</time>
+        <a href="/2018/12/28/《高效能人士的七个习惯》读书笔记/" class="archive-article-date">
+  	<time datetime="2018-12-28T13:47:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-28</time>
 </a>
         
       </header>
@@ -992,10 +977,9 @@
     <div class="article-entry" itemprop="articleBody">
       
 
-     <p><strong>在不使用BigInteger类的情况下，如何计算两个大正整数的和？</strong></p>
-<p>程序不可能通过一条指令计算出两个大整数的和，但我们可以把一个大运算拆分成多个小运算, 像小学生一样列竖式进行按位运算。这里还有一个问题，我们都知道long类型的取值范围是:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">最小值：Long.MIN_VALUE=-9223372036854775808 （-2的63次方）</span><br><span class="line">最大值：Long.MAX_VALUE=9223372036854775807 （2的63次方-1）</span><br></pre></td></tr></table></figure></p>
-<p>如果大整数超出了long类型能表示的范围,我们如何存储这样的整数呢？<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">很容易想到，使用数组存储即可，数组的每一个元素对应大整数的每一个位数。</span><br></pre></td></tr></table></figure></p>
-<p>在程序中列出的 “竖式” 究竟是什么样子呢？我们以 426709752318 + 95481253129 为例，来看看大整数相加的详细步骤：<br></p>
+     <p>附: <a href="http://byteliu.com/PDF/高效能人士的七个习惯.美.史蒂芬·柯维.pdf" target="_blank" rel="noopener">高效能人士的七个习惯.(美国)史蒂芬·柯维.pdf</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">“人的行为总是一再重复。因此卓越不是单一的举动，而是习惯。”</span><br><span class="line">                                                  --亚里士多德</span><br></pre></td></tr></table></figure>
+<p>习惯对我们的生活有极大的影响，因为它是一贯的，在不知不觉中，经年累月影响着我们的品德，暴露出我们的本性，左右着我们的成败。习惯就仿佛一条缆绳，我们每天为它添上一股新索，很快他会变得牢不可破。<br></p>
   
 
     </div>
@@ -1007,7 +991,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
         		</li>
       		
 		</ul>
@@ -1019,7 +1003,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/算法//" class="article-tag-list-link color3">算法</a>
+        			<a href="/categories/读书笔记//" class="article-tag-list-link color5">读书笔记</a>
         		</li>
       		
 		</ul>
@@ -1028,7 +1012,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/10/20/如何实现大整数相加/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/12/28/《高效能人士的七个习惯》读书笔记/">展开全文 >></a>
         </p>
       
 
@@ -1060,7 +1044,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
     </nav>
   
 
@@ -1232,6 +1216,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">servlet</a>
               </li>
              
@@ -1248,11 +1236,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Mysql</a>
+                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
+                <a href="javascript:void(0)" class="js-tag color1">Mysql</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1277,10 +1265,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">WebSocket</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">操作系统</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1344,11 +1328,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1365,6 +1349,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">C10K</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">网络协议</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1396,11 +1384,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">synchronize</a>
+                <a href="javascript:void(0)" class="js-tag color3">tcpdump</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">zookeeper</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">synchronize</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1436,6 +1428,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">SSH</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">iptables</a>
               </li>
              
@@ -1449,10 +1445,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">读书笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">tcpdump</a>
               </li>
              
               <li class="article-tag-list-item">
