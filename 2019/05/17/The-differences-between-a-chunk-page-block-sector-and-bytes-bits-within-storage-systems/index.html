@@ -17,7 +17,7 @@
 <meta property="og:description" content="The differences between a chunk, page, block, sector and bytes/bits withinstorage systems?They all build on eachother. BitBit is the smallest unit of data, literally 0/1 (AKA on/off, AKA yes/no, AKA t">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://www.byteliu.com/2019/05/17/The-differences-between-a-chunk-page-block-sector-and-bytes-bits-within-storage-systems/markdown-img-paste-20190517165000815.png">
-<meta property="og:updated_time" content="2019-05-21T08:20:24.733Z">
+<meta property="og:updated_time" content="2019-05-21T13:39:27.892Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="The differences between a chunk, page, block, sector and bytes&#x2F;bits within storage systems?">
 <meta name="twitter:description" content="The differences between a chunk, page, block, sector and bytes/bits withinstorage systems?They all build on eachother. BitBit is the smallest unit of data, literally 0/1 (AKA on/off, AKA yes/no, AKA t">
@@ -211,7 +211,7 @@
     <p>The differences between a chunk, page, block, sector and bytes/bits within<br>storage systems?<br>They all build on eachother.</p>
 <h3 id="Bit"><a href="#Bit" class="headerlink" title="Bit"></a>Bit</h3><p>Bit is the smallest unit of data, literally 0/1 (AKA on/off, AKA yes/no, AKA true/false). Currently all digital data exists as bits in one physical format or another (magnets, electric impulses, light, etc). Denoted as “b” (small b).</p>
 <h3 id="Byte"><a href="#Byte" class="headerlink" title="Byte"></a>Byte</h3><p>Byte is the most used combination of bits. One byte is 8 bits. Denoted as “B” (big B). One byte can represent $2^8$ (256) different values. The most common example is the ASCII character set, which assigns most numbers/letters/symbols some number from 0 and 127. For example, upper-case letter A (“A”) is ASCII code 65. Numbers 128 and higher differ by character set and usually contain different special symbols like latin letters.</p>
-<h3 id="Sector"><a href="#Sector" class="headerlink" title="Sector"></a>Sector</h3><p>Sector is a physical spot on a formatted disk that holds information. When a disk is formatted, tracks are defined (concentric rings from inside to the outside of the disk platter. Each track is divided into a slice, which is a sector. On hard drives and floppies, each sector can hold 512 bytes of data.<br>A block, on the other hand, is a group of sectors that the operating system can address (point to). A block might be one sector, or it might be several sectors (2,4,8, or even 16). The bigger the drive, the more sectors that a block will hold.</p>
+<h3 id="Sector"><a href="#Sector" class="headerlink" title="Sector"></a>Sector</h3><p>Sector is a physical spot on a formatted disk that holds information. When a disk is formatted, tracks are defined (concentric rings from inside to the outside of the disk platter. Each track is divided into a slice, which is a sector. On hard drives and floppies, each sector can hold 512 bytes of data.<br>A block, on the other hand, is a group of sectors that the operating system can address (point to). A block might be one sector, or it might be several sectors (2,4,8, or even 16). The bigger the drive, the more sectors that a block will hold.<br><a id="more"></a></p>
 <p><img src="/2019/05/17/The-differences-between-a-chunk-page-block-sector-and-bytes-bits-within-storage-systems/markdown-img-paste-20190517165000815.png" alt=""></p>
 <h3 id="Block"><a href="#Block" class="headerlink" title="Block"></a>Block</h3><p>Block, on the other hand, is a group of sectors that the operating system can address (point to). A block might be one sector, or it might be several sectors (2,4,8, or even 16). The bigger the drive, the more sectors that a block will hold.The block is an abstraction representing the smallest unit of storage on a filesystem. Inside the kernel, all filesystem operations occur in terms of blocks.Block in the context of storage is the smallest size you’re able to interface with the hardware at. Whenever you read from a disk or write to a disk, you read this amount times however many blocks you need to read. The default NTFS Block Size (AKA Cluster Size, AKA Allocation Unit) is 4096 bytes (4KB). If you have a file that is exactly 4096 bytes long, then you read one block from the disk. If it is 4097 bytes then you read two blocks. You cannot read a partial block, so even if a file doesn’t actually consume a whole block, the storage file system blanks out the rest of the block. A simple way to see this in action is to create a blank text file on your hard drive, look at the properties and the difference between “Size” (0 bytes) and “Size on Disk” (4096 bytes).</p>
 <p>So why are there blocks. Why doesn’t the operating system just point straight to the sectors? Because there are limits to the number of blocks, or drive addresses, that an operating system can address. By defining a block as several sectors, an OS can work with bigger hard drives without increasing the number of block addresses. For example, PC DOS (earlier versions at least) could only address 65,536 blocks (64K), and each block could could only be a single sector. Thus, the largest size a disk volume could be was 32mb (64K <em> 512bytes). (Earlier versions of the Mac OS had a 16mb volume limit for similar reasons). If you increase the size of a block to, say, 4K, that same version of DOS can now work with volumes as large as 256MB (64K addresses </em> 4K blocks).<br>With current versions of the OS’s, the formatting software will look at the size of the drive, and figure out the smallest number of sectors that need to be in a block in order to be able to use the entire drive. So, when you format a floppy disk, the block size will be one sector. When you format a 230MB drive, for example, the block size is 8 sectors (4K).  Why does this matter?</p>
@@ -229,7 +229,6 @@
 <p>Paging is the SAN OS’s method to optimize and keep track of stored data. So when you write data to your array, the write is usually broken up into manageable segments. My current array can track in 512K, 2MB and 4MB pages. Those segments consume memory space, the smaller the page you use, the more memory you typically consume.</p>
 <p>Other Note that most arrays present native 4K sectors to servers(in a form of a LUN), regardless of the disks behind the array. This as some applications like SQL server, were built and optimized for native 4k sectors.</p>
 <h3 id="Chunk"><a href="#Chunk" class="headerlink" title="Chunk"></a>Chunk</h3><p>Chunk doesn’t really have a strict definition, it’s usually more use-specific. For example, a “chunk” of data might be the amount of data that an application processes from the disk at a time. For example, a log file is 100MB, and the parsing application reads the file in and processes it in 5MB chunks. Read 5MB -&gt; Process 5MB -&gt; Read 5MB -&gt; Process 5MB, etc. In some storage systems this could be an abstraction layer above a block, for example, when talking about read/write caching, it may write data to disk in chunks that are not the same size as a single block. A lot of time reading and writing in chunks can improve performance.</p>
-<p>Chapter 9 addresses alignment in greater depth.</p>
 
   
 
@@ -509,11 +508,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JUC</a>
+                <a href="javascript:void(0)" class="js-tag color4">ARP</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ARP</a>
+                <a href="javascript:void(0)" class="js-tag color4">JUC</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -545,11 +544,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
+                <a href="javascript:void(0)" class="js-tag color1">Mysql</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Mysql</a>
+                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -637,11 +636,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -666,6 +665,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">HTTP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -697,11 +700,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">zookeeper</a>
+                <a href="javascript:void(0)" class="js-tag color2">synchronize</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">synchronize</a>
+                <a href="javascript:void(0)" class="js-tag color5">zookeeper</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -722,10 +725,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">CGLIB</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
               </li>
              
               <li class="article-tag-list-item">

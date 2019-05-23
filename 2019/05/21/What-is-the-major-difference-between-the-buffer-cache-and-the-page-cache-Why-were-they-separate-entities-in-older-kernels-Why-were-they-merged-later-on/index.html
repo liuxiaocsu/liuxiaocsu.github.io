@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Byte_Liu&#39;s Blog">
 <meta property="og:description" content="The page cache caches pages of files to optimize file I/O. The buffer cache caches disk blocks to optimize block I/O. What is the difference between block I/O and file I/O and what are the advantages">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:updated_time" content="2019-05-21T08:20:24.739Z">
+<meta property="og:updated_time" content="2019-05-21T13:33:34.931Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="What is the major difference between the buffer cache and the page cache? Why were they separate entities in older kernels? Why were they merged later on?">
 <meta name="twitter:description" content="The page cache caches pages of files to optimize file I/O. The buffer cache caches disk blocks to optimize block I/O. What is the difference between block I/O and file I/O and what are the advantages">
@@ -208,7 +208,7 @@
   
     <p>The page cache caches pages of files to optimize file I/O. The buffer cache caches disk blocks to optimize block I/O.</p>
 <h3 id="What-is-the-difference-between-block-I-O-and-file-I-O-and-what-are-the-advantages-of-both"><a href="#What-is-the-difference-between-block-I-O-and-file-I-O-and-what-are-the-advantages-of-both" class="headerlink" title="What is the difference between block I/O and file I/O and what are the advantages of both?"></a>What is the difference between block I/O and file I/O and what are the advantages of both?</h3><p>This is really an “all sqauares are rectangles question” in that all “cooked” file i/o is built on top of block i/o. Block i/o means that transfers to and from disk are done in chunks rather than individual bytes AND that the UNIX buffer cache is used to minimize physical i/o.</p>
-<p>Block I/O is the basic mechanism for DISK access using the SCSI protocol as the command set. Block I/O is fast and data can be transmitted in various block sizes like 2K, 4K, 8K, 16K, 64K, 128K, etc. Block I/O can be done over various transports. Parallel SCSI cables, copper fiber, optical fiber and even encapsulated and transmitted over IP networks.</p>
+<p>Block I/O is the basic mechanism for DISK access using the SCSI protocol as the command set. Block I/O is fast and data can be transmitted in various block sizes like 2K, 4K, 8K, 16K, 64K, 128K, etc. Block I/O can be done over various transports. Parallel SCSI cables, copper fiber, optical fiber and even encapsulated and transmitted over IP networks.<br><a id="more"></a></p>
 <ul>
 <li>Block I/O is what is used to talk to DISKS.</li>
 <li>File I/O is what is used to talk to FILES.</li>
@@ -231,7 +231,7 @@
 <p>In the case of a fixed format file, the file system uses the input to DMSCLDBK to determine where the actual end of the file is. If the number of records and record length from the application is less than the number of blocks written, the file will be truncated to that size. If the applications indicates the end of the file is past where the last data block has been written, the file will be extended with sparse blocks (data blocks containing binary zeroes). Another difference between the data block and record interfaces is when SFS data is committed. Using the record interface, you can commit changes to the file while the file is open. For the data block interface, the file system knows less about the file so the file must be closed before the changes can be committed. In fact, there can not be any file open using DMSOPDBK on the work unit in order to commit the changes to the work unit.</p>
 <p>You can operate on files simultaneously using both FS macros and data block I/O routines. The following describes how each method can be used for both minidisk and SFS files.<br>When using DMSOPDBK:<br>For an SFS file, you can open the file more than once for input (read) AND only once for output (new or replace).<br>For a minidisk file, you can open the file more than once for input (read) OR once for output (new or replace).<br>When using FSOPEN:<br>For both a minidisk and SFS file, the file may only be opened once for either input or output.<br>Notice that CSL and non-CSL statements use the same default work unit ID.</p>
 <hr>
-<p>Prior to Linux kernel version 2.4, the two caches were distinct: Files were in the page cache, disk blocks were in the buffer cache. Given that most files are represented by a filesystem on a disk, data was represented twice, once in each of the caches. Many Unix systems follow a similar pattern.<br><a id="more"></a><br>This is simple to implement, but with an obvious inelegance and inefficiency. Starting with Linux kernel version 2.4, the contents of the two caches were unified. The VM subsystem now drives I/O and it does so out of the page cache. If cached data has both a file and a block representation—as most data does—the buffer cache will simply point into the page cache; thus only one instance of the data is cached in memory. The page cache is what you picture when you think of a disk cache: It caches file data from a disk to make subsequent I/O faster.</p>
+<p>Prior to Linux kernel version 2.4, the two caches were distinct: Files were in the page cache, disk blocks were in the buffer cache. Given that most files are represented by a filesystem on a disk, data was represented twice, once in each of the caches. Many Unix systems follow a similar pattern.<br><!--more--><br>This is simple to implement, but with an obvious inelegance and inefficiency. Starting with Linux kernel version 2.4, the contents of the two caches were unified. The VM subsystem now drives I/O and it does so out of the page cache. If cached data has both a file and a block representation—as most data does—the buffer cache will simply point into the page cache; thus only one instance of the data is cached in memory. The page cache is what you picture when you think of a disk cache: It caches file data from a disk to make subsequent I/O faster.</p>
 <p>The buffer cache remains, however, as the kernel still needs to perform block I/O in terms of blocks, not pages. As most blocks represent file data, most of the buffer cache is represented by the page cache. But a small amount of block data isn’t file backed—metadata and raw block I/O for example—and thus is solely represented by the buffer cache.</p>
 <hr>
 <p>I’m glad that Robert Love provided a typically excellent answer.  Instead of trying to cover the same ground that he does, I’ll try to go back a bit further - before Linux, even.  I know that might seem odd in a question about Linux, but Linux developers do talk to others and so on matters of history the context around other systems is IMO still relevant.</p>
@@ -519,11 +519,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JUC</a>
+                <a href="javascript:void(0)" class="js-tag color4">ARP</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ARP</a>
+                <a href="javascript:void(0)" class="js-tag color4">JUC</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -555,11 +555,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
+                <a href="javascript:void(0)" class="js-tag color1">Mysql</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Mysql</a>
+                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -647,11 +647,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -676,6 +676,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">HTTP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -707,11 +711,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">zookeeper</a>
+                <a href="javascript:void(0)" class="js-tag color2">synchronize</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">synchronize</a>
+                <a href="javascript:void(0)" class="js-tag color5">zookeeper</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -732,10 +736,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">CGLIB</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DNS</a>
               </li>
              
               <li class="article-tag-list-item">
