@@ -181,6 +181,160 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-JNA" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/09/01/JNA/">JNA</a>
+    </h1>
+  
+
+        
+        <a href="/2019/09/01/JNA/" class="archive-article-date">
+  	<time datetime="2019-09-01T07:07:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+     <p>Java开发过程中，有时候会需要和C，C++等交互，这时候我们就想起了经典技术JNI，但是JNI的使用过程十分繁琐，而且容易出现各种问题，还得封装而且问题不好定位。假如我们有一个.so文件，如果使用JNI去调用，我们需要另外用C语音写一个.so的共享文件，并且得使用SUN规定的数据结构去替代C语言的数据结构，至此才能调用so文件里面公布的函数。作为JAVA的程序员这个过程是令人头疼的。</p>
+<p>相比之下，使用JNA就简单多了，只需要依赖一个jar包，就像调用一个java方法一样简单。JNA全称Java Native Access，是一个建立在JNI技术之上的<a href="https://github.com/twall/jna" target="_blank" rel="noopener">Java开源框架</a>。JNA提供一组Java工具类用于在运行期动态访问系统本地库（native library：如Window的dll，Linux的so）而不需要编写任何Native/JNI代码。开发人员只要在一个java接口中描述目标native library的函数与结构，JNA将自动实现Java接口到native function的映射。</p>
+<p>dll和so是C函数的集合和容器，这与Java中的接口概念吻合，所以JNA把dll文件和so文件看成一个个接口。在JNA中定义一个接口就是相当于了定义一个DLL/SO文件的描述文件，该接口代表了动态链接库中发布的所有函数。而且，对于程序不需要的函数，可以不在接口中声明。JNA provides Java programs easy access to native shared libraries without writing anything but Java code - no JNI or native code is required.<br></p>
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Java基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Java基础//" class="article-tag-list-link color2">Java基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/09/01/JNA/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-数学公式对应的markdown代码" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+  
+    <ol>
+<li>平方差公式<br>$ a^2-b^2= (a+b)(a-b) $</li>
+<li>立方差公式<br>$ a^3-b^3 = (a+b)(a^2-ab+b^2) $</li>
+<li>立方和公式<br>$ a^3+b^3 = (a-b)(a^2+ab+b^2)$</li>
+<li>完全平方公式<br>$(a + b)^2  = a^2 + 2ab+b^2 $<br>$(a - b)^2  = a^2 - 2ab+b^2 $</li>
+<li>一元二次方程求根公式<br>$ ax^2+bx+c =0$<br>$x_{1,2}=\frac{-b\pm\sqrt{b^2-4ac}}{2a}$</li>
+<li>韦达定理<br>　　设$x1,x2$是一元二次方程$ ax^2+bx+c =0$的两个根，则$x1,x2$满足:<br>$x1+x2 = -\frac{b}{a}$<br>$ x1 \cdot x2 = \frac{c}{a}$</li>
+<li><p>有关集合的公式<br>设$I$为全集，$\varnothing$为空集，如果$A$是$I$的子集,$B$是$I$的子集，则$A \subset I $, $ B \subset I $。<br>于是，<br>$I \cup A = I$<br>$I \cap \varnothing = \varnothing$<br>若$ \bar A ={x|x \in I且x \notin A,A \subseteq I }$,<br>　$ \bar B ={x|x \in I且x \notin B,B \subseteq I }$<br>则<br>$ A \cup  \bar A = I$<br>$ A \cap \bar A = \varnothing$<br>$\overline {A \cap B} = \bar A \cup \bar B$<br>$\overline {A \cup B} = \bar A \cap \bar B$</p>
+</li>
+<li><p>不等式<br>8.1) $|a| \ge 0$<br>8.2) $|a|-|b| \le |a+b| \le |a|+|b|$<br>8.3) $|a| \le b $<br>8.5) $|a| \le b \Leftrightarrow -b \le a \le b　 (b&gt;0)$<br>8.6) $a^2+b^2 \gt 2ab　(a,b \in R)$<br>8.7) $\frac{a+b}{2}  \ge \sqrt{ab}　(a,b \in R^+)$<br>8.7) $\frac{b}{a} + \frac{a}{b} \ge 2　(ab&gt;0)$<br>8.7) $\frac{a+b+c}{3} \ge \sqrt[3]{abc}　(a,b,c \in R)$<br>8.7) $\frac{a_1+a_2+ \ldots +a_n}{n} \ge \sqrt[n]{a_1a_2\ldots a_n}　a_1,a_2, \ldots,a_n \in R^+ n \in N且n&gt;1$</p>
+</li>
+<li><p>排列组合<br>9.1) $ A_n^m = \frac{n!}{(n-m)!} $<br>9.2) $ C_n^m = \frac{n!}{m!(n-m)!} $<br>9.3) $ C_n^m = C_n^(n-m)$<br>9.4) $ C_{n+1}^m = C_n^m + C_n^{m-1}$<br>9.5) $C_n^0+C_n^1+\ldots +C_n^n = 2^n$</p>
+</li>
+<li><p>积分公式<br>10.1) $\int sin(x)dx = cos(x) +C$<br>10.2) $\int cos(x)dx = -sin(x) +C$<br>10.3) $\int tan(x)dx = -ln|cos(x)| +C$<br>10.4) $\int cot(s)dx = ln|sin(x)| +C$<br>10.5) $\int sec^2(x)dx = tan(x) +C$</p>
+</li>
+<li>导数公式<br>11.1) $(C)’=0 $<br>11.2) $(sin \,x)’ = cos \,x$<br>11.3) $(tan \,x)’ = sec^2 \,x$<br>11.4) $(sec \,x)’ = sec \,xtan \,x$<br>11.5) $(a^x)’ = a^xln \,x $<br>11.6) $(x^{\mu}) = \mu x^{\mu-1}$<br>11.7) $(cos \,x)’ = -sin \,x$<br>11.8) $(cot \,x)’ = -csc^2 \,x$<br>11.9) $(csc \,x)’ = -csc \,xcot \,x$<br>11.10) $(e^x)’ = e^x$<br>11.11) $$(log_ax)’ = \frac{1}{xln \,a}$$<br>11.12) $$(ln \,x)’ = \frac{1}{x} $$<br>11.13) $$(arcsin \,x)’ = \frac{1}{\sqrt{1-x^2}}$$<br>11.14) $$(arccos \,x)’ = -\frac{1}{\sqrt{1-x^2}}$$<br>11.15) $$(arctan \,x)’ = \frac{1}{1+x^2}$$<br>11.16) $$(arccot \,x)’ = -\frac{1}{1+x^2}$$</li>
+<li>重要的极限<br>12.1) $$\lim_{x\to 0} \,{\frac{\sin x}{x}} = 1$$<br>12.2) $$\lim_{x\to \infty} \,{({1+ \frac{1}{x}})}^x =  e$$</li>
+</ol>
+<p>　　说明：<br>　　a) \pi 表示希腊字母 π，\infty 表示 ∞。更多的符号请参见：<a href="http://www.math.harvard.edu/texman/node21.html。" target="_blank" rel="noopener">http://www.math.harvard.edu/texman/node21.html。</a><br>　　b) \frac{分子}{分母} 表示分数。另外，\tfrac{分子}{分母} 表示小号的分数。<br>　　c) \sqrt{被开方数} 表示平方根。另外，\sqrt[n]{x} 表示 n 次方根。<br>　　d) \sum_{下标}^{上标} 表示求和符号。另外，\prod 表示乘积符号，\int 表示积分符号。<br>　　e) _{下标} 和 ^{上标} 可以用在任何地方。如果上下标只是一个字符，可以省略 { 和 } 。<br>　　f) 此外，\ldots 和 \cdots 都表示省略号，前者排在基线上，后者排在中间。<br>　　g) 还有：\pm：±、\times：×、\div：÷ 。</p>
+<p>参考地址：<br><a href="http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference" target="_blank" rel="noopener">http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference</a></p>
+
+  
+
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/05/23/数学公式对应的markdown代码/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-UBC-An-Efficient-Unified-I-O-and-Memory-Caching-Subsystem-for-NetBSD" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -870,181 +1024,9 @@
 
 
   
-    <article id="post-Understanding-TCP-three-way-handshake" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/17/Understanding-TCP-three-way-handshake/">Understanding TCP three way handshake</a>
-    </h1>
-  
-
-        
-        <a href="/2019/05/17/Understanding-TCP-three-way-handshake/" class="archive-article-date">
-  	<time datetime="2019-05-17T03:36:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-17</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-     <p>原文链接:<a href="https://www.slashroot.in/understanding-tcp-three-way-handshake" target="_blank" rel="noopener">https://www.slashroot.in/understanding-tcp-three-way-handshake</a></p>
-<p>Before understanding what is three way handshake we will go through a set of terminologies and understand them. We will be moving step by step towards<br>tcp three way handshake. If you feel that you did not understand something in this tutorial, you can mail me your quries at <a href="mailto:slashmaster@slashroot.in" target="_blank" rel="noopener">slashmaster@slashroot.in</a><br></p>
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">TCP</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/网络协议//" class="article-tag-list-link color5">网络协议</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/17/Understanding-TCP-three-way-handshake/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-How-is-TCP-UDP-Checksum-Calculated" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/16/How-is-TCP-UDP-Checksum-Calculated/">How is TCP &amp; UDP Checksum Calculated?</a>
-    </h1>
-  
-
-        
-        <a href="/2019/05/16/How-is-TCP-UDP-Checksum-Calculated/" class="archive-article-date">
-  	<time datetime="2019-05-16T03:16:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-     <p>原文链接:<a href="https://www.slashroot.in/how-is-tcp-and-udp-checksum-calculated" target="_blank" rel="noopener">https://www.slashroot.in/how-is-tcp-and-udp-checksum-calculated</a></p>
-<p><img src="/2019/05/16/How-is-TCP-UDP-Checksum-Calculated/markdown-img-paste-2019051411182510.png" alt=""></p>
-<p>When you send and receive data over the wire, there are possibilities where the data can get corrupted, altered, or modified(it can be accidental, purposely done with evil intention). Whatever may be the case, there needs to be a method where the receiver can verify and figure out easily if the data is altered or corrupted.</p>
-<p>Generally what happens is this..The sender calculates a short checksum value(very small in size) which represents the message/data that is being sent. The value calculated is either sent along with the message, or through other methods. Once the data is received, the receiver also calculates the checksum. If both the values(of the sender and the receiver) tallies, then the data is uncorrupted/unaltered.<br></p>
-  
-
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">网络协议</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/网络协议//" class="article-tag-list-link color5">网络协议</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/16/How-is-TCP-UDP-Checksum-Calculated/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 
@@ -1200,11 +1182,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ARP</a>
+                <a href="javascript:void(0)" class="js-tag color4">JUC</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JUC</a>
+                <a href="javascript:void(0)" class="js-tag color4">ARP</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1268,6 +1250,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">tag1</a>
               </li>
              
@@ -1308,10 +1294,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Java虚拟机</a>
               </li>
              
@@ -1328,11 +1310,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+                <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1364,11 +1346,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Integer</a>
+                <a href="javascript:void(0)" class="js-tag color5">加密解密</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">加密解密</a>
+                <a href="javascript:void(0)" class="js-tag color3">Integer</a>
               </li>
              
               <li class="article-tag-list-item">
